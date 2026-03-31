@@ -41,6 +41,8 @@ public class UserDAO {
                 );
             }
 
+            System.out.println(userList);
+
             request.setAttribute("userList", userList);
 
         } catch (Exception e) {

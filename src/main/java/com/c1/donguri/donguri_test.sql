@@ -12,3 +12,6 @@ INSERT INTO USER_TEST
 VALUES (SYS_GUID(), 'chaejin', 'test1@gmail.com', 'testtest');
 INSERT INTO USER_TEST
 VALUES (SYS_GUID(), 'kyungmin', 'test2@gmail.com', 'testtest');
+
+SELECT *
+FROM USER_TEST;

@@ -24,16 +24,15 @@ public class DBManager {
         String driver = "com.p6spy.engine.spy.P6SpyDriver";
 
         // 일반적인 연결방식
-        String url = "jdbc:p6spy:oracle:thin:@10.1.82.127:1521:XE";
-        String user = "c##sw1004";
-        String password = "sw1004";
+//        String url = "jdbc:p6spy:oracle:thin:@10.1.82.127:1521:XE";
+//        String user = "c##sw1004";
+//        String password = "sw1004";
 
+        System.out.println("WOWOWOWOWO: " + envMap.get("DB_URL"));
 
-//        System.out.println(envMap.get("DB_URL"));
-//
-//        String url = envMap.get("DB_URL");
-//        String user = envMap.get("DB_USER");
-//        String password = envMap.get("DB_PASSWORD");
+        String url = envMap.get("DB_URL");
+        String user = envMap.get("DB_USER");
+        String password = envMap.get("DB_PASSWORD");
         Class.forName(driver);
 
         return DriverManager.getConnection(url, user, password);
@@ -52,7 +51,7 @@ public class DBManager {
 
             // connection을 재사용 하므로 닫으면 안된다.
             if (con != null) {
-                //  con.close();
+                con.close();
             }
 
         } catch (Exception e) {

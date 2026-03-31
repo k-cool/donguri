@@ -2,14 +2,27 @@ package com.c1.donguri.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EnvLoader {
-    public static Map<String, String> loadEnv(String filePath) {
+    public static Map<String, String> loadEnv(String fileName) {
         final Map<String, String> envMap = new HashMap<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (
+                InputStream is = EnvLoader.class
+                        .getClassLoader()
+                        .getResourceAsStream(fileName);
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(is))
+        ) {
+
+            if (is == null) {
+                throw new RuntimeException(fileName + " 파일을 classpath에서 찾을 수 없음");
+            }
+            
             String line;
 
             while ((line = br.readLine()) != null) {
