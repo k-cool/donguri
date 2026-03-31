@@ -41,7 +41,7 @@ public class UserDAO {
                 );
             }
 
-            System.out.println(userList);
+//            System.out.println(userList);
 
             request.setAttribute("userList", userList);
 
