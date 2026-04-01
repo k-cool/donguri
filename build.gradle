@@ -47,6 +47,9 @@ dependencies {
 
     // dbcp2 - 커넥션 풀 라이브러리
     implementation 'org.apache.commons:commons-dbcp2:2.10.0'
+
+    // s3
+    implementation 'software.amazon.awssdk:s3:2.25.0'
 }
 
 test {

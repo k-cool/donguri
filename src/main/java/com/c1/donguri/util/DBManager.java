@@ -19,7 +19,7 @@ public class DBManager {
         this.envMap = EnvLoader.loadEnv(".env");
     }
 
-
+    
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         String driver = "com.p6spy.engine.spy.P6SpyDriver";
 
