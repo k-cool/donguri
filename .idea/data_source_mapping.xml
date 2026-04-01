@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/donguri_test.sql" value="cdf506b0-9ed9-430b-a3e7-66bf800af6b0" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/donguri_test.sql" value="245d7426-67bb-4583-a969-1eefa9f71f73" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/reservation/reservation.sql" value="245d7426-67bb-4583-a969-1eefa9f71f73" />
   </component>
 </project>
