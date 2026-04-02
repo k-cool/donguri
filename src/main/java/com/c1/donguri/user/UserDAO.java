@@ -6,6 +6,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -106,6 +107,71 @@ public class UserDAO {
             System.out.println("sign up fail");
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+    }
+
+    public void login(HttpServletRequest request) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            con = DBManager.DB_MANAGER.getConnection();
+
+            String sql = "SELECT * FROM users WHERE email = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, email);
+
+            rs = pstmt.executeQuery();
+
+            String msg = null;
+            if (rs.next()) {
+
+                if (rs.getString("password").equals(password)) {
+
+                    UserDTO user = new UserDTO();
+                    user.setEmail(rs.getString("email"));
+                    user.setNickname(rs.getString("nickname"));
+                    user.setProfileImgUrl(rs.getString("profile_img_url")); // 이미지 경로도 세팅
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    session.setMaxInactiveInterval(30 * 60);
+
+                    msg = "로그인 성공";
+                    System.out.println(email + " login success");
+                } else {
+                    msg = "비밀번호가 일치하지 않습니다.";
+                    System.out.println(email + " password error");
+                }
+            } else {
+                msg = "존재하지 않는 계정입니다.";
+                System.out.println(email + " user not found");
+            }
+
+            request.setAttribute("msg", msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "로그인 처리 중 서버 오류 발생");
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+    }
+
+    public boolean loginCheck(HttpServletRequest request) {
+        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+
+        if (user != null) {
+            request.setAttribute("loginPage", "user/loginOK.jsp");
+            return true;
+        } else {
+            request.setAttribute("loginPage", "user/login.jsp");
+            return false;
         }
     }
 }

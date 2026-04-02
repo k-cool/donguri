@@ -23,3 +23,6 @@ BEGIN
     :NEW.updated_at := SYSDATE;
 END;
 /
+
+select *
+from users;

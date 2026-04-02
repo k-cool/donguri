@@ -15,16 +15,10 @@
             <h1>header</h1>
         </div>
 
-        <div class="nav-menu">
-            <button type="button" class="btn-signup" onclick="location.href='signup-do'">
-                회원가입
-            </button>
-        </div>
-    </header>
 
-    <div class="content">
-        <jsp:include page="${content}"/>
-    </div>
+        <div class="content">
+            <jsp:include page="${content}"/>
+        </div>
 </div>
 </body>
 </html>

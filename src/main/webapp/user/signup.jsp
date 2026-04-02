@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<link href="css/signup.css" rel="stylesheet">
+
 <div class="join-container">
     <h2>회원가입</h2>
 
@@ -43,6 +45,9 @@
             <input type="file" id="profileImage" name="file" accept="image/*">
         </div>
 
-        <button type="submit" class="btn-signup">가입하기</button>
+        <div class="button-group">
+            <button type="submit" class="btn-signup">가입하기</button>
+            <button type="button" class="btn-cancel" onclick="history.back()">취소</button>
+        </div>
     </form>
 </div>
