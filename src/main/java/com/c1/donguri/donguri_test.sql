@@ -15,3 +15,4 @@ VALUES (SYS_GUID(), 'kyungmin', 'test2@gmail.com', 'testtest');
 
 SELECT *
 FROM USER_TEST;
+
