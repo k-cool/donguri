@@ -12,13 +12,12 @@
 
 
 <div class="container">
-  <header>
-      <h1>header</h1>
-  </header>
 
     <div class="content">
         <jsp:include page="${content}"/>
     </div>
+
+
 </div>
 </body>
 </html>

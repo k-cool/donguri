@@ -17,6 +17,10 @@
     </div>
 </c:forEach>
 
+<div>
+    <button type="button" onclick="location.href='template-list'">template list</button>
+</div>
+
 
 </body>
 </html>
