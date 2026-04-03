@@ -171,4 +171,76 @@ public class UserDAO {
             System.out.println("Logout: Session has been invalidated.");
         }
     }
+
+    public boolean checkNickname(String newNickname) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        String sql = "SELECT COUNT(*) FROM users WHERE nickname = ? AND is_deleted = 'N'";
+        
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, newNickname);
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // 중복이면 true, 아니면 false
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+        
+        return false; // 에러 발생 시 false 반환
+    }
+
+    public boolean updateNickname(String email, String newNickname) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        String sql = "UPDATE users SET nickname = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?";
+        
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, newNickname);
+            pstmt.setString(2, email);
+            
+            int result = pstmt.executeUpdate();
+            return result > 0; // 성공하면 true, 아니면 false
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+        
+        return false; // 에러 발생 시 false 반환
+    }
+
+    public boolean updateProfileImg(String email, String profileImgUrl) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        String sql = "UPDATE users SET profile_img_url = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?";
+        
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, profileImgUrl);
+            pstmt.setString(2, email);
+            
+            int result = pstmt.executeUpdate();
+            return result > 0; // 성공하면 true, 아니면 false
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+        
+        return false; // 에러 발생 시 false 반환
+    }
 }

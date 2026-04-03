@@ -87,3 +87,18 @@
 .btn-group button:nth-child(2):hover {
     background-color: #da190b;
 }
+
+/* --- 기존 mypage.css 내용 유지 --- */
+
+/* 마이페이지 추가 스타일 */
+.profile-img {
+    cursor: pointer;
+}
+
+.nickname-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
