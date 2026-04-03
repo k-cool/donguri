@@ -161,5 +161,14 @@ public class UserDAO {
         }
     }
 
-    
+    public void logout(HttpServletRequest request) {
+        // 1. 기존 세션이 있는지 확인 (없으면 새로 만들지 않고 null 반환)
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            // 2. 세션 바구니 자체를 제거하여 모든 데이터(user 등)를 한 번에 삭제
+            session.invalidate();
+            System.out.println("Logout: Session has been invalidated.");
+        }
+    }
 }

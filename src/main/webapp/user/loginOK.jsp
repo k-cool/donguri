@@ -22,6 +22,6 @@
 
     <div class="user-menu">
         <button type="button" onclick="location.href='mypage'">마이페이지</button>
-        <button type="button" onclick="location.href='logout'">로그아웃</button>
+        <button type="button" onclick="location.href='login?type=logout'">로그아웃</button>
     </div>
 </div>

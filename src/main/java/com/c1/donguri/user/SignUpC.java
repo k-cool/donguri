@@ -15,6 +15,8 @@ public class SignUpC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UserDAO.USER_DAO.loginCheck(request);
 
+        request.setAttribute("loginPage", null);
+
         request.setAttribute("content", "user/signup.jsp");
 
         request.getRequestDispatcher("main.jsp").forward(request, response);
