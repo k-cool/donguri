@@ -1,0 +1,89 @@
+/* 마이페이지 전체 컨테이너 */
+.mypage-wrapper {
+    width: 400px;
+    margin: 50px auto;
+    padding: 40px 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    text-align: center;
+}
+
+/* 제목 부분 */
+.mypage-wrapper h2 {
+    margin-bottom: 30px;
+    color: #333333;
+    font-size: 24px;
+}
+
+/* 프로필 사진 영역 */
+.profile-section {
+    margin-bottom: 25px;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+}
+
+/* 유저 정보 영역 */
+.user-info {
+    margin-bottom: 30px;
+    text-align: left;
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.user-info p {
+    font-size: 16px;
+    color: #555555;
+    margin: 10px 0;
+}
+
+.user-info p strong {
+    color: #333333;
+    display: inline-block;
+    width: 60px;
+}
+
+/* 버튼 영역 */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-group button {
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+/* 정보 수정 버튼 (파란색 계열) */
+.btn-group button:nth-child(1) {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-group button:nth-child(1):hover {
+    background-color: #45a049;
+}
+
+/* 회원 탈퇴 버튼 (빨간색 계열) */
+.btn-group button:nth-child(2) {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-group button:nth-child(2):hover {
+    background-color: #da190b;
+}
