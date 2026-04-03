@@ -50,6 +50,15 @@ dependencies {
 
     // s3
     implementation 'software.amazon.awssdk:s3:2.25.0'
+
+    // javamail - 자바로 메일 보낼 수 있는 기능 구현해주는 거
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+
+    // activation - 자바로 파일 첨부할 수 있도록 도와줌
+    implementation 'javax.activation:activation:1.1.1'
+
+    // Quartz-scheduler gradle 의존성 추가
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 }
 
 test {
