@@ -59,6 +59,10 @@ dependencies {
 
     // Quartz-scheduler gradle 의존성 추가
     implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+
+    // QR 코드 생성
+    implementation 'com.google.zxing:core:3.5.3'
+    implementation 'com.google.zxing:javase:3.5.3'
 }
 
 test {
