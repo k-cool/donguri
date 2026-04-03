@@ -243,4 +243,51 @@ public class UserDAO {
         
         return false; // 에러 발생 시 false 반환
     }
+
+    public boolean updatePassword(HttpServletRequest request, String currentPassword, String newPassword) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        try {
+            // 현재 로그인된 사용자 정보 가져오기
+            UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+            if (user == null) {
+                return false;
+            }
+            
+            // 현재 비밀번호 확인
+            String sql = "SELECT password FROM users WHERE email = ?";
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, user.getEmail());
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+                // 현재 비밀번호가 일치하는지 확인 (실제로는 암호화 필요)
+                if (!currentPassword.equals(dbPassword)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+            
+            // 비밀번호 업데이트
+            String updateSql = "UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?";
+            pstmt = con.prepareStatement(updateSql);
+            pstmt.setString(1, newPassword); // 실제로는 암호화 필요
+            pstmt.setString(2, user.getEmail());
+            
+            int result = pstmt.executeUpdate();
+            return result > 0;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+        
+        return false;
+    }
 }
