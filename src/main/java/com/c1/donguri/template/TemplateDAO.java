@@ -68,22 +68,23 @@ public class TemplateDAO {
     public void addTemplate(HttpServletRequest request) {
         Connection con = null;
         PreparedStatement pstmt = null;
-
         S3Uploader s3Uploader = new S3Uploader();
 
-//
-//        String sql = "INSERT INTO TEMPLATE (name, body_html, type, cover_img_url, qr_url, created_at, updated_at) "
+//      String sql = "INSERT INTO TEMPLATE (name, body_html, type, cover_img_url, qr_url, created_at, updated_at) "
 //                + "VALUES (?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
 
         try {
-            // 1. 파라미터 추출 (request에서 직접 추출 가능)
+            // 1. 파라미터 추출
             String name = request.getParameter("name");
             String bodyHtml = request.getParameter("bodyHtml");
-            String type = request.getParameter("type");
+            String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
 
-            // 2. 파일 처리 (name="coverImgUrl" 인 input 태그 기준)
+            // 2. 고유 ID 생성 (QR 주소와 DB PK로 공통 사용)
+            String templateId = UUID.randomUUID().toString().replace("-", "");
+
+            // 3. 커버 이미지 처리 (S3 업로드)
             Part filePart = request.getPart("coverImgUrl");
-            String imgUrl = null; // 기본값 설정
+            String imgUrl = null;
 
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = "cover_img/template/" + UUID.randomUUID().toString();
@@ -95,28 +96,39 @@ public class TemplateDAO {
                 imgUrl = s3Uploader.upload(inputStream, fileName, contentType, fileSize);
             }
 
-            // 1. 이미지가 저장될 실제 서버 경로 설정 (webapp/img 폴더)
-//            String path = request.getServletContext().getRealPath("img");
+            // 4. QR 코드 처리 (타입이 ADDED일 때만 실행)
+            String qrUrl = null; // 기본값은 null
+            if ("ADDED".equals(type)) {
+                // QR 생성
+                String targetUrl = "http://10.1.82.127:8080/donguri/template.enroll?id=" + templateId;
+                String tempPath = request.getServletContext().getRealPath("img");
 
-            // 2. 파일 업로드를 처리하는 MultipartRequest 객체 생성
-            // (파일 크기 제한 10MB, 한글 인코딩 UTF-8, 중복 파일명 정책 설정)
-//            com.oreilly.servlet.MultipartRequest mr = new com.oreilly.servlet.MultipartRequest(
-//                    request, path, 10 * 1024 * 1024, "UTF-8", new com.oreilly.servlet.multipart.DefaultFileRenamePolicy()
-//            );
+                // 로컬에 임시 QR 생성
+                String qrLocalFileName = QRGenerator.generateQR(targetUrl, tempPath);
+                java.io.File qrFile = new java.io.File(tempPath + "/" + qrLocalFileName);
 
-            String sql = "INSERT INTO TEMPLATE (name, body_html, type, cover_img_url,qr_url) VALUES (?,?,?,?,?)";
+                // [S3 업로드] QR 이미지를 S3에 올리기
+                String qrS3Key = "qr_codes/" + qrLocalFileName;
+                qrUrl = s3Uploader.upload(new java.io.FileInputStream(qrFile), qrS3Key, "image/png", qrFile.length());
 
+                // 업로드 후 로컬 임시 파일 삭제
+                if (qrFile.exists()) qrFile.delete();
+                System.out.println("히든 템플릿 QR 생성 완료! 🐿️");
+            }
+
+
+            String sql = "INSERT INTO TEMPLATE (template_id, name, body_html, type, cover_img_url, qr_url) VALUES (HEXTORAW(?), ?,?,?,?,?)";
 
             con = DBManager.DB_MANAGER.getConnection();
-
             pstmt = con.prepareStatement(sql);
 
             // 3. 데이터 세팅 (중요: mr.getParameter를 사용해야 함!)
-            pstmt.setString(1, name);
-            pstmt.setString(2, bodyHtml);
-            pstmt.setString(3, type);
-            pstmt.setString(4, imgUrl);
-            pstmt.setString(5, null); // TODO: qr이미지 생성, 업로드 작업후 수정
+            pstmt.setString(1, templateId);
+            pstmt.setString(2, name);
+            pstmt.setString(3, bodyHtml);
+            pstmt.setString(4, type);
+            pstmt.setString(5, imgUrl);
+            pstmt.setString(6, qrUrl);
 
             // [QR URL 빈 값 처리] 관리자가 비워뒀을 때 에러 안 나게 기본값 세팅
 //            String qr = mr.getParameter("qrUrl");
@@ -126,7 +138,7 @@ public class TemplateDAO {
 //            pstmt.setString(6, qr);
 
             if (pstmt.executeUpdate() == 1) {
-                System.out.println("add successfully");
+                System.out.println("템플릿 등록 성공! 타입: " + type);
             }
 
         } catch (Exception e) {
@@ -140,20 +152,61 @@ public class TemplateDAO {
     public int enrollTemplate(String userId, String templateId) {
         Connection con = null;
         PreparedStatement pstmt = null;
-        // templateId는 이미 변환된 String이므로 HEXTORAW로 다시 넣음.
-        String sql = "INSERT INTO USER_TEMPLATE (user_id, template_id) VALUES (?, HEXTORAW(?))";
+        ResultSet rs = null;
+
+        // 1. 이미 내 보관함에 있는지 확인하는 SQL
+        String checkSql = "SELECT COUNT(*) FROM USER_TEMPLATE WHERE user_id = ? AND template_id = HEXTORAW(?)";
+        // 2. 담는 SQL
+        String insertSql = "INSERT INTO USER_TEMPLATE (user_id, template_id) VALUES (?, HEXTORAW(?))";
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+
+            // [체크 단계]
+            pstmt = con.prepareStatement(checkSql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, templateId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                System.out.println("이미 보관함에 있는 템플릿입니다! 🐿️");
+                return 2; // 이미 존재함을 알리는 별도의 리턴값 (예: 2)
+            }
+
+            // [등록 단계] pstmt 재사용을 위해 닫고 다시 열기
+            pstmt.close();
+            pstmt = con.prepareStatement(insertSql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, templateId);
+
+            return pstmt.executeUpdate(); // 성공하면 1 반환
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0; // 에러 발생 시 0 반환
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+    }
+
+    public TemplateDAO getTemplateDetail() {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM template WHERE template_id = HEXTORAW(?)";
+        TemplateDTO templateDTO = null;
+        ArrayList<TemplateDTO> templaeList = new  ArrayList<>();
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, templateId);
-            return pstmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        } finally {
-            DBManager.DB_MANAGER.close(con, pstmt, null);
+            pstmt.setString(1, request.getParameter("no"));
+
+            rs = pstmt.executeQuery();
+
+
+
         }
-    }
+
 }
+
