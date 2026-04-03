@@ -48,6 +48,7 @@ public class ReservationC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
@@ -64,6 +65,7 @@ public class ReservationC extends HttpServlet {
             r.setTemplateId(request.getParameter("templateId"));
             r.setBgm(request.getParameter("bgm"));
 
+            r.setEmailContentId("test_content");
 
             session.setAttribute("reservation_confirm", r);
             request.getRequestDispatcher("reservation/reservation_confirm.jsp").forward(request, response);

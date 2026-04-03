@@ -18,24 +18,27 @@ public class ReservationDAO {
         int result = 0;
 
         try (Connection con = DBManager.connect()) {
-            con.setAutoCommit(false); // 수동 commit
+            con.setAutoCommit(false);
 
 
             String emailContentId = UUID.randomUUID().toString();
             String sql1 = "INSERT INTO email_content(email_content_id) VALUES(?)";
+
             try (PreparedStatement ps1 = con.prepareStatement(sql1)) {
                 ps1.setString(1, emailContentId);
                 ps1.executeUpdate();
             }
+
             r.setEmailContentId(emailContentId);
 
 
             String sql2 = "INSERT INTO reservation (" +
                     "from_id, email_content_id, sender_email, recipient_email, " +
                     "title, email_message, template_id, bgm, scheduled_date, is_done) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'N')"; // TO_DATE 제거
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'N')";
 
             try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
+
                 ps2.setString(1, r.getFromId());
                 ps2.setString(2, r.getEmailContentId());
                 ps2.setString(3, r.getSenderEmail());
@@ -46,15 +49,31 @@ public class ReservationDAO {
                 ps2.setString(8, r.getBgm());
 
 
-                java.sql.Timestamp ts = java.sql.Timestamp.valueOf(
-                        r.getScheduledDate().replace("T", " ") + ":00"
-                );
-                ps2.setTimestamp(9, ts);
+                String dateStr = r.getScheduledDate();
+
+                System.out.println("원본 날짜: " + dateStr);
+
+                try {
+                    dateStr = dateStr.replace("T", " ");
+
+                    if (dateStr.length() == 16) {
+                        dateStr += ":00";
+                    }
+
+                    Timestamp ts = Timestamp.valueOf(dateStr);
+                    ps2.setTimestamp(9, ts);
+
+                } catch (Exception e) {
+                    System.out.println(" 날짜 변환 실패: " + dateStr);
+                    e.printStackTrace();
+                    throw e;
+                }
 
                 result = ps2.executeUpdate();
+                System.out.println("insert 결과: " + result);
             }
 
-            con.commit(); // commit 완료
+            con.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
