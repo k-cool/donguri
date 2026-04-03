@@ -2,5 +2,9 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/donguri.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/util/donguri_create.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/util/donguri_drop.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/util/donguri_insert.sql" dialect="Oracle" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c1/donguri/util/donguri_select.sql" dialect="Oracle" />
   </component>
 </project>
