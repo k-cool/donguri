@@ -110,57 +110,43 @@ public class UserDAO {
         }
     }
 
-    public void login(HttpServletRequest request) {
+    public boolean login(HttpServletRequest request) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-
             con = DBManager.DB_MANAGER.getConnection();
-
-            String sql = "SELECT * FROM users WHERE email = ?";
+            // 1. SQL문에 profile_img_url 컬럼 추가 호출
+            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, email);
+            pstmt.setString(1, request.getParameter("email"));
+            pstmt.setString(2, request.getParameter("password"));
 
             rs = pstmt.executeQuery();
 
-            String msg = null;
             if (rs.next()) {
+                // 2. 로그인 성공 시 DTO 객체 생성
+                UserDTO user = new UserDTO();
+                user.setEmail(rs.getString("email"));
+                user.setNickname(rs.getString("nickname"));
 
-                if (rs.getString("password").equals(password)) {
+                // 3. DB의 스네이크(_) 명칭을 DTO의 카멜케이스 세터에 담기 (핵심!)
+                user.setProfileImgUrl(rs.getString("profile_img_url"));
 
-                    UserDTO user = new UserDTO();
-                    user.setEmail(rs.getString("email"));
-                    user.setNickname(rs.getString("nickname"));
-                    user.setProfileImgUrl(rs.getString("profile_img_url")); // 이미지 경로도 세팅
+                // 4. 세션에 "user"라는 이름으로 저장 (JSP에서 sessionScope.user로 접근)
+                HttpSession session = request.getSession();
+                request.getSession().setAttribute("user", user);
+                session.setMaxInactiveInterval(60);
 
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    session.setMaxInactiveInterval(30 * 60);
-
-                    msg = "로그인 성공";
-                    System.out.println(email + " login success");
-                } else {
-                    msg = "비밀번호가 일치하지 않습니다.";
-                    System.out.println(email + " password error");
-                }
-            } else {
-                msg = "존재하지 않는 계정입니다.";
-                System.out.println(email + " user not found");
+                return true;
             }
-
-            request.setAttribute("msg", msg);
-
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("msg", "로그인 처리 중 서버 오류 발생");
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, rs);
         }
+        return false;
     }
 
     public boolean loginCheck(HttpServletRequest request) {
@@ -174,4 +160,6 @@ public class UserDAO {
             return false;
         }
     }
+
+    
 }
