@@ -6,8 +6,12 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.UUID;
 
 public class S3Uploader {
 
@@ -42,5 +46,30 @@ public class S3Uploader {
 
         // S3 URL 생성
         return "https://" + envMap.get("AWS_S3_BUCKET_NAME") + ".s3.amazonaws.com/" + fileName;
+    }
+
+
+    public String uploadLocalFile(String localFilePath, String fileName) {
+        String contentType = "image/png";
+
+        File file = new File(localFilePath + "/" + fileName);
+
+        try (InputStream inputStream = new FileInputStream(file)) {
+
+            String fileUrl = upload(
+                    inputStream,
+                    fileName,
+                    contentType,
+                    file.length()
+            );
+
+            System.out.println("s3-fileUrl: " + fileUrl);
+
+            return fileUrl;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
