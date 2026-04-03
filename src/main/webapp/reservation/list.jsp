@@ -25,7 +25,7 @@
                         <td>${r.recipientEmail}</td>
                         <td>${r.scheduledDate}</td>
                         <td>${r.isDone}</td>
-                        <td style="max-width:300px; word-wrap:break-word;">${r.title}</td>
+                        <td style="max-width:300px; word-wrap:break-word;">${r.subject}</td>
                         <td>
                             <a href="reservation?action=detail&id=${r.reservationId}">
                                 보기

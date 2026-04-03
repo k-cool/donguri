@@ -16,8 +16,8 @@ public class ReservationDTO {
     private String senderEmail;
     private String recipientEmail;
 
-    private String title;
-    private String emailMessage;
+    private String subject;
+    private String content;
 
     private String templateId;
     private String bgm;

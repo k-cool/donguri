@@ -39,6 +39,23 @@ FROM reservation r
 WHERE r.is_done = 'N'
 ORDER BY r.scheduled_date ASC;
 
+SELECT *
+FROM RESERVATION;
+
+SELECT R.RESERVATION_ID,
+       R.RECIPIENT_EMAIL,
+       R.SCHEDULED_DATE,
+       R.IS_DONE,
+       E.SUBJECT
+FROM RESERVATION R,
+     EMAIL_CONTENT E
+WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID
+ORDER BY R.SCHEDULED_DATE;
+
+SELECT *
+FROM EMAIL_CONTENT;
+
+
 
 -- 4. 이메일 발송 로그 및 대상자 확인 (send_log + reservation JOIN)
 -- 어떤 이메일이 성공/실패했는지, 실패했다면 에러 메시지가 무엇인지 확인합니다.

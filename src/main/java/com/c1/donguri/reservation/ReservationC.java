@@ -59,13 +59,14 @@ public class ReservationC extends HttpServlet {
             r.setFromId(request.getParameter("fromId"));
             r.setSenderEmail(request.getParameter("senderEmail"));
             r.setRecipientEmail(request.getParameter("recipientEmail"));
-            r.setTitle(request.getParameter("title"));
-            r.setEmailMessage(request.getParameter("message"));
+            r.setSubject(request.getParameter("title"));
+            r.setContent(request.getParameter("message"));
             r.setScheduledDate(request.getParameter("scheduledDate"));
             r.setTemplateId(request.getParameter("templateId"));
             r.setBgm(request.getParameter("bgm"));
 
             r.setEmailContentId("test_content");
+            
 
             session.setAttribute("reservation_confirm", r);
             request.getRequestDispatcher("reservation/reservation_confirm.jsp").forward(request, response);
