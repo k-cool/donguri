@@ -49,26 +49,35 @@ public class ReservationC extends HttpServlet {
             throws IOException, ServletException {
 
         request.setCharacterEncoding("UTF-8");
-
-        ReservationDTO r = new ReservationDTO();
-
-
-        r.setFromId(request.getParameter("fromId"));
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
 
 
-        r.setSenderEmail(request.getParameter("senderEmail"));
-        r.setRecipientEmail(request.getParameter("recipientEmail"));
-        r.setTitle(request.getParameter("title"));
-        r.setEmailMessage(request.getParameter("message")); // textarea name="message"
-        r.setScheduledDate(request.getParameter("scheduledDate"));
-
-        r.setTemplateId(request.getParameter("templateId"));
-        r.setBgm(request.getParameter("bgm"));
-
-
-        int result = ReservationDAO.getInstance().insert(r);
-        System.out.println("insert 결과: " + result);
+        if ("confirm".equals(action)) {
+            ReservationDTO r = new ReservationDTO();
+            r.setFromId(request.getParameter("fromId"));
+            r.setSenderEmail(request.getParameter("senderEmail"));
+            r.setRecipientEmail(request.getParameter("recipientEmail"));
+            r.setTitle(request.getParameter("title"));
+            r.setEmailMessage(request.getParameter("message"));
+            r.setScheduledDate(request.getParameter("scheduledDate"));
+            r.setTemplateId(request.getParameter("templateId"));
+            r.setBgm(request.getParameter("bgm"));
 
 
-        response.sendRedirect("reservation?action=list");
-    }}
+            session.setAttribute("reservation_confirm", r);
+            request.getRequestDispatcher("reservation/reservation_confirm.jsp").forward(request, response);
+
+        } else if ("insert".equals(action)) {
+
+            ReservationDTO r = (ReservationDTO) session.getAttribute("reservation_confirm");
+
+            if (r != null) {
+                dao.insert(r);
+                session.removeAttribute("reservation_confirm");
+            }
+
+            response.sendRedirect("reservation?action=list");
+        }
+    }
+}
