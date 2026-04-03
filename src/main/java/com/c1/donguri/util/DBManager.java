@@ -19,14 +19,9 @@ public class DBManager {
         this.envMap = EnvLoader.loadEnv(".env");
     }
 
-    
+
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         String driver = "com.p6spy.engine.spy.P6SpyDriver";
-
-        // 일반적인 연결방식
-        String url = "jdbc:p6spy:oracle:thin:@10.1.82.127:1521:XE";
-        String user = "c##km1004";
-        String password = "km1004";
 
         System.out.println("WOWOWOWOWO: " + envMap.get("DB_URL"));
 

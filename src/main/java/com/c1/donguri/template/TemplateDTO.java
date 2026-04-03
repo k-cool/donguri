@@ -8,14 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class TemplateDTO {
     private String templateId;
     private String name;
     private String bodyHtml;
     private String type;
     private String coverImgUrl;
-    private String bgmUrl;
     private String qrUrl;
     private String createdAt;
     private String updatedAt;
