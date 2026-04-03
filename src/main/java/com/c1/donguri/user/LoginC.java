@@ -43,7 +43,7 @@ public class LoginC extends HttpServlet {
         if (UserDAO.USER_DAO.loginCheck(request)) {
             // 성공 시: 중앙에는 홈 화면, 헤더에는 로그인 정보창을 띄웁니다.
             request.setAttribute("content", "home.jsp");
-            request.setAttribute("loginPage", "user/loginOK.jsp");
+            request.setAttribute("loginPage", "user/login_ok.jsp");
 
             request.getRequestDispatcher("main.jsp").forward(request, response);
         } else {

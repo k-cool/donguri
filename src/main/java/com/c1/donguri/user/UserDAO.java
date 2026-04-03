@@ -153,7 +153,7 @@ public class UserDAO {
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
 
         if (user != null) {
-            request.setAttribute("loginPage", "user/loginOK.jsp");
+            request.setAttribute("loginPage", "user/login_ok.jsp");
             return true;
         } else {
             request.setAttribute("loginPage", "user/login.jsp");
