@@ -20,6 +20,9 @@
 <div>
     <button type="button" onclick="location.href='template-list'">template list</button>
 </div>
+<div>
+    <button type="button" onclick="location.href='template-user'">User's template list</button>
+</div>
 
 
 </body>
