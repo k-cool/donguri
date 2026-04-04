@@ -316,5 +316,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/intellij,eclipse,macos,java,windows
 
 # env
-src/main/resources/.env
+**/.env
 /WALLET*

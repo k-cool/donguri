@@ -8,9 +8,6 @@ import java.util.List;
 
 @WebServlet("/reservation")
 public class ReservationC extends HttpServlet {
-
-    private ReservationDAO dao = ReservationDAO.getInstance();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -18,7 +15,7 @@ public class ReservationC extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null || action.equals("list")) {
-            List<ReservationDTO> list = dao.getAll();
+            List<ReservationDTO> list = ReservationDAO.RESERVATION_DAO.getAll();
             request.setAttribute("list", list);
             request.getRequestDispatcher("reservation/list.jsp").forward(request, response);
 
@@ -31,7 +28,7 @@ public class ReservationC extends HttpServlet {
         } else if ("detail".equals(action)) {
             String id = request.getParameter("id");
 
-            ReservationDTO r = dao.getOne(id); // 하나 조회
+            ReservationDTO r = ReservationDAO.RESERVATION_DAO.getOne(id); // 하나 조회
             request.setAttribute("r", r);
 
             request.getRequestDispatcher("reservation/detail.jsp")
@@ -39,7 +36,7 @@ public class ReservationC extends HttpServlet {
         } else if ("delete".equals(action)) {
             String id = request.getParameter("id");
 
-            dao.delete(id);
+            ReservationDAO.RESERVATION_DAO.delete(id);
             response.sendRedirect("reservation?action=list");
         }
     }
@@ -55,29 +52,26 @@ public class ReservationC extends HttpServlet {
 
 
         if ("confirm".equals(action)) {
-            ReservationDTO r = new ReservationDTO();
-            r.setFromId(request.getParameter("fromId"));
-            r.setSenderEmail(request.getParameter("senderEmail"));
-            r.setRecipientEmail(request.getParameter("recipientEmail"));
-            r.setSubject(request.getParameter("title"));
-            r.setContent(request.getParameter("message"));
-            r.setScheduledDate(request.getParameter("scheduledDate"));
-            r.setTemplateId(request.getParameter("templateId"));
-            r.setBgm(request.getParameter("bgm"));
+            InsertReservationDTO ir = new InsertReservationDTO();
 
-            r.setEmailContentId("test_content");
-            
+            ir.setFromId(request.getParameter("fromId"));
+            ir.setRecipientEmail(request.getParameter("recipientEmail"));
+            ir.setSubject(request.getParameter("subject"));
+            ir.setContent(request.getParameter("content"));
+            ir.setTemplateId(request.getParameter("templateId"));
+            ir.setBgmUrl(request.getParameter("bgmUrl"));
+            ir.setScheduledDate(request.getParameter("scheduledDate"));
 
-            session.setAttribute("reservation_confirm", r);
+            session.setAttribute("insertReservation", ir);
             request.getRequestDispatcher("reservation/reservation_confirm.jsp").forward(request, response);
 
         } else if ("insert".equals(action)) {
 
-            ReservationDTO r = (ReservationDTO) session.getAttribute("reservation_confirm");
+            InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
 
-            if (r != null) {
-                dao.insert(r);
-                session.removeAttribute("reservation_confirm");
+            if (ir != null) {
+                ReservationDAO.RESERVATION_DAO.insert(request);
+                session.removeAttribute("insertReservation");
             }
 
             response.sendRedirect("reservation?action=list");

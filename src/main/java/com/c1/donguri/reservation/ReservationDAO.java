@@ -1,89 +1,121 @@
 package com.c1.donguri.reservation;
 
+import com.c1.donguri.util.DBManager;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ReservationDAO {
-
-    private static ReservationDAO instance = new ReservationDAO();
+    public static final ReservationDAO RESERVATION_DAO = new ReservationDAO();
 
     private ReservationDAO() {
     }
 
-    public static ReservationDAO getInstance() {
-        return instance;
-    }
+    public void insert(HttpServletRequest request) { //정보넣자~
 
-    public int insert(ReservationDTO r) {
-        int result = 0;
+        HttpSession session = request.getSession();
+        InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
 
-        try (Connection con = DBManager.connect()) {
+// TODO: 나중에 로그인 , 템플릿 선택 구현 완료되면 변수로 수정하기
+        // userId = 118D6CAAC61C48B9B6A666E4FB021C93
+        // templateId = 44B0AE7E5F7A4F25B71913BB86B6E17D
+
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        String emailContentSql = "\n" +
+                "INSERT INTO EMAIL_CONTENT(EMAIL_CONTENT_ID ,TEMPLATE_ID, SENDER_ID, SUBJECT, CONTENT, COVER_IMG_URL, BGM_URL)\n" +
+                "VALUES (? ,'44B0AE7E5F7A4F25B71913BB86B6E17D', '118D6CAAC61C48B9B6A666E4FB021C93', ?, ?, ?, ?)\n";
+        String reservationSql = "\n" +
+                "INSERT INTO RESERVATION(FROM_ID, EMAIL_CONTENT_ID, RECIPIENT_EMAIL, SCHEDULED_DATE)\n" +
+                "VALUES ('118D6CAAC61C48B9B6A666E4FB021C93', ?, ?, ?)\n";
+
+
+//        String subject = request.getParameter("subject");
+//        String content = request.getParameter("content");
+//        String coverImgUrl = request.getParameter("coverImgUrl");
+//        String templateId = request.getParameter("templateId");
+//        String bgmUrl = request.getParameter("bgmUrl");
+
+
+//        String recipientEmail = request.getParameter("recipientEmail");
+//        String scheduledDate = request.getParameter("scheduledDate");
+
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+
             con.setAutoCommit(false);
 
+            ps = con.prepareStatement(emailContentSql);
 
-            String emailContentId = UUID.randomUUID().toString();
-            String sql1 = "INSERT INTO email_content(email_content_id, template_id, sender_id, subject, content) VALUES(?, ?, ?, ?, ?)";
+            // 1. UUID 생성 (예: 550e8400-e29b-41d4-a716-446655440000)
+            String uuid = UUID.randomUUID().toString();
 
-            try (PreparedStatement ps1 = con.prepareStatement(sql1)) {
-                ps1.setString(1, emailContentId);
-                ps1.executeUpdate();
+            // 2. 하이픈 제거 및 대문자 변환 (오라클 SYS_GUID 형식)
+            String emailContentId = uuid.replace("-", "").toUpperCase();
+
+            ps.setString(1, emailContentId);
+            ps.setString(2, ir.getSubject());
+            ps.setString(3, ir.getContent());
+            ps.setString(4, ir.getCoverImgUrl());
+            ps.setString(5, ir.getBgmUrl());
+
+            int firstRow = ps.executeUpdate();
+
+            if (firstRow > 0) {
+                System.out.println("EMAIL_CONTENT INSERT 성공");
             }
 
-            r.setEmailContentId(emailContentId);
+            ps = con.prepareStatement(reservationSql);
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-            String sql2 = "INSERT INTO reservation (" +
-                    "from_id, email_content_id, sender_email, recipient_email, " +
-                    "subject, content, template_id, bgm, scheduled_date, is_done) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'N')";
+            LocalDateTime formatted = LocalDateTime.parse(ir.getScheduledDate(), formatter);
 
-            try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
+            ps.setString(1, emailContentId);
+            ps.setString(2, ir.getRecipientEmail());
+            ps.setObject(3, formatted);
 
-                ps2.setString(1, r.getFromId());
-                ps2.setString(2, r.getEmailContentId());
-                ps2.setString(3, r.getSenderEmail());
-                ps2.setString(4, r.getRecipientEmail());
-                ps2.setString(5, r.getSubject());
-                ps2.setString(6, r.getContent());
-                ps2.setString(7, r.getTemplateId());
-                ps2.setString(8, r.getBgm());
+            int secondRow = ps.executeUpdate();
 
-
-                String dateStr = r.getScheduledDate();
-
-                System.out.println("원본 날짜: " + dateStr);
-
-                try {
-                    dateStr = dateStr.replace("T", " ");
-
-                    if (dateStr.length() == 16) {
-                        dateStr += ":00";
-                    }
-
-                    Timestamp ts = Timestamp.valueOf(dateStr);
-                    ps2.setTimestamp(9, ts);
-
-                } catch (Exception e) {
-                    System.out.println(" 날짜 변환 실패: " + dateStr);
-                    e.printStackTrace();
-                    throw e;
-                }
-
-                result = ps2.executeUpdate();
-                System.out.println("insert 결과: " + result);
+            if (secondRow > 0) {
+                System.out.println("RESERVATION INSERT 성공");
             }
 
-            con.commit();
+            if (firstRow > 0 && secondRow > 0) {
+                System.out.println("트랜잭션 성공");
+                con.commit();
+            }
 
         } catch (Exception e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                    System.err.println("에러 발생! 데이터가 롤백되었습니다.");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
-        }
+        } finally {
+            DBManager.DB_MANAGER.close(con, ps, null);
 
-        return result;
+            if (con != null) {
+                try {
+                    con.setAutoCommit(true);
+                } catch (Exception e) {
+                }
+            }
+        }
     }
 
-    public List<ReservationDTO> getAll() {
+    public List<ReservationDTO> getAll() { //전체정보조회
         List<ReservationDTO> list = new ArrayList<>();
 //        String sql = "SELECT * FROM reservation ORDER BY scheduled_date";
         String sql = "SELECT R.RESERVATION_ID,\n" +
@@ -97,7 +129,7 @@ public class ReservationDAO {
                 "ORDER BY R.SCHEDULED_DATE";
 
 
-        try (Connection con = DBManager.connect();
+        try (Connection con = DBManager.DB_MANAGER.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -127,13 +159,38 @@ public class ReservationDAO {
 
 
     public int delete(String id) {
-        String sql = "DELETE FROM reservation WHERE reservation_id=?";
+        String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
+        String deleteReservationSql = "DELETE FROM RESERVATION R WHERE R.RESERVATION_ID=?";
+        String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT E WHERE E.EMAIL_CONTENT_ID=?";
 
-        try (Connection con = DBManager.connect();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = DBManager.DB_MANAGER.getConnection()) {
+            con.setAutoCommit(false);
 
-            ps.setString(1, id);
-            return ps.executeUpdate();
+            String emailContentId = null;
+
+            try (PreparedStatement ps = con.prepareStatement(getEmailContentIdSql)) {
+                ps.setString(1, id);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    emailContentId = rs.getString("EMAIL_CONTENT_ID");
+                }
+            }
+
+            if (emailContentId != null) {
+                try (PreparedStatement ps1 = con.prepareStatement(deleteReservationSql)) {
+                    ps1.setString(1, id);
+                    ps1.executeUpdate();
+                }
+
+                try (PreparedStatement ps2 = con.prepareStatement(deleteEmailContentSql)) {
+                    ps2.setString(1, emailContentId);
+                    ps2.executeUpdate();
+                }
+
+                con.commit();
+                return 1;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,8 +199,15 @@ public class ReservationDAO {
     }
 
     public ReservationDTO getOne(String id) {
-        String sql = "SELECT * FROM reservation WHERE reservation_id=?";
-        try (Connection con = DBManager.connect();
+        String sql = "SELECT r.reservation_id,\n" +
+                "       r.recipient_email,\n" +
+                "       r.scheduled_date,\n" +
+                "       e.subject,\n" +
+                "       e.content\n" +
+                "FROM reservation r\n" +
+                "JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
+                "WHERE r.reservation_id=?";
+        try (Connection con = DBManager.DB_MANAGER.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, id);
@@ -165,3 +229,4 @@ public class ReservationDAO {
         return null;
     }
 }
+

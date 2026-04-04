@@ -15,10 +15,10 @@
         .confirm-container {
             max-width: 500px;
             width: 90%;
-            background: rgba(255,255,255,0.95);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .confirm-container h2 {
@@ -64,12 +64,12 @@
 <div class="confirm-container">
     <h2>📬 예약 내용 확인</h2>
 
-    <div class="confirm-row"><label>닉네임:</label> <span>${reservation_confirm.fromId}</span></div>
-    <div class="confirm-row"><label>보내는 이메일:</label> <span>${reservation_confirm.senderEmail}</span></div>
-    <div class="confirm-row"><label>받는 이메일:</label> <span>${reservation_confirm.recipientEmail}</span></div>
-    <div class="confirm-row"><label>제목:</label> <span>${reservation_confirm.title}</span></div>
-    <div class="confirm-row"><label>내용:</label> <span>${reservation_confirm.emailMessage}</span></div>
-    <div class="confirm-row"><label>예약 시간:</label> <span>${reservation_confirm.scheduledDate}</span></div>
+    <div class="confirm-row"><label>닉네임:</label> <span>${insertReservation.fromId}</span></div>
+    <%--    <div class="confirm-row"><label>보내는 이메일:</label> <span>${insertReservation.senderEmail}</span></div>--%>
+    <div class="confirm-row"><label>받는 이메일:</label> <span>${insertReservation.recipientEmail}</span></div>
+    <div class="confirm-row"><label>제목:</label> <span>${insertReservation.subject}</span></div>
+    <div class="confirm-row"><label>내용:</label> <span>${insertReservation.content}</span></div>
+    <div class="confirm-row"><label>예약 시간:</label> <span>${insertReservation.scheduledDate}</span></div>
 
     <%-- 템플릿 표시 --%>
     <div class="confirm-row">
