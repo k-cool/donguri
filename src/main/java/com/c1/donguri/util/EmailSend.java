@@ -1,10 +1,6 @@
 package com.c1.donguri.util;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
@@ -29,7 +25,7 @@ public class EmailSend {
         - subject       : 엽서 제목
         - content       : 엽서 내용
     */
-    public void send(String receiverEmail, String title, String content) throws Exception {
+    public void send(String receiverEmail, String title, String content) {
         System.out.println("=== 실제 SMTP 발송 시도 ===" + receiverEmail);
 
         Properties props = new Properties();
@@ -49,15 +45,19 @@ public class EmailSend {
         MimeMessage message = new MimeMessage(session);
 
         // 실제 발송자
-        message.setFrom(new InternetAddress("noreply@donguri.com"));
+        try {
+            message.setFrom(new InternetAddress("noreply@donguri.com"));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
+
+            message.setSubject(title, "UTF-8");
+
+            message.setText(content, "UTF-8");
+
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
 
         // 수신자
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
-
-        message.setSubject(title, "UTF-8");
-
-        message.setText(content, "UTF-8");
-
-        Transport.send(message);
     }
 }
