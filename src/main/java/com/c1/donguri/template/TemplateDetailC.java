@@ -12,7 +12,9 @@ public class TemplateDetailC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        TemplateDAO.TEMPLATE_DAO.getTemplateDetail(request);
+        TemplateDTO t = TemplateDAO.TEMPLATE_DAO.getTemplateDetail(request);
+        request.setAttribute("t", t);
+
         request.setAttribute("content", "jsp/template/template_detail.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
