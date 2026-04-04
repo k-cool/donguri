@@ -59,6 +59,7 @@ public class AppStartupListener implements ServletContextListener {
                 // 등록할 예약 잡등록
                 try {
                     EmailScheduler.EMAIL_SCHEDULER.enrollJob(emailJob);
+
                 } catch (Exception e) {
                     System.out.println("잡등록 실패");
                     throw new RuntimeException(e);

@@ -3,24 +3,25 @@ package com.c1.donguri.scheduler;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
 
-/*
-    Quartz Scheduler를 한 번만 생성해서 재사용하기 위한 클래스
-*/
 public class QuartzManager {
 
-    private static Scheduler scheduler;
+    private static final Scheduler SCHEDULER = createScheduler();
 
-    static {
+    private QuartzManager() {
+    }
+
+    private static Scheduler createScheduler() {
         try {
-            scheduler = StdSchedulerFactory.getDefaultScheduler();
+            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             System.out.println("Quartz Scheduler started.");
+            return scheduler;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public static Scheduler getScheduler() {
-        return scheduler;
+        return SCHEDULER;
     }
 }

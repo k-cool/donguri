@@ -1,6 +1,5 @@
 package com.c1.donguri.scheduler;
 
-import com.c1.donguri.util.EmailSend;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -20,7 +19,7 @@ public class EmailScheduler {
         if (scheduler == null) {
             throw new Exception("Quartz Scheduler 초기화 실패");
         }
-        
+
         JobDetail job = JobBuilder.newJob(SendEmailJob.class)
                 .withIdentity("sendEmailJob_" + emailJob.getReservationId(), "emailGroup")
                 .usingJobData("emailJob", emailJob.toJSON())

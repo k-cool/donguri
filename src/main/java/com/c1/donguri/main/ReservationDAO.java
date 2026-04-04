@@ -1,30 +1,13 @@
 package com.c1.donguri.main;
 
-import com.c1.donguri.scheduler.EmailDTO;
 import com.c1.donguri.scheduler.EmailJobDTO;
-import com.c1.donguri.scheduler.EmailScheduler;
-import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
-import com.c1.donguri.util.EmailSend;
-import com.c1.donguri.util.EnvLoader;
-import com.mchange.net.MailSender;
-import com.mchange.net.ProtocolException;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static com.mchange.net.SmtpUtils.sendMail;
 
 public class ReservationDAO {
     public static final ReservationDAO RESERVATION_DAO = new ReservationDAO();
@@ -81,15 +64,53 @@ public class ReservationDAO {
         return null;
     }
 
-//
-//    public boolean isOverdue(EmailJobDTO email) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//
-//        LocalDateTime scheduledTime = LocalDateTime.parse(email.getScheduled_date(), formatter);
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        return !scheduledTime.isAfter(now);
-//    }
+    public EmailJobDTO getReservationById(String reservationId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT r.reservation_id," +
+                "       r.recipient_email," +
+                "       r.scheduled_date," +
+                "       e.subject," +
+                "       e.content," +
+                "       r.is_done" +
+                "FROM reservation r" +
+                "         JOIN email_content e ON r.email_content_id = e.email_content_id" +
+                "WHERE r.reservation_id = ? ";
+
+
+        try {
+
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, reservationId);
+            rs = pstmt.executeQuery();
+
+            EmailJobDTO emailJob = null;
+
+            while (rs.next()) {
+                emailJob = new EmailJobDTO(
+                        rs.getString("reservation_id"),
+                        rs.getString("recipient_email"),
+                        rs.getTimestamp("scheduled_date"),
+                        rs.getString("subject"),
+                        rs.getString("content"),
+                        rs.getString("is_done")
+                );
+            }
+
+            return emailJob;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+
+        return null;
+    }
+
 
     public void updateResult(String reservationId, boolean success, String errorMessage) {
         Connection con = null;
@@ -111,51 +132,48 @@ public class ReservationDAO {
             }
 
             //  2. send_Log 업데이트
-            String sql2 = "UPDATE send_log SET status = ?, error_message = ? WHERE reservation_id = ?";
+            String sql2 = "INSERT INTO send_log "
+                    + "(reservation_id, status, error_message, sent_at) "
+                    + "VALUES (?, ?, ?, SYSDATE)";
             pstmt2 = con.prepareStatement(sql2);
+            pstmt2.setString(1, reservationId);
+
 
             if (success) {
-                pstmt2.setString(1, "SUCCESS");
-                pstmt2.setString(2, null);
+                pstmt2.setString(2, "SUCCESS");
+                pstmt2.setString(3, null);
             } else {
-                pstmt2.setString(1, "FAIL");
-                pstmt2.setString(2, errorMessage);
+                pstmt2.setString(2, "FAIL");
+                pstmt2.setString(3, errorMessage);
             }
-            pstmt2.setString(3, reservationId);
             pstmt2.executeUpdate();
+
+            con.commit();
 
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            DBManager.DB_MANAGER.close(con, pstmt1, null);
+
             try {
-                pstmt2.close();
+                if (con != null) {
+                    con.rollback();     // 실패 시 롤백
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        } finally {
+            try {
+                if (pstmt2 != null) {
+                    pstmt2.close();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            DBManager.DB_MANAGER.close(con, pstmt1, null);
         }
     }
 
-
-    public void sendReservationEmail(ArrayList<EmailJobDTO> emailJobList) {
-
-
-//        for (EmailJobDTO email : emailJobList) {
-//            if (isOverdue(email)) {
-//                EmailSend.EMAIL_SEND.send(
-//                        email.getRecipientEmail(),
-//                        email.getSubject(),
-//                        email.getContent()
-//                );
-//                updateDone(email.getReservationId());
-//            } else {
-//                EmailScheduler.enrollJob();
-//            }
-
-    }
-
-    //
 
 }
 

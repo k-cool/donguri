@@ -1,6 +1,8 @@
 package com.c1.donguri.scheduler;
 
 import com.c1.donguri.util.DBManager;
+import com.c1.donguri.util.EmailSend;
+import com.c1.donguri.util.EnvLoader;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class SentMailDAO {
+    public static final SentMailDAO SENT_MAIL = new SentMailDAO();
+
+    private SentMailDAO() {
+    }
+
+
     public ArrayList<SentMailDTO> getSuccessSentMails(String keyword) {
         ArrayList<SentMailDTO> sentMails = new ArrayList<>();
         Connection con = null;

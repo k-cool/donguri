@@ -28,7 +28,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class EmailDTO {
+public class _EmailDTO {
     //    private byte emailContentId;
     private String emailContentId;
     private String templateId;
