@@ -23,11 +23,17 @@ public class DBManager {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         System.out.println("사용할 DB_URL: " + envMap.get("DB_URL"));
 
-        String walletPath = getClass()
-                .getClassLoader()
-                .getResource("Wallet")
-                .getPath();
-        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
+        /*
+           추후에 Oracle Cloud와 연동하여 사용할 경우 활성화 시키기
+           - resources/Wallet 경로로 다운받은 월렛 파일 추가 필요
+        */
+//        String walletPath = getClass()
+//                .getClassLoader()
+//                .getResource("Wallet")
+//                .getPath();
+//        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
+
+        String url = envMap.get("DB_URL");
         String user = envMap.get("DB_USER");
         String password = envMap.get("DB_PASSWORD");
 
