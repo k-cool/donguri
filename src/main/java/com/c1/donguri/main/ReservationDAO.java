@@ -28,7 +28,7 @@ public class ReservationDAO {
                 "FROM reservation r\n" +
                 "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
                 "WHERE r.is_done = 'N'\n" +
-                "ORDER BY r.scheduled_date ASC";
+                "ORDER BY r.scheduled_date";
 
 
         try {
