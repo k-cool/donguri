@@ -16,24 +16,26 @@ public class DBManager {
 
 
     private DBManager() {
-        this.envMap = EnvLoader.loadEnv(".env");
+        envMap = EnvLoader.loadEnv(".env");
     }
 
-    
+
     public Connection getConnection() throws ClassNotFoundException, SQLException {
-        String driver = "com.p6spy.engine.spy.P6SpyDriver";
+        System.out.println("사용할 DB_URL: " + envMap.get("DB_URL"));
 
-        // 일반적인 연결방식
-//        String url = "jdbc:p6spy:oracle:thin:@10.1.82.127:1521:XE";
-//        String user = "c##sw1004";
-//        String password = "sw1004";
-
-        System.out.println("WOWOWOWOWO: " + envMap.get("DB_URL"));
-
-        String url = envMap.get("DB_URL");
+        String walletPath = getClass()
+                .getClassLoader()
+                .getResource("Wallet")
+                .getPath();
+        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
         String user = envMap.get("DB_USER");
         String password = envMap.get("DB_PASSWORD");
-        Class.forName(driver);
+
+        // 1. Oracle 드라이버 먼저 강제 로딩
+        Class.forName("oracle.jdbc.OracleDriver");
+
+        // 2. 그 다음 P6Spy 로딩
+        Class.forName("com.p6spy.engine.spy.P6SpyDriver");
 
         return DriverManager.getConnection(url, user, password);
     }

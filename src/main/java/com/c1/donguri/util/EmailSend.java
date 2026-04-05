@@ -15,7 +15,7 @@ public class EmailSend {
     public static Map<String, String> envMap;
 
     private EmailSend() {
-        this.envMap = EnvLoader.loadEnv(".env");
+        envMap = EnvLoader.loadEnv(".env");
     }
 
     /*
@@ -26,8 +26,6 @@ public class EmailSend {
         - content       : 엽서 내용
     */
     public void send(String receiverEmail, String title, String content) {
-        System.out.println("=== 실제 SMTP 발송 시도 ===" + receiverEmail);
-
         Properties props = new Properties();
 
         props.put("mail.smtp.host", envMap.get("SMTP_HOST"));
@@ -35,17 +33,16 @@ public class EmailSend {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(envMap.get("SMTP_EMAIL"), envMap.get("SMTP_PASSWORD"));
-            }
-        });
-
-        MimeMessage message = new MimeMessage(session);
-
-        // 실제 발송자
         try {
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(envMap.get("SMTP_EMAIL"), envMap.get("SMTP_PASSWORD"));
+                }
+            });
+
+            MimeMessage message = new MimeMessage(session);
+
             message.setFrom(new InternetAddress("noreply@donguri.com"));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
 
@@ -54,10 +51,12 @@ public class EmailSend {
             message.setText(content, "UTF-8");
 
             Transport.send(message);
+
+            System.out.println("이메일 전송 성공: " + receiverEmail);
         } catch (MessagingException e) {
+            System.out.println("이메일 전송 실패: " + receiverEmail);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-        // 수신자
     }
 }

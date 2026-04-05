@@ -23,7 +23,7 @@
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-        <property name="TNSADMIN_DIR" value="C:\Users\soldesk\Desktop\sw\donguri\Wallet_X2778VGMPL6KCV10" />
+        <property name="TNSADMIN_DIR" value="$PROJECT_DIR$/../Wallet_X2778VGMPL6KCV10" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>

@@ -17,10 +17,9 @@ public class S3Uploader {
 
     private final S3Client s3Client;
     private static Map<String, String> envMap;
-
-
+    
     public S3Uploader() {
-        this.envMap = EnvLoader.loadEnv(".env");
+        envMap = EnvLoader.loadEnv(".env");
 
         AwsBasicCredentials credentials = AwsBasicCredentials.create(
                 envMap.get("AWS_S3_ACCESS_KEY"),
