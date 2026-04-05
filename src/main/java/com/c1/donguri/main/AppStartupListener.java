@@ -41,9 +41,8 @@ public class AppStartupListener implements ServletContextListener {
 
             EmailJobDTO emailJob = undoneReservations.get(i);
 
-            System.out.println("=== 이메일 예약 데이터 ===");
-            System.out.println("RESERVATION_ID: " + emailJob.getReservationId());
-            System.out.println("SCHEDULED_DATE: " + emailJob.getScheduledDate());
+            System.out.println("=== 이메일 예약 ===");
+            System.out.println("DATA: " + emailJob.getReservationId() + " / " + emailJob.getScheduledDate());
 
             LocalDateTime scheduledTime = emailJob.getScheduledDate().toInstant()
                     .atZone(ZoneId.systemDefault())

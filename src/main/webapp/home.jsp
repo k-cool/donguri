@@ -18,5 +18,7 @@
 </c:forEach>
 
 
+<button onclick="location.href='omikuji'">omikuji</button>
+
 </body>
 </html>
