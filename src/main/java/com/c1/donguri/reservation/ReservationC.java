@@ -33,6 +33,16 @@ public class ReservationC extends HttpServlet {
 
             request.getRequestDispatcher("jsp/reservation/detail.jsp")
                     .forward(request, response);
+
+        } else if ("edit".equals(action)) {
+
+            String id = request.getParameter("id");
+
+            ReservationDTO r = ReservationDAO.RESERVATION_DAO.getOne(id);
+            request.setAttribute("r", r);
+
+            request.getRequestDispatcher("jsp/reservation/reservation_edit.jsp").forward(request, response);
+
         } else if ("delete".equals(action)) {
             String id = request.getParameter("id");
 
@@ -45,15 +55,13 @@ public class ReservationC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
 
-
         if ("confirm".equals(action)) {
-            InsertReservationDTO ir = new InsertReservationDTO();
 
+            InsertReservationDTO ir = new InsertReservationDTO();
             ir.setFromId(request.getParameter("fromId"));
             ir.setRecipientEmail(request.getParameter("recipientEmail"));
             ir.setSubject(request.getParameter("subject"));
@@ -68,13 +76,35 @@ public class ReservationC extends HttpServlet {
         } else if ("insert".equals(action)) {
 
             InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
-
             if (ir != null) {
                 ReservationDAO.RESERVATION_DAO.insert(request);
                 session.removeAttribute("insertReservation");
             }
-
             response.sendRedirect("reservation?action=list");
+
+        } else if ("update".equals(action)) {
+
+            ReservationDTO r = new ReservationDTO();
+
+            r.setReservationId(request.getParameter("id")); // hidden으로 넘긴 id
+            r.setRecipientEmail(request.getParameter("recipientEmail"));
+            r.setSubject(request.getParameter("subject"));
+            r.setContent(request.getParameter("content"));
+            r.setScheduledDate(request.getParameter("scheduledDate"));
+            r.setTemplateId(request.getParameter("templateId"));
+            r.setBgm(request.getParameter("bgmUrl"));
+
+
+            int result = ReservationDAO.RESERVATION_DAO.update(r);
+
+            if (result > 0) {
+
+                response.sendRedirect("reservation?action=detail&id=" + r.getReservationId());
+            } else {
+
+                response.sendRedirect("reservation?action=list");
+            }
         }
     }
+
 }

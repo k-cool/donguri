@@ -149,7 +149,7 @@
 
         <div class="form-row">
             <label>닉네임</label>
-            <input name="fromId" value="${r.fromId}" placeholder="닉네임 입력" required>
+            <input name="fromId" value="${r.fromId != null ? r.fromId : '도토리'}" placeholder="닉네임 입력" readonly style="background-color: #f5f5f5;">
         </div>
 
         <div class="form-row">
@@ -177,14 +177,15 @@
                 <div id="scheduledWrapper">📅</div>
                 <div id="selectedDateDisplay" class="selected-date">${r.scheduledDate}</div>
 
-                <input type="text" id="scheduledDate" name="scheduledDate" value="${r.scheduledDate}" style="display:none;" required>
+                <input type="text" id="scheduledDate" name="scheduledDate" value="${r.scheduledDate}"
+                       style="display:none;" required>
             </div>
         </div>
 
         <div class="form-row">
             <label>템플릿</label>
             <select name="templateId">
-                <option value="1" ${r.templateId == '1' ? 'selected' : ''}>기본</option>
+                <option value="1" ${r.templateId == null || r.templateId == '1' ? 'selected' : ''}>기본</option>
                 <option value="2" ${r.templateId == '2' ? 'selected' : ''}>감성</option>
                 <option value="3" ${r.templateId == '3' ? 'selected' : ''}>생일</option>
             </select>
@@ -193,13 +194,22 @@
         <div class="form-row">
             <label>BGM</label>
             <select name="bgmUrl">
-                <option value="none" ${r.bgmUrl == 'none' ? 'selected' : ''}>없음</option>
-                <option value="piano" ${r.bgmUrl == 'piano' ? 'selected' : ''}>피아노</option>
-                <option value="lofi" ${r.bgmUrl == 'lofi' ? 'selected' : ''}>Lo-fi</option>
+                <option value="none" ${r.bgm == null || r.bgm == 'none' ? 'selected' : ''}>없음</option>
+                <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
+                <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
             </select>
         </div>
 
-        <button type="submit">💌 수정하기</button>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+            <button type="submit">💌 수정 완료</button>
+            <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
+               style="background: #a6a6a6;">취소</a>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <a href="reservation?action=list" style="color: #8e6546; text-decoration: underline; font-size: 0.9em;">📬 전체
+                목록으로 돌아가기</a>
+        </div>
     </form>
 
     <a href="reservation?action=list" class="link-btn">📬 목록 보기</a>

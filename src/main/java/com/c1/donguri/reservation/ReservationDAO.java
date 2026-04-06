@@ -200,10 +200,13 @@ public class ReservationDAO {
 
     public ReservationDTO getOne(String id) {
         String sql = "SELECT r.reservation_id,\n" +
+                "       r.from_id,\n" +
                 "       r.recipient_email,\n" +
                 "       r.scheduled_date,\n" +
                 "       e.subject,\n" +
-                "       e.content\n" +
+                "       e.content,\n" +
+                "       e.template_id,\n" +
+                "       e.bgm_url\n" +
                 "FROM reservation r\n" +
                 "JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
                 "WHERE r.reservation_id=?";
@@ -216,9 +219,12 @@ public class ReservationDAO {
             if (rs.next()) {
                 ReservationDTO r = new ReservationDTO();
                 r.setReservationId(rs.getString("reservation_id"));
+                r.setFromId(rs.getString("from_id"));
                 r.setRecipientEmail(rs.getString("recipient_email"));
                 r.setSubject(rs.getString("subject"));
                 r.setContent(rs.getString("content"));
+                r.setTemplateId(rs.getString("template_id"));
+                r.setBgm(rs.getString("bgm_url"));
                 r.setScheduledDate(rs.getString("scheduled_date"));
                 return r;
             }
@@ -227,6 +233,70 @@ public class ReservationDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int update(ReservationDTO r) {
+        Connection con = null;
+        PreparedStatement ps = null;
+
+
+        String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID = ?";
+
+
+        String updateEmailSql = "UPDATE EMAIL_CONTENT SET SUBJECT = ?, CONTENT = ?, TEMPLATE_ID = ?, BGM_URL = ? WHERE EMAIL_CONTENT_ID = ?";
+        String updateResSql = "UPDATE RESERVATION SET RECIPIENT_EMAIL = ?, SCHEDULED_DATE = TO_DATE(?, 'YYYY-MM-DD HH24:MI') WHERE RESERVATION_ID = ?";
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            con.setAutoCommit(false);
+
+            String emailContentId = null;
+            // 1. EMAIL_CONTENT_ID 조회
+            ps = con.prepareStatement(getEmailContentIdSql);
+            ps.setString(1, r.getReservationId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                emailContentId = rs.getString("EMAIL_CONTENT_ID");
+            }
+            ps.close();
+
+            if (emailContentId != null) {
+                // 2. EMAIL_CONTENT 테이블 수정
+                ps = con.prepareStatement(updateEmailSql);
+                ps.setString(1, r.getSubject());
+                ps.setString(2, r.getContent());
+                ps.setString(3, r.getTemplateId());
+                ps.setString(4, r.getBgm());
+                ps.setString(5, emailContentId);
+                int res1 = ps.executeUpdate();
+                ps.close();
+
+                // 3. RESERVATION 테이블 수정
+                ps = con.prepareStatement(updateResSql);
+                ps.setString(1, r.getRecipientEmail());
+                ps.setString(2, r.getScheduledDate());
+                ps.setString(3, r.getReservationId());
+                int res2 = ps.executeUpdate();
+
+                if (res1 > 0 && res2 > 0) {
+                    con.commit(); // 둘 다 성공 시 커밋
+                    System.out.println("수정 트랜잭션 성공");
+                    return 1;
+                }
+            }
+        } catch (Exception e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, ps, null);
+        }
+        return 0;
     }
 }
 
