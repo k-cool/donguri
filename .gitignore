@@ -326,4 +326,4 @@ $RECYCLE.BIN/
 !/src/main/webapp/WEB-INF/lib/osdt_cert.jar
 
 # intellij 관련
-/.idea
+.idea/
