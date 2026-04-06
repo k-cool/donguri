@@ -17,21 +17,21 @@ public class ReservationC extends HttpServlet {
         if (action == null || action.equals("list")) {
             List<ReservationDTO> list = ReservationDAO.RESERVATION_DAO.getAll();
             request.setAttribute("list", list);
-            request.getRequestDispatcher("reservation/list.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/reservation/list.jsp").forward(request, response);
 
         } else if ("write".equals(action)) {
-            request.getRequestDispatcher("reservation/write.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/reservation/write.jsp").forward(request, response);
 
         } else if ("main".equals(action)) {
 
-            request.getRequestDispatcher("reservation/reservation_main.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
         } else if ("detail".equals(action)) {
             String id = request.getParameter("id");
 
             ReservationDTO r = ReservationDAO.RESERVATION_DAO.getOne(id); // 하나 조회
             request.setAttribute("r", r);
 
-            request.getRequestDispatcher("reservation/detail.jsp")
+            request.getRequestDispatcher("jsp/reservation/detail.jsp")
                     .forward(request, response);
         } else if ("delete".equals(action)) {
             String id = request.getParameter("id");
@@ -63,7 +63,7 @@ public class ReservationC extends HttpServlet {
             ir.setScheduledDate(request.getParameter("scheduledDate"));
 
             session.setAttribute("insertReservation", ir);
-            request.getRequestDispatcher("reservation/reservation_confirm.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/reservation/reservation_confirm.jsp").forward(request, response);
 
         } else if ("insert".equals(action)) {
 
