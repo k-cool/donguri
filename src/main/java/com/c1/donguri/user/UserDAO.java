@@ -110,6 +110,22 @@ public class UserDAO {
         }
     }
 
+    /**
+     * 로그인 처리 - 세션에 사용자 정보 저장
+     * @param request HTTP 요청 객체 (email, password 파라미터 필요)
+     * @return 로그인 성공 시 true, 실패 시 false
+     * 
+     * [세션 정보]
+     * - 속성명: "user"
+     * - 저장값: UserDTO 객체 (email, nickname, profileImgUrl)
+     * - 만료시간: 60초 (1분)
+     * 
+     * [사용법]
+     * UserDAO.USER_DAO.login(request);
+     * if (UserDAO.USER_DAO.loginCheck(request)) {
+     *     // 로그인 성공 처리
+     * }
+     */
     public boolean login(HttpServletRequest request) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -134,10 +150,12 @@ public class UserDAO {
                 // 3. DB의 스네이크(_) 명칭을 DTO의 카멜케이스 세터에 담기 (핵심!)
                 user.setProfileImgUrl(rs.getString("profile_img_url"));
 
-                // 4. 세션에 "user"라는 이름으로 저장 (JSP에서 sessionScope.user로 접근)
+                // 4. 세션에 "user"라는 이름으로 UserDTO 객체 저장
+                //    - JSP에서 ${sessionScope.user} 또는 ${user}로 접근 가능
+                //    - 다른 컨트롤러에서 session.getAttribute("user")로 가져올 수 있음
                 HttpSession session = request.getSession();
                 request.getSession().setAttribute("user", user);
-                session.setMaxInactiveInterval(60);
+                session.setMaxInactiveInterval(60); // 60초(1분) 후 자동 만료
 
                 return true;
             }
@@ -149,24 +167,55 @@ public class UserDAO {
         return false;
     }
 
+    /**
+     * 로그인 상태 확인 - 세션에 사용자 정보가 있는지 검사
+     * @param request HTTP 요청 객체
+     * @return 로그인되어 있으면 true, 아니면 false
+     * 
+     * [세션 확인 방법]
+     * 1. session.getAttribute("user")로 UserDTO 객체 가져오기
+     * 2. 객체가 null이 아니면 로그인 상태
+     * 
+     * [사용법]
+     * if (UserDAO.USER_DAO.loginCheck(request)) {
+     *     // 로그인된 사용자만 접근 가능한 기능
+     * } else {
+     *     // 로그인 페이지로 리다이렉트
+     * }
+     */
     public boolean loginCheck(HttpServletRequest request) {
+        // 세션에서 "user" 속성으로 저장된 UserDTO 객체 가져오기
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
 
         if (user != null) {
+            // 로그인 상태: 헤더에 로그인 성공 페이지 표시
             request.setAttribute("loginPage", "user/login_ok.jsp");
             return true;
         } else {
+            // 비로그인 상태: 헤더에 로그인 페이지 표시
             request.setAttribute("loginPage", "user/login.jsp");
             return false;
         }
     }
 
+    /**
+     * 로그아웃 처리 - 세션 전체 삭제
+     * @param request HTTP 요청 객체
+     * 
+     * [세션 삭제 방법]
+     * - session.invalidate()로 세션 자체를 완전히 삭제
+     * - 세션에 저장된 모든 데이터(user 등)가 함께 삭제됨
+     * 
+     * [사용법]
+     * UserDAO.USER_DAO.logout(request);
+     * response.sendRedirect("main");
+     */
     public void logout(HttpServletRequest request) {
-        // 1. 기존 세션이 있는지 확인 (없으면 새로 만들지 않고 null 반환)
+        // 기존 세션이 있는지 확인 (없으면 새로 만들지 않고 null 반환)
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            // 2. 세션 바구니 자체를 제거하여 모든 데이터(user 등)를 한 번에 삭제
+            // 세션 바구니 자체를 제거하여 모든 데이터(user 등)를 한 번에 삭제
             session.invalidate();
             System.out.println("Logout: Session has been invalidated.");
         }

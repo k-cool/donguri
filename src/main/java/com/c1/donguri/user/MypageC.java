@@ -15,9 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-// 파일 업로드 처리를 위한 어노테이션 추가
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10) // 최대 10MB
-// JS에서 요청하는 주소들을 배열 형태로 모두 등록
 @WebServlet({"/mypage", "/update-nickname", "/update-profile-img"})
 public class MypageC extends HttpServlet {
 
