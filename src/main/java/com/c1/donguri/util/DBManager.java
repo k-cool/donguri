@@ -1,5 +1,7 @@
 package com.c1.donguri.util;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.Map;
 
@@ -16,19 +18,36 @@ public class DBManager {
 
 
     private DBManager() {
-        this.envMap = EnvLoader.loadEnv(".env");
+        envMap = EnvLoader.loadEnv(".env");
     }
 
 
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        String driver = "com.p6spy.engine.spy.P6SpyDriver";
+    public Connection getConnection() throws ClassNotFoundException, SQLException, URISyntaxException {
+        System.out.println("사용할 DB_URL: " + envMap.get("DB_URL"));
 
-        System.out.println("WOWOWOWOWO: " + envMap.get("DB_URL"));
+        /*
+           추후에 Oracle Cloud와 연동하여 사용할 경우 활성화 시키기
+           - resources/Wallet 경로로 다운받은 월렛 파일 추가 필요
+        */
+        String walletPath = Paths.get(
+                getClass()
+                        .getClassLoader()
+                        .getResource("Wallet")
+                        .toURI()
+        ).toString().replace("\\", "/");
 
-        String url = envMap.get("DB_URL");
+        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
+
+        System.out.println(url);
+//        String url = envMap.get("DB_URL");
         String user = envMap.get("DB_USER");
         String password = envMap.get("DB_PASSWORD");
-        Class.forName(driver);
+
+        // 1. Oracle 드라이버 먼저 강제 로딩
+        Class.forName("oracle.jdbc.OracleDriver");
+
+        // 2. 그 다음 P6Spy 로딩
+        Class.forName("com.p6spy.engine.spy.P6SpyDriver");
 
         return DriverManager.getConnection(url, user, password);
     }
@@ -44,9 +63,8 @@ public class DBManager {
                 ps.close();
             }
 
-            // connection을 재사용 하므로 닫으면 안된다.
             if (con != null) {
-                //  con.close();
+                con.close();
             }
 
         } catch (Exception e) {

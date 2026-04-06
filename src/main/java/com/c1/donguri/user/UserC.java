@@ -11,7 +11,7 @@ import java.io.IOException;
 public class UserC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        UserDAO.USER_DAO.getUserList(request);
+        UserDAO.USER_DAO.getAllUserList(request);
 
         request.setAttribute("content", "home.jsp");
 

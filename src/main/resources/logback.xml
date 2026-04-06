@@ -1,0 +1,16 @@
+<configuration>
+    <!-- Quartz 로그 끄기 -->
+    <logger name="org.quartz" level="WARN"/>
+
+    <!-- 전체 기본 로그 레벨 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+</configuration>
