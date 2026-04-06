@@ -298,5 +298,40 @@ public class ReservationDAO {
         }
         return 0;
     }
+
+
+    public ArrayList<TemplateDTO> getTemplateList(String userId) {
+        ArrayList<TemplateDTO> list = new ArrayList<>();
+        String sql = "SELECT t.template_id, u.nickname, t.name, t.type, t.body_html, t.cover_img_url, ut.created_at " +
+                "FROM user_template ut " +
+                "JOIN template t ON ut.template_id = t.template_id " +
+                "JOIN users u ON ut.user_id = u.user_id " +
+                "WHERE u.user_id = ? " +
+                "ORDER BY ut.created_at DESC";
+
+        try (Connection con = DBManager.DB_MANAGER.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    TemplateDTO dto = new TemplateDTO(
+                            rs.getString("template_id"),
+                            rs.getString("nickname"),
+                            rs.getString("name"),
+                            rs.getString("type"),
+                            rs.getString("body_html"),
+                            rs.getString("cover_img_url"),
+                            new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("created_at"))
+                    );
+                    list.add(dto);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
 

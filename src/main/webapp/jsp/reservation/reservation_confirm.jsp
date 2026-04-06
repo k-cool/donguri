@@ -71,13 +71,21 @@
     <div class="confirm-row"><label>내용:</label> <span>${insertReservation.content}</span></div>
     <div class="confirm-row"><label>예약 시간:</label> <span>${insertReservation.scheduledDate}</span></div>
 
-    <%-- 템플릿 표시 --%>
     <div class="confirm-row">
         <label>템플릿:</label>
         <span>
-            ${reservation_confirm.templateId == '1' ? '기본' :
-                    reservation_confirm.templateId == '2' ? '감성' : '생일'}
-        </span>
+
+        <c:forEach var="t" items="${templateList}">
+            <c:if test="${insertReservation.templateId == t.templateId}">
+                <strong>${t.templateName}</strong> (${t.type})
+
+
+                <div style="margin-top: 10px;">
+                    <img src="${t.coverImgUrl}" width="120" style="border-radius: 5px; border: 1px solid #ddd;">
+                </div>
+            </c:if>
+        </c:forEach>
+    </span>
     </div>
 
     <%-- BGM 표시 --%>

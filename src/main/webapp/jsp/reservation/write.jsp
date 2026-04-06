@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>편지 예약 작성</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-
         body::after {
             content: "";
             position: fixed;
@@ -14,7 +14,7 @@
             width: 100%;
             height: 100%;
             background: url('https://cdn-icons-png.flaticon.com/128/1202/1202088.png') repeat;
-            opacity: 0.15; /* 진하게 */
+            opacity: 0.15;
             z-index: -1;
         }
 
@@ -36,7 +36,7 @@
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center; /* 전체 가운데 정렬 */
+            text-align: center;
         }
 
         .form-container h2 {
@@ -68,53 +68,10 @@
             box-sizing: border-box;
         }
 
-        #scheduledWrapper {
-            display: inline-flex;
-            align-items: center;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            padding: 5px;
-            border-radius: 4px;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
-
-        #selectedDateDisplay {
-            font-size: 14px;
-            color: #333;
-            margin-top: 5px;
-        }
-
-        button, .link-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            background: #8e6546;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            margin-top: 10px;
-            display: inline-block;
-            transition: background 0.2s;
-        }
-
-        button:hover, .link-btn:hover {
-            background: #bf8c72;
-        }
-
-        /*달력 위치꾸민거임*/
-        .form-row {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
-        }
-
         .date-picker-container {
             display: flex;
             align-items: center;
-            gap: 10px; /* 아이콘과 날짜 사이 간격 */
+            gap: 10px;
             cursor: pointer;
         }
 
@@ -135,6 +92,37 @@
             font-size: 1em;
             color: #333;
         }
+
+        button, .link-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #8e6546;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        button:hover, .link-btn:hover {
+            background: #bf8c72;
+        }
+
+        #templatePreview {
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        #previewImg {
+            width: 150px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -143,22 +131,12 @@
     <h2>🌰 도토리 예약바구니 🌰</h2>
 
     <form action="reservation" method="post">
-        <!-- 🔥 핵심 추가 -->
         <input type="hidden" name="action" value="confirm">
 
         <div class="form-row">
             <label>닉네임</label>
             <input name="fromId" value="${sessionScope.user.nickname}" placeholder="닉네임 입력" required>
         </div>
-
-        <%--        <div class="form-row">--%>
-        <%--            <label>보내는 이메일</label>--%>
-        <%--            <input name="senderEmail" placeholder="영어만 입력 가능" required--%>
-        <%--                   oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g,'')">--%>
-        <%--            <small style="color: gray; font-size: 0.8em;">--%>
-        <%--                영어, 숫자, @ . _ - 만 입력 가능합니다.--%>
-        <%--            </small>--%>
-        <%--        </div>--%>
 
         <div class="form-row">
             <label>받는 이메일</label>
@@ -184,19 +162,25 @@
             <div class="date-picker-container">
                 <div id="scheduledWrapper">📅</div>
                 <div id="selectedDateDisplay" class="selected-date">선택된 시간 없음</div>
-
-
                 <input type="text" id="scheduledDate" name="scheduledDate" style="display:none;" required>
             </div>
         </div>
 
         <div class="form-row">
             <label>템플릿</label>
-            <select name="templateId">
-                <option value="1">기본</option>
-                <option value="2">감성</option>
-                <option value="3">생일</option>
+            <select name="templateId" id="templateSelect"
+                    onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">
+                <option value="">-- 보관함 템플릿 선택 --</option>
+                <c:forEach var="t" items="${templateList}">
+                    <option value="${t.templateId}" data-img="${t.coverImgUrl}">
+                        [${t.type}] ${t.templateName}
+                    </option>
+                </c:forEach>
             </select>
+
+            <div id="templatePreview">
+                <img id="previewImg" src="" alt="템플릿 미리보기">
+            </div>
         </div>
 
         <div class="form-row">
@@ -215,5 +199,6 @@
 </div>
 
 <script src="js/reservation-flatpickr.js"></script>
+<script src="js/reservation-template.js"></script>
 </body>
 </html>
