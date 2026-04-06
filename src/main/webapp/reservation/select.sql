@@ -26,6 +26,23 @@ FROM email_content e
          JOIN template t ON e.template_id = t.template_id
 WHERE u.email = 'user1@test.com';
 
+SELECT *
+FROM TEMPLATE;
+
+
+SELECT *
+FROM EMAIL_CONTENT;
+
+INSERT INTO EMAIL_CONTENT(TEMPLATE_ID, SENDER_ID, SUBJECT, CONTENT, COVER_IMG_URL, BGM_URL)
+VALUES ('44B0AE7E5F7A4F25B71913BB86B6E17D', '118D6CAAC61C48B9B6A666E4FB021C93', '엽서 제먹', '내용', '이미 유알앨', '비지엠 유알앨');
+
+--
+-- INSERT INTO RESERVATION(FROM_ID, EMAIL_CONTENT_ID, RECIPIENT_EMAIL, SCHEDULED_DATE)
+-- VALUES ();
+
+SELECT *
+FROM EMAIL_CONTENT;
+
 
 -- 3. 발송 대기 중인 예약 목록 조회 (reservation + email_content JOIN)
 -- 아직 발송되지 않은('N') 예약 건을 발송 예정일 순으로 조회합니다.

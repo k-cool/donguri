@@ -13,9 +13,10 @@
 
     <hr>
 
-    <p>${r.emailMessage}</p>
+    <p>${r.content}</p>
 
     <br>
+    <a href="reservation?action=edit&id=${r.reservationId}">수정하기</a> |
     <a href="reservation?action=list">목록으로</a>
 </div>
 </body>
