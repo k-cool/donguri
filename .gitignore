@@ -317,4 +317,13 @@ $RECYCLE.BIN/
 
 # env
 **/.env
-/WALLET*
+**/.env*
+
+# 오라클 클라우드 관련
+**/Wallet*
+!/src/main/webapp/WEB-INF/lib/oraclepki.jar
+!/src/main/webapp/WEB-INF/lib/osdt_core.jar
+!/src/main/webapp/WEB-INF/lib/osdt_cert.jar
+
+# intellij 관련
+/.idea
