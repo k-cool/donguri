@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link href="css/signup.css" rel="stylesheet">
+<script src="js/signup.js"></script>
 
 <div class="join-container">
     <h2>회원가입</h2>
@@ -10,11 +11,12 @@
             <label for="email">이메일 (ID로 사용)</label>
             <div class="input-flex">
                 <input type="email" id="email" name="email" required placeholder="example@email.com">
-                <button type="button" id="sendEmailBtn" class="btn-secondary">인증 요청</button>
+                <button type="button" id="sendEmailBtn" class="btn-secondary">중복 확인</button>
             </div>
+            <div id="emailMessage" class="message"></div>
         </div>
 
-        <div class="form-group" id="emailConfirmArea">
+        <div class="form-group" id="emailConfirmArea" style="display: none;">
             <label for="emailConfirmCode">인증 코드</label>
             <div class="input-flex">
                 <input type="text" id="emailConfirmCode" name="emailConfirmCode" placeholder="인증번호 6자리">

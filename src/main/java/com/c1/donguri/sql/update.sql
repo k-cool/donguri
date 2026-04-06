@@ -3,7 +3,7 @@
 */
 
 UPDATE RESERVATION
-SET RECIPIENT_EMAIL = 'ksw3721@gmail.com';
+SET RECIPIENT_EMAIL = 'lhm6507@gmail.com';
 
 /*
     이메일 수령 시간을 원하는 시간으로 수정

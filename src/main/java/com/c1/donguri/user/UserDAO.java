@@ -2,6 +2,7 @@ package com.c1.donguri.user;
 
 import com.c1.donguri.util.DBManager;
 import com.c1.donguri.util.S3Uploader;
+import com.c1.donguri.util.EmailSend;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Random;
 
 public class UserDAO {
     public static final UserDAO USER_DAO = new UserDAO();
@@ -384,5 +386,32 @@ public class UserDAO {
         }
         
         return false;
+    }
+
+    // 이메일 중복 확인 메소드
+    public boolean checkEmailExists(String email) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // 중복이면 true, 아니면 false
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+        
+        return false; // 에러 발생 시 false 반환
     }
 }
