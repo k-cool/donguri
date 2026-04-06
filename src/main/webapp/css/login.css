@@ -1,0 +1,84 @@
+/* 로그인 컨테이너 중앙 정렬 및 디자인 */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* 폼 그룹 간격 */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* 입력창 스타일 */
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* 패딩 포함 너비 계산 */
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #ff6b6b; /* 포인트 컬러 */
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+}
+
+/* 버튼 그룹 및 개별 버튼 스타일 */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #ee5253;
+}
+
+/* 회원가입 링크 버튼 (글자 형태) */
+.btn-signup-link {
+    background: none;
+    border: none;
+    color: #888;
+    text-decoration: underline;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-signup-link:hover {
+    color: #555;
+}

@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #f0f4c3;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Malgun Gothic', sans-serif;
+}
+
+#tree {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 150px;
+    z-index: 1;
+}
+
+#acorn {
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    font-size: 40px;
+    opacity: 0;
+    z-index: 15;
+    transition: transform 0.5s ease-in-out; /* 커지는 효과를 위한 transition */
+}
+
+/* 도토리가 도착했을 때 커지는 효과 */
+#acorn.active {
+    transform: scale(2);
+}
+
+#squirrel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+
+@keyframes hop {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-60px);
+    }
+}
+
+.hopping {
+    animation: hop 0.5s infinite ease-in-out;
+}
+
+/* --- 모달 스타일 추가 --- */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+#memo-modal {
+    background-color: #fff9c4; /* 메모지 색상 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    border-left: 10px solid #fbc02d;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+}
+
+#memo-modal h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #5d4037;
+}
+
+#memo-modal p {
+    line-height: 1.6;
+    color: #333;
+}
+
+#guide-text {
+    position: fixed;
+    bottom: 30%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.close-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 5px 10px;
+    background: #5d4037;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
