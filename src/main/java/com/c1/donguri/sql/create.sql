@@ -9,6 +9,7 @@ CREATE TABLE users
     nickname        VARCHAR2(10 char) NOT NULL UNIQUE,
     password        VARCHAR2(100)     NOT NULL,
     profile_img_url VARCHAR2(500),
+    omikuji_at      DATE,
     created_at      DATE        DEFAULT SYSDATE,
     updated_at      DATE        DEFAULT SYSDATE,
     is_deleted      VARCHAR2(1) DEFAULT 'N',
