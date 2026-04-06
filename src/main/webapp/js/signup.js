@@ -91,9 +91,57 @@ function sendVerificationCode() {
     });
 }
 
+// 닉네임 중복 확인 함수
+function checkNickname() {
+    const nickname = document.getElementById("nickname").value;
+    const messageDiv = document.getElementById("nicknameMessage");
+    
+    // 메시지 div가 없으면 생성
+    if (!messageDiv) {
+        const nicknameGroup = document.getElementById("nickname").closest(".form-group");
+        const newDiv = document.createElement("div");
+        newDiv.id = "nicknameMessage";
+        newDiv.className = "message";
+        nicknameGroup.appendChild(newDiv);
+    }
+    
+    const msgDiv = document.getElementById("nicknameMessage");
+    
+    if (!nickname) {
+        msgDiv.textContent = "닉네임을 입력해주세요.";
+        msgDiv.style.color = "red";
+        return;
+    }
+    
+    fetch("nickname-check", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "nickname=" + encodeURIComponent(nickname)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.exists) {
+            msgDiv.textContent = "이미 사용 중인 닉네임입니다.";
+            msgDiv.style.color = "red";
+        } else {
+            msgDiv.textContent = "사용 가능한 닉네임입니다.";
+            msgDiv.style.color = "green";
+        }
+    })
+    .catch(error => {
+        msgDiv.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
+        msgDiv.style.color = "red";
+    });
+}
+
 // 초기 이벤트 리스너 설정
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("sendEmailBtn").onclick = checkEmailDuplicate;
+    
+    // 닉네임 중복 확인 버튼 이벤트 리스너 추가
+    document.getElementById("checkNicknameBtn").onclick = checkNickname;
 
     // 인증 코드 확인 버튼 이벤트 리스너 추가
     document.getElementById("verifyCodeBtn").onclick = function () {
