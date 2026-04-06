@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,6 +19,17 @@
     </div>
 </div>
 
+<c:if test="${empty sessionScope.user}">
+    <div class="nav-menu">
+        <button type="button" class="btn-signup" onclick="location.href='signup-do'">
+            회원가입
+        </button>
+
+        <button type="button" class="btn-login" onclick="location.href='login'">
+            로그인
+        </button>
+    </div>
+</c:if>
 
 </body>
 </html>

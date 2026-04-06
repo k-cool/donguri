@@ -1,0 +1,54 @@
+/* 성공 메시지 컨테이너 */
+.success-container {
+    max-width: 500px;
+    margin: 80px auto;
+    padding: 50px 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center; /* 모든 요소 중앙 정렬 */
+    border: 1px solid #f1f3f5;
+}
+
+/* 제목 스타일 (축하 문구) */
+.success-container h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* 안내 문구 */
+.success-container p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* 버튼 영역 */
+.success-container .button-group {
+    display: flex;
+    justify-content: center;
+}
+
+/* 로그인 이동 버튼 */
+.success-container button {
+    width: 200px;
+    height: 55px;
+    background-color: #ff6b6b; /* 회원가입 버튼과 동일한 포인트 컬러 */
+    color: #fff;
+    border: none;
+    border-radius: 30px; /* 둥근 버튼 스타일 */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.success-container button:hover {
+    background-color: #ee5253;
+    transform: translateY(-2px); /* 살짝 떠오르는 효과 */
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
