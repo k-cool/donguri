@@ -118,3 +118,17 @@ input[type="file"] {
 .btn-cancel:hover {
     background-color: #f8f9fa;
 }
+n/* 메시지 스타일 */
+.message {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.message[style*="color: red"] {
+    color: #dc3545;
+}
+
+.message[style*="color: green"] {
+    color: #28a745;
+}
