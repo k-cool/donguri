@@ -2,10 +2,12 @@ package com.c1.donguri.template;
 
 import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
+import com.c1.donguri.util.QRGenerator;
 import com.c1.donguri.util.S3Uploader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,7 +81,7 @@ public class TemplateDAO {
 
         // TODO: 로그인 연결 이후 수정해주기
 //        String userId = loginUser.getUserId();
-        String userId = "7C00B4D005064FD9B3775F73B9DDC374";
+        String userId = "6483EC9A21894051A75A5D15EACE13D3";
 
         // 추가된 엽서는 내림차순(최신순)으로 정렬
         String sql = "SELECT T.* " + // 끝에 공백
@@ -136,7 +138,7 @@ public class TemplateDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM template WHERE template_id = HEXTORAW(?)";
+        String sql = "SELECT * FROM template WHERE template_id = ?";
         TemplateDTO templateDTO = null;
         ArrayList<TemplateDTO> templaeList = new ArrayList<>();
 
@@ -223,7 +225,81 @@ public class TemplateDAO {
             DBManager.DB_MANAGER.close(con, pstmt, null);
         }
     }
+
+    // QR코드로 템플릿 추가
+    public void addQRTemplate(HttpServletRequest request) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        S3Uploader s3Uploader = new S3Uploader();
+
+        try {
+            // 1. 컨트롤러에서 setAttribute로 담은 S3 URL 꺼내기
+            String s3Url = (String) request.getAttribute("qrUrl");
+            System.out.println("DEBUG - 꺼내온 qrUrl: " + s3Url);
+            String templateId = (String) request.getAttribute("templateId");
+
+            String name = request.getParameter("name");
+            String bodyHtml = request.getParameter("bodyHtml");
+            String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
+            
+            // 3. 커버 이미지 처리 (기존 로직 동일)
+            Part filePart = request.getPart("coverImgUrl");
+            String imgUrl = null;
+
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = "cover_img/template/" + UUID.randomUUID().toString();
+                imgUrl = s3Uploader.upload(filePart.getInputStream(), fileName, filePart.getContentType(), filePart.getSize());
+            }
+
+            // 4. SQL 실행 (qr_url 컬럼에 컨트롤러에서 보낸 s3Url을 바로 넣습니다)
+            String sql = "INSERT INTO TEMPLATE (template_id, name, body_html, type, cover_img_url, qr_url, created_at, updated_at) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
+
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, templateId);
+            pstmt.setString(2, name);
+            pstmt.setString(3, bodyHtml);
+            pstmt.setString(4, type);
+            pstmt.setString(5, imgUrl);
+            pstmt.setString(6, s3Url); // <--- 컨트롤러가 준 URL 사용
+
+            if (pstmt.executeUpdate() == 1) {
+                System.out.println("✅ " + type + " 템플릿 등록 성공!");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+
+
+    }
+
+    public boolean unlockTemplate(String userId, String templateId) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        // 유저와 템플릿을 연결해주는 테이블 (예: USER_TEMPLATE)
+        String sql = "INSERT INTO USER_TEMPLATE (user_id, template_id, created_at) VALUES (?, ?, SYSDATE)";
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, templateId);
+
+            return pstmt.executeUpdate() == 1;
+        } catch (Exception e) {
+            // 이미 해금된 경우(PK 중복 등) 에러가 날 수 있으니 적절히 처리
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+    }
 }
 
-// QR코드로 템플릿 추가
 
