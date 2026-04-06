@@ -16,6 +16,7 @@ public class OmikujiC extends HttpServlet {
 
         request.setAttribute("isOmikujiAvailable", isOmikujiAvailable);
 
+        System.out.println("isOmikujiAvailable: " + isOmikujiAvailable);
         request.setAttribute("content", "jsp/omikuji/omikuji.jsp");
 
         request.getRequestDispatcher("main.jsp").forward(request, response);
@@ -24,16 +25,6 @@ public class OmikujiC extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("application/json; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-
-        /*
-
-           reset sql
-
-           UPDATE USERS
-                SET OMIKUJI_AT = null
-                WHERE USER_ID = '4EB72BAF38F6D371E063835E000AADA2';
-
-        */
 
         // TODO: 로그인 연결작업후 수정하기
         String userId = "4EB72BAF38F6D371E063835E000AADA2";
