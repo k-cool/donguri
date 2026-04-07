@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>예약 내용 확인</title>
@@ -64,7 +65,7 @@
 <div class="confirm-container">
     <h2>📬 예약 내용 확인</h2>
 
-   
+
     <div class="confirm-row"><label>받는 이메일:</label> <span>${insertReservation.recipientEmail}</span></div>
     <div class="confirm-row"><label>제목:</label> <span>${insertReservation.subject}</span></div>
     <div class="confirm-row"><label>내용:</label> <span>${insertReservation.content}</span></div>
@@ -91,8 +92,8 @@
     <div class="confirm-row">
         <label>BGM:</label>
         <span>
-            ${reservation_confirm.bgm == 'none' ? '없음' :
-                    reservation_confirm.bgm == 'piano' ? '피아노' : 'Lo-fi'}
+            ${insertReservation.bgmUrl == 'none' ? '없음' :
+                    insertReservation.bgmUrl == 'piano' ? '피아노' : 'Lo-fi'}
         </span>
     </div>
 
