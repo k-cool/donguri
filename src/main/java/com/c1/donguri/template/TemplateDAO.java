@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -275,8 +277,6 @@ public class TemplateDAO {
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, null);
         }
-
-
     }
 
     // 유저가 QR코드 스캔으로 템플릿 해금
@@ -302,28 +302,97 @@ public class TemplateDAO {
         }
     }
 
-//    public boolean unlockTemplate(String userId, String templateId) {
-//        Connection con = null;
-//        PreparedStatement pstmt = null;
-//        // 유저와 템플릿을 연결해주는 테이블 (예: USER_TEMPLATE)
-//        String sql = "INSERT INTO USER_TEMPLATE (user_id, template_id, created_at) VALUES (HEXTORAW(?), HEXTORAW(?), SYSDATE)";
-//
-//        try {
-//            con = DBManager.DB_MANAGER.getConnection();
-//            pstmt = con.prepareStatement(sql);
-//
-//            pstmt.setString(1, userId.replace("-", ""));
-//            pstmt.setString(2, templateId.replace("-", ""));
-//
-//            return pstmt.executeUpdate() == 1;
-//        } catch (Exception e) {
-//            // 이미 해금된 경우(PK 중복 등) 에러가 날 수 있으니 적절히 처리
-//            e.printStackTrace();
-//            return false;
-//        } finally {
-//            DBManager.DB_MANAGER.close(con, pstmt, null);
-//        }
-//    }
+    // 관리자가 탬플릿 업데이트
+    public void updateTemplate(HttpServletRequest request) {
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        S3Uploader s3Uploader = new S3Uploader();
+
+        try {
+            String templateId = request.getParameter("templateId");
+            String name = request.getParameter("name");
+            String bodyHtml = request.getParameter("bodyHtml");
+
+            // 사진 수정 안 할 때를 대비한 기존 이미지 URL
+            String existingImgUrl = request.getParameter("existingImgUrl");
+
+            // 이미지 수정 여부 판별
+            Part filePart = request.getPart("coverImgUrl");
+            String imgUrl = existingImgUrl;
+
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = "cover_img/template/" + UUID.randomUUID().toString();
+                imgUrl = s3Uploader.upload(filePart.getInputStream(), fileName, filePart.getContentType(), filePart.getSize());
+                System.out.println(">>> [UPDATE] 새 이미지 업로드 완료: " + imgUrl);
+            }
+
+            String sql = "UPDATE TEMPLATE SET name = ?, body_html = ?, cover_img_url = ?, " +
+                    "updated_at = SYSDATE WHERE template_id = ?";
+
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, name);
+            pstmt.setString(2, bodyHtml);
+            pstmt.setString(3, imgUrl);
+            pstmt.setString(4, templateId);
+
+            if (pstmt.executeUpdate() == 1) {
+                System.out.println("✅ 템플릿 수정 성공! (ID: " + templateId + ")");
+            }
+
+        } catch (Exception e) {
+            System.err.println("!!! 템플릿 수정 중 에러 발생 !!!");
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+
+    }
+
+    // 관리자가 탬플릿 삭제
+    public void deleteTemplate(HttpServletRequest request) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            String templateId = request.getParameter("no");
+
+            if (templateId == null || templateId.isEmpty()) {
+                System.out.println("❌ 삭제할 ID가 없습니다.");
+                return;
+            }
+
+            con = DBManager.DB_MANAGER.getConnection();
+
+            // --- 1단계: 자식 테이블(USER_TEMPLATE) 데이터 먼저 삭제 ---
+            // 유저들이 이 템플릿을 해금해서 가지고 있는 기록부터 지워줌.
+            String sql1 = "DELETE FROM USER_TEMPLATE WHERE template_id = ?";
+            pstmt = con.prepareStatement(sql1);
+            pstmt.setString(1, templateId);
+            pstmt.executeUpdate();
+            pstmt.close(); // 다음 쿼리를 위해 한 번 닫아줌
+
+            // --- 2단계: 부모 테이블(TEMPLATE) 데이터 삭제 ---
+            String sql2 = "DELETE FROM TEMPLATE WHERE template_id = ?";
+            pstmt = con.prepareStatement(sql2);
+            pstmt.setString(1, templateId);
+
+            if (pstmt.executeUpdate() == 1) {
+                System.out.println("✅ 삭제 성공");
+            }
+
+        } catch (Exception e) {
+            System.err.println("!!! 오류 발생 !!!");
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, null);
+        }
+
+
+    }
+
 }
 
 
