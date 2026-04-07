@@ -143,6 +143,45 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transform: rotate(-2deg); /* 사진이 툭 던져진 느낌 */
         }
+
+        /* 예약 시간 컨테이너 전체에 클릭 스타일 적용 */
+        .date-picker-container {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
+            transition: all 0.2s ease; /* 부드러운 변화 효과 */
+            background-color: #fff;
+        }
+
+        /* 마우스를 올렸을 때 (Hover) */
+        .date-picker-container:hover {
+            background-color: #f0f0f0; /* 배경색을 살짝 어둡게 */
+            border-color: #999; /* 테두리 강조 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 떠오르는 느낌 */
+        }
+
+        /* 클릭하는 순간 (Active) */
+        .date-picker-container:active {
+            background-color: #e5e5e5;
+            transform: scale(0.98); /* 살짝 눌리는 느낌 */
+        }
+
+        /* 달력 아이콘 스타일 */
+        #scheduledWrapper {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            user-select: none; /* 아이콘 텍스트 선택 방지 */
+        }
+
+        /* 선택된 날짜 텍스트 */
+        #selectedDateDisplay {
+            flex-grow: 1;
+            color: #333;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -183,10 +222,12 @@
 
         <div class="form-row">
             <label>예약 시간</label>
-            <div class="date-picker-container">
-                <div id="scheduledWrapper">📅</div>
-                <div id="selectedDateDisplay"
-                     class="selected-date">${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}</div>
+            <div class="date-picker-container" id="datePickerBtn"
+                 style="cursor: pointer; display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                <div id="scheduledWrapper" style="margin-right: 10px;">📅</div>
+                <div id="selectedDateDisplay" class="selected-date" style="flex-grow: 1;">
+                    ${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}
+                </div>
                 <input type="text" id="scheduledDate" name="scheduledDate"
                        value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
             </div>
@@ -194,20 +235,18 @@
 
         <div class="form-row">
             <label>템플릿</label>
-
             <select name="templateId" id="templateSelect">
-                <%--                onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">--%>
                 <option value="">-- 보관함 템플릿 선택 --</option>
-
                 <c:forEach items="${templateList}" var="t">
-                    <option value="${t.templateId}">
+                    <option value="${t.templateId}" data-url="${t.coverImgUrl}">
                             ${t.name}
                     </option>
                 </c:forEach>
             </select>
 
-            <div id="templatePreview">
-                <img id="previewImg" src="" alt="템플릿 미리보기" style="display:none; max-width:200px;">
+            <div id="templatePreview" style="margin-top: 15px; text-align: center;">
+                <img id="previewImg" src="" alt="템플릿 미리보기"
+                     style="display:none; max-width:100%; height:auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             </div>
         </div>
 

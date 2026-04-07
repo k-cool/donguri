@@ -162,11 +162,6 @@
         <input type="hidden" name="action" value="update">
         <input type="hidden" name="id" value="${r.reservationId}">
 
-        <div class="form-row">
-            <label>닉네임</label>
-            <input name="fromId" value="${r.fromId != null ? r.fromId : '도토리'}" readonly
-                   style="background-color: #f5f5f5;">
-        </div>
 
         <div class="form-row">
             <label>받는 이메일</label>
@@ -196,37 +191,42 @@
 
         <div class="form-row">
             <label>템플릿</label>
-            <select name="templateId" id="templateSelect"
-                    onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">
-                <c:forEach var="t" items="${templateList}">
-                    <option value="${t.templateId}" data-img="${t.coverImgUrl}"
-                        ${r.templateId == t.templateId ? 'selected' : ''}>
-                        [${t.type}] ${t.templateName}
+            <select name="templateId" id="templateSelect">
+                <option value="">-- 보관함 템플릿 선택 --</option>
+                <c:forEach items="${templateList}" var="t">
+                    <option value="${t.templateId}" data-url="${t.coverImgUrl}">
+                            ${t.name}
                     </option>
                 </c:forEach>
             </select>
 
-            <div id="templatePreview" style="margin-top: 10px; text-align: center;">
-                <img id="previewImg" src="" width="150"
-                     style="border-radius: 8px; border: 1px solid #ddd; display: none;">
+            <div id="templatePreview" style="margin-top: 15px; text-align: center;">
+                <img id="previewImg" src="" alt="템플릿 미리보기"
+                     style="display:none; max-width:100%; height:auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             </div>
         </div>
 
-        <div class="form-row">
-            <label>BGM</label>
-            <select name="bgmUrl">
-                <option value="none" ${r.bgm == 'none' ? 'selected' : ''}>없음</option>
-                <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
-                <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
-            </select>
+        <div id="templatePreview" style="margin-top: 10px; text-align: center;">
+            <img id="previewImg" src="" width="150"
+                 style="border-radius: 8px; border: 1px solid #ddd; display: none;">
         </div>
+</div>
 
-        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-            <button type="submit">💌 수정 완료</button>
-            <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
-               style="background: #a6a6a6;">취소</a>
-        </div>
-    </form>
+<div class="form-row">
+    <label>BGM</label>
+    <select name="bgmUrl">
+        <option value="none" ${r.bgm == 'none' ? 'selected' : ''}>없음</option>
+        <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
+        <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
+    </select>
+</div>
+
+<div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+    <button type="submit">💌 수정 완료</button>
+    <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
+       style="background: #a6a6a6;">취소</a>
+</div>
+</form>
 </div>
 
 <script src="js/reservation-flatpickr.js"></script>
