@@ -20,6 +20,9 @@ import java.util.Random;
 public class UserDAO {
     public static final UserDAO USER_DAO = new UserDAO();
 
+    // 기본 프로필 이미지 URL
+    private static final String DEFAULT_PROFILE_IMAGE = "https://donguri-dev.s3.ap-northeast-2.amazonaws.com/profile_img/donguriSample.png";
+
     private UserDAO() {
     }
 
@@ -80,7 +83,7 @@ public class UserDAO {
 
             // 2. 파일 처리 (name="file" 인 input 태그 기준)
             Part filePart = request.getPart("file");
-            String imgUrl = null; // 기본값 설정
+            String imgUrl = DEFAULT_PROFILE_IMAGE; // 기본값으로 기본 이미지 설정
 
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = "profile_img/" + UUID.randomUUID().toString();

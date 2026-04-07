@@ -86,3 +86,5 @@ WHERE ROWNUM = 1;
 -- Oracle의 RAW 타입은 HEXTORAW 함수를 사용하여 검색하는 것이 가장 안전합니다.
 -- SELECT * FROM users WHERE user_id = HEXTORAW('A1B2C3D4E5F6...이미 저장된 HEX값');
 
+select *
+from USERS;
