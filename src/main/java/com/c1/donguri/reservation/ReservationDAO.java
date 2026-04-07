@@ -303,36 +303,55 @@ public class ReservationDAO {
 
     public ArrayList<TemplateDTO> getTemplateList(String userId) {
         ArrayList<TemplateDTO> list = new ArrayList<>();
-        String sql = "SELECT t.template_id, u.nickname, t.name, t.type, t.body_html, t.cover_img_url, ut.created_at " +
-                "FROM user_template ut " +
-                "JOIN template t ON ut.template_id = t.template_id " +
-                "JOIN users u ON ut.user_id = u.user_id " +
-                "WHERE u.user_id = ? " +
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String baseSql = "SELECT TEMPLATE_ID, NAME, COVER_IMG_URL\n" +
+                "FROM TEMPLATE\n" +
+                "WHERE TYPE = 'BASE'";
+        String addedSql = "SELECT t.template_id,\n" +
+                "       t.name,\n" +
+                "       t.cover_img_url\n" +
+                "FROM user_template ut\n" +
+                "         JOIN\n" +
+                "     template t ON ut.template_id = t.template_id\n" +
+                "WHERE ut.user_id = ?\n" +
                 "ORDER BY ut.created_at DESC";
 
-        try (Connection con = DBManager.DB_MANAGER.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, userId);
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            ps = con.prepareStatement(baseSql);
+            rs = ps.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    TemplateDTO dto = new TemplateDTO(
-                            rs.getString("template_id"),
-                            rs.getString("nickname"),
-                            rs.getString("name"),
-                            rs.getString("type"),
-                            rs.getString("body_html"),
-                            rs.getString("cover_img_url"),
-                            new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("created_at"))
-                    );
-                    list.add(dto);
-                }
+
+            while (rs.next()) {
+                TemplateDTO template = new TemplateDTO();
+                template.setTemplateId(rs.getString("template_id"));
+                template.setName(rs.getString("name"));
+                template.setCoverImgUrl(rs.getString("cover_img_url"));
+                list.add(template);
             }
+
+            ps = con.prepareStatement(addedSql);
+            ps.setString(1, userId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                TemplateDTO template = new TemplateDTO();
+                template.setTemplateId(rs.getString("template_id"));
+                template.setName(rs.getString("name"));
+                template.setCoverImgUrl(rs.getString("cover_img_url"));
+                list.add(template);
+            }
+
+            return list;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return list;
     }
 }
-

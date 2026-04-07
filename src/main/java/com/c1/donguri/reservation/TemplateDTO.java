@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TemplateDTO {
     private String templateId;
-    private String nickname;
+    private String name;
     private String templateName;
     private String type;
     private String bodyHtml;

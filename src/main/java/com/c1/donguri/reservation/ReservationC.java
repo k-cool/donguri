@@ -19,7 +19,7 @@ public class ReservationC extends HttpServlet {
         // 세션에서 유저 ID 가져오기 (테스트용 기본값 포함)
         String userId = (String) session.getAttribute("userId");
         if (userId == null) {
-            userId = "118D6CAAC61C48B9B6A666E4FB021C93";
+            userId = "6EA6BADB01C8493F9277DA9DB7016AC5";
         }
 
         if (action == null || action.equals("list")) {
@@ -29,6 +29,8 @@ public class ReservationC extends HttpServlet {
 
         } else if ("write".equals(action)) {
             ArrayList<TemplateDTO> templateList = ReservationDAO.RESERVATION_DAO.getTemplateList(userId);
+            System.out.println(templateList);
+
             request.setAttribute("templateList", templateList);
             request.getRequestDispatcher("jsp/reservation/write.jsp").forward(request, response);
 

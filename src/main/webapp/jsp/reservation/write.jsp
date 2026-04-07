@@ -194,19 +194,20 @@
 
         <div class="form-row">
             <label>템플릿</label>
-            <select name="templateId" id="templateSelect"
-                    onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">
+           
+            <select name="templateId" id="templateSelect">
+                <%--                onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">--%>
                 <option value="">-- 보관함 템플릿 선택 --</option>
-                <c:forEach var="t" items="${templateList}">
-                    <option value="${t.templateId}"
-                            data-img="${t.coverImgUrl}" ${sessionScope.insertReservation.templateId == t.templateId ? 'selected' : ''}>
-                        [${t.type}] ${t.templateName}
+
+                <c:forEach items="${templateList}" var="t">
+                    <option value="${t.templateId}">
+                            ${t.name}
                     </option>
                 </c:forEach>
             </select>
 
             <div id="templatePreview">
-                <img id="previewImg" src="" alt="템플릿 미리보기">
+                <img id="previewImg" src="" alt="템플릿 미리보기" style="display:none; max-width:200px;">
             </div>
         </div>
 
@@ -225,7 +226,9 @@
     <a href="reservation?action=list" class="link-btn">📬 도토리 예약 안 하고 그냥 돌아갈래!</a>
 </div>
 
-<script src="js/reservation-flatpickr.js"></script>
 <script src="js/reservation-template.js"></script>
+<script>
+    initTemplatePreview('templateSelect', 'previewImg', 'templatePreview');
+</script>
 </body>
 </html>
