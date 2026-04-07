@@ -59,4 +59,25 @@ public class EmailSend {
             throw new RuntimeException(e);
         }
     }
+
+    // 인증 이메일 발송 메소드
+    public boolean sendVerificationEmail(String email, String verificationCode) {
+        try {
+            String title = "도토리 이메일 인증 코드";
+            String content = "안녕하세요.\n\n" +
+                    "도토리 서비스 이메일 인증 코드입니다.\n\n" +
+                    "인증 코드: " + verificationCode + "\n\n" +
+                    "해당 코드를 입력하여 이메일 인증을 완료해주세요.\n\n" +
+                    "감사합니다.\n" +
+                    "도토리 팀 드림";
+
+            send(email, title, content);
+            return true;
+        } catch (Exception e) {
+            System.out.println("인증 이메일 발송 실패: " + email);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

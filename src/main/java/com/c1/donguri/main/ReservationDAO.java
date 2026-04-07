@@ -120,7 +120,6 @@ public class ReservationDAO {
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
-            con.setAutoCommit(false);       // 트랜잭션
 
             // 1. reservation 업데이트 (성공일 때만)
 
@@ -133,8 +132,8 @@ public class ReservationDAO {
 
             //  2. send_Log 업데이트
             String sql2 = "INSERT INTO send_log "
-                    + "(reservation_id, status, error_message, sent_at) "
-                    + "VALUES (?, ?, ?, SYSDATE)";
+                    + "(reservation_id, status, error_message) "
+                    + "VALUES (?, ?, ?)";
             pstmt2 = con.prepareStatement(sql2);
             pstmt2.setString(1, reservationId);
 
@@ -148,19 +147,9 @@ public class ReservationDAO {
             }
             pstmt2.executeUpdate();
 
-            con.commit();
-
 
         } catch (Exception e) {
             e.printStackTrace();
-
-            try {
-                if (con != null) {
-                    con.rollback();     // 실패 시 롤백
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
 
         } finally {
             try {

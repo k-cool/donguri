@@ -1,8 +1,6 @@
 package com.c1.donguri.scheduler;
 
 import com.c1.donguri.util.DBManager;
-import com.c1.donguri.util.EmailSend;
-import com.c1.donguri.util.EnvLoader;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,60 +8,83 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class SentMailDAO {
-    public static final SentMailDAO SENT_MAIL = new SentMailDAO();
+    public static final SentMailDAO SENT_MAIL_DAO = new SentMailDAO();
 
     private SentMailDAO() {
     }
 
 
-    public ArrayList<SentMailDTO> getSuccessSentMails(String keyword) {
+    public ArrayList<SentMailDTO> getSuccessSentMails(String userId, String keyword) {
         ArrayList<SentMailDTO> sentMails = new ArrayList<>();
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-
         try {
             con = DBManager.DB_MANAGER.getConnection();
 
-            if (keyword == null || keyword.trim().isEmpty()) {
-                String sql = "SELECT r.reservation_id, r.recipient_email, e.subject, e.content, s.status, s.sent_at " +
-                        "FROM send_log s " +
-                        "JOIN reservation r ON s.reservation_id = r.reservation_id " +
-                        "JOIN email_content e ON r.email_content_id = e.email_content_id " +
-                        "WHERE s.status = 'SUCCESS' " +
-                        "ORDER BY s.sent_at DESC";
+            String sql =
+                    "SELECT user_id, " +
+                            "       reservation_id, " +
+                            "       recipient_email, " +
+                            "       subject, " +
+                            "       content, " +
+                            "       status, " +
+                            "       sent_at " +
+                            "FROM ( " +
+                            "    SELECT RAWTOHEX(r.from_id) AS user_id, " +
+                            "           RAWTOHEX(r.reservation_id) AS reservation_id, " +
+                            "           r.recipient_email, " +
+                            "           e.subject, " +
+                            "           e.content, " +
+                            "           s.status, " +
+                            "           s.created_at AS sent_at, " +
+                            "           ROW_NUMBER() OVER ( " +
+                            "               PARTITION BY r.reservation_id " +
+                            "               ORDER BY s.created_at DESC " +
+                            "           ) AS rn " +
+                            "    FROM reservation r " +
+                            "    JOIN email_content e ON r.email_content_id = e.email_content_id " +
+                            "    JOIN send_log s ON r.reservation_id = s.reservation_id " +
+                            "    WHERE r.from_id = HEXTORAW(?) " +
+                            "      AND s.status = 'SUCCESS' ";
 
-                pstmt = con.prepareStatement(sql);
+            boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
 
-            } else {
-                String sql = "SELECT r.reservation_id, r.recipient_email, e.subject, e.content, s.status, s.sent_at " +
-                        "FROM send_log s " +
-                        "JOIN reservation r ON s.reservation_id = r.reservation_id " +
-                        "JOIN email_content e ON r.email_content_id = e.email_content_id " +
-                        "WHERE s.status = 'SUCCESS' " +
-                        "AND (r.recipient_email LIKE ? OR e.subject LIKE ? OR e.content LIKE ?) " +
-                        "ORDER BY s.sent_at DESC";
+            if (hasKeyword) {
+                sql += "AND (r.recipient_email LIKE ? OR e.subject LIKE ? OR e.content LIKE ?) ";
+            }
 
-                pstmt = con.prepareStatement(sql);
+            sql += ") " +
+                    "WHERE rn = 1 " +
+                    "ORDER BY sent_at DESC";
 
+            pstmt = con.prepareStatement(sql);
+
+            // 1번 파라미터: 로그인한 유저 userId
+            pstmt.setString(1, userId);
+
+            // 검색어가 있을 때만 2,3,4번 파라미터 세팅
+            if (hasKeyword) {
                 String search = "%" + keyword.trim() + "%";
-                pstmt.setString(1, search);
                 pstmt.setString(2, search);
                 pstmt.setString(3, search);
+                pstmt.setString(4, search);
             }
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                SentMailDTO sentMailDTO = new SentMailDTO();
-                sentMailDTO.setReservationId(rs.getString("reservation_id"));
-                sentMailDTO.setRecipientEmail(rs.getString("recipient_email"));
-                sentMailDTO.setSubject(rs.getString("subject"));
-                sentMailDTO.setContent(rs.getString("content"));
-                sentMailDTO.setStatus(rs.getString("status"));
-                sentMailDTO.setSentAt(rs.getTimestamp("sent_at"));
-                sentMails.add(sentMailDTO);
+                SentMailDTO dto = new SentMailDTO();
+                dto.setUserId(rs.getString("user_id"));
+                dto.setReservationId(rs.getString("reservation_id"));
+                dto.setRecipientEmail(rs.getString("recipient_email"));
+                dto.setSubject(rs.getString("subject"));
+                dto.setContent(rs.getString("content"));
+                dto.setStatus(rs.getString("status"));
+                dto.setSentAt(rs.getTimestamp("sent_at"));
+
+                sentMails.add(dto);
             }
 
         } catch (Exception e) {
@@ -71,8 +92,59 @@ public class SentMailDAO {
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, rs);
         }
-        return sentMails;
 
+        return sentMails;
+    }
+
+    public SentMailDTO getSentMailDetail(String userId, String reservationId) {
+        SentMailDTO sentMailDTO = new SentMailDTO();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+
+            String sql =
+                    "SELECT RAWTOHEX(r.from_id) AS user_id, " +
+                            "       RAWTOHEX(r.reservation_id) AS reservation_id, " +
+                            "       r.recipient_email, " +
+                            "       e.subject, " +
+                            "       e.content, " +
+                            "       s.status, " +
+                            "       s.created_at AS sent_at " +
+                            "FROM reservation r " +
+                            "JOIN email_content e ON r.email_content_id = e.email_content_id " +
+                            "JOIN send_log s ON r.reservation_id = s.reservation_id " +
+                            "WHERE r.from_id = HEXTORAW(?) " +
+                            "  AND r.reservation_id = HEXTORAW(?) " +
+                            "  AND r.is_done = 'Y'" +
+                            " ORDER BY s.created_at DESC";
+
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, reservationId);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                sentMailDTO = new SentMailDTO();
+                sentMailDTO.setUserId(rs.getString("user_id"));
+                sentMailDTO.setReservationId(rs.getString("reservation_id"));
+                sentMailDTO.setRecipientEmail(rs.getString("recipient_email"));
+                sentMailDTO.setSubject(rs.getString("subject"));
+                sentMailDTO.setContent(rs.getString("content"));
+                sentMailDTO.setStatus(rs.getString("status"));
+                sentMailDTO.setSentAt(rs.getTimestamp("sent_at"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+
+        return sentMailDTO;
     }
 
 

@@ -1,0 +1,60 @@
+/* 로그인 완료 컨테이너 (헤더/사이드바 가로 정렬 기준) */
+.login-ok-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-radius: 50px; /* 알약 모양 디자인 */
+    border: 1px solid #e9ecef;
+}
+
+/* 프로필 이미지 영역 */
+.profile-area img {
+    display: block;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 환영 메시지 */
+.welcome-msg p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.welcome-msg strong {
+    color: #ff6b6b; /* 닉네임 강조색 */
+}
+
+/* 버튼 메뉴 그룹 */
+.user-menu {
+    display: flex;
+    gap: 8px;
+}
+
+.user-menu button {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 마이페이지 버튼 호버 */
+.user-menu button:first-child:hover {
+    background-color: #f1f3f5;
+    color: #333;
+}
+
+/* 로그아웃 버튼 호버 (강조) */
+.user-menu button:last-child:hover {
+    background-color: #ff6b6b;
+    color: #fff;
+    border-color: #ff6b6b;
+}
