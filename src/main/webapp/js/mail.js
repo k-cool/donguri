@@ -27,12 +27,5 @@ window.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // 5분 단위 체크
-        // const minute = selectedDate.getMinutes();
-        // if (minute % 5 !== 0) {
-        //     alert("예약 시간은 5분 단위로만 설정 가능합니다.");
-        //     reserveInput.focus();
-        //     e.preventDefault();
-        // }
     });
 });

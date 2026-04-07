@@ -39,7 +39,6 @@ public class DBManager {
 //        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
 
 //        System.out.println(url);
-
         String url = envMap.get("DB_URL");
         String user = envMap.get("DB_USER");
         String password = envMap.get("DB_PASSWORD");
@@ -64,6 +63,7 @@ public class DBManager {
                 ps.close();
             }
 
+            // connection을 재사용 하므로 닫으면 안된다.
             if (con != null) {
                 con.close();
             }
