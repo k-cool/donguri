@@ -135,12 +135,12 @@
 
         <div class="form-row">
             <label>닉네임</label>
-            <input name="fromId" value="${sessionScope.user.nickname}" placeholder="닉네임 입력" required>
+            <input name="fromId" value="${sessionScope.insertReservation.fromId != null ? sessionScope.insertReservation.fromId : sessionScope.user.nickname}" placeholder="닉네임 입력" required>
         </div>
 
         <div class="form-row">
             <label>받는 이메일</label>
-            <input name="recipientEmail" placeholder="영어만 입력 가능" required
+            <input name="recipientEmail" value="${sessionScope.insertReservation.recipientEmail}" placeholder="영어만 입력 가능" required
                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g,'')">
             <small style="color: gray; font-size: 0.8em;">
                 영어, 숫자, @ . _ - 만 입력 가능합니다.
@@ -149,20 +149,20 @@
 
         <div class="form-row">
             <label>제목</label>
-            <input name="subject" placeholder="제목 입력" required>
+            <input name="subject" value="${sessionScope.insertReservation.subject}" placeholder="제목 입력" required>
         </div>
 
         <div class="form-row">
             <label>내용</label>
-            <textarea name="content" rows="6" placeholder="내용 입력" required></textarea>
+            <textarea name="content" rows="6" placeholder="내용 입력" required>${sessionScope.insertReservation.content}</textarea>
         </div>
 
         <div class="form-row">
             <label>예약 시간</label>
             <div class="date-picker-container">
                 <div id="scheduledWrapper">📅</div>
-                <div id="selectedDateDisplay" class="selected-date">선택된 시간 없음</div>
-                <input type="text" id="scheduledDate" name="scheduledDate" style="display:none;" required>
+                <div id="selectedDateDisplay" class="selected-date">${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}</div>
+                <input type="text" id="scheduledDate" name="scheduledDate" value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
             </div>
         </div>
 
@@ -172,7 +172,7 @@
                     onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">
                 <option value="">-- 보관함 템플릿 선택 --</option>
                 <c:forEach var="t" items="${templateList}">
-                    <option value="${t.templateId}" data-img="${t.coverImgUrl}">
+                    <option value="${t.templateId}" data-img="${t.coverImgUrl}" ${sessionScope.insertReservation.templateId == t.templateId ? 'selected' : ''}>
                         [${t.type}] ${t.templateName}
                     </option>
                 </c:forEach>

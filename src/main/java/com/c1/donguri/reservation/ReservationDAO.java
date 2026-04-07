@@ -200,7 +200,7 @@ public class ReservationDAO {
 
     public ReservationDTO getOne(String id) {
         String sql = "SELECT r.reservation_id,\n" +
-                "       r.from_id,\n" +
+                "       u.nickname as from_id,\n" +
                 "       r.recipient_email,\n" +
                 "       r.scheduled_date,\n" +
                 "       e.subject,\n" +
@@ -209,6 +209,7 @@ public class ReservationDAO {
                 "       e.bgm_url\n" +
                 "FROM reservation r\n" +
                 "JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
+                "JOIN users u ON r.from_id = u.user_id\n" +
                 "WHERE r.reservation_id=?";
         try (Connection con = DBManager.DB_MANAGER.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
