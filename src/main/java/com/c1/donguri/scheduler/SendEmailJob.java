@@ -20,11 +20,15 @@ public class SendEmailJob implements Job {
         EmailJobDTO emailJob = EmailJobDTO.fromJSON(emailJobJSON);
 
         try {
-            EmailSend.EMAIL_SEND.send(emailJob.getRecipientEmail(), "[동구리] 동구리가 도착했어요.", emailJob.getContent());
+
+            EmailSend.EMAIL_SEND.send(
+                    emailJob.getRecipientEmail(),
+                    "[동구리] 동구리가 도착했어요.",
+                    EmailSend.EMAIL_SEND.createEmailContent(emailJob.getReservationId())
+            );
 
             System.out.println("예약 메일 전송 완료: sendEmailJob_" + emailJob.getReservationId());
-
-
+            
         } catch (Exception e) {
             System.out.println("예약 메일 전송 실패: sendEmailJob_" + emailJob.getReservationId());
             e.printStackTrace();

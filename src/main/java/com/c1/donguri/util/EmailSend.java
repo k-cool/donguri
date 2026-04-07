@@ -48,7 +48,7 @@ public class EmailSend {
 
             message.setSubject(title, "UTF-8");
 
-            message.setText(content, "UTF-8");
+            message.setContent(content, "text/html; charset=UTF-8");
 
             Transport.send(message);
 
@@ -58,6 +58,51 @@ public class EmailSend {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+//    public String createEmailContent(String reservationId) {
+//        return "    <header>\n" +
+//                "                <div>동구리 로고</div>\n" +
+//                "                </header>\n" +
+//                "\n" +
+//                "                <body>\n" +
+//                "                    <h2>동구리 우편이 도착했어요. 아래 링크에서 확인해주세요!</h2>\n" +
+//                "                    <a href=\"%s\">아이콘</a>\n".replace("%s", reservationId) +
+//                "                </body>\n" +
+//                "\n" +
+//                "                <footer>\n" +
+//                "                </footer>";
+//    }
+
+    public String createEmailContent(String reservationId) {
+        // TODO: 엽서화면 작업후 진짜 URL로 수정해주기
+        String url = "http://localhost:8080/donguri/postcard/detail?reservationId=" + reservationId;
+
+        return "<!DOCTYPE html>" +
+                "<html>" +
+                "<head>" +
+                "    <meta charset='UTF-8'>" +
+                "    <title>동구리 우편</title>" +
+                "</head>" +
+                "<body style='font-family: Arial, sans-serif; background-color:#f9f9f9; padding:20px;'>" +
+                "    <div style='max-width:600px; margin:0 auto; background:#ffffff; padding:30px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);'>" +
+                "        <header style='text-align:center; margin-bottom:20px;'>" +
+                "            <h1 style='color:#6b4f3b;'>동구리</h1>" +
+                "        </header>" +
+                "        <main style='text-align:center;'>" +
+                "            <h2 style='color:#333;'>동구리 우편이 도착했어요!</h2>" +
+                "            <p style='color:#555;'>아래 버튼을 눌러 엽서를 확인해주세요.</p>" +
+                "            <a href='" + url + "' " +
+                "               style='display:inline-block; padding:12px 24px; background-color:#8b5e3c; color:white; text-decoration:none; border-radius:8px; margin-top:20px;'>" +
+                "               엽서 확인하기" +
+                "            </a>" +
+                "        </main>" +
+                "        <footer style='margin-top:30px; text-align:center; font-size:12px; color:#999;'>" +
+                "            Donguri Team" +
+                "        </footer>" +
+                "    </div>" +
+                "</body>" +
+                "</html>";
     }
 
     // 인증 이메일 발송 메소드
