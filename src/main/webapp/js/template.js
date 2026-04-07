@@ -1,26 +1,20 @@
-function updateTemplatePreview(selectId, previewImgId, previewDivId) {
-    const select = document.getElementById(selectId);
-    const img = document.getElementById(previewImgId);
-    const previewDiv = document.getElementById(previewDivId);
+document.getElementById('templateSelect').addEventListener('change', function () {
+    const templateId = this.value;
+    const previewImg = document.getElementById('previewImg');
 
-    if (!select || !img) return;
-
-    const selectedOption = select.options[select.selectedIndex];
-    const imgUrl = selectedOption.getAttribute('data-img');
-
-    if (imgUrl && imgUrl.trim() !== "") {
-        img.src = imgUrl;
-        img.style.display = 'inline-block';
-        if (previewDiv) previewDiv.style.display = 'block';
-    } else {
-        img.src = "";
-        img.style.display = 'none';
-        if (previewDiv) previewDiv.style.display = 'none';
+    if (!templateId) {
+        previewImg.style.display = 'none';
+        return;
     }
-}
 
-function initTemplatePreview(selectId, previewImgId, previewDivId) {
-    window.addEventListener('load', function () {
-        updateTemplatePreview(selectId, previewImgId, previewDivId);
-    });
-}
+
+    fetch(`/api/templates/${templateId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.coverImgUrl) {
+                previewImg.src = data.coverImgUrl;
+                previewImg.style.display = 'block';
+            }
+        })
+        .catch(err => console.error('이미지 로드 실패:', err));
+});

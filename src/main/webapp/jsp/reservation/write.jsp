@@ -194,7 +194,7 @@
 
         <div class="form-row">
             <label>템플릿</label>
-           
+
             <select name="templateId" id="templateSelect">
                 <%--                onchange="updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview')">--%>
                 <option value="">-- 보관함 템플릿 선택 --</option>
@@ -225,10 +225,8 @@
 
     <a href="reservation?action=list" class="link-btn">📬 도토리 예약 안 하고 그냥 돌아갈래!</a>
 </div>
-
+<script src="js/reservation-flatpickr.js"></script>
 <script src="js/reservation-template.js"></script>
-<script>
-    initTemplatePreview('templateSelect', 'previewImg', 'templatePreview');
-</script>
+
 </body>
 </html>
