@@ -14,8 +14,7 @@ public class SentMailDAO {
     }
 
 
-    //    public ArrayList<SentMailDTO> getSuccessSentMails(String userId, String keyword) {
-    public ArrayList<SentMailDTO> getSuccessSentMails(String keyword) {
+    public ArrayList<SentMailDTO> getSuccessSentMails(String userId, String keyword) {
         ArrayList<SentMailDTO> sentMails = new ArrayList<>();
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -31,7 +30,6 @@ public class SentMailDAO {
                             "       subject, " +
                             "       content, " +
                             "       status, " +
-                            "       is_done, " +
                             "       sent_at " +
                             "FROM ( " +
                             "    SELECT RAWTOHEX(r.from_id) AS user_id, " +
@@ -40,7 +38,6 @@ public class SentMailDAO {
                             "           e.subject, " +
                             "           e.content, " +
                             "           s.status, " +
-                            "           r.is_done, " +
                             "           s.created_at AS sent_at, " +
                             "           ROW_NUMBER() OVER ( " +
                             "               PARTITION BY r.reservation_id " +
@@ -50,9 +47,7 @@ public class SentMailDAO {
                             "    JOIN email_content e ON r.email_content_id = e.email_content_id " +
                             "    JOIN send_log s ON r.reservation_id = s.reservation_id " +
                             "    WHERE r.from_id = HEXTORAW(?) " +
-                            "      AND r.is_done = 'Y' " +
-                            ") " +
-                            "WHERE rn = 1 ";
+                            "      AND s.status = 'SUCCESS' ";
 
             boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
 
@@ -60,15 +55,16 @@ public class SentMailDAO {
                 sql += "AND (r.recipient_email LIKE ? OR e.subject LIKE ? OR e.content LIKE ?) ";
             }
 
-            sql += "ORDER BY sent_at DESC";
+            sql += ") " +
+                    "WHERE rn = 1 " +
+                    "ORDER BY sent_at DESC";
 
             pstmt = con.prepareStatement(sql);
 
+            // 1번 파라미터: 로그인한 유저 userId
+            pstmt.setString(1, userId);
 
-//            pstmt.setString(1, userId);
-            pstmt.setString(1, "F90D905CC65E464482848C0884788A47");
-
-            // keyword 있을 때만
+            // 검색어가 있을 때만 2,3,4번 파라미터 세팅
             if (hasKeyword) {
                 String search = "%" + keyword.trim() + "%";
                 pstmt.setString(2, search);
@@ -79,17 +75,16 @@ public class SentMailDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                SentMailDTO sentMailDTO = new SentMailDTO();
-                sentMailDTO.setUserId(rs.getString("user_id"));
-                sentMailDTO.setReservationId(rs.getString("reservation_id"));
-                sentMailDTO.setRecipientEmail(rs.getString("recipient_email"));
-                sentMailDTO.setSubject(rs.getString("subject"));
-                sentMailDTO.setContent(rs.getString("content"));
-                sentMailDTO.setIsDone(rs.getString("is_done"));
-                sentMailDTO.setStatus(rs.getString("status"));
-                sentMailDTO.setSentAt(rs.getTimestamp("sent_at"));
+                SentMailDTO dto = new SentMailDTO();
+                dto.setUserId(rs.getString("user_id"));
+                dto.setReservationId(rs.getString("reservation_id"));
+                dto.setRecipientEmail(rs.getString("recipient_email"));
+                dto.setSubject(rs.getString("subject"));
+                dto.setContent(rs.getString("content"));
+                dto.setStatus(rs.getString("status"));
+                dto.setSentAt(rs.getTimestamp("sent_at"));
 
-                sentMails.add(sentMailDTO);
+                sentMails.add(dto);
             }
 
         } catch (Exception e) {
