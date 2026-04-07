@@ -9,9 +9,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,19 +23,6 @@ public class UserDAO {
     private UserDAO() {
     }
 
-    // Java 8 호환: Part를 문자열로 읽는 헬퍼 메소드
-    private String readPartAsString(Part part) throws Exception {
-        if (part == null) {
-            return "";
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(part.getInputStream(), "UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-        return sb.toString();
-    }
 
     public void getAllUserList(HttpServletRequest request) {
         Connection con = null;
@@ -209,11 +194,11 @@ public class UserDAO {
 
         if (user != null) {
             // 로그인 상태: 헤더에 로그인 성공 페이지 표시
-            request.setAttribute("loginPage", "user/login_ok.jsp");
+            request.setAttribute("loginPage", "jsp/user/login_ok.jsp");
             return true;
         } else {
             // 비로그인 상태: 헤더에 로그인 페이지 표시
-            request.setAttribute("loginPage", "user/login.jsp");
+            request.setAttribute("loginPage", "jsp/user/login.jsp");
             return false;
         }
     }
@@ -413,7 +398,7 @@ public class UserDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND is_deleted = 'N'";
 
         try {
             con = DBManager.DB_MANAGER.getConnection();

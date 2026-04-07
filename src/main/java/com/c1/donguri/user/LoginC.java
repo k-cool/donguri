@@ -29,7 +29,7 @@ public class LoginC extends HttpServlet {
         }
 
         // 중앙 컨텐츠 영역에만 로그인 페이지를 띄웁니다.
-        request.setAttribute("content", "user/login.jsp");
+        request.setAttribute("content", "jsp/user/login.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
@@ -43,13 +43,13 @@ public class LoginC extends HttpServlet {
         if (UserDAO.USER_DAO.loginCheck(request)) {
             // 성공 시: 중앙에는 홈 화면, 헤더에는 로그인 정보창을 띄웁니다.
             request.setAttribute("content", "home.jsp");
-            request.setAttribute("loginPage", "user/login_ok.jsp");
+            request.setAttribute("loginPage", "jsp/user/login_ok.jsp");
 
             request.getRequestDispatcher("main.jsp").forward(request, response);
         } else {
             // 실패 시: 헤더는 비우고 중앙에만 다시 로그인 창을 띄웁니다.
             request.setAttribute("loginPage", null);
-            request.setAttribute("content", "user/login.jsp");
+            request.setAttribute("content", "jsp/user/login.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
         }
     }
