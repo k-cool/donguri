@@ -91,4 +91,4 @@ from USERS;
 
 DELETE
 FROM users
-WHERE nickname = '성공해라';
+WHERE nickname = '제발 성공해라';
