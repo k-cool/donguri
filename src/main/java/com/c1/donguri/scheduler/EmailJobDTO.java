@@ -18,6 +18,8 @@ public class EmailJobDTO {
     private String subject;
     private String content;
     private String isDone;
+    private String bodyHtml;
+    private String coverImgUrl;
 
 
     public String toJSON() {

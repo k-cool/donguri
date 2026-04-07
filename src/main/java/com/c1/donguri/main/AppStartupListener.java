@@ -67,7 +67,11 @@ public class AppStartupListener implements ServletContextListener {
                     if (!"true".equals(envMap.get("SKIP_EMAIL_SEND_ON_BOOT"))) {
 
                         // 당장 보낼 예약 전송
-                        EmailSend.EMAIL_SEND.send(emailJob.getRecipientEmail(), "[동구리] 동구리가 도착했어요.", emailJob.getContent());
+                        EmailSend.EMAIL_SEND.send(
+                                emailJob.getRecipientEmail(),
+                                "[동구리] 동구리가 도착했어요.",
+                                EmailSend.EMAIL_SEND.createEmailContent(emailJob.getReservationId())
+                        );
 
                     } else {
 

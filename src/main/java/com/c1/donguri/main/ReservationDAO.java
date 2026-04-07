@@ -23,12 +23,15 @@ public class ReservationDAO {
                 "       r.recipient_email,\n" +
                 "       r.scheduled_date,\n" +
                 "       e.subject,\n" +
-                "       e.CONTENT,\n" +
-                "       r.is_done\n" +
+                "       e.content,\n" +
+                "       r.is_done,\n" +
+                "       t.BODY_HTML,\n" +
+                "       t.COVER_IMG_URL\n" +
                 "FROM reservation r\n" +
                 "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
+                "         JOIN template t on e.TEMPLATE_ID = t.TEMPLATE_ID\n" +
                 "WHERE r.is_done = 'N'\n" +
-                "ORDER BY r.scheduled_date";
+                "ORDER BY r.scheduled_date ASC";
 
 
         try {
@@ -47,7 +50,9 @@ public class ReservationDAO {
                                 rs.getTimestamp("scheduled_date"),
                                 rs.getString("subject"),
                                 rs.getString("CONTENT"),
-                                rs.getString("is_done")
+                                rs.getString("is_done"),
+                                rs.getString("body_html"),
+                                rs.getString("cover_img_url")
                         )
 
                 );
@@ -64,52 +69,54 @@ public class ReservationDAO {
         return null;
     }
 
-    public EmailJobDTO getReservationById(String reservationId) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        String sql = "SELECT r.reservation_id," +
-                "       r.recipient_email," +
-                "       r.scheduled_date," +
-                "       e.subject," +
-                "       e.content," +
-                "       r.is_done" +
-                "FROM reservation r" +
-                "         JOIN email_content e ON r.email_content_id = e.email_content_id" +
-                "WHERE r.reservation_id = ? ";
-
-
-        try {
-
-            con = DBManager.DB_MANAGER.getConnection();
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, reservationId);
-            rs = pstmt.executeQuery();
-
-            EmailJobDTO emailJob = null;
-
-            while (rs.next()) {
-                emailJob = new EmailJobDTO(
-                        rs.getString("reservation_id"),
-                        rs.getString("recipient_email"),
-                        rs.getTimestamp("scheduled_date"),
-                        rs.getString("subject"),
-                        rs.getString("content"),
-                        rs.getString("is_done")
-                );
-            }
-
-            return emailJob;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.DB_MANAGER.close(con, pstmt, rs);
-        }
-
-        return null;
-    }
+//    public EmailJobDTO getReservationById(String reservationId) {
+//        Connection con = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//
+//        String sql = "SELECT r.reservation_id," +
+//                "       r.recipient_email," +
+//                "       r.scheduled_date," +
+//                "       e.subject," +
+//                "       e.content," +
+//                "       r.is_done" +
+//                "FROM reservation r" +
+//                "         JOIN email_content e ON r.email_content_id = e.email_content_id" +
+//                "WHERE r.reservation_id = ? ";
+//
+//
+//        try {
+//
+//            con = DBManager.DB_MANAGER.getConnection();
+//            pstmt = con.prepareStatement(sql);
+//            pstmt.setString(1, reservationId);
+//            rs = pstmt.executeQuery();
+//
+//            EmailJobDTO emailJob = null;
+//
+//            while (rs.next()) {
+//                emailJob = new EmailJobDTO(
+//                        rs.getString("reservation_id"),
+//                        rs.getString("recipient_email"),
+//                        rs.getTimestamp("scheduled_date"),
+//                        rs.getString("subject"),
+//                        rs.getString("content"),
+//                        rs.getString("is_done"),
+//                        null,
+//                        null
+//                );
+//            }
+//
+//            return emailJob;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            DBManager.DB_MANAGER.close(con, pstmt, rs);
+//        }
+//
+//        return null;
+//    }
 
 
     public void updateResult(String reservationId, boolean success, String errorMessage) {
