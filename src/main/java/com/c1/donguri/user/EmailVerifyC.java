@@ -27,14 +27,18 @@ public class EmailVerifyC extends HttpServlet {
 
     private void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
-        boolean success = UserDAO.USER_DAO.sendVerificationEmail(email, request);
+        
+        // 이메일 발송을 비동기로 처리하여 즉시 응답
+        new Thread(() -> {
+            UserDAO.USER_DAO.sendVerificationEmail(email, request);
+        }).start();
         
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         Gson gson = new Gson();
-        String jsonResponse = gson.toJson(new EmailSendResponse(success));
+        String jsonResponse = gson.toJson(new EmailSendResponse(true));
         out.print(jsonResponse);
         out.flush();
     }

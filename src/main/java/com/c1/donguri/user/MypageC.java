@@ -22,9 +22,9 @@ public class MypageC extends HttpServlet {
     // 화면 띄우기는 기존과 동일하게 doGet에서 처리
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (UserDAO.USER_DAO.loginCheck(request)) {
-            request.getRequestDispatcher("user/mypage.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/user/mypage.jsp").forward(request, response);
         } else {
-            request.getRequestDispatcher("user/login.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/user/login.jsp").forward(request, response);
         }
     }
 

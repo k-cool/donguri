@@ -23,6 +23,7 @@ public class UserDAO {
     private UserDAO() {
     }
 
+
     public void getAllUserList(HttpServletRequest request) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -72,7 +73,7 @@ public class UserDAO {
 
 
         try {
-            // 1. 파라미터 추출 (request에서 직접 추출 가능)
+            // 1. 파라미터 추출 (@MultipartConfig가 있으면 getParameter가 동작함)
             String email = request.getParameter("email");
             String nickname = request.getParameter("nickname");
             String password = request.getParameter("password");
@@ -193,11 +194,11 @@ public class UserDAO {
 
         if (user != null) {
             // 로그인 상태: 헤더에 로그인 성공 페이지 표시
-            request.setAttribute("loginPage", "user/login_ok.jsp");
+            request.setAttribute("loginPage", "jsp/user/login_ok.jsp");
             return true;
         } else {
             // 비로그인 상태: 헤더에 로그인 페이지 표시
-            request.setAttribute("loginPage", "user/login.jsp");
+            request.setAttribute("loginPage", "jsp/user/login.jsp");
             return false;
         }
     }
@@ -397,7 +398,7 @@ public class UserDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND is_deleted = 'N'";
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
@@ -433,17 +434,17 @@ public class UserDAO {
 
             // 기존 세션 확인
             HttpSession currentSession = request.getSession(false);
-            
+
             // 기존 세션이 있고 인증 코드가 있으면 재발송만 처리 (새로운 코드 생성 안 함)
             if (currentSession != null && currentSession.getAttribute("verificationCode") != null) {
                 // 기존 세션 시간만 갱신
                 currentSession.setAttribute("verificationTime", new java.util.Date());
                 currentSession.setMaxInactiveInterval(60); // 1분 유효
-                
+
                 // 기존 코드로 이메일 재발송
                 String existingCode = (String) currentSession.getAttribute("verificationCode");
                 boolean success = EmailSend.EMAIL_SEND.sendVerificationEmail(email, existingCode);
-                
+
                 if (success) {
                     System.out.println("인증 코드 재발송 성공: " + email + " (기존 코드: " + existingCode + ")");
                     return true;

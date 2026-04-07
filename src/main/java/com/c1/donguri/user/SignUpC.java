@@ -1,5 +1,8 @@
 package com.c1.donguri.user;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @MultipartConfig
+
 @WebServlet(name = "SignUpC", value = "/signup-do")
 public class SignUpC extends HttpServlet {
 
@@ -17,7 +21,7 @@ public class SignUpC extends HttpServlet {
 
         request.setAttribute("loginPage", null);
 
-        request.setAttribute("content", "user/signup.jsp");
+        request.setAttribute("content", "jsp/user/signup.jsp");
 
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
