@@ -241,7 +241,7 @@ public class TemplateDAO {
             String name = request.getParameter("name");
             String bodyHtml = request.getParameter("bodyHtml");
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
-            
+
             // 3. 커버 이미지 처리 (기존 로직 동일)
             Part filePart = request.getPart("coverImgUrl");
             String imgUrl = null;
@@ -279,6 +279,7 @@ public class TemplateDAO {
 
     }
 
+    // 유저가 QR코드 스캔으로 템플릿 해금
     public boolean unlockTemplate(String userId, String templateId) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -300,6 +301,29 @@ public class TemplateDAO {
             DBManager.DB_MANAGER.close(con, pstmt, null);
         }
     }
+
+//    public boolean unlockTemplate(String userId, String templateId) {
+//        Connection con = null;
+//        PreparedStatement pstmt = null;
+//        // 유저와 템플릿을 연결해주는 테이블 (예: USER_TEMPLATE)
+//        String sql = "INSERT INTO USER_TEMPLATE (user_id, template_id, created_at) VALUES (HEXTORAW(?), HEXTORAW(?), SYSDATE)";
+//
+//        try {
+//            con = DBManager.DB_MANAGER.getConnection();
+//            pstmt = con.prepareStatement(sql);
+//
+//            pstmt.setString(1, userId.replace("-", ""));
+//            pstmt.setString(2, templateId.replace("-", ""));
+//
+//            return pstmt.executeUpdate() == 1;
+//        } catch (Exception e) {
+//            // 이미 해금된 경우(PK 중복 등) 에러가 날 수 있으니 적절히 처리
+//            e.printStackTrace();
+//            return false;
+//        } finally {
+//            DBManager.DB_MANAGER.close(con, pstmt, null);
+//        }
+//    }
 }
 
 

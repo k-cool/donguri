@@ -38,7 +38,7 @@ public class TemplateRegC extends HttpServlet {
         if ("ADDED".equals(type)) {
             // 유저가 스캔했을 때 실행될 주소를 조립 (방금 만든 ID를 붙임)
             String myIP = "10.1.82.127";
-            String targetUrl = "http://" + myIP + ":8080/donguri/qr?t_id=" + templateId;
+            String targetUrl = "http://" + myIP + ":8080/qr?t_id=" + templateId;
 
             // 바탕화면 경로 설정
             String path = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "qr";
