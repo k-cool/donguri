@@ -1,9 +1,15 @@
-// 이메일 중복 확인 및 인증 요청 로직
-let isEmailVerified = false;
-let isEmailDuplicateChecked = false;
-let isNicknameChecked = false;
+// =============================================================================
+// 회원가입 사용자 흐름: 이메일 → 인증 → 닉네임 → 비밀번호 → 가입완료
+// =============================================================================
 
-// 이메일 중복 확인 함수
+// 전역 상태 변수
+let isEmailVerified = false;        // 이메일 인증 완료 여부
+let isEmailDuplicateChecked = false;  // 이메일 중복 확인 여부
+let isNicknameChecked = false;       // 닉네임 중복 확인 여부
+
+// =============================================================================
+// 1단계: 이메일 중복 확인
+// =============================================================================
 function checkEmailDuplicate() {
     const email = document.getElementById("email").value;
     const messageDiv = document.getElementById("emailMessage");
@@ -43,7 +49,9 @@ function checkEmailDuplicate() {
         });
 }
 
-// 인증 코드 발송 함수
+// =============================================================================
+// 2단계: 이메일 인증 코드 발송
+// =============================================================================
 function sendVerificationCode() {
     const email = document.getElementById("email").value;
     const messageDiv = document.getElementById("emailMessage");
@@ -92,7 +100,59 @@ function sendVerificationCode() {
         });
 }
 
-// 닉네임 중복 확인 함수
+// 2단계: 인증 코드 검증
+function verifyEmailCode() {
+    const email = document.getElementById("email").value;
+    const inputCode = document.getElementById("emailConfirmCode").value;
+    const messageDiv = document.getElementById("emailMessage");
+
+    if (!inputCode) {
+        messageDiv.textContent = "인증 코드를 입력해주세요.";
+        messageDiv.style.color = "red";
+        return;
+    }
+
+    // AJAX로 인증 코드 검증 요청
+    fetch("email-verify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "email=" + encodeURIComponent(email) + "&code=" + encodeURIComponent(inputCode)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.verified) {
+                messageDiv.textContent = "이메일 인증이 완료되었습니다.";
+                messageDiv.style.color = "green";
+                isEmailVerified = true;
+
+                // 버튼 및 입력 필드 비활성화
+                document.getElementById("email").readOnly = true;
+                document.getElementById("email").style.backgroundColor = "#e9ecef";
+
+                document.getElementById("sendEmailBtn").disabled = true;
+                document.getElementById("emailConfirmCode").disabled = true;
+                document.getElementById("verifyCodeBtn").disabled = true;
+                document.getElementById("verifyCodeBtn").textContent = "인증 완료";
+
+                // 재발송 버튼 숨기기
+                document.getElementById("sendEmailBtn").style.display = "none";
+            } else {
+                messageDiv.textContent = "인증 코드가 올바르지 않거나 유효시간이 만료되었습니다.";
+                messageDiv.style.color = "red";
+                isEmailVerified = false;
+            }
+        })
+        .catch(error => {
+            messageDiv.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
+            messageDiv.style.color = "red";
+        });
+}
+
+// =============================================================================
+// 3단계: 닉네임 중복 확인
+// =============================================================================
 function checkNickname() {
     const nickname = document.getElementById("nickname").value;
     const messageDiv = document.getElementById("nicknameMessage");
@@ -139,7 +199,9 @@ function checkNickname() {
         });
 }
 
-// 비밀번호 확인 함수
+// =============================================================================
+// 4단계: 비밀번호 확인 (실시간 검증)
+// =============================================================================
 function checkPassword() {
     const password = document.getElementById("password").value;
     const passwordConfirm = document.getElementById("passwordConfirm").value;
@@ -170,18 +232,17 @@ function checkPassword() {
     }
 }
 
-// 초기 이벤트 리스너 설정
+// =============================================================================
+// 5단계: 최종 가입 제출 검증
+// =============================================================================
 document.addEventListener("DOMContentLoaded", function () {
+    // 초기 이벤트 리스너 설정
     document.getElementById("sendEmailBtn").onclick = checkEmailDuplicate;
-
-    // 닉네임 중복 확인 버튼 이벤트 리스너 추가
     document.getElementById("checkNicknameBtn").onclick = checkNickname;
-
-    // 비밀번호 확인 이벤트 리스너 추가
     document.getElementById("password").oninput = checkPassword;
     document.getElementById("passwordConfirm").oninput = checkPassword;
 
-    // 회원가입 폼 제출 시 확인
+    // 회원가입 폼 제출 시 최종 검증
     document.querySelector("form").onsubmit = function () {
         // 1. 이메일 인증 확인
         if (!isEmailVerified) {
@@ -229,56 +290,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
 
+        // 모든 검증 통과 → 가입 진행
         return true;
     };
 
-    // 인증 코드 확인 버튼 이벤트 리스너 추가
-    document.getElementById("verifyCodeBtn").onclick = function () {
-        const email = document.getElementById("email").value;
-        const inputCode = document.getElementById("emailConfirmCode").value;
-        const messageDiv = document.getElementById("emailMessage");
-
-        if (!inputCode) {
-            messageDiv.textContent = "인증 코드를 입력해주세요.";
-            messageDiv.style.color = "red";
-            return;
-        }
-
-        // AJAX로 인증 코드 검증 요청
-        fetch("email-verify", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: "email=" + encodeURIComponent(email) + "&code=" + encodeURIComponent(inputCode)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.verified) {
-                    messageDiv.textContent = "이메일 인증이 완료되었습니다.";
-                    messageDiv.style.color = "green";
-                    isEmailVerified = true;
-
-                    // 버튼 및 입력 필드 비활성화
-                    document.getElementById("email").readOnly = true; // <-- disabled 대신 readOnly(대문자 O) 사용
-                    document.getElementById("email").style.backgroundColor = "#e9ecef"; // 선택사항: 막힌 것처럼 회색으로 보이게 함
-
-                    document.getElementById("sendEmailBtn").disabled = true;
-                    document.getElementById("emailConfirmCode").disabled = true;
-                    document.getElementById("verifyCodeBtn").disabled = true;
-                    document.getElementById("verifyCodeBtn").textContent = "인증 완료";
-
-                    // 재발송 버튼 숨기기
-                    document.getElementById("sendEmailBtn").style.display = "none";
-                } else {
-                    messageDiv.textContent = "인증 코드가 올바르지 않거나 유효시간이 만료되었습니다.";
-                    messageDiv.style.color = "red";
-                    isEmailVerified = false;
-                }
-            })
-            .catch(error => {
-                messageDiv.textContent = "오류가 발생했습니다. 다시 시도해주세요.";
-                messageDiv.style.color = "red";
-            });
-    };
+    // 인증 코드 확인 버튼 이벤트 리스너
+    document.getElementById("verifyCodeBtn").onclick = verifyEmailCode;
 });
