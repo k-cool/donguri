@@ -88,3 +88,7 @@ WHERE ROWNUM = 1;
 
 select *
 from USERS;
+
+DELETE
+FROM users
+WHERE nickname = '성공해라';
