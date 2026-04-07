@@ -1,5 +1,6 @@
 package com.c1.donguri.reservation;
 
+import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,33 +20,17 @@ public class ReservationDAO {
     public void insert(HttpServletRequest request) { //정보넣자~
 
         HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
         InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
-
-// TODO: 나중에 로그인 , 템플릿 선택 구현 완료되면 변수로 수정하기
-        // userId = 118D6CAAC61C48B9B6A666E4FB021C93
-        // templateId = 44B0AE7E5F7A4F25B71913BB86B6E17D
-
 
         Connection con = null;
         PreparedStatement ps = null;
         String emailContentSql = "\n" +
                 "INSERT INTO EMAIL_CONTENT(EMAIL_CONTENT_ID ,TEMPLATE_ID, SENDER_ID, SUBJECT, CONTENT, COVER_IMG_URL, BGM_URL)\n" +
-                "VALUES (? ,'44B0AE7E5F7A4F25B71913BB86B6E17D', '118D6CAAC61C48B9B6A666E4FB021C93', ?, ?, ?, ?)\n";
+                "VALUES (?, ?, ?, ?, ?, ?, ?)\n";
         String reservationSql = "\n" +
                 "INSERT INTO RESERVATION(FROM_ID, EMAIL_CONTENT_ID, RECIPIENT_EMAIL, SCHEDULED_DATE)\n" +
-                "VALUES ('118D6CAAC61C48B9B6A666E4FB021C93', ?, ?, ?)\n";
-
-
-//        String subject = request.getParameter("subject");
-//        String content = request.getParameter("content");
-//        String coverImgUrl = request.getParameter("coverImgUrl");
-//        String templateId = request.getParameter("templateId");
-//        String bgmUrl = request.getParameter("bgmUrl");
-
-
-//        String recipientEmail = request.getParameter("recipientEmail");
-//        String scheduledDate = request.getParameter("scheduledDate");
-
+                "VALUES (?, ?, ?, ?)\n";
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
@@ -61,10 +46,12 @@ public class ReservationDAO {
             String emailContentId = uuid.replace("-", "").toUpperCase();
 
             ps.setString(1, emailContentId);
-            ps.setString(2, ir.getSubject());
-            ps.setString(3, ir.getContent());
-            ps.setString(4, ir.getCoverImgUrl());
-            ps.setString(5, ir.getBgmUrl());
+            ps.setString(2, ir.getTemplateId());
+            ps.setString(3, user.getUserId());
+            ps.setString(4, ir.getSubject());
+            ps.setString(5, ir.getContent());
+            ps.setString(6, ir.getCoverImgUrl());
+            ps.setString(7, ir.getBgmUrl());
 
             int firstRow = ps.executeUpdate();
 
@@ -78,9 +65,10 @@ public class ReservationDAO {
 
             LocalDateTime formatted = LocalDateTime.parse(ir.getScheduledDate(), formatter);
 
-            ps.setString(1, emailContentId);
-            ps.setString(2, ir.getRecipientEmail());
-            ps.setObject(3, formatted);
+            ps.setString(1, user.getUserId());
+            ps.setString(2, emailContentId);
+            ps.setString(3, ir.getRecipientEmail());
+            ps.setObject(4, formatted);
 
             int secondRow = ps.executeUpdate();
 
@@ -117,7 +105,6 @@ public class ReservationDAO {
 
     public List<ReservationDTO> getAll() { //전체정보조회
         List<ReservationDTO> list = new ArrayList<>();
-//        String sql = "SELECT * FROM reservation ORDER BY scheduled_date";
         String sql = "SELECT R.RESERVATION_ID,\n" +
                 "       R.RECIPIENT_EMAIL,\n" +
                 "       R.SCHEDULED_DATE,\n" +
@@ -137,13 +124,8 @@ public class ReservationDAO {
                 ReservationDTO r = new ReservationDTO();
 
                 r.setReservationId(rs.getString("reservation_id"));
-//                r.setFromId(rs.getString("from_id"));
-//                r.setSenderEmail(rs.getString("sender_email"));
                 r.setRecipientEmail(rs.getString("recipient_email"));
                 r.setSubject(rs.getString("subject"));
-//                r.setEmailMessage(rs.getString("content"));
-//                r.setTemplateId(rs.getString("template_id"));
-//                r.setBgm(rs.getString("bgm"));
                 r.setIsDone(rs.getString("is_done"));
                 Timestamp ts = rs.getTimestamp("scheduled_date");
                 r.setScheduledDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(ts));
@@ -158,7 +140,11 @@ public class ReservationDAO {
     }
 
 
-    public int delete(String id) {
+    public int delete(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
         String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
         String deleteReservationSql = "DELETE FROM RESERVATION R WHERE R.RESERVATION_ID=?";
         String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT E WHERE E.EMAIL_CONTENT_ID=?";
@@ -169,7 +155,7 @@ public class ReservationDAO {
             String emailContentId = null;
 
             try (PreparedStatement ps = con.prepareStatement(getEmailContentIdSql)) {
-                ps.setString(1, id);
+                ps.setString(1, user.getUserId());
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
@@ -179,7 +165,7 @@ public class ReservationDAO {
 
             if (emailContentId != null) {
                 try (PreparedStatement ps1 = con.prepareStatement(deleteReservationSql)) {
-                    ps1.setString(1, id);
+                    ps1.setString(1, user.getUserId());
                     ps1.executeUpdate();
                 }
 
@@ -198,7 +184,10 @@ public class ReservationDAO {
         return 0;
     }
 
-    public ReservationDTO getOne(String id) {
+    public ReservationDTO getOne(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
         String sql = "SELECT r.reservation_id,\n" +
                 "       u.nickname as from_id,\n" +
                 "       r.recipient_email,\n" +
@@ -214,7 +203,7 @@ public class ReservationDAO {
         try (Connection con = DBManager.DB_MANAGER.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, id);
+            ps.setString(1, user.getUserId());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -236,14 +225,20 @@ public class ReservationDAO {
         return null;
     }
 
-    public int update(ReservationDTO r) {
+    public int update(HttpServletRequest request) {
+        String reservationId = request.getParameter("id");
+        String recipientEmail = request.getParameter("recipientEmail");
+        String subject = request.getParameter("subject");
+        String content = request.getParameter("content");
+        String scheduledDate = request.getParameter("scheduledDate");
+        String templateId = request.getParameter("templateId");
+        String bgmUrl = request.getParameter("bgmUrl");
+
         Connection con = null;
         PreparedStatement ps = null;
 
 
         String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID = ?";
-
-
         String updateEmailSql = "UPDATE EMAIL_CONTENT SET SUBJECT = ?, CONTENT = ?, TEMPLATE_ID = ?, BGM_URL = ? WHERE EMAIL_CONTENT_ID = ?";
         String updateResSql = "UPDATE RESERVATION SET RECIPIENT_EMAIL = ?, SCHEDULED_DATE = TO_DATE(?, 'YYYY-MM-DD HH24:MI') WHERE RESERVATION_ID = ?";
 
@@ -254,7 +249,7 @@ public class ReservationDAO {
             String emailContentId = null;
             // 1. EMAIL_CONTENT_ID 조회
             ps = con.prepareStatement(getEmailContentIdSql);
-            ps.setString(1, r.getReservationId());
+            ps.setString(1, reservationId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 emailContentId = rs.getString("EMAIL_CONTENT_ID");
@@ -264,19 +259,19 @@ public class ReservationDAO {
             if (emailContentId != null) {
                 // 2. EMAIL_CONTENT 테이블 수정
                 ps = con.prepareStatement(updateEmailSql);
-                ps.setString(1, r.getSubject());
-                ps.setString(2, r.getContent());
-                ps.setString(3, r.getTemplateId());
-                ps.setString(4, r.getBgm());
+                ps.setString(1, subject);
+                ps.setString(2, content);
+                ps.setString(3, templateId);
+                ps.setString(4, bgmUrl);
                 ps.setString(5, emailContentId);
                 int res1 = ps.executeUpdate();
                 ps.close();
 
                 // 3. RESERVATION 테이블 수정
                 ps = con.prepareStatement(updateResSql);
-                ps.setString(1, r.getRecipientEmail());
-                ps.setString(2, r.getScheduledDate());
-                ps.setString(3, r.getReservationId());
+                ps.setString(1, recipientEmail);
+                ps.setString(2, scheduledDate);
+                ps.setString(3, reservationId);
                 int res2 = ps.executeUpdate();
 
                 if (res1 > 0 && res2 > 0) {
@@ -297,11 +292,15 @@ public class ReservationDAO {
         } finally {
             DBManager.DB_MANAGER.close(con, ps, null);
         }
+
         return 0;
     }
 
 
-    public ArrayList<TemplateDTO> getTemplateList(String userId) {
+    public ArrayList<TemplateDTO> getTemplateList(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
         ArrayList<TemplateDTO> list = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
@@ -335,7 +334,7 @@ public class ReservationDAO {
             }
 
             ps = con.prepareStatement(addedSql);
-            ps.setString(1, userId);
+            ps.setString(1, user.getUserId());
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -353,5 +352,28 @@ public class ReservationDAO {
         }
 
         return list;
+    }
+
+    public void setReservationDTOToSession(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
+
+        InsertReservationDTO ir = new InsertReservationDTO(
+                request.getParameter("id"),
+                user.getUserId(),
+                null,
+                request.getParameter("recipientEmail"),
+                request.getParameter("subject"),
+                request.getParameter("content"),
+                request.getParameter("templateId"),
+                request.getParameter("coverImgUrl"),
+                request.getParameter("bgmUrl"),
+                request.getParameter("scheduledDate")
+        );
+
+        session.setAttribute("insertReservation", ir);
+
     }
 }
