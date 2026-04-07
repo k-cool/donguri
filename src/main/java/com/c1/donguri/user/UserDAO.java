@@ -141,7 +141,7 @@ public class UserDAO {
         try {
             con = DBManager.DB_MANAGER.getConnection();
             // 1. SQL문에 profile_img_url 컬럼 추가 호출
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            String sql = "SELECT RAWTOHEX(user_id) AS user_id, email, nickname, profile_img_url FROM users WHERE email = ? AND password = ?";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, request.getParameter("email"));
             pstmt.setString(2, request.getParameter("password"));
@@ -151,6 +151,7 @@ public class UserDAO {
             if (rs.next()) {
                 // 2. 로그인 성공 시 DTO 객체 생성
                 UserDTO user = new UserDTO();
+                user.setUserId(rs.getString("user_id"));
                 user.setEmail(rs.getString("email"));
                 user.setNickname(rs.getString("nickname"));
 
@@ -162,7 +163,7 @@ public class UserDAO {
                 //    - 다른 컨트롤러에서 session.getAttribute("user")로 가져올 수 있음
                 HttpSession session = request.getSession();
                 request.getSession().setAttribute("user", user);
-                session.setMaxInactiveInterval(60); // 60초(1분) 후 자동 만료
+                session.setMaxInactiveInterval(300); //  5분
 
                 return true;
             }
