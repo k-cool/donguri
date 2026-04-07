@@ -1,5 +1,7 @@
 package com.c1.donguri.scheduler;
 
+import com.c1.donguri.user.UserDTO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,15 +21,8 @@ public class SentMailDetailC extends HttpServlet {
         String keyword = request.getParameter("keyword");
 
         HttpSession session = request.getSession();
-//        String userId = (String) session.getAttribute("userId");
-        // 테스트용 값
-        String userId = "F90D905CC65E464482848C0884788A47";
-
-        // 비로그인 상태일 경우 로그인 창으로 넘겨주는 기능
-//        if (userId == null) {
-//            response.sendRedirect("login.jsp");
-//            return;
-//        }
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        String userId = user.getUserId();
 
         SentMailDTO sentMail =
                 SentMailDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
@@ -45,7 +40,7 @@ public class SentMailDetailC extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        doGet(request, response);
 
     }
 
