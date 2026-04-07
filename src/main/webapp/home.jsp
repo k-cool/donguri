@@ -27,6 +27,7 @@
     <button type="button" onclick="location.href='template-list'">template list</button>
     <button type="button" onclick="location.href='template-user'">User's template list</button>
     <button type="button" onclick="location.href='qr-decode'">PC QR Upload!</button>
+    <button onclick="location.href='sent-mail'">sent-mail</button>
 </div>
 
 <div class="scene" id="scene">
@@ -36,7 +37,6 @@
         <div class="ground"></div>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -1,5 +1,8 @@
 package com.c1.donguri.scheduler;
 
+import com.c1.donguri.user.UserDAO;
+import com.c1.donguri.user.UserDTO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,26 +19,25 @@ public class SentMailC extends HttpServlet {
 
         String keyword = request.getParameter("keyword");
 
-// 로그인 유저 가져오기
-//        HttpSession session = request.getSession();
-//        UsersDTO loginUser = (UsersDTO) session.getAttribute("loginUser");
-//
-//        if (loginUser == null) {
-//            response.sendRedirect("login.jsp");
-//            return;
-//        }
-//
-//        String userId = loginUser.getUserId(); // HEX 문자열
 
-        ArrayList<SentMailDTO> sentMails =
-//                SentMailDAO.SENT_MAIL.getSuccessSentMails(getUserId(), keyword);
-                SentMailDAO.SENT_MAIL_DAO.getSuccessSentMails(keyword);
+        if (UserDAO.USER_DAO.loginCheck(request)) {
+            // 로그인된 사용자만 접근 가능한 기능
+            UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+            ArrayList<SentMailDTO> sentMails =
+                    SentMailDAO.SENT_MAIL_DAO.getSuccessSentMails(user.getUserId(), keyword);
 
-        request.setAttribute("sentMails", sentMails);
-        request.setAttribute("keyword", keyword);
+            System.out.println("user : " + user);
+            System.out.println("userId : " + (user != null ? user.getUserId() : null));
 
-        request.setAttribute("content", "jsp/sentMail.jsp");
-        request.getRequestDispatcher("main.jsp").forward(request, response);
+            request.setAttribute("sentMails", sentMails);
+            request.setAttribute("keyword", keyword);
+
+            request.setAttribute("content", "jsp/sentMail.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login");
+        }
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
