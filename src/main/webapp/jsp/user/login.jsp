@@ -3,10 +3,19 @@
 <div class="login-container">
     <h2>로그인</h2>
 
+    <!-- 실패 패스워드에서만 메시지 표시 -->
+    <% if ("invalid".equals(request.getAttribute("loginError"))) { %>
+    <div class="error-message">
+        이메일 또는 비밀번호가 잘못되었습니다.
+        이메일과 비밀번호를 정확히 입력해 주세요.
+    </div>
+    <% } %>
+
     <form action="login" method="post">
         <div class="form-group">
             <label for="email">이메일</label>
-            <input type="email" id="email" name="email" required placeholder="example@email.com">
+            <input type="email" id="email" name="email" required placeholder="example@email.com"
+                   value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>">
         </div>
 
         <div class="form-group">
