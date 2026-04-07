@@ -6,6 +6,139 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
+        /* 기본 배경: 부드러운 모래색 */
+        body {
+            background-color: #fdfaf5;
+            color: #5d4037;
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        /* 다이어리/나무판 느낌의 컨테이너 */
+        .form-container {
+            max-width: 550px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 30px;
+            /* 나무 느낌의 이중 테두리 */
+            border: 8px solid #8e6546;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* 제목 스타일 */
+        h2 {
+            color: #5d4037;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* 폼 라벨: 나무 표지판 느낌 */
+        .form-row label {
+            display: block;
+            font-weight: bold;
+            color: #8d6e63;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* 입력창 공통 스타일 */
+        .form-row input,
+        .form-row textarea,
+        .form-row select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0d5c1;
+            border-radius: 12px;
+            background-color: #fdfbf9;
+            color: #3e2723;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-row input:focus,
+        .form-row textarea:focus {
+            border-color: #8e6546;
+            background-color: #fff;
+        }
+
+        /* 읽기 전용 닉네임 창 */
+        input[readonly] {
+            background-color: #f1ece9 !important;
+            border-color: #d7ccc8 !important;
+            color: #a1887f;
+        }
+
+        /* 날짜 선택 커스텀 */
+        .date-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f4ece1;
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px dashed #8e6546;
+            cursor: pointer;
+        }
+
+        #scheduledWrapper {
+            font-size: 1.4rem;
+            background: none;
+            border: none;
+        }
+
+        /* 버튼 그룹 */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button, .link-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        /* 수정 완료 버튼: 짙은 나무색 */
+        button[type="submit"] {
+            background: #795548;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background: #5d4037;
+            transform: translateY(-3px);
+        }
+
+        /* 취소 버튼: 연한 나무색 */
+        .link-btn {
+            background: #d7ccc8;
+            color: #5d4037 !important;
+        }
+
+        .link-btn:hover {
+            background: #bcaaa4;
+            transform: translateY(-3px);
+        }
+
+        /* 도토리 배경 패턴 */
         body::after {
             content: "";
             position: fixed;
@@ -13,102 +146,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://cdn-icons-png.flaticon.com/128/1202/1202088.png') repeat;
-            opacity: 0.15;
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png'); /* 은은한 나무결 */
+            opacity: 0.05;
+            pointer-events: none;
             z-index: -1;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            background-color: #fff8f0;
-        }
-
-        .form-container {
-            max-width: 500px;
-            width: 90%;
-            margin: 40px auto;
-            padding: 30px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .form-container h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .form-row {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-row label {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .form-row input,
-        .form-row textarea,
-        .form-row select {
-            padding: 8px 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .date-picker-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        #scheduledWrapper {
-            font-size: 1.5em;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            transition: background-color 0.2s;
-        }
-
-        #scheduledWrapper:hover {
-            background-color: #e0e0e0;
-        }
-
-        .selected-date {
-            font-size: 1em;
-            color: #333;
-        }
-
-        button, .link-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            background: #8e6546;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            margin-top: 10px;
-            display: inline-block;
-            transition: background 0.2s;
-        }
-
-        button:hover, .link-btn:hover {
-            background: #bf8c72;
         }
     </style>
 </head>
