@@ -24,6 +24,9 @@
 <div>
     <h1>여기 이동 버튼 모아서 사용해주세요!</h1>
     <button onclick="location.href='omikuji'">omikuji</button>
+    <button type="button" onclick="location.href='template-list'">template list</button>
+    <button type="button" onclick="location.href='template-user'">User's template list</button>
+    <button type="button" onclick="location.href='qr-decode'">PC QR Upload!</button>
     <button onclick="location.href='sent-mail'">sent-mail</button>
 </div>
 
