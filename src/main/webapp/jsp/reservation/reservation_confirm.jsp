@@ -64,8 +64,7 @@
 <div class="confirm-container">
     <h2>📬 예약 내용 확인</h2>
 
-    <div class="confirm-row"><label>닉네임:</label> <span>${insertReservation.fromId}</span></div>
-    <%--    <div class="confirm-row"><label>보내는 이메일:</label> <span>${insertReservation.senderEmail}</span></div>--%>
+   
     <div class="confirm-row"><label>받는 이메일:</label> <span>${insertReservation.recipientEmail}</span></div>
     <div class="confirm-row"><label>제목:</label> <span>${insertReservation.subject}</span></div>
     <div class="confirm-row"><label>내용:</label> <span>${insertReservation.content}</span></div>
