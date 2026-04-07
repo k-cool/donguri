@@ -9,15 +9,18 @@
 
     <p><b>받는 사람:</b> ${r.recipientEmail}</p>
     <p><b>제목:</b> ${r.subject}</p>
-    <p><b>예약 시간:</b> ${r.scheduledDate}</p>
 
     <hr>
 
     <p>${r.content}</p>
 
+    <hr>
+
+    <p><b>예약 시간:</b> ${r.scheduledDate}</p>
+
     <br>
-    <a href="reservation?action=edit&id=${r.reservationId}">수정하기</a> |
-    <a href="reservation?action=list">목록으로</a>
+    <a href="reservation?action=edit&id=${r.reservationId}">수정하고싶어요!</a> <br>
+    <a href="reservation?action=list">리스트로 돌아갈래!</a>
 </div>
 </body>
 </html>

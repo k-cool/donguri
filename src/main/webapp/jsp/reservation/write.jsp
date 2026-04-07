@@ -135,7 +135,7 @@
 
         <div class="form-row">
             <label>닉네임</label>
-            <input name="fromId" value="${sessionScope.insertReservation.fromId != null ? sessionScope.insertReservation.fromId : sessionScope.user.nickname}" placeholder="닉네임 입력" required>
+            <input name="fromId" value="${sessionScope.insertReservation.fromId != null ? sessionScope.insertReservation.fromId : ''}" placeholder="닉네임 입력" required>
         </div>
 
         <div class="form-row">
