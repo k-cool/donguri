@@ -9,13 +9,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "sentMailDetail", value = "/sentMailDetail")
+@WebServlet(name = "sentMailDetail", value = "/sent-mail-detail")
 public class SentMailDetailC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         request.setCharacterEncoding("UTF-8");
 
@@ -34,7 +30,7 @@ public class SentMailDetailC extends HttpServlet {
 //        }
 
         SentMailDTO sentMail =
-                SentMailDAO.SENT_MAIL.getSentMailDetail(userId, reservationId);
+                SentMailDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
 
         System.out.println("reservationId = " + reservationId);
         System.out.println("userId = " + userId);
@@ -44,6 +40,13 @@ public class SentMailDetailC extends HttpServlet {
         request.setAttribute("keyword", keyword); // 뒤로가기용 검색어 유지
         request.setAttribute("content", "jsp/sentMailDetail.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
+
+
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+
     }
 
     public void destroy() {

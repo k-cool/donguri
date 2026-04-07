@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class SentMailDAO {
-    public static final SentMailDAO SENT_MAIL = new SentMailDAO();
+    public static final SentMailDAO SENT_MAIL_DAO = new SentMailDAO();
 
     private SentMailDAO() {
     }
@@ -102,7 +102,7 @@ public class SentMailDAO {
     }
 
     public SentMailDTO getSentMailDetail(String userId, String reservationId) {
-        SentMailDTO sentMailDTO = null;
+        SentMailDTO sentMailDTO = new SentMailDTO();
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

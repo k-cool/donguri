@@ -5,24 +5,25 @@
 <head>
     <title>보낸 메일함</title>
     <link rel="stylesheet" href="/css/sentMail.css">
-
     <script src="js/sentMail.js"></script>
 </head>
 <body>
 <div class="sent-mail-container">
     <h1>보낸 메일함</h1>
 
-    <form action="${pageContext.request.contextPath}/sentMail" method="get" class="search-form">
+    <!-- 검색 form -->
+    <form action="${pageContext.request.contextPath}/sent-mail" method="get" class="search-form">
         <input type="text" name="keyword" placeholder="이메일, 제목, 내용 검색" value="${keyword}">
         <button type="submit">검색</button>
     </form>
 
     <!-- 상세 이동용 form -->
-    <form id="detailForm" method="post" action="${pageContext.request.contextPath}/sentMailDetail">
+    <form id="detailForm" method="get" action="${pageContext.request.contextPath}/sent-mail-detail">
         <input type="hidden" name="reservationId" id="reservationId">
         <input type="hidden" name="keyword" id="detailKeyword" value="${keyword}">
     </form>
 
+    <!-- 카드 리스트 -->
     <div class="mail-list">
         <c:choose>
             <c:when test="${empty sentMails}">
@@ -30,28 +31,24 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="mail" items="${sentMails}">
-                    <form id="detailForm" method="post"
-                          action="/sentMailDetail">
-                        <input type="hidden" name="reservationId" id="reservationId">
-                        <div class="mail-card" onclick="goDetail('${mail.reservationId}')">
-                            <div class="mail-row">
-                                <span class="mail-label">받는 사람:</span>
-                                <span class="mail-value">${mail.recipientEmail}</span>
-                            </div>
-                            <div class="mail-row title-row">
-                                <span class="mail-label">제목:</span>
-                                <span class="mail-value title-text">${mail.subject}</span>
-                            </div>
-                            <div class="mail-row">
-                                <span class="mail-label">상태:</span>
-                                <span class="mail-value status-text">${mail.status}</span>
-                            </div>
-                            <div class="mail-row">
-                                <span class="mail-label">보낸 시각:</span>
-                                <span class="mail-value date-text">${mail.sentAt}</span>
-                            </div>
+                    <div class="mail-card" onclick="goDetail('${mail.reservationId}')">
+                        <div class="mail-row">
+                            <span class="mail-label">받는 사람:</span>
+                            <span class="mail-value">${mail.recipientEmail}</span>
                         </div>
-                    </form>
+                        <div class="mail-row title-row">
+                            <span class="mail-label">제목:</span>
+                            <span class="mail-value title-text">${mail.subject}</span>
+                        </div>
+                        <div class="mail-row">
+                            <span class="mail-label">상태:</span>
+                            <span class="mail-value status-text">${mail.status}</span>
+                        </div>
+                        <div class="mail-row">
+                            <span class="mail-label">보낸 시각:</span>
+                            <span class="mail-value date-text">${mail.sentAt}</span>
+                        </div>
+                    </div>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

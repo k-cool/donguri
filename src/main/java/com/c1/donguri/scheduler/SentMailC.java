@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "sentMail", value = "/sentMail")
+@WebServlet(name = "sentMail", value = "/sent-mail")
 public class SentMailC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -29,7 +29,7 @@ public class SentMailC extends HttpServlet {
 
         ArrayList<SentMailDTO> sentMails =
 //                SentMailDAO.SENT_MAIL.getSuccessSentMails(getUserId(), keyword);
-                SentMailDAO.SENT_MAIL.getSuccessSentMails(keyword);
+                SentMailDAO.SENT_MAIL_DAO.getSuccessSentMails(keyword);
 
         request.setAttribute("sentMails", sentMails);
         request.setAttribute("keyword", keyword);
