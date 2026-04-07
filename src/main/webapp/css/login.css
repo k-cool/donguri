@@ -82,3 +82,13 @@
 .btn-signup-link:hover {
     color: #555;
 }
+
+.error-message {
+    color: #ff4444;
+    background-color: #ffebee;
+    border: 1px solid #ffcccc;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+}
