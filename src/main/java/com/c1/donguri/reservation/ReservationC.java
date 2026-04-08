@@ -54,8 +54,8 @@ public class ReservationC extends HttpServlet {
             request.getRequestDispatcher("jsp/reservation/reservation_edit.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
-            String id = request.getParameter("id");
-            ReservationDAO.RESERVATION_DAO.delete(request);
+            String reservationId = request.getParameter("id");
+            ReservationDAO.RESERVATION_DAO.delete(reservationId);
             response.sendRedirect("reservation?action=list");
         }
     }

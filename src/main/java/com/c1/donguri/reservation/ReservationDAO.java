@@ -140,14 +140,11 @@ public class ReservationDAO {
     }
 
 
-    public int delete(HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-        UserDTO user = (UserDTO) session.getAttribute("user");
+    public int delete(String reservationId) {
 
         String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
-        String deleteReservationSql = "DELETE FROM RESERVATION R WHERE R.RESERVATION_ID=?";
-        String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT E WHERE E.EMAIL_CONTENT_ID=?";
+        String deleteReservationSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID=?";
+        String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID=?";
 
         try (Connection con = DBManager.DB_MANAGER.getConnection()) {
             con.setAutoCommit(false);
@@ -155,9 +152,8 @@ public class ReservationDAO {
             String emailContentId = null;
 
             try (PreparedStatement ps = con.prepareStatement(getEmailContentIdSql)) {
-                ps.setString(1, user.getUserId());
+                ps.setString(1, reservationId);
                 ResultSet rs = ps.executeQuery();
-
                 if (rs.next()) {
                     emailContentId = rs.getString("EMAIL_CONTENT_ID");
                 }
@@ -165,7 +161,7 @@ public class ReservationDAO {
 
             if (emailContentId != null) {
                 try (PreparedStatement ps1 = con.prepareStatement(deleteReservationSql)) {
-                    ps1.setString(1, user.getUserId());
+                    ps1.setString(1, reservationId);
                     ps1.executeUpdate();
                 }
 
