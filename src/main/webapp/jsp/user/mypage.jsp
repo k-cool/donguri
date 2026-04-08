@@ -35,7 +35,7 @@
     </div>
 
     <div class="btn-group">
-        <button type="button" onclick="location.href='/'">홈으로</button>
+        <button type="button" onclick="location.href='../..'">홈으로</button>
         <button type="button" onclick="location.href='password-edit'">비밀번호 재설정</button>
         <button type="button" onclick="location.href='user-delete'">회원 탈퇴</button>
     </div>

@@ -1,5 +1,6 @@
 package com.c1.donguri.omikuji;
 
+import com.c1.donguri.user.UserDAO;
 import com.c1.donguri.util.EmailSend;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,11 +13,18 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "omikuji", value = "/omikuji")
 public class OmikujiC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
+
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+        }
+
         boolean isOmikujiAvailable = OmikujiDAO.OMIKUJI_DAO.getIsOmikujiAvailable(request);
 
         request.setAttribute("isOmikujiAvailable", isOmikujiAvailable);
 
         System.out.println("isOmikujiAvailable: " + isOmikujiAvailable);
+
         request.setAttribute("content", "jsp/omikuji/omikuji.jsp");
 
         request.getRequestDispatcher("main.jsp").forward(request, response);

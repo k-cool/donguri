@@ -25,3 +25,25 @@ ORDER BY SCHEDULED_DATE;
 UPDATE USERS
 SET OMIKUJI_AT = null
 WHERE USER_ID = '4EB72BAF38F6D371E063835E000AADA2';
+
+/*
+    BGM 데이터 입력
+*/
+
+UPDATE EMAIL_CONTENT
+SET BGM_URL = 'https://www.chosic.com/wp-content/uploads/2021/02/PerituneMaterial_Sakuya2(chosic.com).mp3';
+
+
+/*
+    body html 입력
+*/
+
+UPDATE TEMPLATE
+SET BODY_HTML = '<div>
+    <img src="$COVER_IMG_URL$" alt="bg-img"/>
+</div>
+<div>
+    <h2>$SUBJECT$</h2>
+    <p>$CONTENT$</p>
+    <span>$SCHEDULED_DATE$</span>
+</div>';
