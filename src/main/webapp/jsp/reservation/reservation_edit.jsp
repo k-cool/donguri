@@ -194,7 +194,7 @@
             <select name="templateId" id="templateSelect">
                 <option value="">-- 보관함 템플릿 선택 --</option>
                 <c:forEach items="${templateList}" var="t">
-                    <option value="${t.templateId}" data-url="${t.coverImgUrl}">
+                    <option value="${t.templateId}" data-url="${t.coverImgUrl}" ${r.templateId == t.templateId ? "selected" : ""}>
                             ${t.name}
                     </option>
                 </c:forEach>
@@ -210,23 +210,22 @@
             <img id="previewImg" src="" width="150"
                  style="border-radius: 8px; border: 1px solid #ddd; display: none;">
         </div>
-</div>
 
-<div class="form-row">
-    <label>BGM</label>
-    <select name="bgmUrl">
-        <option value="none" ${r.bgm == 'none' ? 'selected' : ''}>없음</option>
-        <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
-        <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
-    </select>
-</div>
-
-<div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-    <button type="submit">💌 수정 완료</button>
-    <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
-       style="background: #a6a6a6;">취소</a>
-</div>
-</form>
+        <div class="form-row">
+            <label>BGM</label>
+            <select name="bgmUrl">
+                <option value="none" ${r.bgm == 'none' ? 'selected' : ''}>없음</option>
+                <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
+                <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
+            </select>
+        </div>
+        
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+            <button type="submit">💌 수정 완료</button>
+            <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
+               style="background: #a6a6a6;">취소</a>
+        </div>
+        </form>
 </div>
 
 <script src="js/reservation-flatpickr.js"></script>

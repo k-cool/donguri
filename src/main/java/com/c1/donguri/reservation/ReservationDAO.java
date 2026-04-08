@@ -264,7 +264,7 @@ public class ReservationDAO {
                 int res1 = ps.executeUpdate();
                 ps.close();
 
-                // 3. RESERVATION 테이블 수정
+
                 ps = con.prepareStatement(updateResSql);
                 ps.setString(1, recipientEmail);
                 ps.setString(2, scheduledDate);
@@ -275,6 +275,12 @@ public class ReservationDAO {
                     con.commit(); // 둘 다 성공 시 커밋
                     System.out.println("수정 트랜잭션 성공");
                     return 1;
+                } else {
+                    try {
+                        con.rollback();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         } catch (Exception e) {
