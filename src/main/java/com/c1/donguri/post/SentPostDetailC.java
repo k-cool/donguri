@@ -1,5 +1,6 @@
 package com.c1.donguri.post;
 
+import com.c1.donguri.user.UserDAO;
 import com.c1.donguri.user.UserDTO;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,12 @@ import java.io.IOException;
 @WebServlet(name = "sentMailDetail", value = "/sent-post-detail")
 public class SentPostDetailC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
+
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+            return;
+        }
 
         request.setCharacterEncoding("UTF-8");
 

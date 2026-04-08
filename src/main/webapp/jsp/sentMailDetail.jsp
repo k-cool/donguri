@@ -17,6 +17,7 @@
         <div class="detail-row">
             <span class="detail-label">제목</span>
             <span class="detail-value detail-title">${sentMail.subject}</span>
+            <button class="back-btn" onclick="location.href='post?id=${sentMail.reservationId}'">실제 동구리 보기</button>
         </div>
 
         <div class="detail-row detail-content-row">
