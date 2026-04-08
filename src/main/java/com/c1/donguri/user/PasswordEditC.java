@@ -63,10 +63,10 @@ public class PasswordEditC extends HttpServlet {
 
         if (isUpdated) {
             request.setAttribute("successMessage", "비밀번호가 성공적으로 변경되었습니다.");
-            request.setAttribute("content", "user/mypage.jsp");
+            request.setAttribute("content", "jsp/user/mypage.jsp");
         } else {
             request.setAttribute("errorMessage", "현재 비밀번호가 올바르지 않습니다.");
-            request.setAttribute("content", "user/password_edit.jsp");
+            request.setAttribute("content", "jsp/user/password_edit.jsp");
         }
 
         request.getRequestDispatcher("main.jsp").forward(request, response);

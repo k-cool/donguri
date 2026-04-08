@@ -35,7 +35,7 @@ public class DBManager {
 //                        .getResource("Wallet")
 //                        .toURI()
 //        ).toString().replace("\\", "/");
-//
+
 //        String url = envMap.get("DB_URL") + "?TNS_ADMIN=" + walletPath;
 
 //        System.out.println(url);

@@ -50,6 +50,7 @@ public class LoginC extends HttpServlet {
             // 실패 시: 헤더는 비우고 중앙에만 다시 로그인 창을 띄웁니다.
             request.setAttribute("loginPage", null);
             request.setAttribute("content", "jsp/user/login.jsp");
+            request.setAttribute("loginError", "invalid");
             request.getRequestDispatcher("main.jsp").forward(request, response);
         }
     }
