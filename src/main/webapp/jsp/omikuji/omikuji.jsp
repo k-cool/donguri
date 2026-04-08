@@ -23,11 +23,11 @@
         <div id="squirrel">🐿️</div>
     </c:if>
 
-    <%--    <c:if test="${!isOmikujiAvailable}">--%>
-    <div id="guide-text" style="display: <%=(boolean)request.getAttribute("isOmikujiAvailable") ?"none" :"block"%>">
-        <h2>오늘은 다람쥐가 쉬러갔어요. 내일 다시 만나요!</h2>
-    </div>
-    <%--    </c:if>--%>
+    <c:if test="${!isOmikujiAvailable}">
+        <div id="guide-text" style="display: <%=(boolean)request.getAttribute("isOmikujiAvailable") ?"none" :"block"%>">
+            <h2>오늘은 다람쥐가 쉬러갔어요. 내일 다시 만나요!</h2>
+        </div>
+    </c:if>
 
 
     <div id="modal-overlay">
@@ -42,8 +42,5 @@
 
 
 </div>
-
-<button id="draw-btn">뽑기!</button>
-
 </body>
 </html>
