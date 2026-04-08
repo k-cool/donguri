@@ -62,8 +62,8 @@ public class PasswordEditC extends HttpServlet {
         boolean isUpdated = UserDAO.USER_DAO.updatePassword(request, currentPassword, newPassword);
 
         if (isUpdated) {
-            request.setAttribute("successMessage", "비밀번호가 성공적으로 변경되었습니다.");
-            request.setAttribute("content", "jsp/user/mypage.jsp");
+            response.sendRedirect("password-success");
+            return;
         } else {
             request.setAttribute("errorMessage", "현재 비밀번호가 올바르지 않습니다.");
             request.setAttribute("content", "jsp/user/password_edit.jsp");
