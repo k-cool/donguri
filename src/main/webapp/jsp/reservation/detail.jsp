@@ -107,7 +107,7 @@
             background-color: #bcaaa4;
         }
 
-      
+
     </style>
 </head>
 <body>
@@ -132,7 +132,7 @@
 
         <div class="btn-group">
             <a href="reservation?action=edit&id=${r.reservationId}" class="btn btn-edit">수정하고싶어요!</a>
-            <a href="reservation?action=list" class="btn btn-list">리스트로 돌아갈래!</a>
+            <a href="reservation?action=list" class="btn btn-list">도토리 심기</a>
         </div>
     </div>
 </div>

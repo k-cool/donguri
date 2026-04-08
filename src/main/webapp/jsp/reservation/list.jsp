@@ -209,6 +209,7 @@
 <div class="container">
     <h2>🌳 숲속 우체통: 추억 찾기</h2>
 
+
     <div class="filter-basket">
         <form action="reservation" method="get" style="display: flex; gap: 10px; margin: 0;">
             <input type="hidden" name="action" value="list">
@@ -229,6 +230,8 @@
             </c:if>
         </form>
     </div>
+
+    <a href="reservation?action=write" class="btn-write">도토리 심으러 가기 🌰</a>
 
     <div class="table-wrapper">
         <table>
@@ -269,7 +272,7 @@
         </table>
     </div>
 
-    <a href="reservation?action=write" class="btn-write">도토리 심으러 가기 🌰</a>
+
 </div>
 <script src="js/filter.js"></script>
 </body>

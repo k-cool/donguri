@@ -87,6 +87,7 @@ public class ReservationC extends HttpServlet {
             if (ir != null) {
                 ReservationDAO.RESERVATION_DAO.insert(request);
                 session.removeAttribute("insertReservation");
+                response.sendRedirect("reservation?action=list");
             } else {
                 response.sendRedirect("reservation?action=list");
             }
