@@ -1,4 +1,4 @@
-package com.c1.donguri.scheduler;
+package com.c1.donguri.post;
 
 import com.c1.donguri.user.UserDTO;
 
@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet(name = "sentMailDetail", value = "/sent-mail-detail")
-public class SentMailDetailC extends HttpServlet {
+@WebServlet(name = "sentMailDetail", value = "/sent-post-detail")
+public class SentPostDetailC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         request.setCharacterEncoding("UTF-8");
@@ -24,8 +23,8 @@ public class SentMailDetailC extends HttpServlet {
         UserDTO user = (UserDTO) session.getAttribute("user");
         String userId = user.getUserId();
 
-        SentMailDTO sentMail =
-                SentMailDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
+        SentPostDTO sentMail =
+                SentPostDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
 
         System.out.println("reservationId = " + reservationId);
         System.out.println("userId = " + userId);

@@ -36,7 +36,7 @@
     </div>
 
     <div class="detail-btn-area">
-        <form action="${pageContext.request.contextPath}/sent-mail" method="get">
+        <form action="${pageContext.request.contextPath}/sent-post" method="get">
             <input type="hidden" name="keyword" value="${keyword}">
             <button type="submit" class="back-btn">목록으로</button>
         </form>

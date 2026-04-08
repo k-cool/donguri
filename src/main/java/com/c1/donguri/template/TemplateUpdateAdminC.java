@@ -1,23 +1,33 @@
 package com.c1.donguri.template;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "TemplateC", value = "/template-list")
-public class TemplateC extends HttpServlet {
+@WebServlet(name = "TemplateUpdateAdminC", value = "/template-update-admin")
+@MultipartConfig
+public class TemplateUpdateAdminC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        TemplateDTO template = TemplateDAO.TEMPLATE_DAO.getTemplateDetail(request);
 
-        TemplateDAO.TEMPLATE_DAO.getTemplateList(request);
-        request.setAttribute("content", "jsp/template/template_list.jsp");
+        request.setAttribute("t", template);
+
+        request.setAttribute("content", "jsp/template/template_update_admin.jsp");
+
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+
+        TemplateDAO.TEMPLATE_DAO.updateTemplate(request);
+
+        response.sendRedirect("template-list-admin");
     }
 
     public void destroy() {

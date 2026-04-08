@@ -1,4 +1,4 @@
-package com.c1.donguri.scheduler;
+package com.c1.donguri.post;
 
 import com.c1.donguri.util.DBManager;
 
@@ -7,15 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class SentMailDAO {
-    public static final SentMailDAO SENT_MAIL_DAO = new SentMailDAO();
+public class SentPostDAO {
+    public static final SentPostDAO SENT_MAIL_DAO = new SentPostDAO();
 
-    private SentMailDAO() {
+    private SentPostDAO() {
     }
 
 
-    public ArrayList<SentMailDTO> getSuccessSentMails(String userId, String keyword) {
-        ArrayList<SentMailDTO> sentMails = new ArrayList<>();
+    public ArrayList<SentPostDTO> getSuccessSentMails(String userId, String keyword) {
+        ArrayList<SentPostDTO> sentMails = new ArrayList<>();
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -75,7 +75,7 @@ public class SentMailDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                SentMailDTO dto = new SentMailDTO();
+                SentPostDTO dto = new SentPostDTO();
                 dto.setUserId(rs.getString("user_id"));
                 dto.setReservationId(rs.getString("reservation_id"));
                 dto.setRecipientEmail(rs.getString("recipient_email"));
@@ -96,8 +96,8 @@ public class SentMailDAO {
         return sentMails;
     }
 
-    public SentMailDTO getSentMailDetail(String userId, String reservationId) {
-        SentMailDTO sentMailDTO = new SentMailDTO();
+    public SentPostDTO getSentMailDetail(String userId, String reservationId) {
+        SentPostDTO sentMailDTO = new SentPostDTO();
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -128,7 +128,7 @@ public class SentMailDAO {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                sentMailDTO = new SentMailDTO();
+                sentMailDTO = new SentPostDTO();
                 sentMailDTO.setUserId(rs.getString("user_id"));
                 sentMailDTO.setReservationId(rs.getString("reservation_id"));
                 sentMailDTO.setRecipientEmail(rs.getString("recipient_email"));

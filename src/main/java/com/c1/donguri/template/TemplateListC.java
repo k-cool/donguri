@@ -1,5 +1,7 @@
 package com.c1.donguri.template;
 
+import com.c1.donguri.user.UserDAO;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,13 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "TemplateUserC", value = "/template-user")
-public class TemplateUserC extends HttpServlet {
+@WebServlet(name = "TemplateListC", value = "/template-list")
+public class TemplateListC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
+
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+            return;
+        }
+
         TemplateDAO.TEMPLATE_DAO.getUserTemplateList(request);
-        request.setAttribute("content", "jsp/template/template_list_user.jsp");
+
+        request.setAttribute("content", "jsp/template/template_list.jsp");
+
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
