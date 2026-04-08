@@ -199,7 +199,8 @@ public class ReservationDAO {
         try (Connection con = DBManager.DB_MANAGER.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, user.getUserId());
+            String reservationId = request.getParameter("id");
+            ps.setString(1, reservationId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
