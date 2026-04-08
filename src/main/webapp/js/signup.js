@@ -204,12 +204,11 @@ function checkNickname() {
 // =============================================================================
 function checkPassword() {
     const password = document.getElementById("password").value;
-    const passwordConfirm = document.getElementById("passwordConfirm").value;
     const messageDiv = document.getElementById("passwordMessage");
 
     // 메시지 div가 없으면 생성
     if (!messageDiv) {
-        const passwordGroup = document.getElementById("passwordConfirm").closest(".form-group");
+        const passwordGroup = document.getElementById("password").closest(".form-group");
         const newDiv = document.createElement("div");
         newDiv.id = "passwordMessage";
         newDiv.className = "message";
@@ -218,18 +217,33 @@ function checkPassword() {
 
     const msgDiv = document.getElementById("passwordMessage");
 
-    if (passwordConfirm === "") {
+    if (password === "") {
         msgDiv.textContent = "";
         return;
     }
 
-    if (password === passwordConfirm) {
-        msgDiv.textContent = "비밀번호가 일치합니다.";
-        msgDiv.style.color = "green";
-    } else {
-        msgDiv.textContent = "비밀번호가 일치하지 않습니다.";
+    // 비밀번호 길이 검증
+    if (password.length < 8) {
+        msgDiv.textContent = "비밀번호는 최소 8자 이상이어야 합니다.";
         msgDiv.style.color = "red";
+        return;
     }
+
+    // 특수문자 검증
+    const specialCharPattern = /[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/?]/;
+    if (!specialCharPattern.test(password)) {
+        msgDiv.textContent = "비밀번호에 특수문자 1개 이상 포함해야 합니다.";
+        msgDiv.style.color = "red";
+        return;
+    }
+
+    // 비밀번호 유효성 통과
+    msgDiv.textContent = "";
+}
+
+function checkPasswordConfirm() {
+    // 실시간 검증 제거 - 폼 제출 시에만 검증
+    return;
 }
 
 // =============================================================================
@@ -240,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("sendEmailBtn").onclick = checkEmailDuplicate;
     document.getElementById("checkNicknameBtn").onclick = checkNickname;
     document.getElementById("password").oninput = checkPassword;
-    document.getElementById("passwordConfirm").oninput = checkPassword;
 
     // 회원가입 폼 제출 시 최종 검증
     document.querySelector("form").onsubmit = function () {
@@ -277,16 +290,49 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
 
-        // 3. 비밀번호 일치 확인
+        // 3. 비밀번호 유효성 검사
         const password = document.getElementById("password").value;
         const passwordConfirm = document.getElementById("passwordConfirm").value;
 
+        // 비밀번호 길이 검증
+        if (password.length < 8) {
+            const passwordInput = document.getElementById("password");
+            const messageDiv = document.getElementById("passwordMessage");
+            passwordInput.focus();
+            messageDiv.textContent = "비밀번호는 최소 8자 이상이어야 합니다.";
+            messageDiv.style.color = "red";
+            return false;
+        }
+
+        // 특수문자 검증
+        const specialCharPattern = /[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/?]/;
+        if (!specialCharPattern.test(password)) {
+            const passwordInput = document.getElementById("password");
+            const messageDiv = document.getElementById("passwordMessage");
+            passwordInput.focus();
+            messageDiv.textContent = "비밀번호에 특수문자 1개 이상 포함해야 합니다.";
+            messageDiv.style.color = "red";
+            return false;
+        }
+
+        // 비밀번호 일치 확인
         if (password !== passwordConfirm) {
             const passwordConfirmInput = document.getElementById("passwordConfirm");
-            const messageDiv = document.getElementById("passwordMessage");
+            const messageDiv = document.getElementById("passwordConfirmMessage");
+            
+            // 메시지 div가 없으면 생성
+            if (!messageDiv) {
+                const passwordConfirmGroup = passwordConfirmInput.closest(".form-group");
+                const newDiv = document.createElement("div");
+                newDiv.id = "passwordConfirmMessage";
+                newDiv.className = "message";
+                passwordConfirmGroup.appendChild(newDiv);
+            }
+            
+            const msgDiv = document.getElementById("passwordConfirmMessage");
             passwordConfirmInput.focus();
-            messageDiv.textContent = "비밀번호가 일치하지 않습니다.";
-            messageDiv.style.color = "red";
+            msgDiv.textContent = "비밀번호가 일치하지 않습니다.";
+            msgDiv.style.color = "red";
             return false;
         }
 

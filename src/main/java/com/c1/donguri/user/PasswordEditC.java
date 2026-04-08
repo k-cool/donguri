@@ -58,6 +58,14 @@ public class PasswordEditC extends HttpServlet {
             return;
         }
 
+        // 특수문자 검증
+        if (!newPassword.matches(".*[!@#$%^&*()\\-_=+\\[\\]{}|;:'\",.<>/?].*")) {
+            request.setAttribute("errorMessage", "비밀번호에 특수문자 1개 이상 포함해야 합니다.");
+            request.setAttribute("content", "jsp/user/password_edit.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
+            return;
+        }
+
         // 비밀번호 변경 처리
         boolean isUpdated = UserDAO.USER_DAO.updatePassword(request, currentPassword, newPassword);
 

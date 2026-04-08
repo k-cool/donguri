@@ -81,6 +81,16 @@ public class UserDAO {
             String nickname = request.getParameter("nickname");
             String password = request.getParameter("password");
 
+            // 2. 비밀번호 유효성 검증
+            if (password == null || password.length() < 8) {
+                throw new IllegalArgumentException("비밀번호는 최소 8자 이상이어야 합니다.");
+            }
+
+            // 특수문자 검증
+            if (!password.matches(".*[!@#$%^&*()\\-_=+\\[\\]{}|;:'\",.<>/?].*")) {
+                throw new IllegalArgumentException("비밀번호에 특수문자 1개 이상 포함해야 합니다.");
+            }
+
             // 2. 파일 처리 (name="file" 인 input 태그 기준)
             Part filePart = request.getPart("file");
             String imgUrl = DEFAULT_PROFILE_IMAGE; // 기본값으로 기본 이미지 설정
