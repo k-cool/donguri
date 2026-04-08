@@ -1,8 +1,10 @@
 package com.c1.donguri.omikuji;
 
+import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,13 +25,14 @@ public class OmikujiDAO {
         String sql = "SELECT OMIKUJI_AT FROM USERS WHERE USER_ID = ?";
 
         // TODO: 로그인 연결작업후 수정하기
-        String userId = "4EB72BAF38F6D371E063835E000AADA2";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, userId);
+            pstmt.setString(1, user.getUserId());
 
             rs = pstmt.executeQuery();
 

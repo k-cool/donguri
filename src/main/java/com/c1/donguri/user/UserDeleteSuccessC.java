@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserDeleteSuccessC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute("content", "user/user_delete_success.jsp");
+        request.setAttribute("content", "jsp/user/user_delete_success.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 

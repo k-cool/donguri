@@ -17,7 +17,7 @@ public class SignUpC extends HttpServlet {
 
         request.setAttribute("loginPage", null);
 
-        request.setAttribute("content", "user/signup.jsp");
+        request.setAttribute("content", "jsp/user/signup.jsp");
 
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }

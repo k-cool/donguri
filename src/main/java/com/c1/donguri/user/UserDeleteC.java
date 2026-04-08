@@ -16,7 +16,7 @@ public class UserDeleteC extends HttpServlet {
             return;
         }
         
-        request.getRequestDispatcher("user/user_delete.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/user/user_delete.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -29,7 +29,7 @@ public class UserDeleteC extends HttpServlet {
         
         if (password == null || password.isEmpty()) {
             request.setAttribute("errorMessage", "비밀번호를 입력해주세요.");
-            request.setAttribute("content", "user/user_delete.jsp");
+            request.setAttribute("content", "jsp/user/user_delete.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
             return;
         }
@@ -43,7 +43,7 @@ public class UserDeleteC extends HttpServlet {
             response.sendRedirect("user-delete-success");
         } else {
             request.setAttribute("errorMessage", "비밀번호가 올바르지 않습니다.");
-            request.getRequestDispatcher("user/user_delete.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/user/user_delete.jsp").forward(request, response);
         }
     }
 

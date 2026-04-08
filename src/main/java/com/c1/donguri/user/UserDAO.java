@@ -20,8 +20,12 @@ import java.util.Random;
 public class UserDAO {
     public static final UserDAO USER_DAO = new UserDAO();
 
+    // 기본 프로필 이미지 URL
+    private static final String DEFAULT_PROFILE_IMAGE = "https://donguri-dev.s3.ap-northeast-2.amazonaws.com/profile_img/donguriSample.png";
+
     private UserDAO() {
     }
+
 
     public void getAllUserList(HttpServletRequest request) {
         Connection con = null;
@@ -72,14 +76,14 @@ public class UserDAO {
 
 
         try {
-            // 1. 파라미터 추출 (request에서 직접 추출 가능)
+            // 1. 파라미터 추출 (@MultipartConfig가 있으면 getParameter가 동작함)
             String email = request.getParameter("email");
             String nickname = request.getParameter("nickname");
             String password = request.getParameter("password");
 
             // 2. 파일 처리 (name="file" 인 input 태그 기준)
             Part filePart = request.getPart("file");
-            String imgUrl = null; // 기본값 설정
+            String imgUrl = DEFAULT_PROFILE_IMAGE; // 기본값으로 기본 이미지 설정
 
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = "profile_img/" + UUID.randomUUID().toString();
@@ -136,8 +140,13 @@ public class UserDAO {
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
-            // 1. SQL문에 profile_img_url 컬럼 추가 호출
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+            // [수정] SQL문 끝에 'AND is_deleted = 'N'' 조건을 추가했습니다.
+            // 탈퇴하지 않은 유저만 조회되도록 필터링하는 것입니다.
+
+            String sql = "SELECT RAWTOHEX(user_id) AS user_id, email, nickname, profile_img_url " +
+                    "FROM users " +
+                    "WHERE email = ? AND password = ? AND is_deleted = 'N'";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, request.getParameter("email"));
             pstmt.setString(2, request.getParameter("password"));
@@ -147,6 +156,7 @@ public class UserDAO {
             if (rs.next()) {
                 // 2. 로그인 성공 시 DTO 객체 생성
                 UserDTO user = new UserDTO();
+                user.setUserId(rs.getString("user_id"));
                 user.setEmail(rs.getString("email"));
                 user.setNickname(rs.getString("nickname"));
 
@@ -158,7 +168,7 @@ public class UserDAO {
                 //    - 다른 컨트롤러에서 session.getAttribute("user")로 가져올 수 있음
                 HttpSession session = request.getSession();
                 request.getSession().setAttribute("user", user);
-                session.setMaxInactiveInterval(60); // 60초(1분) 후 자동 만료
+                session.setMaxInactiveInterval(300); //  5분
 
                 return true;
             }
@@ -193,11 +203,11 @@ public class UserDAO {
 
         if (user != null) {
             // 로그인 상태: 헤더에 로그인 성공 페이지 표시
-            request.setAttribute("loginPage", "user/login_ok.jsp");
+            request.setAttribute("loginPage", "jsp/user/login_ok.jsp");
             return true;
         } else {
             // 비로그인 상태: 헤더에 로그인 페이지 표시
-            request.setAttribute("loginPage", "user/login.jsp");
+            request.setAttribute("loginPage", "jsp/user/login.jsp");
             return false;
         }
     }
@@ -373,14 +383,21 @@ public class UserDAO {
             } else {
                 return false;
             }
+            // [핵심 변경 구간] 3. 회원 탈퇴 처리 (DELETE 대신 UPDATE)
+            // DB에 이미 있는 is_deleted 컬럼을 'Y'로 바꿉니다.
+            // 트리거 덕분에 updated_at은 자동으로 현재 시간으로 갱신됩니다.
+            String deleteSql = "UPDATE users SET is_deleted = 'Y' WHERE email = ?";
 
-            // 회원 탈퇴 처리
-            String deleteSql = "DELETE FROM users WHERE email = ?";
             pstmt = con.prepareStatement(deleteSql);
             pstmt.setString(1, user.getEmail());
 
             int result = pstmt.executeUpdate();
-            return result > 0;
+
+            // 4. 탈퇴 성공 시 세션 무효화 (로그아웃 처리)
+            if (result > 0) {
+                request.getSession().invalidate(); // 탈퇴했으니 세션도 바로 지워줍니다.
+                return true;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,6 +414,8 @@ public class UserDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
+        // [수정] AND is_deleted = 'N' 조건을 지워야 합니다.
+        // 그래야 탈퇴한 계정(Y)도 검색되어 중복으로 판정됩니다. 오호 그렇군요
         String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
 
         try {
@@ -407,15 +426,14 @@ public class UserDAO {
 
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count > 0; // 중복이면 true, 아니면 false
+                return count > 0; // DB에 존재하면(탈퇴자 포함) 중복(true) 반환
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, rs);
         }
-
-        return false; // 에러 발생 시 false 반환
+        return false;
     }
 
     // 6자리 인증 코드 생성
@@ -433,17 +451,17 @@ public class UserDAO {
 
             // 기존 세션 확인
             HttpSession currentSession = request.getSession(false);
-            
+
             // 기존 세션이 있고 인증 코드가 있으면 재발송만 처리 (새로운 코드 생성 안 함)
             if (currentSession != null && currentSession.getAttribute("verificationCode") != null) {
                 // 기존 세션 시간만 갱신
                 currentSession.setAttribute("verificationTime", new java.util.Date());
                 currentSession.setMaxInactiveInterval(60); // 1분 유효
-                
+
                 // 기존 코드로 이메일 재발송
                 String existingCode = (String) currentSession.getAttribute("verificationCode");
                 boolean success = EmailSend.EMAIL_SEND.sendVerificationEmail(email, existingCode);
-                
+
                 if (success) {
                     System.out.println("인증 코드 재발송 성공: " + email + " (기존 코드: " + existingCode + ")");
                     return true;

@@ -18,7 +18,7 @@ public class PasswordEditC extends HttpServlet {
             return;
         }
 
-        request.setAttribute("content", "user/password_edit.jsp");
+        request.setAttribute("content", "jsp/user/password_edit.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
@@ -39,21 +39,21 @@ public class PasswordEditC extends HttpServlet {
                 confirmPassword == null || confirmPassword.isEmpty()) {
 
             request.setAttribute("errorMessage", "모든 필드를 입력해주세요.");
-            request.setAttribute("content", "user/password_edit.jsp");
+            request.setAttribute("content", "jsp/user/password_edit.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
             return;
         }
 
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("errorMessage", "새 비밀번호가 일치하지 않습니다.");
-            request.setAttribute("content", "user/password_edit.jsp");
+            request.setAttribute("content", "jsp/user/password_edit.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
             return;
         }
 
         if (newPassword.length() < 8) {
             request.setAttribute("errorMessage", "비밀번호는 최소 8자 이상이어야 합니다.");
-            request.setAttribute("content", "user/password_edit.jsp");
+            request.setAttribute("content", "jsp/user/password_edit.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
             return;
         }

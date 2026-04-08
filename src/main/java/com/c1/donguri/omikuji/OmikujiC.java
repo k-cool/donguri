@@ -13,10 +13,12 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "omikuji", value = "/omikuji")
 public class OmikujiC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
         boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
 
         if (!isLoggedIn) {
             response.sendRedirect("login");
+            return;
         }
 
         boolean isOmikujiAvailable = OmikujiDAO.OMIKUJI_DAO.getIsOmikujiAvailable(request);
