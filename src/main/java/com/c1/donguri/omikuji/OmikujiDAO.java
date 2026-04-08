@@ -59,7 +59,10 @@ public class OmikujiDAO {
 
     }
 
-    public OmikujiDTO drawOmikuji(String userId) {
+    public OmikujiDTO drawOmikuji(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -90,7 +93,7 @@ public class OmikujiDAO {
             pstmt = con.prepareStatement(updateSql);
 
             pstmt.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
-            pstmt.setString(2, userId);
+            pstmt.setString(2, user.getUserId());
 
             int row = pstmt.executeUpdate();
 

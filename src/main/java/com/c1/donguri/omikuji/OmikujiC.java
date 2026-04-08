@@ -36,13 +36,10 @@ public class OmikujiC extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // TODO: 로그인 연결작업후 수정하기
-        String userId = "4EB72BAF38F6D371E063835E000AADA2";
-
         boolean isOmikujiAvailable = OmikujiDAO.OMIKUJI_DAO.getIsOmikujiAvailable(request);
 
         if (isOmikujiAvailable) {
-            OmikujiDTO omikuji = OmikujiDAO.OMIKUJI_DAO.drawOmikuji(userId);
+            OmikujiDTO omikuji = OmikujiDAO.OMIKUJI_DAO.drawOmikuji(request);
 
             JsonObject object = new JsonObject();
             object.add("omikuji", omikuji.toJsonObject());
