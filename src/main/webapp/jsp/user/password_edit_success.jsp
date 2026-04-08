@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>비밀번호 재설정</title>
-    <link rel="stylesheet" href="css/password_edit.css">
+    <link href="css/password_success.css" rel="stylesheet">
 </head>
 <body>
 
