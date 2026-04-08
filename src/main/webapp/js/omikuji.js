@@ -1,9 +1,11 @@
+const squirrel = document.getElementById('squirrel');
+const acorn = document.getElementById('acorn');
+const overlay = document.getElementById('modal-overlay');
+
+
 window.onload = function () {
     console.log("omikuji.js loaded");
 
-    const squirrel = document.getElementById('squirrel');
-    const acorn = document.getElementById('acorn');
-    const overlay = document.getElementById('modal-overlay');
     let isMoving = false;
 
     squirrel?.addEventListener('click', function () {
@@ -126,9 +128,10 @@ function drawOmikuji() {
 }
 
 function closeModal() {
-    document.getElementById('squirrel').style.display = 'none';
-    document.getElementById('guide-text').style.display = 'none';
-    document.getElementById('modal-overlay').style.display = 'none';
-    document.getElementById('acorn').style.opacity = '0';
-    document.getElementById('acorn').classList.remove('active');
+    squirrel.style.display = 'none';
+    acorn.style.opacity = '0';
+    acorn.classList.remove('active');
+    overlay.style.display = 'none';
+
+    location.href = "omikuji";
 }
