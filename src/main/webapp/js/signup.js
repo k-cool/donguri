@@ -200,6 +200,118 @@ function checkNickname() {
 }
 
 // =============================================================================
+// 비밀번호 강도 체크 함수
+// =============================================================================
+
+// 비밀번호 강도 계산
+function checkPasswordStrength(password) {
+    let strength = 0;
+
+    // 길이 기반 강도 계산
+    if (password.length <= 3) {
+        strength = 0;  // 취약
+    } else if (password.length >= 4 && password.length < 8) {
+        strength = 1;  // 보통
+    } else if (password.length >= 8) {
+        // 8글자 이상이면 특수문자 확인
+        if (/[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/?]/.test(password)) {
+            strength = 2;  // 안전
+        } else {
+            strength = 1;  // 보통 (길이는 충족 but 특수문자 없음)
+        }
+    }
+
+    return {
+        level: getLevel(strength),
+        color: getColor(strength),
+        message: getMessage(strength)
+    };
+}
+
+// 강도 레벨 반환
+function getLevel(strength) {
+    switch (strength) {
+        case 0:
+            return 'weak';
+        case 1:
+            return 'medium';
+        case 2:
+            return 'strong';
+        default:
+            return 'weak';
+    }
+}
+
+// 강도별 색상 반환
+function getColor(strength) {
+    switch (strength) {
+        case 0:
+            return '#ff4444';  // 빨강
+        case 1:
+            return '#ffaa00';  // 노랑
+        case 2:
+            return '#00c851';  // 초록
+        default:
+            return '#ff4444';
+    }
+}
+
+// 강도별 메시지 반환
+function getMessage(strength) {
+    switch (strength) {
+        case 0:
+            return '취약';
+        case 1:
+            return '보통';
+        case 2:
+            return '안전';
+        default:
+            return '취약';
+    }
+}
+
+// 강도 게이지 UI 업데이트
+function updateStrengthGauge(password) {
+    const strength = checkPasswordStrength(password);
+
+    // 게이지가 없으면 생성
+    let gaugeContainer = document.getElementById('passwordStrengthContainer');
+    if (!gaugeContainer) {
+        const passwordGroup = document.getElementById("password").closest(".form-group");
+        const container = document.createElement("div");
+        container.id = "passwordStrengthContainer";
+        container.style.marginTop = "8px";
+
+        // 게이지 HTML 구조
+        container.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="flex: 1;">
+                    <div style="width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden;">
+                        <div id="strengthFill" style="height: 100%; width: 0%; transition: width 0.3s ease, background-color 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div id="strengthText" style="font-size: 12px; font-weight: bold; min-width: 40px;">취약</div>
+            </div>
+        `;
+        passwordGroup.appendChild(container);
+        gaugeContainer = document.getElementById('passwordStrengthContainer');
+    }
+
+    const fill = document.getElementById('strengthFill');
+    const text = document.getElementById('strengthText');
+
+    // 게이지 너비와 색상 업데이트
+    const width = strength.level === 'weak' ? '33%' :
+        strength.level === 'medium' ? '66%' : '100%';
+    fill.style.width = width;
+    fill.style.backgroundColor = strength.color;
+
+    // 텍스트 업데이트
+    text.textContent = strength.message;
+    text.style.color = strength.color;
+}
+
+// =============================================================================
 // 4단계: 비밀번호 확인 (실시간 검증)
 // =============================================================================
 function checkPassword() {
@@ -219,8 +331,18 @@ function checkPassword() {
 
     if (password === "") {
         msgDiv.textContent = "";
+        // 게이지 숨기기
+        const gauge = document.getElementById('passwordStrengthContainer');
+        if (gauge) gauge.style.display = 'none';
         return;
     }
+
+    // 강도 게이지 업데이트
+    updateStrengthGauge(password);
+
+    // 게이지가 숨겨져 있으면 다시 보이기
+    const gauge = document.getElementById('passwordStrengthContainer');
+    if (gauge) gauge.style.display = 'block';
 
     // 비밀번호 길이 검증
     if (password.length < 8) {
