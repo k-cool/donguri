@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+
 <html>
 <body>
 
@@ -7,12 +8,12 @@
 
 <!-- 메시지 -->
 <div style="color:deeppink;">
-  ${msg}
+    ${msg}
 </div>
 
 <!-- 페이지 포함 -->
 <div>
-  <jsp:include page="${page}"></jsp:include>
+    <jsp:include page="${page}"></jsp:include>
 </div>
 
 </body>

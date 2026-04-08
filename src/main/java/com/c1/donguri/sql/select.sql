@@ -6,6 +6,8 @@
     ==========================================================
 */
 
+SELECT *
+from USers;
 
 -- 1. 사용자 목록 조회 (users)
 -- 탈퇴하지 않은('N') 사용자들을 가입일 최신순으로 조회합니다.
@@ -55,6 +57,32 @@ FROM send_log l
 ORDER BY l.created_at DESC;
 
 
+SELECT t.template_id,
+       t.name,
+       t.cover_img_url
+FROM user_template ut
+         JOIN
+     template t ON ut.template_id = t.template_id
+WHERE ut.user_id = '6EA6BADB01C8493F9277DA9DB7016AC5'
+ORDER BY ut.created_at DESC;
+
+SELECT TEMPLATE_ID, NAME, COVER_IMG_URL
+FROM TEMPLATE
+WHERE TYPE = 'BASE';
+
+SELECT *
+FROM USER_TEMPLATE
+where USER_ID = '6EA6BADB01C8493F9277DA9DB7016AC5';
+
+SELECT *
+FROM TEMPLATE;
+
+SELECT *
+FROM USER_TEMPLATE
+WHERE TEMPLATE_ID = 'AE6766ED9C7E47F3B33899CBE96C7F22';
+
+
+
 -- 5. 사용자의 개인 템플릿 보관함 조회 (user_template + template JOIN)
 -- 사용자가 '저장' 또는 '보관'한 템플릿 목록을 확인합니다.
 SELECT u.nickname,
@@ -73,6 +101,7 @@ SELECT type,
        COUNT(*) AS total_count
 FROM template
 GROUP BY type;
+
 
 
 -- 7. 오늘의 운세 랜덤 추출 (omikuji)
