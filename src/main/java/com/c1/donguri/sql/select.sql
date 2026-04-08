@@ -6,8 +6,6 @@
     ==========================================================
 */
 
-SELECT *
-from USers;
 
 -- 1. 사용자 목록 조회 (users)
 -- 탈퇴하지 않은('N') 사용자들을 가입일 최신순으로 조회합니다.
@@ -101,7 +99,6 @@ SELECT type,
        COUNT(*) AS total_count
 FROM template
 GROUP BY type;
-
 
 
 -- 7. 오늘의 운세 랜덤 추출 (omikuji)
