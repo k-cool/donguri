@@ -194,7 +194,8 @@
             <select name="templateId" id="templateSelect">
                 <option value="">-- 보관함 템플릿 선택 --</option>
                 <c:forEach items="${templateList}" var="t">
-                    <option value="${t.templateId}" data-url="${t.coverImgUrl}" ${r.templateId == t.templateId ? "selected" : ""}>
+                    <option value="${t.templateId}"
+                            data-url="${t.coverImgUrl}" ${r.templateId == t.templateId ? "selected" : ""}>
                             ${t.name}
                     </option>
                 </c:forEach>
@@ -219,13 +220,13 @@
                 <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
             </select>
         </div>
-        
+
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-            <button type="submit">💌 수정 완료</button>
+            <button type="submit">💌</button>
             <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
                style="background: #a6a6a6;">취소</a>
         </div>
-        </form>
+    </form>
 </div>
 
 <script src="js/reservation-flatpickr.js"></script>
