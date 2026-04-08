@@ -2,22 +2,139 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        /* 배경 및 기본 폰트 */
+        body {
+            background-color: #f4ece1; /* 포근한 베이지색 배경 */
+            color: #4e342e; /* 깊은 나무색 텍스트 */
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 50px 20px;
+        }
+
+        /* 카드 형태의 상세 페이지 컨테이너 */
+        .detail-card {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(121, 85, 72, 0.1);
+            border: 2px solid #e0d5c1;
+            position: relative;
+        }
+
+        /* 상단 제목 */
+        h2 {
+            color: #795548;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        /* 정보 영역 (받는 사람, 제목 등) */
+        .info-section {
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #f1ece9;
+            padding-bottom: 15px;
+        }
+
+        .info-label {
+            display: inline-block;
+            width: 80px;
+            font-weight: bold;
+            color: #a1887f;
+        }
+
+        /* 본문 영역 */
+        .content-area {
+            min-height: 200px;
+            padding: 20px 0;
+            text-align: left;
+            white-space: pre-wrap; /* 줄바꿈 유지 */
+            font-size: 1.1rem;
+            color: #3e2723;
+        }
+
+        /* 구분선 스타일 */
+        hr {
+            border: 0;
+            border-top: 1px dashed #d7ccc8;
+            margin: 25px 0;
+        }
+
+        /* 예약 시간 스타일 */
+        .date-info {
+            font-size: 0.9rem;
+            color: #8d6e63;
+            font-style: italic;
+        }
+
+        /* 버튼 스타일 */
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #795548;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #5d4037;
+            transform: translateY(-2px);
+        }
+
+        .btn-list {
+            background-color: #d7ccc8;
+            color: #5d4037;
+        }
+
+        .btn-list:hover {
+            background-color: #bcaaa4;
+        }
+
+
+    </style>
 </head>
 <body>
-<div align="center">
-    <h2>📬 도토리 상세보기</h2>
+<div class="detail-card">
+    <div align="center">
+        <h2>📬 도토리 상세보기</h2>
 
-    <p><b>받는 사람:</b> ${r.recipientEmail}</p>
-    <p><b>제목:</b> ${r.subject}</p>
-    <p><b>예약 시간:</b> ${r.scheduledDate}</p>
+        <div class="info-section">
+            <p><span class="info-label">받는 사람</span> ${r.recipientEmail}</p>
+            <p><span class="info-label">제목</span> <b>${r.subject}</b></p>
+        </div>
 
-    <hr>
+        <div class="content-area">
+            ${r.content}
+        </div>
 
-    <p>${r.content}</p>
+        <hr>
 
-    <br>
-    <a href="reservation?action=edit&id=${r.reservationId}">수정하기</a> |
-    <a href="reservation?action=list">목록으로</a>
+        <p class="date-info">
+            🕰️ 이 추억은 <b>${r.scheduledDate}</b>에 배달될 예정이야.
+        </p>
+
+        <div class="btn-group">
+            <a href="reservation?action=edit&id=${r.reservationId}" class="btn btn-edit">수정하고싶어요!</a>
+            <a href="reservation?action=list" class="btn btn-list">도토리 심기</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>
