@@ -12,6 +12,8 @@
     <% } %>
 
     <form action="login" method="post">
+        <input hidden type="text" name="cb" value="${param.cb}"/>
+
         <div class="form-group">
             <label for="email">이메일</label>
             <input type="email" id="email" name="email" required placeholder="example@email.com"

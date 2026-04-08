@@ -259,8 +259,8 @@ public class TemplateDAO {
 
 
             // 4. URL에서 t_id 파라미터 추출
-            if (decodedUrl != null && decodedUrl.contains("t_id=")) {
-                templateId = decodedUrl.substring(decodedUrl.indexOf("t_id=") + 5);
+            if (decodedUrl != null && decodedUrl.contains("=")) {
+                templateId = decodedUrl.substring(decodedUrl.indexOf("=") + 1);
             }
 
             // 5. DB 해금 로직 실행
@@ -290,7 +290,9 @@ public class TemplateDAO {
         String s3Url = null;
 
         // 유저가 스캔했을 때 실행될 주소를 조립 (방금 만든 ID를 붙임)
-        String targetUrl = envMap.get("BASE_URL") + "/qr-decode?templateId=" + templateId;
+        String targetUrl = envMap.get("BASE_URL") + "/qr?templateId=" + templateId;
+
+        System.out.println("QR URL:" + targetUrl);
 
         // 바탕화면 경로 설정
         String path = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "qr";

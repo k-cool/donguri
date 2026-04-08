@@ -22,12 +22,6 @@ import java.io.InputStream;
 public class QRDecodeC extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
-
-        if (!isLoggedIn) {
-            response.sendRedirect("login");
-            return;
-        }
 
         request.setAttribute("content", "jsp/template/template_qr_upload.jsp");
 
