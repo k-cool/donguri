@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>동구리 메일 서비스</title>
+    <link rel="stylesheet" href="css/reservation_main.css">
 </head>
 <body>
 
