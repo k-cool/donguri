@@ -6,7 +6,7 @@
 <body>
 
 
-<div align="center">
+<div>
     <h2>동구리 메일 서비스</h2>
     <br>
     일본의 연하장 문화를 참고하여, 온라인으로 원하는 시점에 원하는 대상에게 마음을 전할 수 있는 서비스를 만들고자 하였습니다.<br><br>
@@ -33,7 +33,7 @@
         <div style="display:flex; justify-content:center; gap:50px; margin-top:100px;">
 
             <h1>
-                <a href="login"
+                <a href="${isLoggedIn ? "reservation?action=list" : "login"}"
                    style="display:inline-block; padding:20px 40px; text-decoration:none; color:black; border:1px solid black; border-radius:10px;">
                     🐿️도토리 보내기<br>
                 </a>

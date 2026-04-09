@@ -7,7 +7,22 @@
     <link href="css/reset.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <script src="js/main.js"></script>
+
 </head>
+
+<%
+    System.out.println("main.jsp: " + request.getAttribute("cb"));
+%>
+
+<%--<c:if test="${cb != null}">--%>
+
+<%--    <div>${cb}</div>--%>
+
+<%--    <script>--%>
+<%--        location.href = "${cb}";--%>
+<%--    </script>--%>
+<%--    --%>
+<%--</c:if>--%>
 
 <body>
 <div class="container">
@@ -27,9 +42,6 @@
         <jsp:include page="${not empty content ? content : 'home.jsp'}"/>
     </div>
 
-    <button onclick="location.href='reservation?action=main'">
-        전송서비스
-    </button>
 </div>
 </body>
 </html>

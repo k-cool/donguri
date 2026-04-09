@@ -26,7 +26,9 @@ public class UserDAO {
     private UserDAO() {
     }
 
-
+    /*
+       test 용
+    */
     public void getAllUserList(HttpServletRequest request) {
         Connection con = null;
         PreparedStatement pstmt = null;

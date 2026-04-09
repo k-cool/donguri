@@ -36,15 +36,23 @@ public class LoginC extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
 
+        String cb = request.getParameter("cb");
+
         // 1. 로그인 수행 (세션에 "user" 저장 및 1분 만료 설정)
         UserDAO.USER_DAO.login(request);
 
         // 2. 로그인 성공 여부 확인
         if (UserDAO.USER_DAO.loginCheck(request)) {
+
+            if (cb != null && !cb.trim().isEmpty()) {
+
+                response.sendRedirect(cb);
+
+                return;
+            }
+
             // 성공 시: 중앙에는 홈 화면, 헤더에는 로그인 정보창을 띄웁니다.
             request.setAttribute("content", "home.jsp");
-            request.setAttribute("loginPage", "jsp/user/login_ok.jsp");
-
             request.getRequestDispatcher("main.jsp").forward(request, response);
         } else {
             // 실패 시: 헤더는 비우고 중앙에만 다시 로그인 창을 띄웁니다.

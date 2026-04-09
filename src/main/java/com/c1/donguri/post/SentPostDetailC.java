@@ -1,5 +1,6 @@
-package com.c1.donguri.scheduler;
+package com.c1.donguri.post;
 
+import com.c1.donguri.user.UserDAO;
 import com.c1.donguri.user.UserDTO;
 
 import javax.servlet.ServletException;
@@ -9,11 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet(name = "sentMailDetail", value = "/sent-mail-detail")
-public class SentMailDetailC extends HttpServlet {
+@WebServlet(name = "sentMailDetail", value = "/sent-post-detail")
+public class SentPostDetailC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
+
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+            return;
+        }
 
         request.setCharacterEncoding("UTF-8");
 
@@ -24,8 +30,8 @@ public class SentMailDetailC extends HttpServlet {
         UserDTO user = (UserDTO) session.getAttribute("user");
         String userId = user.getUserId();
 
-        SentMailDTO sentMail =
-                SentMailDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
+        SentPostDTO sentMail =
+                SentPostDAO.SENT_MAIL_DAO.getSentMailDetail(userId, reservationId);
 
         System.out.println("reservationId = " + reservationId);
         System.out.println("userId = " + userId);
@@ -33,7 +39,7 @@ public class SentMailDetailC extends HttpServlet {
 
         request.setAttribute("sentMail", sentMail);
         request.setAttribute("keyword", keyword); // 뒤로가기용 검색어 유지
-        request.setAttribute("content", "jsp/sentMailDetail.jsp");
+        request.setAttribute("content", "jsp/sent_post/sentMailDetail.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
 
 

@@ -1,7 +1,7 @@
 package com.c1.donguri.reservation;
 
+import com.c1.donguri.template.TemplateDTO;
 import com.c1.donguri.user.UserDAO;
-import com.c1.donguri.user.UserDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,31 +18,33 @@ public class ReservationC extends HttpServlet {
 
         boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
 
-
-        String action = request.getParameter("action");
-
-
         if (!isLoggedIn) {
             request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
             return;
         }
 
+        String action = request.getParameter("action");
 
-        if (action == null || action.equals("list")) {
-            List<ReservationDTO> list = ReservationDAO.RESERVATION_DAO.getAll();
+        if (action == null) {
+            request.setAttribute("isLoggedIn", isLoggedIn);
+            request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
+        } else if (action.equals("list")) {
+            List<ReservationDTO> list = ReservationDAO.RESERVATION_DAO.getAll(request);
             request.setAttribute("list", list);
-            request.getRequestDispatcher("jsp/reservation/list.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/list.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("write".equals(action)) {
             ArrayList<TemplateDTO> templateList = ReservationDAO.RESERVATION_DAO.getTemplateList(request);
             request.setAttribute("templateList", templateList);
-            request.getRequestDispatcher("jsp/reservation/write.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/write.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("detail".equals(action)) {
-            String id = request.getParameter("id");
             ReservationDTO r = ReservationDAO.RESERVATION_DAO.getOne(request);
             request.setAttribute("r", r);
-            request.getRequestDispatcher("jsp/reservation/detail.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/detail.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("edit".equals(action)) {
             String id = request.getParameter("id");
@@ -51,9 +53,11 @@ public class ReservationC extends HttpServlet {
 
             request.setAttribute("r", r);
             request.setAttribute("templateList", templateList);
-            request.getRequestDispatcher("jsp/reservation/reservation_edit.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/edit.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
+            System.out.println("EEERERERERSkrjselkrj");
             String reservationId = request.getParameter("id");
             ReservationDAO.RESERVATION_DAO.delete(reservationId);
             response.sendRedirect("reservation?action=list");
@@ -66,31 +70,41 @@ public class ReservationC extends HttpServlet {
 
         boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
 
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+            return;
+        }
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
 
-        if (!isLoggedIn) {
-            request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
-            return;
-        }
 
         if ("confirm".equals(action)) {
-            ArrayList<TemplateDTO> templateList = ReservationDAO.RESERVATION_DAO.getTemplateList(request);
+            TemplateDTO selectedTemplate = ReservationDAO.RESERVATION_DAO.getTemplate(request);
             ReservationDAO.RESERVATION_DAO.setReservationDTOToSession(request);
-            request.setAttribute("templateList", templateList);
-            request.getRequestDispatcher("jsp/reservation/reservation_confirm.jsp").forward(request, response);
+            request.setAttribute("selectedTemplate", selectedTemplate);
+            request.getRequestDispatcher("jsp/reservation/confirm.jsp").forward(request, response);
 
         } else if ("insert".equals(action)) {
             InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
 
+            String reservationId = null;
+
             if (ir != null) {
-                ReservationDAO.RESERVATION_DAO.insert(request);
+                reservationId = ReservationDAO.RESERVATION_DAO.insert(request);
                 session.removeAttribute("insertReservation");
-                response.sendRedirect("reservation?action=list");
-            } else {
-                response.sendRedirect("reservation?action=list");
             }
+
+            System.out.println("RESERVATION ID: " + reservationId);
+
+            if (reservationId != null) {
+                ReservationDAO.RESERVATION_DAO.enrollNewEmailJob(reservationId);
+            }
+
+            response.sendRedirect("reservation?action=list");
+
+
         } else if ("update".equals(action)) {
             String reservationId = request.getParameter("id");
 
