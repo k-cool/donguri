@@ -12,13 +12,13 @@
     <h1>보낸 메일함</h1>
 
     <!-- 검색 form -->
-    <form action="${pageContext.request.contextPath}/sent-mail" method="get" class="search-form">
+    <form action="${pageContext.request.contextPath}/sent-post" method="get" class="search-form">
         <input type="text" name="keyword" placeholder="이메일, 제목, 내용 검색" value="${keyword}">
         <button type="submit">검색</button>
     </form>
 
     <!-- 상세 이동용 form -->
-    <form id="detailForm" method="get" action="${pageContext.request.contextPath}/sent-mail-detail">
+    <form id="detailForm" method="get" action="${pageContext.request.contextPath}/sent-post-detail">
         <input type="hidden" name="reservationId" id="reservationId">
         <input type="hidden" name="keyword" id="detailKeyword" value="${keyword}">
     </form>

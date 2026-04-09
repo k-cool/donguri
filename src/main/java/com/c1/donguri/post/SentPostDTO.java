@@ -1,18 +1,17 @@
-package com.c1.donguri.scheduler;
+package com.c1.donguri.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 // 보낸 메일 보관함 DTO
-public class SentMailDTO {
+public class SentPostDTO {
     private String userId;
     private String reservationId;
     private String recipientEmail;

@@ -24,7 +24,6 @@ public class OmikujiDAO {
         ResultSet rs = null;
         String sql = "SELECT OMIKUJI_AT FROM USERS WHERE USER_ID = ?";
 
-        // TODO: 로그인 연결작업후 수정하기
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
 

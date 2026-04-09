@@ -34,8 +34,6 @@ public class EmailScheduler {
             scheduler.scheduleJob(job, trigger);
 
             System.out.println("잡등록 완료: " + emailJob.getReservationId());
-//            System.out.println("jobKey: " + job.getKey());
-//            System.out.println("triggerKey: " + trigger.getKey());
         } catch (Exception e) {
             System.out.println("email job등록 실패");
             e.printStackTrace();

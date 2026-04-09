@@ -2,12 +2,21 @@ package com.c1.donguri.template;
 
 import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
+import com.c1.donguri.util.EnvLoader;
 import com.c1.donguri.util.QRGenerator;
 import com.c1.donguri.util.S3Uploader;
+import com.google.zxing.*;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -15,12 +24,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 public class TemplateDAO {
     public static final TemplateDAO TEMPLATE_DAO = new TemplateDAO();
+    public static Map<String, String> envMap;
 
     private TemplateDAO() {
+        envMap = EnvLoader.loadEnv(".env");
     }
 
     // 어드민 페이지 탬플릿 리스트 전체 조회
@@ -74,16 +86,9 @@ public class TemplateDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        // 1. 세션에서 로그인한 유저 정보 가져오기 (예: UserDTO 객체나 String ID)
-        // 로그인 시 "loginUser"라는 이름으로 세션에 저장했다고 가정합니다.
-//        UserDTO loginUser = (UserDTO) request.getSession().getAttribute("loginUser");
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
 
-        // 만약 로그인이 안 되어 있다면 로직 중단 (방어 코드)
-//        if (loginUser == null) return;
-
-        // TODO: 로그인 연결 이후 수정해주기
-//        String userId = loginUser.getUserId();
-        String userId = "6483EC9A21894051A75A5D15EACE13D3";
 
         // 추가된 엽서는 내림차순(최신순)으로 정렬
         String sql = "SELECT T.* " + // 끝에 공백
@@ -98,7 +103,7 @@ public class TemplateDAO {
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, userId);
+            pstmt.setString(1, user.getUserId());
 
             rs = pstmt.executeQuery();
             TemplateDTO templateDTO = null;
@@ -142,12 +147,11 @@ public class TemplateDAO {
 
         String sql = "SELECT * FROM template WHERE template_id = ?";
         TemplateDTO templateDTO = null;
-        ArrayList<TemplateDTO> templaeList = new ArrayList<>();
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, request.getParameter("no"));
+            pstmt.setString(1, request.getParameter("templateId"));
 
             rs = pstmt.executeQuery();
 
@@ -161,7 +165,6 @@ public class TemplateDAO {
                 templateDTO.setQrUrl(rs.getString("qr_url"));
                 templateDTO.setCreatedAt(rs.getString("created_at"));
                 templateDTO.setUpdatedAt(rs.getString("updated_at"));
-
             }
 
         } catch (Exception e) {
@@ -169,6 +172,7 @@ public class TemplateDAO {
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, rs);
         }
+
         return templateDTO;
 
     }
@@ -179,9 +183,6 @@ public class TemplateDAO {
         PreparedStatement pstmt = null;
         S3Uploader s3Uploader = new S3Uploader();
 
-//      String sql = "INSERT INTO TEMPLATE (name, body_html, type, cover_img_url, qr_url, created_at, updated_at) "
-//                + "VALUES (?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
-
         try {
             // 1. 파라미터 추출
             String name = request.getParameter("name");
@@ -189,7 +190,7 @@ public class TemplateDAO {
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
 
             // 2. 고유 ID 생성 (QR 주소와 DB PK로 공통 사용)
-            String templateId = UUID.randomUUID().toString().replace("-", "");
+            String templateId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
             // 3. 커버 이미지 처리 (S3 업로드)
             Part filePart = request.getPart("coverImgUrl");
@@ -228,24 +229,94 @@ public class TemplateDAO {
         }
     }
 
-    // QR코드로 템플릿 추가
-    public void addQRTemplate(HttpServletRequest request) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        S3Uploader s3Uploader = new S3Uploader();
+    public String decodeQrImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession httpSession = request.getSession();
+        UserDTO user = (UserDTO) httpSession.getAttribute("user");
+        String userId = user.getUserId();
+        String templateId = null;
 
         try {
-            // 1. 컨트롤러에서 setAttribute로 담은 S3 URL 꺼내기
-            String s3Url = (String) request.getAttribute("qrUrl");
-            System.out.println("DEBUG - 꺼내온 qrUrl: " + s3Url);
-            String templateId = (String) request.getAttribute("templateId");
+            // 1. 업로드된 파일 받기
+            Part filePart = request.getPart("qrFile");
 
+            if (filePart == null || filePart.getSize() == 0) {
+                return "qr-decode";
+            }
+
+            InputStream is = filePart.getInputStream();
+
+            // 2. 이미지 해석 (Zxing 라이브러리 사용)
+            BufferedImage bufferedImage = ImageIO.read(is);
+            LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            // 3. QR 디코딩
+            Result result = new MultiFormatReader().decode(bitmap);
+            String decodedUrl = result.getText(); // 예: http://.../qr?t_id=UUID
+
+            System.out.println(decodedUrl);
+
+
+            // 4. URL에서 t_id 파라미터 추출
+            if (decodedUrl != null && decodedUrl.contains("=")) {
+                templateId = decodedUrl.substring(decodedUrl.indexOf("=") + 1);
+            }
+
+            // 5. DB 해금 로직 실행
+            if (templateId != null && TemplateDAO.TEMPLATE_DAO.unlockTemplate(userId, templateId)) {
+                System.out.println("PC 해금 성공: " + templateId);
+                return "template-detail?templateId=" + templateId;
+            } else {
+                System.out.println("해금 실패 또는 이미 보유 중");
+                return "qr-decode";
+            }
+
+        } catch (NotFoundException e) {
+            System.out.println("QR 코드를 인식할 수 없습니다.");
+            return "qr-decode";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "qr-decode";
+        }
+
+    }
+
+
+    // QR코드로 템플릿 추가
+    public void addQRTemplate(HttpServletRequest request) {
+        String templateId = java.util.UUID.randomUUID().toString().replace("-", "").toUpperCase();
+
+        String s3Url = null;
+
+        // 유저가 스캔했을 때 실행될 주소를 조립 (방금 만든 ID를 붙임)
+        String targetUrl = envMap.get("BASE_URL") + "/qr?templateId=" + templateId;
+
+        System.out.println("QR URL:" + targetUrl);
+
+        // 바탕화면 경로 설정
+        String path = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "qr";
+
+        // 폴더가 없으면 에러나니까 안전장치 추가
+        File dir = new File(path);
+        if (!dir.exists()) dir.mkdirs();
+
+        // 큐알 생성
+        String prFileName = QRGenerator.QR_GENERATOR.generateQR(targetUrl, path);
+
+        // 3. [QRC에서 가져온 로직] S3업로드
+        S3Uploader s3Uploader = new S3Uploader();
+        s3Url = s3Uploader.uploadLocalFile(path, prFileName);
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
             String name = request.getParameter("name");
             String bodyHtml = request.getParameter("bodyHtml");
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
-
-            // 3. 커버 이미지 처리 (기존 로직 동일)
             Part filePart = request.getPart("coverImgUrl");
+
             String imgUrl = null;
 
             if (filePart != null && filePart.getSize() > 0) {
@@ -270,7 +341,6 @@ public class TemplateDAO {
             if (pstmt.executeUpdate() == 1) {
                 System.out.println("✅ " + type + " 템플릿 등록 성공!");
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -357,7 +427,7 @@ public class TemplateDAO {
         PreparedStatement pstmt = null;
 
         try {
-            String templateId = request.getParameter("no");
+            String templateId = request.getParameter("templateId");
 
             if (templateId == null || templateId.isEmpty()) {
                 System.out.println("❌ 삭제할 ID가 없습니다.");
@@ -392,6 +462,7 @@ public class TemplateDAO {
 
 
     }
+
 
 }
 

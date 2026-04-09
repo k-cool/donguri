@@ -1,5 +1,8 @@
 package com.c1.donguri.reservation;
 
+import com.c1.donguri.scheduler.EmailJobDTO;
+import com.c1.donguri.scheduler.EmailScheduler;
+import com.c1.donguri.template.TemplateDTO;
 import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
 
@@ -17,7 +20,7 @@ public class ReservationDAO {
     private ReservationDAO() {
     }
 
-    public void insert(HttpServletRequest request) { //정보넣자~
+    public String insert(HttpServletRequest request) { //정보넣자~
 
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
@@ -29,8 +32,11 @@ public class ReservationDAO {
                 "INSERT INTO EMAIL_CONTENT(EMAIL_CONTENT_ID ,TEMPLATE_ID, SENDER_ID, SUBJECT, CONTENT, COVER_IMG_URL, BGM_URL)\n" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)\n";
         String reservationSql = "\n" +
-                "INSERT INTO RESERVATION(FROM_ID, EMAIL_CONTENT_ID, RECIPIENT_EMAIL, SCHEDULED_DATE)\n" +
-                "VALUES (?, ?, ?, ?)\n";
+                "INSERT INTO RESERVATION(RESERVATION_ID, FROM_ID, EMAIL_CONTENT_ID, RECIPIENT_EMAIL, SCHEDULED_DATE)\n" +
+                "VALUES (?, ?, ?, ?, ?)\n";
+
+        String reservationId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        String emailContentId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
@@ -38,12 +44,6 @@ public class ReservationDAO {
             con.setAutoCommit(false);
 
             ps = con.prepareStatement(emailContentSql);
-
-            // 1. UUID 생성 (예: 550e8400-e29b-41d4-a716-446655440000)
-            String uuid = UUID.randomUUID().toString();
-
-            // 2. 하이픈 제거 및 대문자 변환 (오라클 SYS_GUID 형식)
-            String emailContentId = uuid.replace("-", "").toUpperCase();
 
             ps.setString(1, emailContentId);
             ps.setString(2, ir.getTemplateId());
@@ -65,10 +65,11 @@ public class ReservationDAO {
 
             LocalDateTime formatted = LocalDateTime.parse(ir.getScheduledDate(), formatter);
 
-            ps.setString(1, user.getUserId());
-            ps.setString(2, emailContentId);
-            ps.setString(3, ir.getRecipientEmail());
-            ps.setObject(4, formatted);
+            ps.setString(1, reservationId);
+            ps.setString(2, user.getUserId());
+            ps.setString(3, emailContentId);
+            ps.setString(4, ir.getRecipientEmail());
+            ps.setObject(5, formatted);
 
             int secondRow = ps.executeUpdate();
 
@@ -81,6 +82,8 @@ public class ReservationDAO {
                 con.commit();
             }
 
+            return reservationId;
+
         } catch (Exception e) {
             if (con != null) {
                 try {
@@ -90,20 +93,84 @@ public class ReservationDAO {
                     ex.printStackTrace();
                 }
             }
+
             e.printStackTrace();
         } finally {
-            DBManager.DB_MANAGER.close(con, ps, null);
-
             if (con != null) {
                 try {
                     con.setAutoCommit(true);
                 } catch (Exception e) {
+
                 }
             }
+
+            DBManager.DB_MANAGER.close(con, ps, null);
+
         }
+
+        return null;
     }
 
-    public List<ReservationDTO> getAll() { //전체정보조회
+    public void enrollNewEmailJob(String reservationId) {
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT r.reservation_id,\n" +
+                "       r.recipient_email,\n" +
+                "       r.scheduled_date,\n" +
+                "       e.subject,\n" +
+                "       e.content,\n" +
+                "       r.is_done,\n" +
+                "       t.BODY_HTML,\n" +
+                "       t.COVER_IMG_URL\n" +
+                "FROM reservation r\n" +
+                "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
+                "         JOIN template t on e.TEMPLATE_ID = t.TEMPLATE_ID\n" +
+                "WHERE r.reservation_id = ?";
+
+
+        try {
+
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, reservationId);
+            rs = pstmt.executeQuery();
+            EmailJobDTO emailJob = null;
+
+            while (rs.next()) {
+                emailJob = new EmailJobDTO(
+                        rs.getString("reservation_id"),
+                        rs.getString("recipient_email"),
+                        rs.getTimestamp("scheduled_date"),
+                        rs.getString("subject"),
+                        rs.getString("content"),
+                        rs.getString("is_done"),
+                        rs.getString("body_html"),
+                        rs.getString("cover_img_url")
+                );
+            }
+
+            EmailScheduler.EMAIL_SCHEDULER.enrollJob(emailJob);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+
+    }
+
+    public List<ReservationDTO> getAll(HttpServletRequest request) { //전체정보조회
+
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         List<ReservationDTO> list = new ArrayList<>();
         String sql = "SELECT R.RESERVATION_ID,\n" +
                 "       R.RECIPIENT_EMAIL,\n" +
@@ -113,12 +180,16 @@ public class ReservationDAO {
                 "FROM RESERVATION R,\n" +
                 "     EMAIL_CONTENT E\n" +
                 "WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID\n" +
+                "AND R.IS_DONE = 'N'\n" +
+                "AND R.FROM_ID = ?\n" +
                 "ORDER BY R.SCHEDULED_DATE";
 
+        try {
 
-        try (Connection con = DBManager.DB_MANAGER.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+            con = DBManager.DB_MANAGER.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user.getUserId());
+            rs = ps.executeQuery();
 
             while (rs.next()) {
                 ReservationDTO r = new ReservationDTO();
@@ -135,54 +206,90 @@ public class ReservationDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, ps, rs);
         }
+
         return list;
     }
 
 
-    public int delete(String reservationId) {
+    public void delete(String reservationId) {
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String emailContentId = null;
 
         String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
         String deleteReservationSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID=?";
         String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID=?";
 
-        try (Connection con = DBManager.DB_MANAGER.getConnection()) {
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+
             con.setAutoCommit(false);
 
-            String emailContentId = null;
+            // getEmailContentIdSql
+            pstmt = con.prepareStatement(getEmailContentIdSql);
+            pstmt.setString(1, reservationId);
 
-            try (PreparedStatement ps = con.prepareStatement(getEmailContentIdSql)) {
-                ps.setString(1, reservationId);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    emailContentId = rs.getString("EMAIL_CONTENT_ID");
-                }
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                emailContentId = rs.getString("EMAIL_CONTENT_ID");
             }
 
-            if (emailContentId != null) {
-                try (PreparedStatement ps1 = con.prepareStatement(deleteReservationSql)) {
-                    ps1.setString(1, reservationId);
-                    ps1.executeUpdate();
-                }
-
-                try (PreparedStatement ps2 = con.prepareStatement(deleteEmailContentSql)) {
-                    ps2.setString(1, emailContentId);
-                    ps2.executeUpdate();
-                }
-
-                con.commit();
-                return 1;
+            // deleteReservationSql
+            if (emailContentId == null) {
+                throw new Exception();
             }
+
+            pstmt = con.prepareStatement(deleteReservationSql);
+            pstmt.setString(1, reservationId);
+
+            int rRow = pstmt.executeUpdate();
+
+            if (rRow > 0) {
+                System.out.println("RESERVATION DELETE SUCCESS");
+            }
+
+            pstmt = con.prepareStatement(deleteEmailContentSql);
+            pstmt.setString(1, emailContentId);
+            int eRow = pstmt.executeUpdate();
+
+            if (eRow > 0) {
+                System.out.println("EMAIL_CONTENT DELETE SUCCESS");
+            }
+
+            con.commit();
 
         } catch (Exception e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                    System.err.println("에러 발생! 데이터가 롤백되었습니다.");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
             e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.setAutoCommit(true);
+                } catch (Exception e) {
+                }
+            }
+
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+
         }
-        return 0;
+
     }
 
     public ReservationDTO getOne(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserDTO user = (UserDTO) session.getAttribute("user");
 
         String sql = "SELECT r.reservation_id,\n" +
                 "       u.nickname as from_id,\n" +
@@ -219,6 +326,7 @@ public class ReservationDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -309,17 +417,23 @@ public class ReservationDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String baseSql = "SELECT TEMPLATE_ID, NAME, COVER_IMG_URL\n" +
+        String baseSql = "SELECT *\n" +
                 "FROM TEMPLATE\n" +
                 "WHERE TYPE = 'BASE'";
-        String addedSql = "SELECT t.template_id,\n" +
-                "       t.name,\n" +
-                "       t.cover_img_url\n" +
-                "FROM user_template ut\n" +
-                "         JOIN\n" +
-                "     template t ON ut.template_id = t.template_id\n" +
-                "WHERE ut.user_id = ?\n" +
-                "ORDER BY ut.created_at DESC";
+
+        String addedSql = "SELECT t.TEMPLATE_ID,\n" +
+                "       t.NAME,\n" +
+                "       t.BODY_HTML,\n" +
+                "       t.TYPE,\n" +
+                "       t.COVER_IMG_URL,\n" +
+                "       t.QR_URL,\n" +
+                "       t.CREATED_AT,\n" +
+                "       t.UPDATED_AT\n" +
+                "FROM TEMPLATE T,\n" +
+                "     USER_TEMPLATE UT\n" +
+                "WHERE t.TEMPLATE_ID = ut.TEMPLATE_ID\n" +
+                "  AND ut.USER_ID = ?\n" +
+                "ORDER BY ut.CREATED_AT DESC";
 
 
         try {
@@ -329,10 +443,17 @@ public class ReservationDAO {
 
 
             while (rs.next()) {
-                TemplateDTO template = new TemplateDTO();
-                template.setTemplateId(rs.getString("template_id"));
-                template.setName(rs.getString("name"));
-                template.setCoverImgUrl(rs.getString("cover_img_url"));
+                TemplateDTO template = new TemplateDTO(
+                        rs.getString("template_id"),
+                        rs.getString("name"),
+                        rs.getString("body_html"),
+                        rs.getString("type"),
+                        rs.getString("cover_img_url"),
+                        rs.getString("qr_url"),
+                        rs.getString("created_at"),
+                        rs.getString("updated_at")
+                );
+
                 list.add(template);
             }
 
@@ -341,10 +462,17 @@ public class ReservationDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                TemplateDTO template = new TemplateDTO();
-                template.setTemplateId(rs.getString("template_id"));
-                template.setName(rs.getString("name"));
-                template.setCoverImgUrl(rs.getString("cover_img_url"));
+                TemplateDTO template = new TemplateDTO(
+                        rs.getString("template_id"),
+                        rs.getString("name"),
+                        rs.getString("body_html"),
+                        rs.getString("type"),
+                        rs.getString("cover_img_url"),
+                        rs.getString("qr_url"),
+                        rs.getString("created_at"),
+                        rs.getString("updated_at")
+                );
+
                 list.add(template);
             }
 
@@ -352,6 +480,8 @@ public class ReservationDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, ps, null);
         }
 
         return list;
@@ -378,5 +508,46 @@ public class ReservationDAO {
 
         session.setAttribute("insertReservation", ir);
 
+    }
+
+    public TemplateDTO getTemplate(HttpServletRequest request) {
+
+        TemplateDTO template = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT *\n" +
+                "FROM TEMPLATE\n" +
+                "WHERE TEMPLATE_ID = ?";
+
+        String templateId = request.getParameter("templateId");
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, templateId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                template = new TemplateDTO(
+                        rs.getString("template_id"),
+                        rs.getString("name"),
+                        rs.getString("body_html"),
+                        rs.getString("type"),
+                        rs.getString("cover_img_url"),
+                        rs.getString("qr_url"),
+                        rs.getString("created_at"),
+                        rs.getString("updated_at")
+                );
+            }
+
+            return template;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return template;
     }
 }

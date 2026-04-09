@@ -17,6 +17,7 @@
         <div class="detail-row">
             <span class="detail-label">제목</span>
             <span class="detail-value detail-title">${sentMail.subject}</span>
+            <button class="back-btn" onclick="location.href='post?id=${sentMail.reservationId}'">실제 동구리 보기</button>
         </div>
 
         <div class="detail-row detail-content-row">
@@ -36,7 +37,7 @@
     </div>
 
     <div class="detail-btn-area">
-        <form action="${pageContext.request.contextPath}/sent-mail" method="get">
+        <form action="${pageContext.request.contextPath}/sent-post" method="get">
             <input type="hidden" name="keyword" value="${keyword}">
             <button type="submit" class="back-btn">목록으로</button>
         </form>
