@@ -31,7 +31,7 @@ public class SentPostC extends HttpServlet {
             request.setAttribute("sentMails", sentMails);
             request.setAttribute("keyword", keyword);
 
-            request.setAttribute("content", "jsp/sentMail.jsp");
+            request.setAttribute("content", "jsp/sent_post/sentMail.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
         } else {
             response.sendRedirect("login");

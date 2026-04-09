@@ -39,7 +39,7 @@ public class SentPostDetailC extends HttpServlet {
 
         request.setAttribute("sentMail", sentMail);
         request.setAttribute("keyword", keyword); // 뒤로가기용 검색어 유지
-        request.setAttribute("content", "jsp/sentMailDetail.jsp");
+        request.setAttribute("content", "jsp/sent_post/sentMailDetail.jsp");
         request.getRequestDispatcher("main.jsp").forward(request, response);
 
 
