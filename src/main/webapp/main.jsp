@@ -17,14 +17,14 @@
         </div>
 
         <div class="user-auth-area">
-            <c:if test="${not empty loginPage}">
-                <jsp:include page="${loginPage}"/>
+            <c:if test="${not empty sessionScope.user}">
+                <jsp:include page="jsp/user/login_ok.jsp"/>
             </c:if>
         </div>
     </header>
 
     <div class="content">
-        <jsp:include page="${content}"/>
+        <jsp:include page="${not empty content ? content : 'home.jsp'}"/>
     </div>
 
     <button onclick="location.href='reservation?action=main'">

@@ -11,7 +11,7 @@
     </div>
     <% } %>
 
-    <form action="login" method="post">
+    <form action="login-success" method="post">
         <div class="form-group">
             <label for="email">이메일</label>
             <input type="email" id="email" name="email" required placeholder="example@email.com"
