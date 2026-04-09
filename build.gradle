@@ -67,6 +67,11 @@ dependencies {
     // QR 코드 생성
     implementation 'com.google.zxing:core:3.5.3'
     implementation 'com.google.zxing:javase:3.5.3'
+
+    // BCrypt: Spring Security 제공 비밀번호 해시 라이브러리
+    // - 자동 솔트 생성으로 비밀번호를 안전하게 해시
+    // - 비밀번호 저장 보안의 업계 표준 방식
+    implementation 'org.springframework.security:spring-security-crypto:5.7.3'
 }
 
 test {
