@@ -33,7 +33,7 @@
         <div style="display:flex; justify-content:center; gap:50px; margin-top:100px;">
 
             <h1>
-                <a href="login"
+                <a href="${isLoggedIn ? "reservation?action=list" : "login"}"
                    style="display:inline-block; padding:20px 40px; text-decoration:none; color:black; border:1px solid black; border-radius:10px;">
                     🐿️도토리 보내기<br>
                 </a>
