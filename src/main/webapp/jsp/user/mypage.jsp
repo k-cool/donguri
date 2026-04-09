@@ -30,8 +30,9 @@
         <div class="nickname-box">
             <strong>닉네임:</strong>
             <input type="text" id="nicknameInput" value="${sessionScope.user.nickname}">
-            <button type="button" onclick="updateNickname()">수정(중복확인)</button>
+            <button type="button" id="nicknameBtn" onclick="handleNicknameProcess()">수정</button>
         </div>
+        <div id="nicknameMsg" style="font-size: 12px; margin-top: 5px; margin-left: 60px;"></div>
     </div>
 
     <div class="btn-group">
