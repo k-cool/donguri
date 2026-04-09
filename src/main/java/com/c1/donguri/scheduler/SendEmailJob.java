@@ -1,5 +1,6 @@
 package com.c1.donguri.scheduler;
 
+import com.c1.donguri.main.ReservationDAO;
 import com.c1.donguri.util.EmailSend;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -27,10 +28,17 @@ public class SendEmailJob implements Job {
                     EmailSend.EMAIL_SEND.createEmailContent(emailJob.getReservationId())
             );
 
+
+            ReservationDAO.RESERVATION_DAO.updateResult(emailJob.getReservationId(), true, null);
+
+
             System.out.println("예약 메일 전송 완료: sendEmailJob_" + emailJob.getReservationId());
-            
+
         } catch (Exception e) {
+            ReservationDAO.RESERVATION_DAO.updateResult(emailJob.getReservationId(), false, e.toString());
+
             System.out.println("예약 메일 전송 실패: sendEmailJob_" + emailJob.getReservationId());
+            
             e.printStackTrace();
 
             throw new JobExecutionException(e);

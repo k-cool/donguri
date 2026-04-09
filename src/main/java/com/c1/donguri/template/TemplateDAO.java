@@ -190,7 +190,7 @@ public class TemplateDAO {
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
 
             // 2. 고유 ID 생성 (QR 주소와 DB PK로 공통 사용)
-            String templateId = UUID.randomUUID().toString().replace("-", "");
+            String templateId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
             // 3. 커버 이미지 처리 (S3 업로드)
             Part filePart = request.getPart("coverImgUrl");

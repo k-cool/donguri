@@ -74,17 +74,15 @@
     <div class="confirm-row">
         <label>템플릿:</label>
         <span>
-
-        <c:forEach var="t" items="${templateList}">
-            <c:if test="${insertReservation.templateId == t.templateId}">
-                <strong>${t.templateName}</strong> (${t.type})
-
-
+                <strong>${selectedTemplate.name}</strong> (${selectedTemplate.type})
                 <div style="margin-top: 10px;">
-                    <img src="${t.coverImgUrl}" width="120" style="border-radius: 5px; border: 1px solid #ddd;">
+                    <img src="${selectedTemplate.coverImgUrl}" width="120"
+                         style="border-radius: 5px; border: 1px solid #ddd;">
                 </div>
-            </c:if>
-        </c:forEach>
+<%--        <c:forEach var="t" items="${templateList}">--%>
+<%--            <c:if test="${insertReservation.templateId == t.templateId}">--%>
+<%--            </c:if>--%>
+<%--        </c:forEach>--%>
     </span>
     </div>
 

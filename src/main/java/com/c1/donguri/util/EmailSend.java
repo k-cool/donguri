@@ -75,8 +75,7 @@ public class EmailSend {
 //    }
 
     public String createEmailContent(String reservationId) {
-        // TODO: 엽서화면 작업후 진짜 URL로 수정해주기
-        String url = "http://localhost:8080/donguri/postcard/detail?reservationId=" + reservationId;
+        String url = envMap.get("BASE_URL") + "/post?id=" + reservationId;
 
         return "<!DOCTYPE html>" +
                 "<html>" +

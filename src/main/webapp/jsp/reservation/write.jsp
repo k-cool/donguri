@@ -247,9 +247,14 @@
         <div class="form-row">
             <label>BGM</label>
             <select name="bgmUrl">
-                <option value="none">없음</option>
-                <option value="piano">피아노</option>
-                <option value="lofi">Lo-fi</option>
+                <option value="https://www.chosic.com/wp-content/uploads/2021/02/PerituneMaterial_Sakuya2(chosic.com).mp3">
+                    없음
+                </option>
+                <option value="https://www.chosic.com/wp-content/uploads/2023/12/Konnichiwa-chosic.com_.mp3">피아노
+                </option>
+                <option value="https://www.chosic.com/wp-content/uploads/2024/08/Sunshine-Boulevard-chosic.com_.mp3">
+                    Lo-fi
+                </option>
             </select>
         </div>
 
