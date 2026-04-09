@@ -42,9 +42,6 @@
         <jsp:include page="${content}"/>
     </div>
 
-    <button onclick="location.href='reservation?action=main'">
-        전송서비스
-    </button>
 </div>
 </body>
 </html>

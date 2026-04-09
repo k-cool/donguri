@@ -39,12 +39,12 @@
                 </a>
             </h1>
 
-            <h1>
-                <a href="reservation?action=list"
-                   style="display:inline-block; padding:20px 40px; text-decoration:none; color:black; border:1px solid black; border-radius:10px;">
-                    🐿️ 내가 예약한 도토리<br>
-                </a>
-            </h1>
+            <%--            <h1>--%>
+            <%--                <a href="reservation?action=list"--%>
+            <%--                   style="display:inline-block; padding:20px 40px; text-decoration:none; color:black; border:1px solid black; border-radius:10px;">--%>
+            <%--                    🐿️ 내가 예약한 도토리<br>--%>
+            <%--                </a>--%>
+            <%--            </h1>--%>
 
         </div>
 
