@@ -1,55 +1,60 @@
-    body {
-            margin: 0;
-            background: #4facfe;
-            overflow: hidden;
-        }
+body {
+    margin: 0;
+    background: #4facfe;
+    overflow: hidden;
+}
 
-        .scene {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
+.scene {
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    /*margin-top: 70px;*/
+}
 
-        .cloud {
-            position: absolute;
-            font-size: 60px;
-            opacity: 0.5;
-            will-change: transform;
-            /* 구름이 사라질 때 0.5초 동안 부드럽게 투명해짐 */
-            transition: opacity 0.5s ease;
-        }
+.cloud {
+    position: absolute;
+    font-size: 60px;
+    opacity: 0.5;
+    will-change: transform;
+    /* 구름이 사라질 때 0.5초 동안 부드럽게 투명해짐 */
+    transition: opacity 0.5s ease;
+}
 
-        .acorn {
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-size: 50px;
-            z-index: 10;
-            will-change: transform;
-        }
+.acorn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 50px;
+    z-index: 10;
+    will-change: transform;
+}
 
-        .bottom-group {
-            position: absolute;
-            bottom: -300px;
-            width: 100%;
-            transition: bottom 1.2s cubic-bezier(0.39, 0.575, 0.565, 1);
-            z-index: 5;
-        }
+.bottom-group {
+    position: absolute;
+    bottom: -300px;
+    width: 100%;
+    transition: bottom 1.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    z-index: 5;
+}
 
-        .mailbox {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 70px;
-        }
+.mailbox {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 70px;
+}
 
-        .ground {
-            width: 100%;
-            height: 100px;
-            background: #654321;
-        }
+.ground {
+    width: 100%;
+    height: 100px;
+    background: #654321;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
 
-        .show {
-            bottom: 0px;
-        }
+.show {
+    bottom: 0px;
+}
