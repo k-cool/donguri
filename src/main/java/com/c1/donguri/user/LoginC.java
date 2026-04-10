@@ -61,6 +61,10 @@ public class LoginC extends HttpServlet {
             request.setAttribute("loginError", "invalid");
             request.getRequestDispatcher("main.jsp").forward(request, response);
         }
+
+
+        // TODO: 이미 등록한 템플릿 재등록시 오류 수정하기
+
     }
 
     public void destroy() {

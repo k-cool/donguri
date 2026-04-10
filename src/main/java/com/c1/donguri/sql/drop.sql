@@ -8,6 +8,7 @@ DROP TRIGGER trg_template_updated_at;
 DROP TRIGGER trg_reservation_updated_at;
 DROP TRIGGER trg_send_log_updated_at;
 DROP TRIGGER trg_omikuji_updated_at;
+DROP TRIGGER trg_inquiry_updated_at;
 
 
 -- 자식 테이블부터 DROP
@@ -22,3 +23,4 @@ DROP TABLE users CASCADE CONSTRAINTS;
 
 -- 독립 테이블
 DROP TABLE omikuji CASCADE CONSTRAINTS;
+DROP TABLE inquiry CASCADE CONSTRAINTS;

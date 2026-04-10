@@ -17,7 +17,7 @@ public class S3Uploader {
 
     private final S3Client s3Client;
     private static Map<String, String> envMap;
-    
+
     public S3Uploader() {
         envMap = EnvLoader.loadEnv(".env");
 
@@ -48,7 +48,7 @@ public class S3Uploader {
     }
 
 
-    public String uploadLocalFile(String localFilePath, String fileName) {
+    public String uploadLocalFile(String localFilePath, String fileName, String s3Path) {
         String contentType = "image/png";
 
         File file = new File(localFilePath + "/" + fileName);
@@ -57,7 +57,7 @@ public class S3Uploader {
 
             String fileUrl = upload(
                     inputStream,
-                    fileName,
+                    s3Path + "/" + fileName,
                     contentType,
                     file.length()
             );
