@@ -209,3 +209,12 @@ header {
         white-space: nowrap;
     }
 }
+
+/* 🚨 클릭된(활성화된) 메뉴 스타일 */
+.nav-menu a.active {
+    color: #007bff; /* 동구리 포인트 파란색 */
+    font-weight: 700; /* 글씨 굵게 */
+    border-bottom: 3px solid #007bff; /* 밑줄 쫙! */
+    border-radius: 0; /* 밑줄이 예쁘게 나오게 라운드 효과 제거 */
+    padding-bottom: 6px; /* 글씨와 밑줄 사이 간격 */
+}
