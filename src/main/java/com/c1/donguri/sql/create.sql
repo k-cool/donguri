@@ -216,3 +216,22 @@ END;
 /
 
 
+CREATE TABLE inquiry
+(
+    inquiry_id RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    name       VARCHAR2(30 char)   not null,
+    phone      VARCHAR2(20 char)   not null,
+    email      VARCHAR2(50 char)   not null,
+    message    VARCHAR2(1000 char) not null,
+    created_at DATE    DEFAULT SYSDATE,
+    updated_at DATE    DEFAULT SYSDATE
+);
+
+CREATE OR REPLACE TRIGGER trg_inquiry_updated_at
+    BEFORE UPDATE
+    ON inquiry
+    FOR EACH ROW
+BEGIN
+    :NEW.updated_at := SYSDATE;
+END;
+/

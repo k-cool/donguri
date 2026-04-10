@@ -31,6 +31,7 @@
     <button type="button" onclick="location.href='qr-decode'">PC QR Upload!</button>
     <button onclick="location.href='sent-post'">sent-post</button>
     <button onclick="location.href='reservation'">전송서비스</button>
+    <button onclick="location.href='inquiry'">inquiry</button>
 </div>
 
 <div class="scene" id="scene">
