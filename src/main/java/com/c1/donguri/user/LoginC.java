@@ -52,8 +52,7 @@ public class LoginC extends HttpServlet {
             }
 
             // 성공 시: 중앙에는 홈 화면, 헤더에는 로그인 정보창을 띄웁니다.
-            request.setAttribute("content", "home.jsp");
-            request.getRequestDispatcher("main.jsp").forward(request, response);
+            response.sendRedirect("main");
         } else {
             // 실패 시: 헤더는 비우고 중앙에만 다시 로그인 창을 띄웁니다.
             request.setAttribute("loginPage", null);

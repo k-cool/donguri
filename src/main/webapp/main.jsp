@@ -35,6 +35,9 @@
             <c:if test="${not empty loginPage}">
                 <jsp:include page="${loginPage}"/>
             </c:if>
+            <c:if test="${empty loginPage and not empty sessionScope.user}">
+                <jsp:include page="jsp/user/login_ok.jsp"/>
+            </c:if>
         </div>
     </header>
 
