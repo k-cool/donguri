@@ -3,6 +3,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="css/reservation_detail.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <body>
