@@ -4,7 +4,7 @@
 <head>
     <title>너가 남겨준 추억들</title>
     <link rel="stylesheet" href="css/reservation_list.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div class="container">

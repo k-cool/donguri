@@ -33,21 +33,21 @@ body {
 
 /* 2. 종이 컨테이너: posting_page.png가 내용 따라 늘어나는 핵심 */
 .form-container {
-    background-image: url("../image/posting_page.png");
-    /* [중요] 내용이 많아지면 이미지가 같이 아래로 쭉 늘어나게 함 */
-    background-size: 100% 100%;
+    background-image: url(../image/posting_page.png);
+    background-size: cover;
     background-repeat: no-repeat;
-
+    background-position: center;
+    background-position-y: -57px;
     width: 100%;
     max-width: 480px;
-
-    /* 집게 부분 여백 120px로 넉넉히 벌려줌 */
-    padding: 120px 40px 80px 40px;
-
     position: relative;
-    /* 내용물 높이에 맞게 컨테이너가 늘어남 */
     height: auto;
     display: block;
+}
+
+.form-container > div {
+    width: 100%;
+    padding-top: 105px;
 }
 
 /* 3. 제목 (집게 바로 아래 오도록) */
