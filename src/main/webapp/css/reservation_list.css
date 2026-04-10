@@ -1,199 +1,169 @@
-/* 1. 레이아웃 초기화: 칸이 절대 밖으로 나가지 않게 함 */
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* 1. 모든 요소 폰트 강제 적용 */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Galmuri11', sans-serif !important;
+    font-weight: 400;
+    color: #3b110b;
 }
 
 body {
-    background-color: #e0c9a6;
-    background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-    color: #3e2723;
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-    padding: 50px 15px;
+    background-image: url("../image/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #edeae2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
     text-align: center;
 }
 
-/* 2. 필터 바구니 (검색창) 디자인 */
-.filter-basket {
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: 15px;
+/* 2. 제목 형광펜 (요청하신 이미지와 동일한 하단 박스 방식) */
+h2 {
+    font-size: 1.25rem;
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
     margin-bottom: 30px;
-    border: 2px dashed #795548;
+    z-index: 1;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0px; /* 글씨 하단에 딱 붙임 */
+    left: 0;
+    width: 100%;
+    height: 12px; /* 형광펜 두께 */
+    background-color: #d7c9b8;
+    z-index: -1;
+}
+
+/* 3. 검색창 박스 (점선 간격 확대) */
+.filter-basket {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px dashed #422c13;
+    border-radius: 25px;
+    padding: 25px 15px;
+    margin-bottom: 25px;
+}
+
+.filter-basket form {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
     gap: 10px;
 }
 
-.filter-basket select,
-.filter-basket input[type="text"] {
-    height: 45px;
-    border: 1px solid #d7ccc8;
-    border-radius: 8px;
-    padding: 0 15px;
-    font-size: 1rem;
+select, input[type="text"] {
+    border: 1px solid #c7bca1;
+    border-radius: 12px;
+    padding: 10px 15px;
+    background-color: #fffcf6;
+    font-size: 0.95rem;
     outline: none;
 }
 
-/* 입력창 너비 고정 */
-.filter-basket input[type="text"] {
-    width: 250px;
+input[type="text"] {
+    flex: 1;
+    min-width: 140px;
 }
 
 .btn-search {
-    height: 45px;
-    padding: 0 25px;
-    background: #795548;
-    color: white;
+    background-color: #3b110b;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-.btn-search:hover {
-    background: #5d4037;
+/* 4. 도토리 심으러 가기 버튼 (너비 줄임 & 뚱뚱함 유지) */
+.btn-write {
+    display: inline-flex; /* 너비를 글씨+패딩만큼만 가지게 변경 */
+    justify-content: center;
+    align-items: center;
+    background-color: #3b110b;
+    color: #e0d5c1 !important;
+    padding: 0 40px; /* 좌우 여백으로 너비 조절 */
+    height: 70px; /* 높이는 유지해서 뚱뚱하게 */
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin: 10px auto 35px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 3. 테이블 디자인: 절대 깨지지 않는 고정 레이아웃 */
+/* 5. 테이블 리스트 (점선 간격 확대) */
 .table-wrapper {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    padding: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px dashed #3b110b; /* 점선 두께를 2px로 올려서 더 잘 보이게 */
+    border-radius: 25px;
+    padding: 15px;
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
+    min-width: 460px;
     border-collapse: separate;
     border-spacing: 0 10px;
-    table-layout: fixed; /* 칸 너비를 강제로 고정 */
 }
 
 th {
-    padding: 10px;
-    color: #5d4037;
-    font-size: 0.9rem;
-    border-bottom: 2px solid #5d4037;
+    font-size: 0.8rem;
+    color: #8d6e63;
+    padding-bottom: 12px;
 }
 
-/* 각 컬럼 너비 비율 고정 (총 100%) */
-th:nth-child(1) {
-    width: 22%;
+tbody td {
+    padding: 14px 5px;
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
-/* 이메일 */
-th:nth-child(2) {
-    width: 18%;
+tbody td:first-child {
+    border-radius: 15px 0 0 15px;
+    padding-left: 15px;
 }
 
-/* 시간 */
-th:nth-child(3) {
-    width: 10%;
+tbody td:last-child {
+    border-radius: 0 15px 15px 0;
+    padding-right: 15px;
 }
 
-/* 상태 */
-th:nth-child(4) {
-    width: 25%;
-}
-
-/* 제목 */
-th:nth-child(5) {
-    width: 13%;
-}
-
-/* 상세보기 */
-th:nth-child(6) {
-    width: 12%;
-}
-
-/* 삭제 */
-
-tr td {
-    background: #fff9c4;
-    padding: 15px 10px;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.05);
-    font-size: 0.9rem;
-    vertical-align: middle;
-    /* 글자가 길면 줄바꿈 대신 '...' 처리하여 정렬 유지 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-tr td:first-child {
-    border-radius: 10px 0 0 10px;
-    border-left: 5px solid #795548;
-}
-
-tr td:last-child {
-    border-radius: 0 10px 10px 0;
-}
-
-/* 상태 배지 */
 .status {
-    display: inline-block;
-    padding: 2px 8px;
-    background: #d7ccc8;
+    background-color: #d7c9b8;
+    padding: 3px 7px;
     border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-view, .btn-delete {
+    padding: 5px 12px;
     font-size: 0.75rem;
-    color: #5d4037;
-}
-
-/* 버튼류 */
-.btn-view {
-    background: #795548;
-    color: #fff !important;
-    padding: 6px 12px;
-    border-radius: 20px;
+    border-radius: 15px;
     text-decoration: none;
-    font-size: 0.8rem;
-}
-
-.btn-delete {
-    color: #d32f2f !important;
-    text-decoration: none;
-    font-size: 0.8rem;
-}
-
-.btn-write {
+    border: 1px solid #d7c9b8;
+    background-color: #fffcf6;
     display: inline-block;
-    margin-top: 40px;
-    padding: 18px 50px;
-    background: #5d4037;
-    color: #fff !important;
-    border-radius: 50px;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 0 5px 0 #2e1a12;
-}
-
-tr.row-highlight td {
-    background-color: #fff176 !important; /* 전체적으로 밝은 노란 조명 */
-    box-shadow: inset 0 0 10px rgba(121, 85, 72, 0.1);
-    transform: scale(1.02); /* 살짝 앞으로 튀어나오는 효과 */
-    transition: all 0.3s ease;
-    z-index: 10;
-    border-top: 2px solid #fbc02d;
-    border-bottom: 2px solid #fbc02d;
-}
-
-/* 2. 행 왼쪽 끝에 도토리 포인트 주기 */
-tr.row-highlight td:first-child {
-    border-left: 10px solid #fbc02d !important;
-}
-
-/* 3. 검색어 단어 자체도 색연필 느낌으로 강조 */
-.text-highlight {
-    background: linear-gradient(to top, #ffb300 50%, transparent 50%);
-    font-weight: bold;
-    padding: 0 2px;
 }

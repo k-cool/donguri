@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>🌳 숲속 우체통: 추억 찾기</h2>
+    <h2> {숲속 우체통: 추억 찾기}</h2>
 
 
     <div class="filter-basket">
@@ -24,7 +24,7 @@
 
             <input type="text" name="keyword" placeholder="찾고싶은 도토리.." value="${param.keyword}">
 
-            <button type="submit" class="btn-search">🔍 검색</button>
+            <button type="submit" class="btn-search">검색</button>
 
             <c:if test="${not empty param.keyword}">
                 <a href="reservation?action=list" style="color: #8d6e63; font-size: 0.8rem; align-self: center;">초기화</a>
@@ -32,7 +32,7 @@
         </form>
     </div>
 
-    <a href="reservation?action=write" class="btn-write">도토리 심으러 가기 🌰</a>
+    <a href="reservation?action=write" class="btn-write">도토리 심으러 가기</a>
 
     <div class="table-wrapper">
         <table>
