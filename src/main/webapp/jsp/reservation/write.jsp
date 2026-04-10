@@ -75,7 +75,7 @@
             <select name="bgmUrl" id="bgmSelect">
                 <option value="">없음</option>
 
-                <optgroup label="일본풍">
+                <optgroup label="Japanese Mood">
                     <option value="bgm/PerituneMaterial_Sakuya2(chosic.com).mp3">바람에 실려온 작은 마음</option>
                     <option value="bgm/Dreaming-Under-The-Stars-MP3(chosic.com).mp3">오늘을 담아</option>
                     <option value="bgm/PerituneMaterial_Soft_Day(chosic.com).mp3">말로 다 하지 못한 감정을 담아서</option>
@@ -83,7 +83,7 @@
                     <option value="bgm/Double-Rainbow-chosic.com_.mp3">흘러가는 시간 위에</option>
                 </optgroup>
 
-                <optgroup label="밝은">
+                <optgroup label="Playful Day">
                     <option value="bgm/Soda(chosic.com).mp3">별사탕 스텝</option>
                     <option value="bgm/Lights(chosic.com).mp3">슬라임 마을의 아침</option>
                     <option value="bgm/Roa-Haru-chosic.com_.mp3">작은 세계, 큰 모험</option>
@@ -91,14 +91,14 @@
                     <option value="bgm/Lobby-Time(chosic.com).mp3">말랑말랑</option>
                 </optgroup>
 
-                <optgroup label="차분한">
+                <optgroup label="Midnight Blue">
                     <option value="bgm/Spring-Flowers(chosic.com).mp3">밤의 여운</option>
                     <option value="bgm/Fall-In-Love-chosic.com_.mp3">고요한 마음</option>
                     <option value="bgm/Transcendence-chosic.com_.mp3">Calm Journey</option>
                     <option value="bgm/Walking-Home-chosic.com_.mp3">조용히 전해지는 이야기</option>
                 </optgroup>
 
-                <optgroup label="Lo-fi">
+                <optgroup label="Lofi Chill">
                     <option value="bgm/Colorful-Flowers(chosic.com).mp3">Stay Cozy</option>
                     <option value="bgm/echoes-in-blue-by-tokyo-music-walker-chosic.com_.mp3">雨の音 (Rainy Mood)
                     </option>
@@ -106,7 +106,7 @@
                     <option value="bgm/Late-at-Night(chosic.com).mp3">Coffee & Chill</option>
                 </optgroup>
 
-                <optgroup label="잔잔/슬픔">
+                <optgroup label="Calm & Sad">
                     <option value="bgm/a-promise(chosic.com).mp3">Rainy Window</option>
                     <option value="bgm/Daydreams-chosic.com_.mp3">흐르지 못한 이야기</option>
                     <option value="bgm/Golden-Hour-chosic.com_.mp3">전하지 못한 말</option>

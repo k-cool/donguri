@@ -26,10 +26,7 @@
                     <img src="${selectedTemplate.coverImgUrl}" width="120"
                          style="border-radius: 5px; border: 1px solid #ddd;">
                 </div>
-<%--        <c:forEach var="t" items="${templateList}">--%>
-<%--            <c:if test="${insertReservation.templateId == t.templateId}">--%>
-<%--            </c:if>--%>
-<%--        </c:forEach>--%>
+
     </span>
     </div>
 
@@ -50,6 +47,10 @@
             </c:choose>
         </span>
     </div>
+
+    <audio controls style="width:300px;">
+        <source src="${param.bgmUrl}" type="audio/mpeg">
+    </audio>
 
 
     <form action="reservation" method="post">
