@@ -91,19 +91,35 @@
     color: #000;
 }
 
+/* -------------------------------------
+   새롭게 바뀐 2층 구조 헤더 레이아웃
+-------------------------------------- */
 header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* 1층과 2층을 위아래로 쌓음 */
     padding: 15px 30px;
     background-color: #fff;
     border-bottom: 1px solid #dee2e6;
 }
 
-.header-left {
+/* --- 1층 (상단) --- */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative; /* 로고 중앙 고정을 위한 기준점 */
+}
+
+.header-left, .user-auth-area {
     display: flex;
     align-items: center;
-    gap: 15px;
+    z-index: 10;
+}
+
+.user-auth-area {
+    justify-content: flex-end;
+    min-width: 60px;
 }
 
 .menu-btn {
@@ -115,20 +131,29 @@ header {
     padding: 0;
 }
 
+/* 1층 정중앙 로고 고정 */
 .logo-center {
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
 
 .logo-center img {
     height: 40px;
 }
 
+/* --- 2층 (하단 메뉴) --- */
+.header-bottom {
+    display: flex;
+    justify-content: center; /* 메뉴 전체를 가운데 정렬 */
+    width: 100%;
+    margin-top: 20px; /* 1층 로고와의 간격 */
+}
+
 .main-nav {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -139,7 +164,7 @@ header {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 40px;
+    gap: 70px; /* 메뉴들 사이의 널찍한 간격 */
 }
 
 .nav-menu li {
@@ -160,34 +185,27 @@ header {
     color: #007bff;
 }
 
-.user-auth-area {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 60px;
-}
-
-/* --- 모바일 화면 최적화 (화면 너비 768px 이하일 때만 작동) --- */
+/* --- 모바일 화면 최적화 --- */
 @media (max-width: 768px) {
     header {
-        /* 모바일에서는 좌우 여백을 조금 줄여서 공간을 확보합니다 */
         padding: 10px 15px;
     }
 
+    .header-bottom {
+        margin-top: 15px; /* 모바일은 위아래 간격을 조금 줄임 */
+    }
+
     .nav-menu {
-        gap: 0; /* 로고 옆의 불필요한 간격 제거 */
+        gap: 20px; /* 모바일에서는 메뉴 간격을 좁혀서 한 줄에 들어가게 함 */
     }
 
-    /* nav-menu 안의 li 중에서 '첫 번째(로고)'를 제외한 나머지(글씨 메뉴들)를 숨김 처리 */
-    .nav-menu li:not(:first-child) {
-        display: none;
+    .logo-center img {
+        height: 35px;
     }
 
-    /* 로고 영역이 남은 공간을 적절히 차지하도록 플렉스 비율 조정 */
-    .main-nav {
-        flex: 1;
-        justify-content: center;
+    .nav-menu a {
+        font-size: 13px;
+        padding: 5px 8px;
+        white-space: nowrap;
     }
 }
-
-

@@ -33,34 +33,39 @@
 <body>
 <div class="container">
     <header>
-        <div class="header-left">
-            <button id="menuBtn" class="menu-btn">
-                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
-                     alt="menu" width="30"
-                     height="30">
-            </button>
+        <div class="header-top">
+            <div class="header-left">
+                <button id="menuBtn" class="menu-btn">
+                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
+                         alt="menu" width="30" height="30">
+                </button>
+            </div>
+
+            <div class="logo-center">
+                <a href="main">
+                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
+                         alt="donguri post" height="40">
+                </a>
+            </div>
+
+            <div class="user-auth-area">
+                <c:if test="${not empty loginPage}">
+                    <jsp:include page="${loginPage}"/>
+                </c:if>
+                <c:if test="${empty loginPage and not empty sessionScope.user}">
+                    <jsp:include page="jsp/user/login_ok.jsp"/>
+                </c:if>
+            </div>
         </div>
 
-
-        <nav class="main-nav">
-            <ul class="nav-menu">
-                <li><a href="main" class="logo-center">
-                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
-                         alt="donguri post" width="120" height="40">
-                </a></li>
-                <li><a href="#">동구리 예약</a></li>
-                <li><a href="#">동구리 보관함</a></li>
-                <li><a href="#">동구리 뽑기</a></li>
-            </ul>
-        </nav>
-
-        <div class="user-auth-area">
-            <c:if test="${not empty loginPage}">
-                <jsp:include page="${loginPage}"/>
-            </c:if>
-            <c:if test="${empty loginPage and not empty sessionScope.user}">
-                <jsp:include page="jsp/user/login_ok.jsp"/>
-            </c:if>
+        <div class="header-bottom">
+            <nav class="main-nav">
+                <ul class="nav-menu">
+                    <li><a href="#">동구리 예약</a></li>
+                    <li><a href="#">동구리 보관함</a></li>
+                    <li><a href="#">동구리 뽑기</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
