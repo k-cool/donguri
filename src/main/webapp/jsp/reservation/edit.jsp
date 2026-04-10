@@ -69,11 +69,53 @@
 
         <div class="form-row">
             <label>BGM</label>
-            <select name="bgmUrl">
-                <option value="none" ${r.bgm == 'none' ? 'selected' : ''}>없음</option>
-                <option value="piano" ${r.bgm == 'piano' ? 'selected' : ''}>피아노</option>
-                <option value="lofi" ${r.bgm == 'lofi' ? 'selected' : ''}>Lo-fi</option>
+            <select name="bgmUrl" id="bgmSelect">
+                <option value="" ${empty r.bgm ? 'selected' : ''}>None</option>
+
+                <optgroup label="Japanese Style">
+                    <option value="bgm/PerituneMaterial_Sakuya2(chosic.com).mp3" ${r.bgm == 'bgm/PerituneMaterial_Sakuya2(chosic.com).mp3' ? 'selected' : ''}>Sakuya2</option>
+                    <option value="bgm/Dreaming-Under-The-Stars-MP3(chosic.com).mp3" ${r.bgm == 'bgm/Dreaming-Under-The-Stars-MP3(chosic.com).mp3' ? 'selected' : ''}>Dreaming Under The Stars</option>
+                    <option value="bgm/PerituneMaterial_Soft_Day(chosic.com).mp3" ${r.bgm == 'bgm/PerituneMaterial_Soft_Day(chosic.com).mp3' ? 'selected' : ''}>Soft Day</option>
+                    <option value="bgm/jayjen-ray-of-hope(chosic.com).mp3" ${r.bgm == 'bgm/jayjen-ray-of-hope(chosic.com).mp3' ? 'selected' : ''}>Ray of Hope</option>
+                    <option value="bgm/Double-Rainbow-chosic.com_.mp3" ${r.bgm == 'bgm/Double-Rainbow-chosic.com_.mp3' ? 'selected' : ''}>Double Rainbow</option>
+                </optgroup>
+
+                <optgroup label="Bright">
+                    <option value="bgm/Soda(chosic.com).mp3" ${r.bgm == 'bgm/Soda(chosic.com).mp3' ? 'selected' : ''}>Soda</option>
+                    <option value="bgm/Lights(chosic.com).mp3" ${r.bgm == 'bgm/Lights(chosic.com).mp3' ? 'selected' : ''}>Lights</option>
+                    <option value="bgm/Roa-Haru-chosic.com_.mp3" ${r.bgm == 'bgm/Roa-Haru-chosic.com_.mp3' ? 'selected' : ''}>Haru</option>
+                    <option value="bgm/Little-Wishes-chosic.com_.mp3" ${r.bgm == 'bgm/Little-Wishes-chosic.com_.mp3' ? 'selected' : ''}>Little Wishes</option>
+                    <option value="bgm/Lobby-Time(chosic.com).mp3" ${r.bgm == 'bgm/Lobby-Time(chosic.com).mp3' ? 'selected' : ''}>Lobby Time</option>
+                </optgroup>
+
+                <optgroup label="Calm">
+                    <option value="bgm/Spring-Flowers(chosic.com).mp3" ${r.bgm == 'bgm/Spring-Flowers(chosic.com).mp3' ? 'selected' : ''}>Spring Flowers</option>
+                    <option value="bgm/Fall-In-Love-chosic.com_.mp3" ${r.bgm == 'bgm/Fall-In-Love(chosic.com_.mp3' ? 'selected' : ''}>Fall In Love</option>
+                    <option value="bgm/Transcendence-chosic.com).mp3" ${r.bgm == 'bgm/Transcendence(chosic.com).mp3' ? 'selected' : ''}>Transcendence</option>
+                    <option value="bgm/Walking-Home(chosic.com).mp3" ${r.bgm == 'bgm/Walking-Home(chosic.com).mp3' ? 'selected' : ''}>Walking Home</option>
+                </optgroup>
+
+                <optgroup label="Lo-fi">
+                    <option value="bgm/Colorful-Flowers(chosic.com).mp3" ${r.bgm == 'bgm/Colorful-Flowers(chosic.com).mp3' ? 'selected' : ''}>Colorful Flowers</option>
+                    <option value="bgm/echoes-in-blue-by-tokyo-music-walker-chosic.com_.mp3" ${r.bgm == 'bgm/echoes-in-blue-by-tokyo-music-walker-chosic.com_.mp3' ? 'selected' : ''}>Echoes in Blue</option>
+                    <option value="bgm/tokyo-music-walker-day-off-chosic.com_.mp3" ${r.bgm == 'bgm/tokyo-music-walker-day-off-chosic.com_.mp3' ? 'selected' : ''}>Day Off</option>
+                    <option value="bgm/Late-at-Night(chosic.com).mp3" ${r.bgm == 'bgm/Late-at-Night(chosic.com).mp3' ? 'selected' : ''}>Late at Night</option>
+                </optgroup>
+
+                <optgroup label="Gentle/Sad">
+                    <option value="bgm/a-promise(chosic.com).mp3" ${r.bgm == 'bgm/a-promise(chosic.com).mp3' ? 'selected' : ''}>A Promise</option>
+                    <option value="bgm/Daydreams(chosic.com).mp3" ${r.bgm == 'bgm/Daydreams(chosic.com).mp3' ? 'selected' : ''}>Daydreams</option>
+                    <option value="bgm/Golden-Hour(chosic.com).mp3" ${r.bgm == 'bgm/Golden-Hour(chosic.com).mp3' ? 'selected' : ''}>Golden Hour</option>
+                    <option value="bgm/scott-buckley-reverie(chosic.com).mp3" ${r.bgm == 'bgm/scott-buckley-reverie(chosic.com).mp3' ? 'selected' : ''}>Reverie</option>
+                </optgroup>
             </select>
+        </div>
+
+        <!-- Preview -->
+        <div style="margin-top:10px;">
+            <audio id="bgmPlayer" controls style="width:300px;">
+                <source id="bgmSource" src="" type="audio/mpeg">
+            </audio>
         </div>
 
         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
@@ -86,6 +128,7 @@
 
 <script src="js/reservation-flatpickr.js"></script>
 <script src="js/reservation-template.js"></script>
+<script src="js/bgmplay.js"></script>
 <script>
     window.onload = function () {
         updateTemplatePreview('templateSelect', 'previewImg', 'templatePreview');
