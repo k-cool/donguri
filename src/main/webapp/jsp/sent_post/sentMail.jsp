@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>보낸 메일함</title>
-    <link rel="stylesheet" href="/css/sentMail.css">
+    <link rel="stylesheet" href="/css/sentPost.css">
     <script src="js/sentMail.js"></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
             <c:otherwise>
                 <c:forEach var="mail" items="${sentMails}">
                     <div class="mail-card" onclick="goDetail('${mail.reservationId}')">
-                        <div class="mail-row">
+                        <div class="mail-row recipient-row">
                             <span class="mail-label">받는 사람:</span>
                             <span class="mail-value">${mail.recipientEmail}</span>
                         </div>
@@ -40,11 +41,11 @@
                             <span class="mail-label">제목:</span>
                             <span class="mail-value title-text">${mail.subject}</span>
                         </div>
-                        <div class="mail-row">
+                        <div class="mail-row status-row">
                             <span class="mail-label">상태:</span>
                             <span class="mail-value status-text">${mail.status}</span>
                         </div>
-                        <div class="mail-row">
+                        <div class="mail-row date-row">
                             <span class="mail-label">보낸 시각:</span>
                             <span class="mail-value date-text">${mail.sentAt}</span>
                         </div>
@@ -54,5 +55,8 @@
         </c:choose>
     </div>
 </div>
+
+<div class="deco-cone-1"></div>
+<div class="deco-cone-2"></div>
 </body>
 </html>
