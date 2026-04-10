@@ -76,40 +76,41 @@
                 <option value="">없음</option>
 
                 <optgroup label="일본풍">
-                    <option value="bgm/PerituneMaterial_Sakuya2(chosic.com).mp3">Sakuya2</option>
-                    <option value="bgm/Dreaming-Under-The-Stars-MP3(chosic.com).mp3">Dreaming Under The Stars</option>
-                    <option value="bgm/PerituneMaterial_Soft_Day(chosic.com).mp3">Soft Day</option>
-                    <option value="bgm/jayjen-ray-of-hope(chosic.com).mp3">Ray of Hope</option>
-                    <option value="bgm/Double-Rainbow-chosic.com_.mp3">Double Rainbow</option>
+                    <option value="bgm/PerituneMaterial_Sakuya2(chosic.com).mp3">바람에 실려온 작은 마음</option>
+                    <option value="bgm/Dreaming-Under-The-Stars-MP3(chosic.com).mp3">오늘을 담아</option>
+                    <option value="bgm/PerituneMaterial_Soft_Day(chosic.com).mp3">말로 다 하지 못한 감정을 담아서</option>
+                    <option value="bgm/jayjen-ray-of-hope(chosic.com).mp3">사라지지 않는 하루</option>
+                    <option value="bgm/Double-Rainbow-chosic.com_.mp3">흘러가는 시간 위에</option>
                 </optgroup>
 
                 <optgroup label="밝은">
-                    <option value="bgm/Soda(chosic.com).mp3">Soda</option>
-                    <option value="bgm/Lights(chosic.com).mp3">Lights</option>
-                    <option value="bgm/Roa-Haru-chosic.com_.mp3">Haru</option>
-                    <option value="bgm/Little-Wishes-chosic.com_.mp3">Little Wishes</option>
-                    <option value="bgm/Lobby-Time(chosic.com).mp3">Lobby Time</option>
+                    <option value="bgm/Soda(chosic.com).mp3">별사탕 스텝</option>
+                    <option value="bgm/Lights(chosic.com).mp3">슬라임 마을의 아침</option>
+                    <option value="bgm/Roa-Haru-chosic.com_.mp3">작은 세계, 큰 모험</option>
+                    <option value="bgm/Little-Wishes-chosic.com_.mp3">♪ ON</option>
+                    <option value="bgm/Lobby-Time(chosic.com).mp3">말랑말랑</option>
                 </optgroup>
 
                 <optgroup label="차분한">
-                    <option value="bgm/Spring-Flowers(chosic.com).mp3">Spring Flowers</option>
-                    <option value="bgm/Fall-In-Love-chosic.com_.mp3">Fall In Love</option>
-                    <option value="bgm/Transcendence-chosic.com_.mp3">Transcendence</option>
-                    <option value="bgm/Walking-Home-chosic.com_.mp3">Walking Home</option>
+                    <option value="bgm/Spring-Flowers(chosic.com).mp3">밤의 여운</option>
+                    <option value="bgm/Fall-In-Love-chosic.com_.mp3">고요한 마음</option>
+                    <option value="bgm/Transcendence-chosic.com_.mp3">Calm Journey</option>
+                    <option value="bgm/Walking-Home-chosic.com_.mp3">조용히 전해지는 이야기</option>
                 </optgroup>
 
                 <optgroup label="Lo-fi">
-                    <option value="bgm/Colorful-Flowers(chosic.com).mp3">Colorful Flowers</option>
-                    <option value="bgm/echoes-in-blue-by-tokyo-music-walker-chosic.com_.mp3">Echoes in Blue</option>
-                    <option value="bgm/tokyo-music-walker-day-off-chosic.com_.mp3">Day Off</option>
-                    <option value="bgm/Late-at-Night(chosic.com).mp3">Late at Night</option>
+                    <option value="bgm/Colorful-Flowers(chosic.com).mp3">Stay Cozy</option>
+                    <option value="bgm/echoes-in-blue-by-tokyo-music-walker-chosic.com_.mp3">雨の音 (Rainy Mood)
+                    </option>
+                    <option value="bgm/tokyo-music-walker-day-off-chosic.com_.mp3">Tokyo Night Drive</option>
+                    <option value="bgm/Late-at-Night(chosic.com).mp3">Coffee & Chill</option>
                 </optgroup>
 
                 <optgroup label="잔잔/슬픔">
-                    <option value="bgm/a-promise(chosic.com).mp3">A Promise</option>
-                    <option value="bgm/Daydreams-chosic.com_.mp3">Daydreams</option>
-                    <option value="bgm/Golden-Hour-chosic.com_.mp3">Golden Hour</option>
-                    <option value="bgm/scott-buckley-reverie(chosic.com).mp3">Reverie</option>
+                    <option value="bgm/a-promise(chosic.com).mp3">Rainy Window</option>
+                    <option value="bgm/Daydreams-chosic.com_.mp3">흐르지 못한 이야기</option>
+                    <option value="bgm/Golden-Hour-chosic.com_.mp3">전하지 못한 말</option>
+                    <option value="bgm/scott-buckley-reverie(chosic.com).mp3">조용한 눈물</option>
                 </optgroup>
 
 
