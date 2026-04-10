@@ -1,176 +1,111 @@
-/* 1. 배경: 깊은 숲속 원목 느낌 */
-body {
-    background-color: #d7b899;
-    background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-    color: #3e2723;
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+* {
     margin: 0;
-    padding: 40px 20px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Galmuri11', sans-serif !important;
+    color: #3b110b;
+}
+
+/* 1. 배경 설정: 주황색이 절대 안 보이게 꽉 채우기 */
+body {
+    background-image: url("../image/background.png");
+    /* cover가 아니라 100% 100%를 써야 화면 길이에 맞춰 배경이 강제로 늘어납니다 */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed; /* 배경은 고정하고 내용만 스크롤 */
+    background-color: #ffffff; /* 혹시라도 이미지가 안 뜰 때를 대비해 주황색 대신 흰색 */
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    padding: 30px 10px;
+    min-height: 100vh;
 }
 
-/* 2. 메인 컨테이너: 나무 판자 위에 놓인 편지봉투 느낌 */
+/* 2. 종이 컨테이너: posting_page.png가 내용 따라 늘어나는 핵심 */
 .form-container {
-    max-width: 550px;
+    background-image: url("../image/posting_page.png");
+    /* [중요] 내용이 많아지면 이미지가 같이 아래로 쭉 늘어나게 함 */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
     width: 100%;
-    background: #fffef2; /* 편지지 색상 */
-    padding: 40px;
-    border-radius: 5px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(0, 0, 0, 0.1) inset,
-    15px 15px 0px rgba(0, 0, 0, 0.1); /* 바닥 그림자 */
-    border: 1px solid #e0d5c1;
+    max-width: 480px;
+
+    /* 집게 부분 여백 120px로 넉넉히 벌려줌 */
+    padding: 120px 40px 80px 40px;
+
     position: relative;
+    /* 내용물 높이에 맞게 컨테이너가 늘어남 */
+    height: auto;
+    display: block;
 }
 
-/* 편지지 상단 장식 (도토리 아이콘) */
-.form-container::before {
-    content: "🌰";
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 3rem;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
-}
-
+/* 3. 제목 (집게 바로 아래 오도록) */
 h2 {
-    font-size: 1.8rem;
-    color: #5d4037;
-    border-bottom: 2px dashed #d7ccc8;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    font-size: 1.15rem;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
+/* 4. 입력 행 간격: 이걸 키우면 종이가 더 길게 늘어남 */
 .form-row {
-    margin-bottom: 20px;
+    margin-bottom: 25px; /* 줄 간격이 너무 좁으면 이 숫자를 키우세요 */
     text-align: left;
-}
-
-/* 라벨: 연필로 꾹꾹 눌러쓴 느낌 */
-.form-row label {
-    font-weight: bold;
-    color: #795548;
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 8px;
-}
-
-/* 입력창: 테두리를 없애고 밑줄만 주어 편지지 느낌 강조 */
-.form-row input,
-.form-row textarea,
-.form-row select {
-    padding: 12px 10px;
-    font-size: 1rem;
-    border: none;
-    border-bottom: 1px solid #d7ccc8;
-    background: transparent;
     width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.3s;
 }
 
-.form-row input:focus,
-.form-row textarea:focus {
-    border-bottom: 2px solid #8e6546;
-}
-
-/* 예약 날짜 선택 박스 */
-.date-picker-container {
-    background: #fdf5f0;
-    border-radius: 10px;
-    padding: 15px;
-    border: 1px solid #efebe9;
-    margin-top: 5px;
-}
-
-#scheduledWrapper {
-    font-size: 1.5rem;
-    margin-right: 10px;
-}
-
-/* 버튼 스타일: 묵직한 나무 버튼 */
-button[type="submit"] {
-    width: 100%;
-    padding: 18px;
-    background: #5d4037;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #3e2723; /* 버튼 입체감 */
-    margin-top: 20px;
-    transition: all 0.1s;
-}
-
-button[type="submit"]:active {
-    box-shadow: 0 0px 0 #3e2723;
-    transform: translateY(4px);
-}
-
-/* 돌아가기 링크 버튼 */
-.link-btn {
-    display: block;
-    margin-top: 25px;
-    color: #8d6e63;
-    text-decoration: none;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #8d6e63;
+label {
     display: inline-block;
+    background-color: #d7c9b8;
+    padding: 2px 10px;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    border-radius: 2px;
 }
 
-.link-btn:hover {
-    color: #5d4037;
-    border-color: #5d4037;
+/* 입력창 투명화 (종이 비치게) */
+input[type="text"], input[name="recipientEmail"], input[name="subject"], textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    outline: none;
 }
 
-/* 템플릿 미리보기 이미지 */
-#previewImg {
-    margin-top: 15px;
-    border: 5px solid white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: rotate(-2deg); /* 사진이 툭 던져진 느낌 */
+/* 종이의 점선 줄 */
+.form-row::after {
+    content: "----------------------------------------------------";
+    display: block;
+    letter-spacing: 2px;
+    font-size: 10px;
+    color: #c7bca1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 5px;
+    opacity: 0.6;
 }
 
-/* 예약 시간 컨테이너 전체에 클릭 스타일 적용 */
-.date-picker-container {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-    transition: all 0.2s ease; /* 부드러운 변화 효과 */
-    background-color: #fff;
-}
-
-/* 마우스를 올렸을 때 (Hover) */
-.date-picker-container:hover {
-    background-color: #f0f0f0; /* 배경색을 살짝 어둡게 */
-    border-color: #999; /* 테두리 강조 */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 떠오르는 느낌 */
-}
-
-/* 클릭하는 순간 (Active) */
-.date-picker-container:active {
-    background-color: #e5e5e5;
-    transform: scale(0.98); /* 살짝 눌리는 느낌 */
-}
-
-/* 달력 아이콘 스타일 */
-#scheduledWrapper {
-    margin-right: 10px;
-    font-size: 1.2rem;
-    user-select: none; /* 아이콘 텍스트 선택 방지 */
-}
-
-/* 선택된 날짜 텍스트 */
-#selectedDateDisplay {
-    flex-grow: 1;
-    color: #333;
-    font-weight: 500;
+/* 5. 예약하기 버튼: 캡슐 모양 */
+button[type="submit"] {
+    display: block;
+    width: 70%;
+    margin: 50px auto 10px auto;
+    background-color: #3b110b;
+    color: #e0d5c1;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
