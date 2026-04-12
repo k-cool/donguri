@@ -22,12 +22,16 @@
 
             <div class="form-row">
                 <label>받는 이메일</label>
-                <input name="recipientEmail" value="${sessionScope.insertReservation.recipientEmail}"
-                       placeholder="영어만 입력 가능" required
-                       oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g,'')">
-                <small style="color: gray; font-size: 0.8em;">
-                    영어, 숫자, @ . _ - 만 입력 가능합니다.
-                </small>
+
+                <div class="input-row">
+                    <input name="recipientEmail"
+                           placeholder="영어만 입력 가능"
+                           required>
+
+                    <small class="input-desc">
+                        영어, 숫자, @ . _ - 만 입력 가능합니다.
+                    </small>
+                </div>
             </div>
 
             <div class="form-row">
@@ -57,7 +61,7 @@
 
                 <button type="button" id="tempLeft">◀</button>
 
-               
+
                 <div class="template-track-wrapper">
                     <div class="template-track" id="templateTrack">
                         <div class="template-card"><img src="img1.png"></div>
