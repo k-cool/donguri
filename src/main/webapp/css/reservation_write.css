@@ -15,15 +15,15 @@
     color: #3b110b;
 }
 
-/* 1. 배경 설정: 주황색이 절대 안 보이게 꽉 채우기 */
+/* ===== 배경 ===== */
 body {
     background-image: url("../image/background.png");
-    /* cover가 아니라 100% 100%를 써야 화면 길이에 맞춰 배경이 강제로 늘어납니다 */
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center top;
-    background-attachment: fixed; /* 배경은 고정하고 내용만 스크롤 */
-    background-color: #ffffff; /* 혹시라도 이미지가 안 뜰 때를 대비해 주황색 대신 흰색 */
+    background-attachment: fixed;
+    background-color: #ffffff;
+
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -31,18 +31,17 @@ body {
     min-height: 100vh;
 }
 
-/* 2. 종이 컨테이너: posting_page.png가 내용 따라 늘어나는 핵심 */
+/* ===== 종이 ===== */
 .form-container {
     background-image: url(../image/posting_page.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-position-y: -57px;
+
     width: 100%;
     max-width: 480px;
-    position: relative;
     height: auto;
-    display: block;
 }
 
 .form-container > div {
@@ -50,17 +49,16 @@ body {
     padding-top: 105px;
 }
 
-/* 3. 제목 (집게 바로 아래 오도록) */
+/* ===== 제목 ===== */
 h2 {
     font-size: 1.15rem;
     text-align: center;
     margin-bottom: 40px;
 }
 
-/* 4. 입력 행 간격: 이걸 키우면 종이가 더 길게 늘어남 */
+/* ===== 입력 영역 ===== */
 .form-row {
-    margin-bottom: 25px; /* 줄 간격이 너무 좁으면 이 숫자를 키우세요 */
-    text-align: left;
+    margin-bottom: 25px;
     width: 100%;
 }
 
@@ -73,8 +71,8 @@ label {
     border-radius: 2px;
 }
 
-/* 입력창 투명화 (종이 비치게) */
-input[type="text"], input[name="recipientEmail"], input[name="subject"], textarea {
+/* 입력창 */
+input[type="text"], textarea {
     width: 100%;
     border: none;
     background: transparent;
@@ -83,20 +81,18 @@ input[type="text"], input[name="recipientEmail"], input[name="subject"], textare
     outline: none;
 }
 
-/* 종이의 점선 줄 */
+/* 점선 */
 .form-row::after {
     content: "----------------------------------------------------";
     display: block;
     letter-spacing: 2px;
     font-size: 10px;
     color: #c7bca1;
-    overflow: hidden;
-    white-space: nowrap;
     margin-top: 5px;
     opacity: 0.6;
 }
 
-/* 5. 예약하기 버튼: 캡슐 모양 */
+/* 버튼 */
 button[type="submit"] {
     display: block;
     width: 70%;
@@ -107,5 +103,57 @@ button[type="submit"] {
     padding: 16px;
     border-radius: 50px;
     font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* =========================
+   ✅ 템플릿 (버튼형 캐러셀)
+========================= */
+
+/* 전체 */
+.template-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.template-track-wrapper {
+    width: 264px !important; /* ⭐ 강제 적용 */
+    overflow: hidden;
+}
+
+/* 카드 */
+.template-card {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+/* 트랙 */
+.template-track {
+    display: flex;
+    gap: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* 선택 */
+.template-card.active {
+    border: 2px solid #3b110b;
+    transform: scale(1.08);
+}
+
+/* 이미지 */
+.template-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 화살표 */
+.arrow {
+    background: none;
+    border: none;
+    font-size: 18px;
     cursor: pointer;
 }
