@@ -275,11 +275,14 @@ button[type="submit"] {
 }
 
 /* ===== BGM 탭 & 슬라이더 ===== */
+/* 기본 레이아웃 */
+/* 1. 전체 섹션 배경 제거 */
 .bgm-section {
     margin-top: 25px;
+    padding: 10px; /* 여백 조정 */
+    background-color: transparent !important; /* 배경 투명하게 */
 }
 
-/* 탭 버튼 스타일 */
 .bgm-tabs {
     display: flex;
     gap: 2px;
@@ -291,18 +294,15 @@ button[type="submit"] {
     padding: 6px 12px;
     font-size: 10px;
     cursor: pointer;
-    background-color: #c9b9a8; /* 비활성 탭 */
+    background-color: #c9b9a8;
     color: #3b110b;
-    transition: 0.2s;
 }
 
 .tab-btn.active {
-    background-color: #745b4c; /* 이미지 속 활성 탭 색상 */
+    background-color: #745b4c;
     color: #fff;
-    padding-top: 8px; /* 활성 탭 강조 */
 }
 
-/* 슬라이더 메인 박스 */
 .bgm-container {
     background-color: #745b4c;
     border-radius: 0 15px 15px 15px;
@@ -323,7 +323,6 @@ button[type="submit"] {
     transition: transform 0.3s ease-out;
 }
 
-/* 개별 BGM 카드 (재생 버튼) */
 .bgm-card {
     width: 65px;
     height: 65px;
@@ -334,11 +333,11 @@ button[type="submit"] {
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    font-size: 20px;
 }
 
 .bgm-card::after {
-    content: '♫'; /* 이미지의 아이콘 느낌 */
+    content: '♫';
+    font-size: 20px;
     color: #3b110b;
 }
 
@@ -347,22 +346,75 @@ button[type="submit"] {
     border: 2px solid #fff;
 }
 
-/* 화살표 */
 .bgm-arrow {
     background: none;
     border: none;
-    color: #3b110b;
-    font-size: 16px;
+    color: #fff;
     cursor: pointer;
-    font-weight: bold;
 }
 
-/* 하단 정보 */
+/* 2. 테마별 슬라이더 박스 색상만 변경 */
+/* Japanese Mood */
+.theme-japanese .bgm-container {
+    background-color: #d8a7b1 !important;
+}
+
+.theme-japanese .tab-btn.active {
+    background-color: #d8a7b1 !important;
+}
+
+/* Midnight Blue */
+.theme-midnight .bgm-container {
+    background-color: #34495e !important;
+}
+
+.theme-midnight .tab-btn.active {
+    background-color: #34495e !important;
+}
+
+/* Playful Day */
+.theme-playful .bgm-container {
+    background-color: #fbc02d !important;
+}
+
+.theme-playful .tab-btn.active {
+    background-color: #fbc02d !important;
+}
+
+/* Lofi Chill */
+.theme-lofi .bgm-container {
+    background-color: #9575cd !important;
+}
+
+.theme-lofi .tab-btn.active {
+    background-color: #9575cd !important;
+}
+
+/* Calm & Sad */
+.theme-calm .bgm-container {
+    background-color: #90a4ae !important;
+}
+
+.theme-calm .tab-btn.active {
+    background-color: #90a4ae !important;
+}
+
 .player-wrapper {
     margin-top: 10px;
     text-align: center;
-
 }
+
+#currentSongTitle {
+    font-size: 14px;
+    color: inherit;
+    margin-top: 5px;
+}
+
+audio {
+    width: 100%;
+    height: 35px;
+}
+
 
 #currentSongTitle {
     font-size: 15px;

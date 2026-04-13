@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. 기존 select 기반의 모든 곡 데이터
     const bgmData = {
         "Japanese Mood": [
             {title: "바람에 실려온 작은 마음", url: "bgm/PerituneMaterial_Sakuya2(chosic.com).mp3"},
@@ -40,40 +39,55 @@ document.addEventListener("DOMContentLoaded", function () {
     const player = document.getElementById('bgmPlayer');
     const titleDisplay = document.getElementById('currentSongTitle');
     const selectedInput = document.getElementById('selectedBgm');
+    const bgmSection = document.querySelector('.bgm-section');
 
-    // 2. 탭 전환 기능
+    // 테마 변경 함수 (CSS 이름과 맞춰줌)
+    function updateTheme(genre) {
+        // 기존 테마 클래스 싹 지우기
+        bgmSection.classList.remove('theme-japanese', 'theme-midnight', 'theme-playful', 'theme-lofi', 'theme-calm');
+
+        // 장르에 맞춰 클래스 추가
+        if (genre === "Japanese Mood") bgmSection.classList.add('theme-japanese');
+        else if (genre === "Midnight Blue") bgmSection.classList.add('theme-midnight');
+        else if (genre === "Playful Day") bgmSection.classList.add('theme-playful');
+        else if (genre === "Lofi Chill") bgmSection.classList.add('theme-lofi');
+        else if (genre === "Calm & Sad") bgmSection.classList.add('theme-calm');
+    }
+
+    // 탭 클릭 시 동작
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            renderBgms(tab.dataset.genre);
+
+            const genre = tab.dataset.genre;
+            updateTheme(genre); // 테마 색상 변경
+            renderBgms(genre);  // 곡 목록 다시 그리기
         });
     });
 
-    // 3. 곡 목록 생성 기능
+    // 곡 목록 생성
     function renderBgms(genre) {
         track.innerHTML = '';
+        currentX = 0;
         track.style.transform = 'translateX(0)';
 
         bgmData[genre].forEach(song => {
             const card = document.createElement('div');
             card.className = 'bgm-card';
-
             card.onclick = () => {
                 document.querySelectorAll('.bgm-card').forEach(c => c.classList.remove('active'));
                 card.classList.add('active');
-
                 player.src = song.url;
                 player.play();
                 titleDisplay.innerText = "♪ " + song.title + " ♪";
                 selectedInput.value = song.url;
             };
-
             track.appendChild(card);
         });
     }
 
-    // 4. 슬라이더 이동 버튼
+    // 슬라이더 버튼
     let currentX = 0;
     document.querySelector('.bgm-arrow.right').onclick = () => {
         if (currentX > -(track.scrollWidth - 250)) {
@@ -88,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // 초기 로드
+    // 처음 페이지 열릴 때 실행
+    updateTheme("Japanese Mood");
     renderBgms("Japanese Mood");
 });
