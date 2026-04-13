@@ -137,8 +137,8 @@
                 </audio>
             </div>
 
-            <button type="submit">💌 예약하기</button>
-            <a href="reservation?action=list" class="link-btn">📬 도토리 예약 안 하고 그냥 돌아갈래!</a>
+            <button type="submit">예약하기</button>
+            <a href="reservation?action=list" class="link-btn">돌아가기</a>
         </form>
     </div>
 
