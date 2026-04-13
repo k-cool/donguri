@@ -166,17 +166,50 @@ input[type="text"] {
     text-decoration: none;
 }
 
-/* [중요] padding-top 방식 사용 시 내부 요소들은 absolute로 띄워야 함 */
+/* 1. 카드를 감싸는 그리드 설정 */
+.acorn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* 우표가 튀어나올 공간을 위해 간격을 넓힘 */
+    padding: 40px 20px; /* 상단과 좌우에 여백을 주어 우표가 잘리지 않게 함 */
+    overflow: visible !important; /* 부모에서도 잘림 방지 */
+}
 
-/* 우표 이미지 (안 잘리게 안쪽 배치) */
+/* 2. 개별 카드 설정 */
+.acorn-card {
+    /* ... (배경 이미지 설정 등 기존 코드 유지) ... */
+
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+
+    /* [가장 중요] hidden을 visible로 강제 설정 */
+    overflow: visible !important;
+
+    border: 3px dashed #8e765e;
+    border-radius: 10px;
+    z-index: 1; /* 우표보다 낮게 설정 */
+    text-decoration: none;
+}
+
+/* 3. 우표 이미지 설정 */
 .acorn-card .stamp-img {
-    width: 230px;
+    width: 150px; /* 크기 조절 */
     height: auto;
     position: absolute;
-    top: -30px;
-    right: -30px;
-    transform: rotate(10deg);
-    z-index: 10;
+
+    /* 카드 밖으로 확실히 밀어내기 */
+    top: -40px !important;
+    right: -40px !important;
+
+    transform: rotate(15deg);
+    z-index: 999 !important; /* 어떤 요소보다 위에 오도록 */
+    pointer-events: none; /* 클릭 방해 금지 */
+
+    /* 잘림 방지를 위해 clip 설정 해제 */
+    clip: auto;
 }
 
 /* 정보 영역 (정중앙 배치) */
@@ -184,14 +217,14 @@ input[type="text"] {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* 정확히 정중앙으로 보냄 */
-    width: 80%;
+    transform: translate(-50%, -50%);
+    width: 90%;
     text-align: center;
-    pointer-events: none; /* 클릭 방해 금지 */
+    pointer-events: none;
     z-index: 15;
 }
 
-/* 제목 중앙 배치 및 말줄임표 처리 */
+/* 제목 및 날짜 스타일은 기존 유지 */
 .acorn-info .subject {
     font-size: 1.8rem;
     font-weight: bold;
@@ -202,28 +235,17 @@ input[type="text"] {
     text-overflow: ellipsis;
     margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.8);
-    position: relative;
-    z-index: 15;
 }
 
-.acorn-info .subject::before {
-    content: '"';
-}
-
-.acorn-info .subject::after {
-    content: '"';
-}
-
-/* 날짜 하단 고정 */
 .acorn-info .date {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -40px; /* 제목으로부터 아래쪽으로 거리 조절 */
+    bottom: -40px;
     width: 100%;
     font-size: 1.1rem;
     color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .acorn-card:hover {

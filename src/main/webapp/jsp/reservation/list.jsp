@@ -35,18 +35,12 @@
             <c:choose>
                 <c:when test="${not empty list}">
                     <c:forEach var="r" items="${list}">
-
                         <a href="reservation?action=detail&id=${r.reservationId}" class="acorn-card">
-
-                         
                             <img src="${pageContext.request.contextPath}/image/${r.isDone == '완료' ? 'stamp_green.svg' : 'stamp_red.svg'}"
                                  class="stamp-img">
 
                             <div class="acorn-info">
-
                                 <p class="subject">${r.subject}</p>
-
-
                                 <p class="date">
                                     <c:choose>
                                         <c:when test="${r.scheduledDate.length() >= 10}">
@@ -62,12 +56,11 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <p class="empty" style="padding: 50px 0; color: #8d6e63;">검색 결과가 없습니다.</p>
+                    <p class="empty">검색 결과가 없습니다.</p>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
-</div>
-<script src="js/filter.js"></script>
+    <script src="js/filter.js"></script>
 </body>
 </html>
