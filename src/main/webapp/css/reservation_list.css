@@ -60,7 +60,7 @@ h2::after {
 /* 3. 검색창 박스 (점선 간격 확대) */
 .filter-basket {
     background: rgba(255, 255, 255, 0.3);
-    border: 2px dashed #422c13;
+    border: 2px dashed #3b110b;
     border-radius: 25px;
     padding: 25px 15px;
     margin-bottom: 25px;
@@ -113,57 +113,103 @@ input[type="text"] {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 5. 테이블 리스트 (점선 간격 확대) */
-.table-wrapper {
+/* 보관함 박스 */
+.acorn-box {
     background: rgba(255, 255, 255, 0.3);
-    border: 2px dashed #3b110b; /* 점선 두께를 2px로 올려서 더 잘 보이게 */
+    border: 2px dashed #3b110b;
     border-radius: 25px;
-    padding: 15px;
-    overflow-x: auto;
+    padding: 20px;
 }
 
-table {
+/* 제목 */
+.acorn-box h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+/* 그리드 */
+.acorn-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* 카드 (포스트잇 느낌) */
+.acorn-card {
+    background: #fff;
+    border-radius: 4px; /* 각진 느낌 */
+    padding: 10px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1 / 1.1; /* 정사각에 가까운 비율 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* 벚꽃 배경 효과 (두 번째 사진의 분홍 꽃) */
+.acorn-card::before {
+    content: '✿';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: #ffd1dc;
+    font-size: 1rem;
+    z-index: 0;
+}
+
+/* 카드 내 이미지들 공통 */
+.acorn-card img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+/* 엽서/소주병 이미지 (첫 번째 이미지) */
+.acorn-card .postcard-img {
+    width: 40px; /* 크기를 확 줄임 */
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+/* 도장 이미지 (두 번째 이미지 - 가장 강조) */
+.acorn-card .stamp-img {
+    width: 70px; /* 도장을 크게 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg); /* 약간 회전시켜 자연스럽게 */
+    z-index: 2;
+}
+
+/* 정보 영역 숨기기 (두 번째 사진처럼 도장 위주로 보려면 필요) */
+.acorn-info {
+    display: none; /* 텍스트 정보를 숨기고 싶지 않으면 이 줄을 지우세요 */
+}
+
+/* 버튼 영역 (카드 하단에 작게 배치) */
+.acorn-actions {
+    position: absolute;
+    bottom: 5px;
     width: 100%;
-    min-width: 460px;
-    border-collapse: separate;
-    border-spacing: 0 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    z-index: 3;
+    opacity: 0; /* 평소엔 안 보이다가 */
+    transition: opacity 0.3s;
 }
 
-th {
-    font-size: 0.8rem;
-    color: #8d6e63;
-    padding-bottom: 12px;
+.acorn-card:hover .acorn-actions {
+    opacity: 1; /* 마우스 올리면 보임 */
 }
 
-tbody td {
-    padding: 14px 5px;
-    font-size: 0.8rem;
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-tbody td:first-child {
-    border-radius: 15px 0 0 15px;
-    padding-left: 15px;
-}
-
-tbody td:last-child {
-    border-radius: 0 15px 15px 0;
-    padding-right: 15px;
-}
-
-.status {
-    background-color: #d7c9b8;
-    padding: 3px 7px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.btn-view, .btn-delete {
-    padding: 5px 12px;
-    font-size: 0.75rem;
-    border-radius: 15px;
-    text-decoration: none;
-    border: 1px solid #d7c9b8;
-    background-color: #fffcf6;
-    display: inline-block;
+.acorn-actions a {
+    font-size: 0.5rem;
+    padding: 2px 4px;
+    background: rgba(255, 255, 255, 0.8);
 }

@@ -34,46 +34,39 @@
 
     <a href="reservation?action=write" class="btn-write">도토리 심으러 가기</a>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-            <tr>
-                <th>받는사람 이메일</th>
-                <th>예약시간</th>
-                <th>상태</th>
-                <th>제목</th>
-                <th>보기</th>
-                <th>관리</th>
-            </tr>
-            </thead>
-            <tbody>
+    <div class="acorn-box">
+        <h3>{ 보낸 도토리 보관함 }</h3>
+
+        <div class="acorn-grid">
             <c:choose>
                 <c:when test="${not empty list}">
                     <c:forEach var="r" items="${list}">
-                        <tr>
-                            <td title="${r.recipientEmail}">${r.recipientEmail}</td>
-                            <td>${r.scheduledDate}</td>
-                            <td><span class="status">${r.isDone}</span></td>
-                            <td title="${r.subject}"><strong>${r.subject}</strong></td>
-                            <td><a href="reservation?action=detail&id=${r.reservationId}" class="btn-view">열기</a></td>
-                            <td><a href="reservation?action=delete&id=${r.reservationId}" class="btn-delete"
-                                   onclick="return confirm('지울까요?');">비우기</a></td>
-                        </tr>
+                        <div class="acorn-card">
+                            <img src="${pageContext.request.contextPath}/image/postcard.jpg" class="postcard-img">
+
+                            <img src="${pageContext.request.contextPath}/image/${r.isDone == '완료' ? 'stamp_green.svg' : 'stamp_red.svg'}"
+                                 class="stamp-img">
+
+                            <div class="acorn-info">
+                                <p class="subject">${r.subject}</p>
+                                <p class="date">${r.scheduledDate}</p>
+                            </div>
+
+                            <div class="acorn-actions">
+                                <a href="reservation?action=detail&id=${r.reservationId}">열기</a>
+                                <a href="reservation?action=delete&id=${r.reservationId}"
+                                   onclick="return confirm('지울까요?');">삭제</a>
+                            </div>
+                        </div>
                     </c:forEach>
                 </c:when>
+
                 <c:otherwise>
-                    <tr>
-                        <td colspan="6" style="padding: 80px; color: #8d6e63;">
-                            숲속에 해당하는 도토리가 없어요. 🐿️
-                        </td>
-                    </tr>
+                    <p class="empty">검색 결과 없음</p>
                 </c:otherwise>
             </c:choose>
-            </tbody>
-        </table>
+        </div>
     </div>
-
-
 </div>
 <script src="js/filter.js"></script>
 </body>
