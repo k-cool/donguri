@@ -12,18 +12,20 @@
 
         <div class="envelope" id="envelope">
 
-            <!-- 닫힌 상태에서 보이는 앞면 -->
-            <div class="cover">
-                📩 편지를 열어보세요
-            </div>
-
             <div class="envelope-body">
+
+                <!-- 닫힌 상태에서 보이는 앞면 -->
+                <div class="cover">
+                    📩 편지를 열어보세요
+                </div>
+
 
                 <div class="wing left"></div>
                 <div class="wing right"></div>
+                <div class="top-flap"></div>
 
                 <div class="letter">
-                    <div class="stamp">どぐり</div>
+                    <div class="stamp">どんぐり</div>
 
                     <div class="image-area"></div>
 
@@ -50,7 +52,6 @@
                     </div>
                 </div>
 
-                <div class="top-flap"></div>
             </div>
 
         </div>
@@ -68,4 +69,3 @@
 </div>
 </body>
 </html>
-
