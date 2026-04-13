@@ -356,47 +356,47 @@ button[type="submit"] {
 /* 2. 테마별 슬라이더 박스 색상만 변경 */
 /* Japanese Mood */
 .theme-japanese .bgm-container {
-    background-color: #d8a7b1 !important;
+    background-color: #baa890 !important;
 }
 
 .theme-japanese .tab-btn.active {
-    background-color: #d8a7b1 !important;
+    background-color: #b9a78f !important;
 }
 
 /* Midnight Blue */
 .theme-midnight .bgm-container {
-    background-color: #34495e !important;
+    background-color: #98867c !important;
 }
 
 .theme-midnight .tab-btn.active {
-    background-color: #34495e !important;
+    background-color: #97857b !important;
 }
 
 /* Playful Day */
 .theme-playful .bgm-container {
-    background-color: #fbc02d !important;
+    background-color: #7d7064 !important;
 }
 
 .theme-playful .tab-btn.active {
-    background-color: #fbc02d !important;
+    background-color: #7e7165 !important;
 }
 
 /* Lofi Chill */
 .theme-lofi .bgm-container {
-    background-color: #9575cd !important;
+    background-color: #634e2b !important;
 }
 
 .theme-lofi .tab-btn.active {
-    background-color: #9575cd !important;
+    background-color: #6e5c43 !important;
 }
 
 /* Calm & Sad */
 .theme-calm .bgm-container {
-    background-color: #90a4ae !important;
+    background-color: #5a483d !important;
 }
 
 .theme-calm .tab-btn.active {
-    background-color: #90a4ae !important;
+    background-color: #59473d !important;
 }
 
 .player-wrapper {
