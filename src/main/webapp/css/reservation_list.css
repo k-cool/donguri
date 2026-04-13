@@ -170,7 +170,7 @@ input[type="text"] {
 .acorn-grid {
     display: flex;
     flex-direction: column;
-    gap: 40px; /* 우표가 튀어나올 공간을 위해 간격을 넓힘 */
+    gap: 60px; /* 우표가 튀어나올 공간을 위해 간격을 넓힘 */
     padding: 40px 20px; /* 상단과 좌우에 여백을 주어 우표가 잘리지 않게 함 */
     overflow: visible !important; /* 부모에서도 잘림 방지 */
 }
@@ -187,9 +187,8 @@ input[type="text"] {
 
     /* [가장 중요] hidden을 visible로 강제 설정 */
     overflow: visible !important;
-
-    border: 3px dashed #8e765e;
-    border-radius: 10px;
+    border: 0px dashed #8e765e;
+    border-radius: 6px;
     z-index: 1; /* 우표보다 낮게 설정 */
     text-decoration: none;
 }
