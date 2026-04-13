@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    background: #e9e2d8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    perspective: 1000px;
+    font-family: sans-serif;
+}
+
+.envelope {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    cursor: pointer;
+}
+
+/* 닫힌 상태 덮개 */
+.cover {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    background: #f5cdd1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: opacity 0.5s;
+}
+
+/* 봉투 */
+.envelope-body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* 날개 */
+.wing {
+    position: absolute;
+    top: 50px;
+    width: 150px;
+    height: 250px;
+    background: #f5cdd1;
+    transition: transform 0.8s;
+    transform-origin: center;
+    z-index: 2;
+}
+
+.left {
+    left: -70px;
+    border-radius: 10px 0 0 10px;
+    transform-origin: right;
+    transform: rotateY(-120deg);
+
+    clip-path: polygon(
+            100% 0%, /* 오른쪽 위 */ 100% 100%, /* 오른쪽 아래 */ 0% 80%, /* 왼쪽 아래 */ 0% 20% /* 왼쪽 위 */
+    );
+}
+
+.right {
+    right: -70px;
+    border-radius: 0 10px 10px 0;
+    transform-origin: left;
+    transform: rotateY(120deg);
+
+    clip-path: polygon(
+            0% 0%, /* 왼쪽 위 */ 0% 100%, /* 왼쪽 아래 */ 100% 80%, /* 오른쪽 아래 */ 100% 20% /* 오른쪽 위 */
+    );
+}
+
+/* 위 플랩 */
+.top-flap {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 300px;
+    height: 80px;
+    background: #f5cdd1;
+    border-radius: 0 0 20px 20px;
+    transform-origin: top;
+    transition: transform 0.8s;
+    z-index: 3;
+    transform: rotateX(0deg);
+
+    /* 삼각형 */
+    clip-path: polygon(
+            0% 0%, /* 왼쪽 위 */ 100% 0%, /* 오른쪽 위 */ 50% 100% /* 아래 중앙 */
+    );
+}
+
+/* 편지 */
+.letter {
+    /*display: none;*/
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    width: 260px;
+    background: #f5cdd1;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s;
+    z-index: 5;
+}
+
+/* 열렸을 때 */
+.envelope.open .cover {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope.open .top-flap {
+    transform: rotateX(160deg);
+}
+
+.envelope.open .left {
+    transform: rotateY(0deg);
+}
+
+.envelope.open .right {
+    transform: rotateY(0deg);
+}
+
+.envelope.open .letter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 내부 스타일 */
+.image-area {
+    height: 120px;
+    background: white;
+    margin-bottom: 10px;
+}
+
+.field input {
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.message {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.date {
+    text-align: right;
+    font-size: 11px;
+}
