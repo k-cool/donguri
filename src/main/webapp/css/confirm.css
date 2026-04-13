@@ -1,92 +1,79 @@
-/* 전체 영역 */
+:root {
+    /* 최소 280px ~ 최대 420px 사이에서 화면에 맞게 자동 조절 */
+    --base: clamp(17.5rem, 80vw, 26.25rem);
+}
 
-
+/* 공통 */
 .confirm-wrapper {
     width: 100%;
-    margin: 120px auto;
 }
 
 .confirm-wrapper * {
     box-sizing: border-box;
 }
 
-/* 메인 컨테이너 */
-.confirm-container {
-    max-width: 420px;
-    margin: auto;
-    position: relative;
+.title {
+    margin: calc(var(--base) * 0.057) auto; /* 24 / 420 */
+    text-align: center;
 }
 
-/* 제목 */
-.confirm-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #444;
+/* ================= 메인 컨테이너 ================= */
+
+.confirm-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: calc(var(--base) * 1.667); /* 700px */
+    margin: calc(var(--base) * 0.38) 0 calc(var(--base) * 0.5) 0; /* 160px */
 }
 
 /* ================= 봉투 ================= */
 
-/* 봉투 몸통 */
 .post-container {
     position: relative;
-    height: 1000px;
+    width: var(--base);
+    margin: 0 auto;
 }
 
 /* 윗 뚜껑 */
 .top-cover {
     position: absolute;
-    top: -119px;
-    left: 0;
+    top: calc(var(--base) * -0.283); /* -119 / 420 */
+    /*left: 0;*/
     width: 100%;
-    height: 120px;
+    height: calc(var(--base) * 0.285); /* 120 / 420 */
     background: #f4cfd2;
     clip-path: polygon(0 100%, 50% 0, 100% 100%);
     z-index: 1;
-
 }
 
 /* 좌측 날개 */
 .wing.left {
     position: absolute;
     top: 0;
-    left: -119px;
-    width: 120px;
-    height: 420px;
+    left: 0;
+    transform: translateX(-100%);
+    /*left: calc(var(--base) * -0.283);*/
+    width: calc(var(--base) * 0.285);
+    height: var(--base);
     background: #f4cfd2;
     clip-path: polygon(100% 0, 0 50%, 100% 100%);
     z-index: 2;
-
 }
 
 /* 우측 날개 */
 .wing.right {
     position: absolute;
     top: 0;
-    right: -119px;
-    width: 120px;
-    height: 420px;
+    right: 0;
+    transform: translateX(100%);
+    /*right: calc(var(--base) * -0.283);*/
+    width: calc(var(--base) * 0.285);
+    height: var(--base);
     background: #f4cfd2;
     clip-path: polygon(0 0, 100% 50%, 0 100%);
-    z-index: 2;
-}
-
-/* ================= 상단 카드 ================= */
-
-.post-square {
-    position: absolute;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 420px;
-    height: 420px;
-
-}
-
-.post-top {
-    background: #f4cfd2;
-    border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
     z-index: 2;
 }
 
@@ -96,93 +83,111 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /*background-image: url('/image/template_texture_square.png'); !* 경로 맞게 수정 *!*/
+    background-image: url('/image/template_texture.png'); /* 경로 맞게 수정 */
     background-size: cover; /* 화면 꽉 채움 */
     background-position: center; /* 가운데 정렬 */
-    background-repeat: no-repeat; /* 반복 제거 */
+}
+
+/* ================= 상단 카드 ================= */
+
+.post-square {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--base);
+    height: var(--base);
+}
+
+.post-top {
+    background: #f4cfd2;
+    border-radius: calc(var(--base) * 0.005); /* 2px */
+    box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);
+    z-index: 2;
 }
 
 /* 이미지 카드 */
 .img-wrapper {
     position: absolute;
-    top: 50px;
-    left: 50px;
+    top: calc(var(--base) * 0.12); /* 50 / 420 */
+    left: calc(var(--base) * 0.12);
     rotate: 2deg;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+
+    box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);
 }
 
 .img-wrapper img {
-    width: 320px;
-    height: 320px;
+    width: calc(var(--base) * 0.76); /* 320 / 420 */
+    height: calc(var(--base) * 0.76);
     object-fit: cover;
-    border: 16px solid white;
+    border: calc(var(--base) * 0.038) solid white; /* 16 / 420 */
 }
 
 /* 우표 */
 .stamp {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 80px;
+    top: calc(var(--base) * 0.012);
+    left: calc(var(--base) * 0.012);
+    width: calc(var(--base) * 0.19); /* 80 / 420 */
     rotate: 16deg;
+    transition: transform .3s ease-in-out;
 }
 
-.stamp img {
-    width: 100%;
+
+.stamp:hover {
+    transform: scale(1.05);
 }
 
-/* ================= 하단 내용 ================= */
+/* ================= 하단 ================= */
 
 .post-bottom {
-    top: 420px;
+    position: absolute;
+    top: var(--base);
+    width: 100%;
+
     background: #f4cfd2;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 10px;
-    padding: 50px;
+    align-items: center;
 
+    gap: calc(var(--base) * 0.024); /* 10px */
+    padding: calc(var(--base) * 0.12); /* 50px */
+
+    font-size: calc(var(--base) * 0.033); /* 14px */
     color: #5c3d3d;
-    font-size: 14px;
-
 }
 
 /* 줄 */
 .row {
-    position: relative;
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    height: 34px;
+    align-items: center;
+    height: calc(var(--base) * 0.08); /* 34px */
 }
 
 .label {
-    width: 70px;
+    width: calc(var(--base) * 0.167); /* 70px */
 }
 
 .data {
+    width: calc(var(--base) * 0.57); /* 240px */
     text-align: right;
-    width: 240px;
-
 }
 
 /* 본문 */
 .content {
     flex: 1;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 20px 0;
+    gap: calc(var(--base) * 0.048); /* 20px */
+    width: 100%;
+    padding: calc(var(--base) * 0.048) 0;
 }
 
 /* 날짜 */
 .date {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
+    width: 100%;
+    text-align: right;
 }

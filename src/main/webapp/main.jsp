@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donguri - Main</title>
     <link href="css/reset.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
@@ -10,41 +11,25 @@
 
 </head>
 
-<%
-    System.out.println("main.jsp: " + request.getAttribute("cb"));
-%>
-
-<%--<c:if test="${cb != null}">--%>
-
-<%--    <div>${cb}</div>--%>
-
-<%--    <script>--%>
-<%--        location.href = "${cb}";--%>
-<%--    </script>--%>
-<%--    --%>
-<%--</c:if>--%>
-
 <body>
-<div class="container">
-    <header>
-        <div class="logo">
-            <h1>header</h1>
-        </div>
-
-        <div class="user-auth-area">
-            <c:if test="${not empty loginPage}">
-                <jsp:include page="${loginPage}"/>
-            </c:if>
-            <c:if test="${empty loginPage and not empty sessionScope.user}">
-                <jsp:include page="jsp/user/login_ok.jsp"/>
-            </c:if>
-        </div>
-    </header>
-
-    <div class="content">
-        <jsp:include page="${content}"/>
+<header class="mn-header">
+    <div class="logo">
+        <h1>header</h1>
     </div>
 
+    <div class="user-auth-area">
+        <c:if test="${not empty loginPage}">
+            <jsp:include page="${loginPage}"/>
+        </c:if>
+        <c:if test="${empty loginPage and not empty sessionScope.user}">
+            <jsp:include page="jsp/user/login_ok.jsp"/>
+        </c:if>
+    </div>
+</header>
+
+<div class="mn-content">
+    <jsp:include page="${content}"/>
 </div>
+
 </body>
 </html>

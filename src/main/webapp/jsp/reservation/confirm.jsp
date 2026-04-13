@@ -1,32 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>예약 내용 확인</title>
-    <link rel="stylesheet" href="css/confirm.css"/>
-</head>
-<body>
+<link rel="stylesheet" href="css/confirm.css"/>
+
 
 <div class="confirm-wrapper">
+    <h2 class="title">📬 예약 내용 확인 📬</h2>
 
     <div class="confirm-container">
-        <h2>📬 예약 내용 확인 📬</h2>
 
 
         <div class="post-container">
 
-            <div class="top-cover"></div>
+            <div class="top-cover">
+                <div class="texture"></div>
+            </div>
 
-            <div class="wing left"></div>
-            <div class="wing right"></div>
+            <div class="wing left">
+                <div class="texture"></div>
+            </div>
+
+            <div class="wing right">
+                <div class="texture"></div>
+            </div>
 
             <div class="post-square post-top">
-
-                <%--                <div class="texture"></div>--%>
-
+                <div class="texture"></div>
 
                 <div class="img-wrapper">
-                    <img src="https://cdn.assets.lomography.com/86/93d57e0bd8e88f6890c1687803700ab45f3007/576x576x2.jpg?auth=fb4474f73f10307f800cfe75a5a7052702f6d316"
+                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/template/template_sakura_img.png"
                          alt="cover-img"/>
                 </div>
 
@@ -37,18 +38,20 @@
             </div>
 
             <div class="post-square post-bottom">
+                <div class="texture"></div>
+
                 <div class="row">
                     <div class="label">받은 사람</div>
                     <div class="data">user1@naver.com</div>
                 </div>
+
                 <div class="row">
-                    <div class="label">제목</div>
+                    <div class="label">제&nbsp&nbsp&nbsp&nbsp&nbsp목</div>
                     <div class="data">"둘레로 같이 벚꽃 볼래?"</div>
                 </div>
 
                 <div class="content">
                     <span>테스트 텍스트</span>
-
                     <span>와우와우</span>
                 </div>
 
@@ -61,5 +64,3 @@
     </div>
 </div>
 
-</body>
-</html>
