@@ -58,22 +58,23 @@
                 </div>
             </div>
             <div class="template-slider">
+                <label>템플릿</label>
 
-                <button type="button" id="tempLeft">◀</button>
+                <div class="slider-row">
+                    <button type="button" id="tempLeft" class="arrow">◀</button>
 
-
-                <div class="template-track-wrapper">
-                    <div class="template-track" id="templateTrack">
-                        <div class="template-card"><img src="img1.png"></div>
-                        <div class="template-card"><img src="img2.png"></div>
-                        <div class="template-card"><img src="img3.png"></div>
-                        <div class="template-card"><img src="img4.png"></div>
-                        <div class="template-card"><img src="img5.png"></div>
+                    <div class="template-track-wrapper">
+                        <div class="template-track" id="templateTrack">
+                            <div class="template-card"><img src="img1.png"></div>
+                            <div class="template-card"><img src="img2.png"></div>
+                            <div class="template-card"><img src="img3.png"></div>
+                            <div class="template-card"><img src="img4.png"></div>
+                            <div class="template-card"><img src="img5.png"></div>
+                        </div>
                     </div>
+
+                    <button type="button" id="tempRight" class="arrow">▶</button>
                 </div>
-
-                <button type="button" id="tempRight">▶</button>
-
             </div>
 
             <input type="hidden" name="templateId" id="selectedTemplate">

@@ -121,8 +121,8 @@ button[type="submit"] {
 /* 전체 */
 .template-slider {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* 👉 이걸로 세로 배치 */
+    align-items: flex-start; /* 👉 왼쪽 정렬 (선택) */
     gap: 10px;
     margin: 20px 0;
 }
@@ -157,6 +157,12 @@ button[type="submit"] {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* 화살표 */
