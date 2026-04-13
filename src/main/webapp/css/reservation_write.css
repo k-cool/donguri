@@ -235,9 +235,9 @@ button[type="submit"] {
 }
 
 .template-card img {
-    width: 90%; /* 이미지 안쪽 여백 느낌 */
-    height: 90%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* 화살표 버튼 스타일 */

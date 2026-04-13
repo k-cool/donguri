@@ -40,7 +40,8 @@
             <div class="form-row">
                 <label>내용</label>
                 <textarea name="content" placeholder="내용 입력"
-                          required style="height: 120px; resize: none; overflow-y: auto;">${sessionScope.insertReservation.content}</textarea>
+                          required
+                          style="height: 120px; resize: none; overflow-y: auto;">${sessionScope.insertReservation.content}</textarea>
             </div>
 
             <div class="form-row">
@@ -64,11 +65,11 @@
 
                     <div class="template-track-wrapper">
                         <div class="template-track" id="templateTrack">
-                            <div class="template-card"><img src="img1.png"></div>
-                            <div class="template-card"><img src="img2.png"></div>
-                            <div class="template-card"><img src="img3.png"></div>
-                            <div class="template-card"><img src="img4.png"></div>
-                            <div class="template-card"><img src="img5.png"></div>
+                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
                         </div>
                     </div>
 
