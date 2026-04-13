@@ -1,37 +1,37 @@
-#slideMenu {
+#hd-slideMenu {
     position: fixed;
-    left: -250px;
+    right: -250px; /* 🚨 left에서 right로 변경 */
     top: 0;
     width: 250px;
     height: 100vh;
     background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6; /* 🚨 메뉴가 오른쪽에 있으므로 왼쪽 테두리로 변경 */
     transition: all 0.3s ease-out;
     z-index: 1000;
     padding: 20px;
     box-sizing: border-box;
 }
 
-.user-info {
+.hd-user-info {
     padding: 20px 0;
     border-bottom: 1px solid #dee2e6;
     text-align: center;
 }
 
-.profile-pic {
+.hd-profile-pic {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
-.nickname {
+.hd-nickname {
     font-weight: bold;
     margin: 5px 0;
     color: #333;
 }
 
-.notifications {
+.hd-notifications {
     font-size: 12px;
     color: #666;
     margin: 5px 0;
@@ -41,17 +41,17 @@
     display: inline-block;
 }
 
-.sub-menu {
+.hd-sub-menu {
     list-style: none;
     padding: 0;
     margin: 15px 0 0 0;
 }
 
-.sub-menu li {
+.hd-sub-menu li {
     margin: 5px 0;
 }
 
-.sub-menu a {
+.hd-sub-menu a {
     display: block;
     padding: 8px 15px;
     text-decoration: none;
@@ -61,22 +61,22 @@
     transition: background-color 0.2s;
 }
 
-.sub-menu a:hover {
+.hd-sub-menu a:hover {
     background-color: #e9ecef;
     color: #333;
 }
 
-.logout-menu {
+.hd-logout-menu {
     list-style: none;
     padding: 20px 0;
     margin: 0;
 }
 
-.logout-menu li {
+.hd-logout-menu li {
     margin: 10px 0;
 }
 
-.logout-menu a {
+.hd-logout-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
@@ -86,7 +86,7 @@
     transition: background-color 0.2s;
 }
 
-.logout-menu a:hover {
+.hd-logout-menu a:hover {
     background-color: #e9ecef;
     color: #000;
 }
@@ -96,55 +96,53 @@
 -------------------------------------- */
 header {
     display: flex;
-    flex-direction: column; /* 1층과 2층을 위아래로 쌓음 */
+    flex-direction: column;
     padding: 15px 30px;
     background-color: #fff;
     border-bottom: 1px solid #dee2e6;
-
-    width: 100%; /* 이제 제약 없이 화면 양끝을 100% 채웁니다 */
+    width: 100%;
     box-sizing: border-box;
     margin: 0;
 }
 
 /* --- 1층 (상단) --- */
-.header-top {
+.hd-header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    position: relative; /* 로고 중앙 고정을 위한 기준점 */
+    position: relative;
 }
 
-.header-left, .user-auth-area {
+/* 🚨 왼쪽(로그인)과 오른쪽(메뉴버튼) 영역 정렬 설정 */
+.hd-header-left, .hd-header-right {
     display: flex;
     align-items: center;
     z-index: 10;
+    min-width: 60px; /* 중앙 로고 밸런스를 위해 양쪽 최소 너비 동일하게 유지 */
 }
 
-.user-auth-area {
-    justify-content: flex-end;
-    min-width: 60px;
+.hd-header-right {
+    justify-content: flex-end; /* 오른쪽 요소는 우측 끝으로 바짝 붙임 */
 }
 
-/* 🚨 15도씩 까딱까딱 기우는 애니메이션 정의 */
-@keyframes acornTilt {
+/* 15도씩 까딱까딱 기우는 애니메이션 정의 */
+@keyframes hd-acornTilt {
     0% {
         transform: rotate(0deg);
     }
     25% {
         transform: rotate(-15deg);
     }
-    /* 왼쪽으로 15도 기울기 */
     75% {
         transform: rotate(15deg);
     }
-    /* 오른쪽으로 15도 기울기 */
     100% {
         transform: rotate(0deg);
     }
 }
 
-.menu-btn {
+.hd-menu-btn {
     width: 70px;
     height: 70px;
     cursor: pointer;
@@ -155,54 +153,53 @@ header {
 }
 
 /* 마우스 커서가 올라갔을 때의 반응 */
-.menu-btn:hover {
+.hd-menu-btn:hover {
     opacity: 0.8;
-
-    /* 🚨 acornTilt 애니메이션을 0.4초 속도로 무한 반복 (속도를 조금 더 여유롭게 줌) */
-    animation: acornTilt 0.4s ease-in-out infinite;
+    animation: hd-acornTilt 0.4s ease-in-out infinite;
 }
 
 /* 1층 정중앙 로고 고정 */
-.logo-center {
+.hd-logo-center {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.logo-center img {
+.hd-logo-center img {
     height: 40px;
 }
 
 /* --- 2층 (하단 메뉴) --- */
-.header-bottom {
+.hd-header-bottom {
     display: flex;
-    justify-content: center; /* 메뉴 전체를 가운데 정렬 */
+    justify-content: center;
     width: 100%;
-    margin-top: 20px; /* 1층 로고와의 간격 */
+    margin-top: 20px;
 }
 
-.main-nav {
+.hd-main-nav {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.nav-menu {
+.hd-nav-menu {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 70px; /* 메뉴들 사이의 널찍한 간격 */
+    gap: 70px;
 }
 
-.nav-menu li {
+.hd-nav-menu li {
     margin: 0;
 }
 
-.nav-menu a {
+.hd-nav-menu a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
@@ -211,7 +208,7 @@ header {
     transition: all 0.2s ease;
 }
 
-.nav-menu a:hover {
+.hd-nav-menu a:hover {
     background-color: #f8f9fa;
     color: #007bff;
 }
@@ -222,36 +219,36 @@ header {
         padding: 10px 15px;
     }
 
-    .header-bottom {
-        margin-top: 15px; /* 모바일은 위아래 간격을 조금 줄임 */
+    .hd-header-bottom {
+        margin-top: 15px;
     }
 
-    .nav-menu {
-        gap: 20px; /* 모바일에서는 메뉴 간격을 좁혀서 한 줄에 들어가게 함 */
+    .hd-nav-menu {
+        gap: 20px;
     }
 
-    .logo-center img {
+    .hd-logo-center img {
         height: 35px;
     }
 
-    .nav-menu a {
+    .hd-nav-menu a {
         font-size: 13px;
         padding: 5px 8px;
         white-space: nowrap;
     }
 }
 
-/* 🚨 클릭된(활성화된) 메뉴 스타일 */
-.nav-menu a.active {
-    color: #007bff; /* 동구리 포인트 파란색 */
-    font-weight: 700; /* 글씨 굵게 */
-    border-bottom: 3px solid #007bff; /* 밑줄 쫙! */
-    border-radius: 0; /* 밑줄이 예쁘게 나오게 라운드 효과 제거 */
-    padding-bottom: 6px; /* 글씨와 밑줄 사이 간격 */
+/* 클릭된(활성화된) 메뉴 스타일 */
+.hd-nav-menu a.hd-active {
+    color: #007bff;
+    font-weight: 700;
+    border-bottom: 3px solid #007bff;
+    border-radius: 0;
+    padding-bottom: 6px;
 }
 
 /* 서브 페이지에서 2층이 숨겨졌을 때 헤더 높이 보정 */
-header.sub-header {
-    min-height: 70px; /* 적당한 두께 유지 */
+header.hd-sub-header {
+    min-height: 70px;
     justify-content: center;
 }
