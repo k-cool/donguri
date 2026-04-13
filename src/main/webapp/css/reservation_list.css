@@ -113,6 +113,26 @@ input[type="text"] {
     padding: 20px;
 }
 
+.acorn-box h3 {
+    font-size: 1.25rem;
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+.acorn-box h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-color: #d7c9b8;
+    z-index: -1;
+}
+
 .acorn-grid {
     display: flex;
     flex-direction: column;
