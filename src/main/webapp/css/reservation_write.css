@@ -338,7 +338,7 @@ button[type="submit"] {
 }
 
 .bgm-card::after {
-    content: '▶'; /* 이미지의 아이콘 느낌 */
+    content: '♫'; /* 이미지의 아이콘 느낌 */
     color: #3b110b;
 }
 
@@ -361,10 +361,11 @@ button[type="submit"] {
 .player-wrapper {
     margin-top: 10px;
     text-align: center;
+
 }
 
 #currentSongTitle {
-    font-size: 11px;
+    font-size: 15px;
     color: #745b4c;
     margin-top: 5px;
 }

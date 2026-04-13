@@ -110,17 +110,11 @@
                     <input type="hidden" name="bgmUrl" id="selectedBgm">
                     <div class="player-wrapper">
                         <audio id="bgmPlayer" controls></audio>
-                        <p id="currentSongTitle">곡을 선택해주세요</p>
+                        <p id="currentSongTitle"></p>
                     </div>
                 </div>
             </div>
 
-            <!-- 🎧 미리듣기 -->
-            <div style="margin-top:10px;">
-                <audio id="bgmPlayer" controls style="width:300px;">
-                    <source id="bgmSource" src="" type="audio/mpeg">
-                </audio>
-            </div>
 
             <button type="submit">예약하기</button>
             <a href="reservation?action=list" class="link-btn">돌아가기</a>

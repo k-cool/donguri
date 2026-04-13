@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 player.src = song.url;
                 player.play();
-                titleDisplay.innerText = "재생 중: " + song.title;
+                titleDisplay.innerText = "♪ " + song.title + " ♪";
                 selectedInput.value = song.url;
             };
 
