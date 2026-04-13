@@ -613,3 +613,30 @@ form > .link-btn::after {
 
 
 
+
+/* Textarea fixed height and scroll styling */
+textarea {
+    height: 120px;
+    resize: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c9b9a8 #f9f5f0;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #f9f5f0;
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #c9b9a8;
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #b39f7d;
+}

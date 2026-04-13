@@ -39,8 +39,8 @@
 
             <div class="form-row">
                 <label>내용</label>
-                <textarea name="content" rows="6" placeholder="내용 입력"
-                          required>${sessionScope.insertReservation.content}</textarea>
+                <textarea name="content" placeholder="내용 입력"
+                          required style="height: 120px; resize: none; overflow-y: auto;">${sessionScope.insertReservation.content}</textarea>
             </div>
 
             <div class="form-row">
