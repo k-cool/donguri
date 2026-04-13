@@ -151,7 +151,7 @@ input[type="text"] {
     background-position: center; /* 이미지의 중앙을 기준으로 */
     background-repeat: no-repeat;
 
-    border: 2px dashed #3b110b;
+    border: 3px dashed #8e765e;
     border-radius: 10px;
     position: relative;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
