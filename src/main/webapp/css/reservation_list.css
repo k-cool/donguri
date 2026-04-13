@@ -134,7 +134,7 @@ input[type="text"] {
     background-position: center; /* 이미지의 중앙을 기준으로 */
     background-repeat: no-repeat;
 
-    border-radius: 8px;
+    border-radius: 0;
     position: relative;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 
@@ -158,8 +158,8 @@ input[type="text"] {
     width: 100px;
     height: auto;
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 0px;
+    right: 0px;
     transform: rotate(10deg);
     z-index: 10;
 }
