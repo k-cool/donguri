@@ -92,7 +92,7 @@
                         <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
                         <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
                         <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
-                        <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm & Sad</button>
+                        <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
                     </div>
 
                     <div class="bgm-container">

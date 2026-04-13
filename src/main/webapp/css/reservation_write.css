@@ -260,7 +260,8 @@ button[type="submit"] {
 
 /* 날짜 선택 컨테이너 */
 .date-picker-container {
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .input-row input {
@@ -279,8 +280,8 @@ button[type="submit"] {
 /* 1. 전체 섹션 배경 제거 */
 .bgm-section {
     margin-top: 25px;
-    padding: 10px; /* 여백 조정 */
-    background-color: transparent !important; /* 배경 투명하게 */
+    padding: 15px 10px 20px 10px; /* 여백 추가 */
+    background-color: transparent; /* 배경 제거 */
 }
 
 .bgm-tabs {
@@ -291,7 +292,7 @@ button[type="submit"] {
 .tab-btn {
     border: none;
     border-radius: 8px 8px 0 0;
-    padding: 6px 12px;
+    padding: 6px 10px;
     font-size: 10px;
     cursor: pointer;
     background-color: #c9b9a8;
@@ -305,10 +306,11 @@ button[type="submit"] {
 
 .bgm-container {
     background-color: #745b4c;
-    border-radius: 0 15px 15px 15px;
+    border-radius: 0 0px 15px 15px;
     display: flex;
     align-items: center;
     padding: 15px 10px;
+    gap: 8px;
     gap: 8px;
 }
 
@@ -401,7 +403,8 @@ button[type="submit"] {
 }
 
 .player-wrapper {
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
