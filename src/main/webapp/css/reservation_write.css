@@ -74,8 +74,8 @@ h2::after {
     bottom: 0px;
     left: 0;
     width: 100%;
-    height: 12px;
-    background-color: #d7c9b8;
+    height: 15px;
+    background-color: #c7b8a6;
     z-index: -1;
 }
 
@@ -103,8 +103,8 @@ label::after {
     bottom: 0px;
     left: 0;
     width: 100%;
-    height: 8px;
-    background-color: rgba(215, 201, 184, 0.6); /* 연한 갈색 형광펜 */
+    height: 13px;
+    background-color: rgba(181, 168, 154, 0.6); /* 연한 갈색 형광펜 */
     z-index: -1;
 }
 
@@ -133,6 +133,10 @@ input, textarea {
 
 /* 버튼들 옆으로 배치 */
 button[type="submit"], .link-btn {
+    margin-bottom: 0;
+}
+
+button[type="submit"]:not(.form-row), .link-btn:not(.form-row) {
     display: inline-block;
     vertical-align: top;
     margin: 30px 10px 0 0;
@@ -190,7 +194,7 @@ button[type="submit"] {
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.4); /* 살짝 투명한 배경 */
-    border: 1px solid #9c8f81; /* 테두리선 */
+    border: 1px solid #ad99848f; /* 테두리선 */
     border-radius: 15px; /* 둥근 모서리 */
     padding: 15px 10px;
     gap: 5px;
@@ -240,7 +244,7 @@ button[type="submit"] {
 .arrow {
     background: none;
     border: none;
-    color: #3b110b;
+    color: #918277;
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
@@ -279,7 +283,7 @@ button[type="submit"] {
 /* 기본 레이아웃 */
 /* 1. 전체 섹션 배경 제거 */
 .bgm-section {
-    margin-top: 25px;
+
     padding: 15px 10px 20px 10px; /* 여백 추가 */
     background-color: transparent; /* 배경 제거 */
 }
@@ -311,7 +315,7 @@ button[type="submit"] {
     align-items: center;
     padding: 15px 10px;
     gap: 8px;
-    gap: 8px;
+    gap: 13px;
 }
 
 
@@ -411,7 +415,7 @@ button[type="submit"] {
 #currentSongTitle {
     font-size: 14px;
     color: inherit;
-    margin-top: 5px;
+    margin-top: 30px;
 }
 
 audio {
@@ -423,7 +427,7 @@ audio {
 #currentSongTitle {
     font-size: 15px;
     color: #745b4c;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 audio {
@@ -541,9 +545,6 @@ audio::-webkit-media-controls-timeline {
     margin: 0 8px;
 }
 
-audio::-webkit-media-controls-timeline::-webkit-media-controls-time-fill {
-    background-color: #f0e6d9;
-    border-radius: 3px;
 }
 
 audio::-webkit-media-controls-volume-slider {
@@ -583,3 +584,30 @@ audio::-webkit-media-controls-volume-slider {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+/* Remove timeline progress color */
+audio::-webkit-media-controls-timeline::-webkit-media-controls-time-fill {
+    background-color: transparent;
+}
+
+/* Remove dotted line from buttons */
+button[type="submit"], .link-btn {
+    margin-bottom: 0;
+}
+
+button[type="submit"]::after, .link-btn::after {
+    display: none !important;
+}
+
+/* Alternative: Remove form-row dotted line for buttons */
+form > button[type="submit"],
+form > .link-btn {
+    margin-bottom: 0;
+}
+
+form > button[type="submit"]::after,
+form > .link-btn::after {
+    display: none !important;
+}
+
+
