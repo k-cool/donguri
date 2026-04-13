@@ -25,12 +25,10 @@
 
                 <div class="input-row">
                     <input name="recipientEmail"
-                           placeholder="영어만 입력 가능"
+                           placeholder="영어, 숫자, @ . _ - 만 입력 가능합니다."
                            required>
 
-                    <small class="input-desc">
-                        영어, 숫자, @ . _ - 만 입력 가능합니다.
-                    </small>
+
                 </div>
             </div>
 
