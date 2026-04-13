@@ -274,28 +274,104 @@ button[type="submit"] {
     white-space: nowrap;
 }
 
-/* ===== BGM ===== */
-select {
-    width: 100%;
-    padding: 6px; /* 🔥 살짝 줄임 */
-    border: 1px solid #d7c9b8;
-    background-color: #f9f5f0;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    outline: none;
+/* ===== BGM 탭 & 슬라이더 ===== */
+.bgm-section {
+    margin-top: 25px;
 }
 
-/* 오디오 */
+/* 탭 버튼 스타일 */
+.bgm-tabs {
+    display: flex;
+    gap: 2px;
+}
+
+.tab-btn {
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 6px 12px;
+    font-size: 10px;
+    cursor: pointer;
+    background-color: #c9b9a8; /* 비활성 탭 */
+    color: #3b110b;
+    transition: 0.2s;
+}
+
+.tab-btn.active {
+    background-color: #745b4c; /* 이미지 속 활성 탭 색상 */
+    color: #fff;
+    padding-top: 8px; /* 활성 탭 강조 */
+}
+
+/* 슬라이더 메인 박스 */
+.bgm-container {
+    background-color: #745b4c;
+    border-radius: 0 15px 15px 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    gap: 8px;
+}
+
+.bgm-window {
+    flex: 1;
+    overflow: hidden;
+}
+
+.bgm-track {
+    display: flex;
+    gap: 12px;
+    transition: transform 0.3s ease-out;
+}
+
+/* 개별 BGM 카드 (재생 버튼) */
+.bgm-card {
+    width: 65px;
+    height: 65px;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.bgm-card::after {
+    content: '▶'; /* 이미지의 아이콘 느낌 */
+    color: #3b110b;
+}
+
+.bgm-card.active {
+    background-color: #eddcc8;
+    border: 2px solid #fff;
+}
+
+/* 화살표 */
+.bgm-arrow {
+    background: none;
+    border: none;
+    color: #3b110b;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 하단 정보 */
+.player-wrapper {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#currentSongTitle {
+    font-size: 11px;
+    color: #745b4c;
+    margin-top: 5px;
+}
+
 audio {
-    margin-top: 10px; /* 간격 넓힘 */
     width: 100%;
-    max-width: 300px;
-}
-
-/* 자동완성 제거 */
-input:-webkit-autofill {
-    box-shadow: 0 0 0 1000px transparent inset !important;
-    -webkit-text-fill-color: #3b110b !important;
+    height: 35px;
 }
 
 /* Flatpickr */
