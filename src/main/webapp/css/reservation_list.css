@@ -58,8 +58,8 @@ h2::after {
 .filter-basket {
     background: rgba(255, 255, 255, 0.3);
     border: 2px dashed #3b110b;
-    border-radius: 25px;
-    padding: 25px 15px;
+    border-radius: 15px;
+    padding: 15px 10px;
     margin-bottom: 25px;
 }
 
