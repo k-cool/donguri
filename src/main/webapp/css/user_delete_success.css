@@ -1,41 +1,86 @@
+/* 기본 배경 설정 (전체 페이지 통일) */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea;
+    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* 스크롤 및 화면 밀림 방지 */
+}
+
+/* 탈퇴 완료 안내 박스 */
 .delete-success-wrapper {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    /* 화면 정중앙 고정 */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    width: 400px;
+    padding: 50px 40px; /* 마지막 인사말인 만큼 여백을 넉넉히 */
+    background-color: rgba(255, 255, 255, 0.85); /* 텍스트 가독성을 위한 반투명 배경 */
+    border: 2px dashed #8b5a42;
+    border-radius: 30px;
     text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
 }
 
+/* 제목 스타일 ( { } 기호 추가로 디자인 통일 ) */
 .delete-success-wrapper h2 {
-    margin-bottom: 20px;
-    color: #333;
+    color: #5d3a2a;
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 25px;
 }
 
+.delete-success-wrapper h2::before {
+    content: "{ ";
+}
+
+.delete-success-wrapper h2::after {
+    content: " }";
+}
+
+/* 완료 메시지 텍스트 */
 .success-message {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .success-message p {
-    margin: 10px 0;
-    color: #555;
+    color: #5d3a2a;
+    font-size: 1rem;
+    margin: 8px 0;
+    line-height: 1.5;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
 }
 
+/* 홈으로 버튼 (메인 와인색) */
 .btn-group {
-    margin-top: 20px;
+    width: 100%;
 }
 
 .btn-home {
-    background-color: #007bff;
+    width: 100%;
+    padding: 14px;
+    background-color: #5d0000;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 14px;
+    transition: background 0.3s ease;
 }
 
 .btn-home:hover {
-    background-color: #0056b3;
+    background-color: #3e0000;
 }

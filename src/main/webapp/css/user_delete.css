@@ -1,84 +1,156 @@
+/* 기본 배경 설정 (전체 페이지 통일) */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea;
+    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* 스크롤 및 화면 밀림 방지 */
+}
+
+/* 회원 탈퇴 컨테이너 */
 .user-delete-wrapper {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    width: 400px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.85); /* 폼 요소가 잘 보이도록 반투명 흰색 */
+    border: 2px dashed #8b5a42; /* 따뜻한 갈색 점선 */
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
 }
 
+/* 제목 스타일 ( { } 기호 추가 ) */
 .user-delete-wrapper h2 {
-    text-align: center;
+    color: #5d3a2a;
+    font-size: 1.6rem;
+    margin-top: 0;
     margin-bottom: 20px;
-    color: #333;
 }
 
+.user-delete-wrapper h2::before {
+    content: "{ ";
+}
+
+.user-delete-wrapper h2::after {
+    content: " }";
+}
+
+/* 탈퇴 경고 텍스트 */
 .warning-text {
-    color: #dc3545;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
+    color: #8b3a3a; /* 너무 쨍한 빨간색 대신, 팥죽색/빈티지한 붉은색 사용 */
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    word-break: keep-all;
+
+    background-color: transparent; /* 배경색을 빼서 편지지 질감이 그대로 보이게 함 */
+    padding: 15px;
+
+    /* 위아래로만 얇은 물결/점선 테두리를 주어 디자인적인 포인트 추가 */
+    border-top: 1px dashed #d1a3a3;
+    border-bottom: 1px dashed #d1a3a3;
+    border-radius: 0;
 }
 
+/* 서버에서 받아오는 에러 배너 (인라인 스타일 덮어쓰기) */
+.error-banner {
+    font-size: 0.9rem;
+    border-radius: 10px !important;
+    background-color: #ffebee !important;
+    color: #c62828 !important;
+    border: none !important;
+}
+
+/* 폼 그룹 및 라벨 */
 .form-group {
+    text-align: left;
     margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    color: #5d3a2a;
     font-weight: bold;
-    color: #555;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    font-size: 0.95rem;
 }
 
-.form-group input {
+/* 입력창 스타일 */
+input[type="password"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border: 1px solid #c7b8a7;
+    border-radius: 10px;
     box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
 }
 
+input[type="password"]:focus {
+    outline: none;
+    border-color: #8b5a42; /* 클릭 시 테두리 진하게 */
+}
+
+/* JS 하단 에러 메시지 */
+.error-message {
+    color: #c62828;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    margin-left: 5px;
+    min-height: 15px; /* 들썩임 방지 */
+}
+
+/* 하단 버튼 그룹 (취소/탈퇴 버튼 나란히 배치) */
 .btn-group {
+    margin-top: 25px;
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 10px; /* 버튼 사이 간격 */
 }
 
-.btn-group button {
-    flex: 1;
-    padding: 10px;
+.btn-cancel, .btn-delete {
+    flex: 1; /* 두 버튼이 정확히 반반씩 공간 차지 */
+    padding: 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 25px;
+    font-size: 1.05rem;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 14px;
+    transition: background 0.3s ease;
 }
 
+/* 취소 버튼 (베이지색) */
 .btn-cancel {
-    background-color: #6c757d;
-    color: white;
+    background-color: #e8dcc6;
+    color: #5d3a2a;
 }
 
 .btn-cancel:hover {
-    background-color: #545b62;
+    background-color: #d6c6ac;
 }
 
+/* 회원 탈퇴 버튼 (메인 와인색) */
 .btn-delete {
-    background-color: #dc3545;
+    background-color: #5d0000;
     color: white;
 }
 
 .btn-delete:hover {
-    background-color: #c82333;
-}
-
-.error-message {
-    color: #dc3545;
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
+    background-color: #3e0000;
 }

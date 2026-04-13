@@ -1,94 +1,125 @@
-/* 로그인 컨테이너 중앙 정렬 및 디자인 */
+/* 기본 배경 및 폰트 설정 */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea; /* 전체적인 미색 배경 */
+    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png'); /* 종이 질감 이미지가 있다면 추가 */
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 로그인 박스 컨테이너 */
 .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* 절대 위치를 사용하여 화면 중앙으로 고정 */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 자신의 크기만큼 다시 반대 방향으로 이동 */
+
+    width: 400px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.85); /* 가독성을 위해 불투명도 살짝 조절 */
+    border: 2px dashed #8b5a42;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     text-align: center;
+    z-index: 100; /* 배경 요소들보다 위에 보이도록 설정 */
 }
 
+/* { Log-In } 제목 스타일 */
 .login-container h2 {
-    margin-bottom: 25px;
-    color: #333;
-    font-size: 24px;
+    color: #5d3a2a;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
 }
 
-/* 폼 그룹 간격 */
+.login-container h2::before {
+    content: "{ ";
+}
+
+.login-container h2::after {
+    content: " }";
+}
+
+/* 폼 그룹 레이아웃 */
 .form-group {
-    margin-bottom: 20px;
     text-align: left;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    color: #5d3a2a;
     font-weight: bold;
-    color: #555;
+    margin-bottom: 8px;
+    margin-left: 5px;
 }
 
 /* 입력창 스타일 */
-.form-group input {
+input[type="email"],
+input[type="password"] {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-sizing: border-box; /* 패딩 포함 너비 계산 */
-    font-size: 14px;
+    padding: 12px 15px;
+    border: 1px solid #c7b8a7;
+    border-radius: 10px;
+    box-sizing: border-box; /* 패딩 포함 크기 조절 */
+    font-size: 1rem;
+    background-color: #ffffff;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #ff6b6b; /* 포인트 컬러 */
-    box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+input::placeholder {
+    color: #d3c5b5;
+}
+
+/* 에러 메시지 */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
 
 /* 버튼 그룹 및 개별 버튼 스타일 */
 .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .btn-login {
     width: 100%;
     padding: 12px;
-    background-color: #ff6b6b;
+    background-color: #5d0000; /* 이미지의 짙은 갈색/와인색 버튼 */
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 25px;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
+    margin-bottom: 15px;
 }
 
 .btn-login:hover {
-    background-color: #ee5253;
+    background-color: #3e0000;
 }
 
-/* 회원가입 링크 버튼 (글자 형태) */
 .btn-signup-link {
     background: none;
     border: none;
-    color: #888;
+    color: #5d3a2a;
     text-decoration: underline;
-    font-size: 13px;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
-.btn-signup-link:hover {
-    color: #555;
-}
-
-.error-message {
-    color: #ff4444;
-    background-color: #ffebee;
-    border: 1px solid #ffcccc;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    font-size: 14px;
+/* 이미지의 솔방울/도토리 효과를 위한 가상 요소 (선택 사항) */
+/* 실제 이미지가 있다면 아래처럼 배치할 수 있습니다 */
+.login-container::after {
+    position: absolute;
+    right: -50px;
+    top: 50px;
+    font-size: 2rem;
 }

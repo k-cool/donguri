@@ -36,12 +36,7 @@
     <div class="hd-header-top">
 
         <div class="hd-header-left">
-            <c:if test="${not empty loginPage}">
-                <jsp:include page="${loginPage}"/>
-            </c:if>
-            <c:if test="${empty loginPage and not empty sessionScope.user}">
-                <jsp:include page="jsp/user/login_ok.jsp"/>
-            </c:if>
+            <span style="font-weight: bold; color: #5d4037; font-family: 'Courier New', monospace;">KOR / JP</span>
         </div>
 
         <div class="hd-logo-center">
@@ -63,14 +58,22 @@
     <div class="hd-header-bottom">
         <nav class="hd-main-nav">
             <ul class="hd-nav-menu">
-                <li><a href="#">동구리 예약</a></li>
-                <li><a href="#">동구리 보관함</a></li>
-                <li><a href="#">동구리 뽑기</a></li>
+                <li><a href="omikuji">OMIKUJI</a></li>
+                <li><a href="sent-post">Sent Post</a></li>
+                <li><a href="#">Scheduled Post</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
+<div class="test-action-buttons" style="padding-top: 150px; text-align: center; position: relative; z-index: 10;">
+    <c:if test="${not empty loginPage}">
+        <jsp:include page="${loginPage}"/>
+    </c:if>
+    <c:if test="${empty loginPage and not empty sessionScope.user}">
+        <jsp:include page="jsp/user/login_ok.jsp"/>
+    </c:if>
+</div>
 <div class="container">
     <div id="hd-slideMenu">
         <div class="hd-user-info">
@@ -83,12 +86,14 @@
                          class="hd-profile-pic">
                 </c:otherwise>
             </c:choose>
-            <p class="hd-nickname">${sessionScope.user.nickname}</p>
-            <div class="hd-notifications">알림</div>
+
+            <p class="hd-user-email">이메일: ${sessionScope.user.email}</p>
+            <p class="hd-nickname">닉네임: ${sessionScope.user.nickname}</p>
+
             <ul class="hd-sub-menu">
-                <li><a href="mypage">마이페이지</a></li>
-                <li><a href="#">탬플릿 보관함</a></li>
-                <li><a href="#">컨택트</a></li>
+                <li><a href="mypage">My page</a></li>
+                <li><a href="template-list">Template Storage</a></li>
+                <li><a href="#">Contacts</a></li>
             </ul>
         </div>
         <ul class="hd-logout-menu">

@@ -1,134 +1,142 @@
-/* 회원가입 컨테이너 디자인 */
+/* 기본 배경 설정 (로그인과 통일) */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea;
+    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png'); /* 종이 질감 이미지가 있다면 추가 */
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 가입폼이 길므로 min-height 사용 */
+    padding: 50px 0; /* 상하 여백 */
+}
+
+/* 회원가입 컨테이너 */
 .join-container {
-    max-width: 500px;
-    margin: 40px auto;
+    /* 절대 위치 정렬 */
+    position: fixed; /* 혹은 absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* 배경 이미지보다 무조건 위로 */
+
+    width: 450px;
     padding: 40px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-.join-container h2 {
+    background-color: rgba(255, 255, 255, 0.8); /* 배경이 보이도록 살짝 투명하게 */
+    border: 2px dashed #8b5a42;
+    border-radius: 30px;
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 26px;
-    color: #333;
-    font-weight: 700;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 입체감 살짝 추가 */
 }
 
-/* 폼 그룹 레이아웃 */
+/* { Sign-Up } 제목 */
+.join-container h2 {
+    color: #5d3a2a;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+}
+
+.join-container h2::before {
+    content: "{ ";
+}
+
+.join-container h2::after {
+    content: " }";
+}
+
+/* 폼 그룹 */
 .form-group {
-    margin-bottom: 20px;
+    text-align: left;
+    margin-bottom: 18px;
 }
 
 .form-group label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 8px;
+    color: #5d3a2a;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
 }
 
 /* 입력창 공통 스타일 */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
+input[type="email"],
+input[type="text"],
+input[type="password"] {
     width: 100%;
-    height: 45px;
-    padding: 0 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 10px 15px;
+    border: 1px solid #c7b8a7;
+    border-radius: 10px;
     box-sizing: border-box;
-    transition: border-color 0.2s;
+    font-size: 0.95rem;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #ff6b6b;
-}
-
-/* 인증 버튼이 포함된 입력창 (가로 정렬) */
+/* 중복확인 버튼이 포함된 입력창 레이아웃 */
 .input-flex {
     display: flex;
-    gap: 8px;
+    gap: 8px; /* 입력창과 버튼 사이 간격 */
 }
 
 .input-flex input {
-    flex: 1; /* 입력창이 남는 공간을 모두 차지 */
+    flex: 1; /* 입력창이 남는 공간 차지 */
 }
 
-/* 보조 버튼 스타일 (인증요청, 중복확인 등) */
+/* 중복확인 / 확인 버튼 (보조 버튼) */
 .btn-secondary {
-    width: 100px;
-    background-color: #f1f3f5;
-    color: #495057;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
+    background-color: #fcfaf5;
+    border: 1px solid #8b5a42;
+    color: #5d3a2a;
+    padding: 0 15px;
+    border-radius: 8px;
     cursor: pointer;
-    white-space: nowrap;
+    font-size: 0.85rem;
+    white-space: nowrap; /* 글자 줄바꿈 방지 */
+    transition: 0.2s;
 }
 
 .btn-secondary:hover {
-    background-color: #e9ecef;
+    background-color: #eee9e0;
 }
 
-/* 파일 업로드 스타일 */
+/* 파일 선택(프로필 이미지) 스타일 */
 input[type="file"] {
-    font-size: 13px;
-    color: #888;
+    font-size: 0.85rem;
+    color: #5d3a2a;
 }
 
 /* 하단 버튼 그룹 */
 .button-group {
-    display: flex;
-    gap: 12px;
     margin-top: 35px;
 }
 
+/* 가입하기 버튼 (메인) */
 .btn-signup {
-    flex: 2;
-    height: 50px;
-    background-color: #ff6b6b;
-    color: #fff;
+    width: 100%;
+    padding: 14px;
+    background-color: #5d0000; /* 이미지의 진한 빨간색 */
+    color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 700;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-.btn-signup:hover {
-    background-color: #ee5253;
-}
-
+/* 취소 버튼 */
 .btn-cancel {
-    flex: 1;
-    height: 50px;
-    background-color: #fff;
-    color: #888;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
+    background: none;
+    border: none;
+    color: #8b5a42;
+    text-decoration: underline;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
-.btn-cancel:hover {
-    background-color: #f8f9fa;
-}
-n/* 메시지 스타일 */
+/* 메시지 텍스트 (이메일 중복 시 등) */
 .message {
-    margin-top: 5px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.message[style*="color: red"] {
-    color: #dc3545;
-}
-
-.message[style*="color: green"] {
-    color: #28a745;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    margin-left: 5px;
 }

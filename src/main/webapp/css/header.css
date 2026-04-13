@@ -1,164 +1,71 @@
-#hd-slideMenu {
-    position: fixed;
-    right: -250px; /* 🚨 left에서 right로 변경 */
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #f8f9fa;
-    border-left: 1px solid #dee2e6; /* 🚨 메뉴가 오른쪽에 있으므로 왼쪽 테두리로 변경 */
-    transition: all 0.3s ease-out;
-    z-index: 1000;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.hd-user-info {
-    padding: 20px 0;
-    border-bottom: 1px solid #dee2e6;
-    text-align: center;
-}
-
-.hd-profile-pic {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.hd-nickname {
-    font-weight: bold;
-    margin: 5px 0;
-    color: #333;
-}
-
-.hd-notifications {
-    font-size: 12px;
-    color: #666;
-    margin: 5px 0;
-    padding: 5px 10px;
-    background-color: #f8f9fa;
-    border-radius: 15px;
-    display: inline-block;
-}
-
-.hd-sub-menu {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0 0 0;
-}
-
-.hd-sub-menu li {
-    margin: 5px 0;
-}
-
-.hd-sub-menu a {
-    display: block;
-    padding: 8px 15px;
-    text-decoration: none;
-    color: #666;
-    font-size: 14px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-}
-
-.hd-sub-menu a:hover {
-    background-color: #e9ecef;
-    color: #333;
-}
-
-.hd-logout-menu {
-    list-style: none;
-    padding: 20px 0;
-    margin: 0;
-}
-
-.hd-logout-menu li {
-    margin: 10px 0;
-}
-
-.hd-logout-menu a {
-    display: block;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-}
-
-.hd-logout-menu a:hover {
-    background-color: #e9ecef;
-    color: #000;
+/* 🚨 여백 발생의 주범인 body 기본 마진 강제 삭제 */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* -------------------------------------
-   새롭게 바뀐 2층 구조 헤더 레이아웃
+   1. 전체 헤더 뼈대
 -------------------------------------- */
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1100;
     display: flex;
     flex-direction: column;
-    padding: 15px 30px;
-    background-color: #fff;
-    border-bottom: 1px solid #dee2e6;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 0;
     margin: 0;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    /* 🚨 핵심 1: 헤더의 빈 공간이 화면 뒤쪽 버튼 클릭을 방해하지 않게 유령 취급 */
+    pointer-events: none;
 }
 
-/* --- 1층 (상단) --- */
+/* -------------------------------------
+   2. 1층 상단 (찢어진 종이 테마)
+-------------------------------------- */
 .hd-header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 90px;
+    background: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/main/header.svg') center center no-repeat;
+
+    /* 🚨 핵심: 원본의 투명 여백을 화면 밖으로 완전히 날려버리기 위해 비율을 대폭 확대 */
+    background-size: 160% 100%;
+
+    padding: 0 40px;
+    box-sizing: border-box;
     position: relative;
+    z-index: 2;
 }
 
-/* 🚨 왼쪽(로그인)과 오른쪽(메뉴버튼) 영역 정렬 설정 */
-.hd-header-left, .hd-header-right {
+/* 🚨 진짜로 클릭해야 하는 로고, KOR/JP, 도토리 버튼만 클릭 기능 부활 */
+.hd-header-left, .hd-logo-center, .hd-header-right {
+    pointer-events: auto;
+}
+
+/* 왼쪽: 프로필 도토리 버튼 */
+.hd-header-left {
     display: flex;
     align-items: center;
     z-index: 10;
-    min-width: 60px; /* 중앙 로고 밸런스를 위해 양쪽 최소 너비 동일하게 유지 */
-}
-
-.hd-header-right {
-    justify-content: flex-end; /* 오른쪽 요소는 우측 끝으로 바짝 붙임 */
-}
-
-/* 15도씩 까딱까딱 기우는 애니메이션 정의 */
-@keyframes hd-acornTilt {
-    0% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(-15deg);
-    }
-    75% {
-        transform: rotate(15deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
 }
 
 .hd-menu-btn {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
-    transition: opacity 0.2s ease-in-out;
 }
 
-/* 마우스 커서가 올라갔을 때의 반응 */
-.hd-menu-btn:hover {
-    opacity: 0.8;
-    animation: hd-acornTilt 0.4s ease-in-out infinite;
-}
-
-/* 1층 정중앙 로고 고정 */
+/* 정중앙: 동구리 우편 로고 */
 .hd-logo-center {
     position: absolute;
     left: 50%;
@@ -170,21 +77,32 @@ header {
 }
 
 .hd-logo-center img {
-    height: 40px;
+    height: 55px;
 }
 
-/* --- 2층 (하단 메뉴) --- */
+/* 우측: KOR / JP */
+.hd-header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
+    color: #5d4037;
+    font-family: 'Courier New', monospace;
+}
+
+/* -------------------------------------
+   3. 2층 하단 (민트색 바 & 탭)
+-------------------------------------- */
 .hd-header-bottom {
     display: flex;
     justify-content: center;
+    align-items: flex-end;
     width: 100%;
-    margin-top: 20px;
-}
-
-.hd-main-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 45px;
+    background-color: #6edfd3;
+    margin-top: -15px; /* 종이 뒤로 겹쳐 들어가게 끌어올림 */
+    z-index: 1;
+    pointer-events: auto; /* 🚨 민트색 탭 영역 클릭 부활 */
 }
 
 .hd-nav-menu {
@@ -192,63 +110,109 @@ header {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 70px;
-}
-
-.hd-nav-menu li {
-    margin: 0;
+    gap: 0;
 }
 
 .hd-nav-menu a {
     text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 6px;
+    color: #004d40;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 12px 35px;
     transition: all 0.2s ease;
 }
 
-.hd-nav-menu a:hover {
-    background-color: #f8f9fa;
-    color: #007bff;
+.hd-nav-menu a.hd-active, .hd-nav-menu a:hover {
+    background-color: #f7ead9;
+    color: #d35400;
+    border-radius: 10px 10px 0 0;
 }
 
-/* --- 모바일 화면 최적화 --- */
-@media (max-width: 768px) {
-    header {
-        padding: 10px 15px;
-    }
-
-    .hd-header-bottom {
-        margin-top: 15px;
-    }
-
-    .hd-nav-menu {
-        gap: 20px;
-    }
-
-    .hd-logo-center img {
-        height: 35px;
-    }
-
-    .hd-nav-menu a {
-        font-size: 13px;
-        padding: 5px 8px;
-        white-space: nowrap;
-    }
+/* -------------------------------------
+   4. 햄버거 슬라이드 메뉴 (모눈종이 & 우표)
+-------------------------------------- */
+#hd-slideMenu {
+    position: fixed;
+    /* 🚨 JS에서 닫을 때 -350px로 닫혀야 화면 밖으로 완벽히 숨습니다 */
+    right: -350px;
+    top: 120px;
+    width: 320px;
+    height: calc(100vh - 120px);
+    background-color: #fdfdfd;
+    background-image: linear-gradient(#e0e8f0 1px, transparent 1px),
+    linear-gradient(90deg, #e0e8f0 1px, transparent 1px);
+    background-size: 20px 20px;
+    border-left: 1px solid #c8d6e5;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1000;
+    padding: 40px 30px;
+    box-sizing: border-box;
+    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.05);
+    pointer-events: auto; /* 🚨 사이드 메뉴 내부 클릭 부활 */
 }
 
-/* 클릭된(활성화된) 메뉴 스타일 */
-.hd-nav-menu a.hd-active {
-    color: #007bff;
-    font-weight: 700;
-    border-bottom: 3px solid #007bff;
-    border-radius: 0;
-    padding-bottom: 6px;
+/* 우표 형태 프로필 사진 영역 */
+.hd-user-info {
+    text-align: left;
+    margin-bottom: 30px;
 }
 
-/* 서브 페이지에서 2층이 숨겨졌을 때 헤더 높이 보정 */
-header.hd-sub-header {
-    min-height: 70px;
-    justify-content: center;
+.hd-profile-pic {
+    width: 140px;
+    height: 180px;
+    border: 15px solid #f2e2c6;
+    background-color: #fff;
+    margin: 0 auto 20px auto;
+    display: block;
+    object-fit: cover;
+}
+
+.hd-nickname, .hd-user-email {
+    font-family: 'Courier New', monospace;
+    color: #4e342e;
+    font-size: 14px;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+/* 테이프 모양의 버튼 메뉴 */
+.hd-sub-menu {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0 0;
+}
+
+.hd-sub-menu a {
+    display: block;
+    background-color: #eccfb1;
+    color: #5d4037;
+    margin-bottom: 20px;
+    padding: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    clip-path: polygon(2% 10%, 100% 0%, 98% 90%, 0% 100%);
+    transition: transform 0.2s;
+}
+
+.hd-sub-menu a:hover {
+    transform: scale(1.05);
+    background-color: #e2c09c;
+}
+
+.hd-logout-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+    text-align: right;
+}
+
+.hd-logout-menu a {
+    color: #999;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+header.hd-sub-header .hd-header-bottom {
+    display: none;
 }
