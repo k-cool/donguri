@@ -123,6 +123,10 @@ input[type="text"] {
 
 /* 제목 */
 .acorn-box h3 {
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
+    z-index: 1;
     font-size: 1rem;
     margin-bottom: 15px;
 }
@@ -134,82 +138,97 @@ input[type="text"] {
     gap: 15px;
 }
 
-/* 카드 (포스트잇 느낌) */
+/* 카드 (포스트잇) */
 .acorn-card {
     background: #fff;
-    border-radius: 4px; /* 각진 느낌 */
-    padding: 10px;
+    border-radius: 2px; /* 좀 더 포스트잇처럼 각지게 */
+    padding: 15px; /* 내부 여백 조정 */
     position: relative;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    aspect-ratio: 1 / 1.1; /* 정사각에 가까운 비율 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.08); /* 그림자 부드럽게 */
+    aspect-ratio: 1 / 1.1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-/* 벚꽃 배경 효과 (두 번째 사진의 분홍 꽃) */
-.acorn-card::before {
-    content: '✿';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    color: #ffd1dc;
-    font-size: 1rem;
-    z-index: 0;
-}
-
-/* 카드 내 이미지들 공통 */
-.acorn-card img {
-    max-width: 80%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+    overflow: visible; /* 스탬프가 모서리 밖으로 살짝 나가게 */
     z-index: 1;
 }
 
-/* 엽서/소주병 이미지 (첫 번째 이미지) */
-.acorn-card .postcard-img {
-    width: 40px; /* 크기를 확 줄임 */
-    margin-bottom: 5px;
-    opacity: 0.8;
+/* 벚꽃 배경 (왼쪽 하단으로 이동) */
+.acorn-card::before {
+    content: '✿';
+    position: absolute;
+    bottom: 5px; /* 왼쪽 하단 */
+    left: 8px;
+    color: #ffd1dc;
+    font-size: 1.2rem;
+    z-index: 0;
+    opacity: 0.6;
 }
 
-/* 도장 이미지 (두 번째 이미지 - 가장 강조) */
-.acorn-card .stamp-img {
-    width: 70px; /* 도장을 크게 */
+/* 카드 내 이미지 공통 (리셋) */
+.acorn-card img {
+    all: unset;
+}
+
+/* 1. 소주병/엽서 이미지 (왼쪽 상단 배치) */
+.acorn-card .postcard-img {
+    width: 35px; /* 크기 유지 */
+    height: auto;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-5deg); /* 약간 회전시켜 자연스럽게 */
+    top: 15px;
+    left: 15px;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+/* 2. 스탬프 이미지 (요청하신 대로 우측 모서리에 배치) */
+.acorn-card .stamp-img {
+    width: 75px; /* 도장을 돋보이게 */
+    height: auto;
+    position: absolute;
+    /* 모서리에 걸치게 조정 */
+    top: -5px; /* 위쪽 모서리 살짝 밖으로 */
+    right: -10px; /* 오른쪽 모서리 밖으로 */
+
+    /* 두 번째 사진처럼 약간 회전 */
+    transform: rotate(10deg);
+
+    z-index: 10; /* 가장 위에 */
+    opacity: 0.9; /* 약간 투명하게 */
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1)); /* 도장 자체 그림자 */
+}
+
+/* 정보 영역 (모서리에 배치) */
+.acorn-info {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    text-align: right;
+    font-size: 0.65rem;
+    color: #8d6e63;
     z-index: 2;
 }
 
-/* 정보 영역 숨기기 (두 번째 사진처럼 도장 위주로 보려면 필요) */
-.acorn-info {
-    display: none; /* 텍스트 정보를 숨기고 싶지 않으면 이 줄을 지우세요 */
+.acorn-info p {
+    margin: 0;
+    line-height: 1.2;
 }
 
-/* 버튼 영역 (카드 하단에 작게 배치) */
+/* 버튼 영역 */
 .acorn-actions {
     position: absolute;
-    bottom: 5px;
-    width: 100%;
+    bottom: 10px;
+    left: 15px;
     display: flex;
-    justify-content: center;
-    gap: 5px;
-    z-index: 3;
-    opacity: 0; /* 평소엔 안 보이다가 */
-    transition: opacity 0.3s;
-}
-
-.acorn-card:hover .acorn-actions {
-    opacity: 1; /* 마우스 올리면 보임 */
+    gap: 4px;
+    z-index: 5;
 }
 
 .acorn-actions a {
-    font-size: 0.5rem;
-    padding: 2px 4px;
-    background: rgba(255, 255, 255, 0.8);
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    background: #fffcf6;
+    border: 1px solid #d7c9b8;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #3b110b;
 }
