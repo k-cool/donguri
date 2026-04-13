@@ -295,17 +295,17 @@ button[type="submit"] {
     padding: 6px 10px;
     font-size: 10px;
     cursor: pointer;
-    background-color: #c9b9a8;
+    background-color: #f0e6d9;
     color: #3b110b;
 }
 
 .tab-btn.active {
-    background-color: #745b4c;
+    background-color: #f0e6d9;
     color: #fff;
 }
 
 .bgm-container {
-    background-color: #745b4c;
+    background-color: #f0e6d9;
     border-radius: 0 0px 15px 15px;
     display: flex;
     align-items: center;
@@ -438,4 +438,148 @@ audio {
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     z-index: 9999 !important;
+}
+/* Audio player controls - Webkit browsers */
+audio::-webkit-media-controls-panel {
+    background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
+    border-radius: 18px;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+    background-color: #f9f5f0;
+    border-radius: 50%;
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #f9f5f0;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+audio::-webkit-media-controls-timeline {
+    background-color: rgba(249, 245, 240, 0.3);
+    border-radius: 10px;
+    height: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-volume-slider {
+    background-color: rgba(249, 245, 240, 0.3);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-toggle-closed-captions-button {
+    background-color: #f9f5f0;
+    border-radius: 50%;
+    min-width: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Firefox audio styling */
+audio::-moz-media-controls-panel {
+    background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
+    border-radius: 18px;
+}
+
+/* Modern and clean audio player styling */
+audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d5c1;
+}
+
+/* Webkit audio controls */
+audio::-webkit-media-controls-panel {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+    background-color: #f0e6d9;
+    border-radius: 4px;
+    min-width: 28px;
+    max-width: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    transition: all 0.2s ease;
+}
+
+audio::-webkit-media-controls-play-button:hover,
+audio::-webkit-media-controls-pause-button:hover {
+    background-color: #e0d5c1;
+    transform: scale(1.05);
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #3b110b;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+audio::-webkit-media-controls-timeline {
+    background-color: #f0e6d9;
+    border-radius: 3px;
+    height: 4px;
+    margin: 0 8px;
+}
+
+audio::-webkit-media-controls-timeline::-webkit-media-controls-time-fill {
+    background-color: #f0e6d9;
+    border-radius: 3px;
+}
+
+audio::-webkit-media-controls-volume-slider {
+    background-color: #f0e6d9;
+    border-radius: 3px;
+    margin-left: 8px;
+}
+
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-toggle-closed-captions-button {
+    background-color: #f0e6d9;
+    border-radius: 4px;
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    transition: all 0.2s ease;
+}
+
+audio::-webkit-media-controls-mute-button:hover,
+audio::-webkit-media-controls-toggle-closed-captions-button:hover {
+    background-color: #e0d5c1;
+    transform: scale(1.05);
+}
+
+/* Fix speaker button vertical alignment */
+audio::-webkit-media-controls-mute-button {
+    vertical-align: middle;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+/* Adjust volume slider position */
+audio::-webkit-media-controls-volume-slider {
+    vertical-align: middle;
+    margin-top: 0;
+    margin-bottom: 0;
 }
