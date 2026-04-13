@@ -155,11 +155,11 @@ input[type="text"] {
 
 /* 우표 이미지 (안 잘리게 안쪽 배치) */
 .acorn-card .stamp-img {
-    width: 100px;
+    width: 180px;
     height: auto;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -30px;
+    right: -30px;
     transform: rotate(10deg);
     z-index: 10;
 }
