@@ -14,7 +14,8 @@ FROM users
 WHERE is_deleted = 'N'
 ORDER BY created_at DESC;
 
-
+SELECT *
+FROM USERS;
 -- 2. 특정 사용자가 작성한 이메일 상세 조회 (3개 테이블 JOIN)
 -- 작성자의 닉네임, 사용된 템플릿 이름, 이메일 제목과 내용을 한꺼번에 가져옵니다.
 SELECT u.nickname AS sender_name,

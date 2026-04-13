@@ -4,18 +4,21 @@
 
 CREATE TABLE users
 (
-    user_id         RAW(16)     DEFAULT SYS_GUID() PRIMARY KEY,
+    user_id         RAW(16)      DEFAULT SYS_GUID() PRIMARY KEY,
     email           VARCHAR2(50)      NOT NULL UNIQUE,
     nickname        VARCHAR2(10 char) NOT NULL UNIQUE,
     password        VARCHAR2(100)     NOT NULL,
     profile_img_url VARCHAR2(500),
+    roll            VARCHAR2(10) DEFAULT 'MEMBER',
     omikuji_at      DATE,
-    created_at      DATE        DEFAULT SYSDATE,
-    updated_at      DATE        DEFAULT SYSDATE,
-    is_deleted      VARCHAR2(1) DEFAULT 'N',
+    created_at      DATE         DEFAULT SYSDATE,
+    updated_at      DATE         DEFAULT SYSDATE,
+    is_deleted      VARCHAR2(1)  DEFAULT 'N',
 
     CONSTRAINT chk_users_is_deleted
-        CHECK (is_deleted IN ('Y', 'N'))
+        CHECK (is_deleted IN ('Y', 'N')),
+    CONSTRAINT chk_users_roll
+        CHECK (roll IN ('ADMIN', 'MEMBER'))
 );
 
 CREATE OR REPLACE TRIGGER trg_users_updated_at
