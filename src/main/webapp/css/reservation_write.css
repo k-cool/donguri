@@ -42,13 +42,17 @@ body {
     width: 100%;
     max-width: 480px;
     height: auto;
+    position: relative;
 }
 
 .form-container > div {
     width: 100%;
     padding-top: 105px;
-    padding-left: 25px; /* ⭐ 추가 */
-    padding-right: 25px; /* ⭐ 추가 */
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-bottom: 40px;
+    max-width: 410px;
+    margin: 0 auto;
 }
 
 /* ===== 제목 ===== */
@@ -62,6 +66,7 @@ h2 {
 .form-row {
     margin-bottom: 25px;
     width: 100%;
+    position: relative;
 }
 
 label {
@@ -85,13 +90,14 @@ input[type="text"], textarea {
 
 /* 점선 */
 .form-row::after {
-    content: "----------------------------------------------------";
+    content: "——————————————————————————————";
     display: block;
-    letter-spacing: 2px;
-    font-size: 10px;
-    color: #c7bca1;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #b39f7d;
     margin-top: 5px;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 /* 버튼 */
@@ -118,6 +124,7 @@ button[type="submit"] {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    margin: 20px 0;
 }
 
 .template-track-wrapper {
@@ -177,5 +184,23 @@ button[type="submit"] {
     font-size: 0.75rem;
     color: #8a7d6b;
     white-space: nowrap; /* 한 줄 유지 */
+}
+
+/* BGM 선택 */
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d7c9b8;
+    background-color: #f9f5f0;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* 오디오 플레이어 */
+audio {
+    margin-top: 10px;
+    width: 100% !important;
+    max-width: 300px;
 }
 
