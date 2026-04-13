@@ -55,7 +55,8 @@
                            value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
                 </div>
             </div>
-            <div class="template-slider">
+
+            <div class="template-slider form-row">
                 <label>템플릿</label>
 
                 <div class="slider-row">
@@ -81,44 +82,44 @@
             <input type="hidden" name="templateId" id="selectedTemplate">
 
 
-            <div class="form-row">
+            <%--            <div class="form-row">--%>
 
 
-                <div class="form-row bgm-section">
-                    <label>B G M</label>
+            <div class="bgm-section">
+                <label>B G M</label>
 
-                    <div class="bgm-tabs">
-                        <button type="button" class="tab-btn active" data-genre="Japanese Mood">Japanese Mood</button>
-                        <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
-                        <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
-                        <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
-                        <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
-                    </div>
+                <div class="bgm-tabs">
+                    <button type="button" class="tab-btn active" data-genre="Japanese Mood">Japanese Mood</button>
+                    <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
+                    <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
+                    <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
+                    <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
+                </div>
 
-                    <div class="bgm-container">
-                        <button type="button" class="bgm-arrow left">◀</button>
+                <div class="bgm-container">
+                    <button type="button" class="bgm-arrow left">◀</button>
 
-                        <div class="bgm-window">
-                            <div class="bgm-track" id="bgmTrack">
-                            </div>
+                    <div class="bgm-window">
+                        <div class="bgm-track" id="bgmTrack">
                         </div>
-
-                        <button type="button" class="bgm-arrow right">▶</button>
                     </div>
 
-                    <input type="hidden" name="bgmUrl" id="selectedBgm">
-                    <div class="player-wrapper">
-                        <audio id="bgmPlayer" controls></audio>
-                        <p id="currentSongTitle"></p>
-                    </div>
+                    <button type="button" class="bgm-arrow right">▶</button>
+                </div>
+
+                <input type="hidden" name="bgmUrl" id="selectedBgm">
+                <div class="player-wrapper">
+                    <audio id="bgmPlayer" controls></audio>
+                    <p id="currentSongTitle"></p>
                 </div>
             </div>
-
-
-            <button type="submit">예약하기</button>
-            <a href="reservation?action=list" class="link-btn">돌아가기</a>
-        </form>
     </div>
+
+
+    <button type="submit">예약하기</button>
+    <a href="reservation?action=list" class="link-btn">돌아가기</a>
+    </form>
+    <%--    </div>--%>
 
 </div>
 </div>
