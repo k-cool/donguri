@@ -27,4 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // 템플릿 카드 클릭 이벤트
+    cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+            // 기존 active 클래스 제거
+            cards.forEach(c => c.classList.remove("active"));
+            
+            // 클릭된 카드에 active 클래스 추가
+            card.classList.add("active");
+            
+            // 선택된 템플릿 ID를 hidden input에 설정
+            const selectedTemplateInput = document.getElementById("selectedTemplate");
+            if (selectedTemplateInput) {
+                selectedTemplateInput.value = index + 1; // 1부터 시작하는 ID
+                console.log("선택된 템플릿:", index + 1);
+            }
+        });
+    });
+
 });
