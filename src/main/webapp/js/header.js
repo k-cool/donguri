@@ -40,3 +40,23 @@ $(document).ready(function () {
         }
     });
 });
+$(document).ready(function () {
+    var currentPath = window.location.pathname;
+
+    // 1. 현재 접속한 주소가 메인 페이지('/main')가 아닐 경우 2층 메뉴 전체 숨기기
+    // (만약 기본 접속 주소가 '/' 라면 조건에 맞게 동작하도록 처리)
+    if (currentPath !== '/main' && currentPath !== '/') {
+        $('.header-bottom').hide();
+        $('header').addClass('sub-header');
+    }
+
+    // 2. 실전용 (페이지 이동 유지 로직 - 활성화된 메뉴 파란색 표시)
+    $('.nav-menu a').each(function () {
+        var linkHref = $(this).attr('href');
+
+        if (linkHref !== "#" && currentPath.includes(linkHref)) {
+            $('.nav-menu a').removeClass('active');
+            $(this).addClass('active');
+        }
+    });
+});

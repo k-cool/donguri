@@ -66,17 +66,17 @@
     color: #333;
 }
 
-.main-menu {
+.logout-menu {
     list-style: none;
     padding: 20px 0;
     margin: 0;
 }
 
-.main-menu li {
+.logout-menu li {
     margin: 10px 0;
 }
 
-.main-menu a {
+.logout-menu a {
     display: block;
     padding: 12px 20px;
     text-decoration: none;
@@ -86,7 +86,7 @@
     transition: background-color 0.2s;
 }
 
-.main-menu a:hover {
+.logout-menu a:hover {
     background-color: #e9ecef;
     color: #000;
 }
@@ -100,6 +100,10 @@ header {
     padding: 15px 30px;
     background-color: #fff;
     border-bottom: 1px solid #dee2e6;
+
+    width: 100%; /* 이제 제약 없이 화면 양끝을 100% 채웁니다 */
+    box-sizing: border-box;
+    margin: 0;
 }
 
 /* --- 1층 (상단) --- */
@@ -122,13 +126,40 @@ header {
     min-width: 60px;
 }
 
+/* 🚨 15도씩 까딱까딱 기우는 애니메이션 정의 */
+@keyframes acornTilt {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    /* 왼쪽으로 15도 기울기 */
+    75% {
+        transform: rotate(15deg);
+    }
+    /* 오른쪽으로 15도 기울기 */
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
 .menu-btn {
-    width: 30px;
-    height: 30px;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* 마우스 커서가 올라갔을 때의 반응 */
+.menu-btn:hover {
+    opacity: 0.8;
+
+    /* 🚨 acornTilt 애니메이션을 0.4초 속도로 무한 반복 (속도를 조금 더 여유롭게 줌) */
+    animation: acornTilt 0.4s ease-in-out infinite;
 }
 
 /* 1층 정중앙 로고 고정 */
@@ -217,4 +248,10 @@ header {
     border-bottom: 3px solid #007bff; /* 밑줄 쫙! */
     border-radius: 0; /* 밑줄이 예쁘게 나오게 라운드 효과 제거 */
     padding-bottom: 6px; /* 글씨와 밑줄 사이 간격 */
+}
+
+/* 서브 페이지에서 2층이 숨겨졌을 때 헤더 높이 보정 */
+header.sub-header {
+    min-height: 70px; /* 적당한 두께 유지 */
+    justify-content: center;
 }

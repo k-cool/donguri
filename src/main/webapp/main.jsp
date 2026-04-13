@@ -31,44 +31,45 @@
 <%--</c:if>--%>
 
 <body>
+
+<header>
+    <div class="header-top">
+        <div class="header-left">
+            <button id="menuBtn" class="menu-btn">
+                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/main/profile.svg"
+                     alt="menu" width="70" height="70">
+            </button>
+        </div>
+
+        <div class="logo-center">
+            <a href="main">
+                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
+                     alt="donguri post" height="40">
+            </a>
+        </div>
+
+        <div class="user-auth-area">
+            <c:if test="${not empty loginPage}">
+                <jsp:include page="${loginPage}"/>
+            </c:if>
+            <c:if test="${empty loginPage and not empty sessionScope.user}">
+                <jsp:include page="jsp/user/login_ok.jsp"/>
+            </c:if>
+        </div>
+    </div>
+
+    <div class="header-bottom">
+        <nav class="main-nav">
+            <ul class="nav-menu">
+                <li><a href="#">동구리 예약</a></li>
+                <li><a href="#">동구리 보관함</a></li>
+                <li><a href="#">동구리 뽑기</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 <div class="container">
-    <header>
-        <div class="header-top">
-            <div class="header-left">
-                <button id="menuBtn" class="menu-btn">
-                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
-                         alt="menu" width="30" height="30">
-                </button>
-            </div>
-
-            <div class="logo-center">
-                <a href="main">
-                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
-                         alt="donguri post" height="40">
-                </a>
-            </div>
-
-            <div class="user-auth-area">
-                <c:if test="${not empty loginPage}">
-                    <jsp:include page="${loginPage}"/>
-                </c:if>
-                <c:if test="${empty loginPage and not empty sessionScope.user}">
-                    <jsp:include page="jsp/user/login_ok.jsp"/>
-                </c:if>
-            </div>
-        </div>
-
-        <div class="header-bottom">
-            <nav class="main-nav">
-                <ul class="nav-menu">
-                    <li><a href="#">동구리 예약</a></li>
-                    <li><a href="#">동구리 보관함</a></li>
-                    <li><a href="#">동구리 뽑기</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
     <div id="slideMenu">
         <div class="user-info">
             <c:choose>
@@ -81,14 +82,14 @@
                 </c:otherwise>
             </c:choose>
             <p class="nickname">${sessionScope.user.nickname}</p>
-            <div class="notifications">Notifications</div>
+            <div class="notifications">알림</div>
             <ul class="sub-menu">
-                <li><a href="mypage">My Page</a></li>
-                <li><a href="#">Template Storage</a></li>
-                <li><a href="#">Contacts</a></li>
+                <li><a href="mypage">마이페이지</a></li>
+                <li><a href="#">탬플릿 보관함</a></li>
+                <li><a href="#">컨택트</a></li>
             </ul>
         </div>
-        <ul class="main-menu">
+        <ul class="logout-menu">
             <li><a href="login?type=logout">Logout</a></li>
         </ul>
     </div>
