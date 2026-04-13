@@ -16,7 +16,7 @@
     <div>
 
         <form action="reservation" method="post">
-            <h2>너무나도 그리운 그대에게</h2>
+            <h2>{ 너무나도 그리운 누군가에게 }</h2>
             <input type="hidden" name="action" value="confirm">
 
 
