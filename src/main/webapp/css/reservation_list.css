@@ -204,8 +204,9 @@ input[type="text"] {
     transform: translateX(-50%);
     bottom: -40px; /* 제목으로부터 아래쪽으로 거리 조절 */
     width: 100%;
-    font-size: 0.85rem;
-    color: #8d6e63;
+    font-size: 1.1rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .acorn-card:hover {
