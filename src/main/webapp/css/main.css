@@ -1,3 +1,22 @@
-body{
-    background-color: tomato;
+/*전역 폰트 불러오기*/
+
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Galmuri11', serif;
+    background-image: url('/image/background.png'); /* 경로 맞게 수정 */
+    background-size: cover; /* 화면 꽉 채움 */
+    background-position: center; /* 가운데 정렬 */
+    background-repeat: no-repeat; /* 반복 제거 */
+    background-attachment: fixed; /* ⭐ 스크롤해도 고정 */
+    
 }

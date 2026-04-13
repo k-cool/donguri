@@ -1,0 +1,188 @@
+/* 전체 영역 */
+
+
+.confirm-wrapper {
+    width: 100%;
+    margin: 120px auto;
+}
+
+.confirm-wrapper * {
+    box-sizing: border-box;
+}
+
+/* 메인 컨테이너 */
+.confirm-container {
+    max-width: 420px;
+    margin: auto;
+    position: relative;
+}
+
+/* 제목 */
+.confirm-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #444;
+}
+
+/* ================= 봉투 ================= */
+
+/* 봉투 몸통 */
+.post-container {
+    position: relative;
+    height: 1000px;
+}
+
+/* 윗 뚜껑 */
+.top-cover {
+    position: absolute;
+    top: -119px;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: #f4cfd2;
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    z-index: 1;
+
+}
+
+/* 좌측 날개 */
+.wing.left {
+    position: absolute;
+    top: 0;
+    left: -119px;
+    width: 120px;
+    height: 420px;
+    background: #f4cfd2;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    z-index: 2;
+
+}
+
+/* 우측 날개 */
+.wing.right {
+    position: absolute;
+    top: 0;
+    right: -119px;
+    width: 120px;
+    height: 420px;
+    background: #f4cfd2;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    z-index: 2;
+}
+
+/* ================= 상단 카드 ================= */
+
+.post-square {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 420px;
+    height: 420px;
+
+}
+
+.post-top {
+    background: #f4cfd2;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    z-index: 2;
+}
+
+.texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*background-image: url('/image/template_texture_square.png'); !* 경로 맞게 수정 *!*/
+    background-size: cover; /* 화면 꽉 채움 */
+    background-position: center; /* 가운데 정렬 */
+    background-repeat: no-repeat; /* 반복 제거 */
+}
+
+/* 이미지 카드 */
+.img-wrapper {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    rotate: 2deg;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+}
+
+.img-wrapper img {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border: 16px solid white;
+}
+
+/* 우표 */
+.stamp {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 80px;
+    rotate: 16deg;
+}
+
+.stamp img {
+    width: 100%;
+}
+
+/* ================= 하단 내용 ================= */
+
+.post-bottom {
+    top: 420px;
+    background: #f4cfd2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 50px;
+
+    color: #5c3d3d;
+    font-size: 14px;
+
+}
+
+/* 줄 */
+.row {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 34px;
+}
+
+.label {
+    width: 70px;
+}
+
+.data {
+    text-align: right;
+    width: 240px;
+
+}
+
+/* 본문 */
+.content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* 날짜 */
+.date {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+}

@@ -180,7 +180,7 @@ public class UserDAO {
                 //    - 다른 컨트롤러에서 session.getAttribute("user")로 가져올 수 있음
                 HttpSession session = request.getSession();
                 request.getSession().setAttribute("user", user);
-                session.setMaxInactiveInterval(300); //  5분
+                session.setMaxInactiveInterval(60 * 60); //  5분
 
                 return true;
             }
