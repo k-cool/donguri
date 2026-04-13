@@ -264,7 +264,7 @@ button[type="submit"] {
 }
 
 .input-row input {
-    flex: 1;
+    width: 231px; /* 65px 카드 3개 + 간격 12px*2 = 195+24 = 219px, 여유분 포함 231px */
     min-width: 0;
 }
 
@@ -312,8 +312,9 @@ button[type="submit"] {
     gap: 8px;
 }
 
+
 .bgm-window {
-    flex: 1;
+    width: 231px; /* 65px 카드 3개 + 간격 12px*2 = 195+24 = 219px, 여유분 포함 231px */
     overflow: hidden;
 }
 

@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // 슬라이더 버튼
     let currentX = 0;
     document.querySelector('.bgm-arrow.right').onclick = () => {
-        if (currentX > -(track.scrollWidth - 250)) {
-            currentX -= 77;
+        if (currentX > -(track.scrollWidth - 231)) {
+            currentX -= 77; /* 카드 너비 65px + 간격 12px = 77px */
             track.style.transform = `translateX(${currentX}px)`;
         }
     };

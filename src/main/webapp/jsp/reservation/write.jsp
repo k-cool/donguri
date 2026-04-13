@@ -82,7 +82,6 @@
 
 
             <div class="form-row">
-                <label>BGM</label>
 
 
                 <div class="form-row bgm-section">
