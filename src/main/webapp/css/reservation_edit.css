@@ -139,7 +139,7 @@ button[type="submit"], .link-btn {
 button[type="submit"]:not(.form-row), .link-btn:not(.form-row) {
     display: inline-block;
     vertical-align: top;
-    margin: 30px 10px 0 0;
+    margin: 50px 10px 0 0;
 }
 
 /* 버튼 */
