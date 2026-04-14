@@ -1,145 +1,662 @@
-/* 기본 배경: 부드러운 모래색 */
-body {
-    background-color: #fdfaf5;
-    color: #5d4037;
-    font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
-    margin: 0;
-    padding: 40px 20px;
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
 }
 
-/* 다이어리/나무판 느낌의 컨테이너 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Galmuri11', sans-serif !important;
+    color: #3b110b;
+}
+
+/* ===== 배경 ===== */
+body {
+    background-image: url("../image/background.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 10px;
+    min-height: 100vh;
+}
+
+/* ===== 종이 ===== */
 .form-container {
-    max-width: 550px;
+    background-image: url(../image/posting_page.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: -57px;
+
     width: 100%;
-    margin: 0 auto;
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 30px;
-    /* 나무 느낌의 이중 테두리 */
-    border: 8px solid #8e6546;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 480px;
+    height: 1400px;
     position: relative;
 }
 
-/* 제목 스타일 */
-h2 {
-    color: #5d4037;
-    font-size: 1.6rem;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.form-container > div {
+    width: 100%;
+    padding-top: 105px;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-bottom: 40px;
+    max-width: 410px;
+    margin: 0 auto;
 }
 
-/* 폼 라벨: 나무 표지판 느낌 */
-.form-row label {
-    display: block;
-    font-weight: bold;
-    color: #8d6e63;
-    margin-bottom: 8px;
+/* ===== 제목 ===== */
+h2 {
+    font-size: 1.25rem;
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
+    margin-bottom: 40px;
+    margin-top: 70px;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background-color: #c7b8a6;
+    z-index: -1;
+}
+
+/* ===== 입력 영역 ===== */
+.form-row {
+    margin-bottom: 20px; /* 간격 넓힘 */
+    width: 100%;
+    position: relative;
+}
+
+label {
+    display: inline-block;
+    position: relative;
+    padding: 2px 10px;
+    font-size: 0.95rem;
+    margin-bottom: 8px; /* 간격 넓힘 */
+    border-radius: 2px;
+    z-index: 1;
+    font-family: 'Galmuri11', sans-serif !important;
+}
+
+label::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 13px;
+    background-color: rgba(181, 168, 154, 0.6); /* 연한 갈색 형광펜 */
+    z-index: -1;
+}
+
+/* 입력창 */
+input, textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 0;
     font-size: 0.95rem;
 }
 
-/* 입력창 공통 스타일 */
-.form-row input,
-.form-row textarea,
-.form-row select {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0d5c1;
-    border-radius: 12px;
-    background-color: #fdfbf9;
-    color: #3e2723;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    outline: none;
+/* 점선 */
+.form-row::after {
+    content: "——————————————————————————————";
+    display: block;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #b39f7d;
+    margin-top: 4px;
+    opacity: 0.8;
 }
 
-.form-row input:focus,
-.form-row textarea:focus {
-    border-color: #8e6546;
-    background-color: #fff;
+/* 버튼들 옆으로 배치 */
+button[type="submit"], .link-btn {
+    margin-bottom: 0;
 }
 
-/* 읽기 전용 닉네임 창 */
-input[readonly] {
-    background-color: #f1ece9 !important;
-    border-color: #d7ccc8 !important;
-    color: #a1887f;
+button[type="submit"]:not(.form-row), .link-btn:not(.form-row) {
+    display: inline-block;
+    vertical-align: top;
+    margin: 30px 10px 0 0;
 }
 
-/* 날짜 선택 커스텀 */
-.date-picker-container {
+/* 버튼 */
+button[type="submit"] {
+    background-color: #614d34;
+    color: #e0d5c1;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1.1rem;
+    height: 52px;
+    box-sizing: border-box;
+    width: 45%;
+}
+
+/* 리스트로 돌아가기 버튼 */
+.link-btn {
+    background-color: #50402b;
+    color: #e0d5c1;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.1rem;
+    height: 52px;
+    box-sizing: border-box;
+    width: 45%;
+}
+
+/* =========================
+   ✅ 템플릿 (캐러셀)
+========================= */
+/* ===== 템플릿 슬라이더 (이미지 스타일 구현) ===== */
+.template-slider {
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+.template-slider label {
+    margin-bottom: 20px;
+}
+
+
+/* 전체를 감싸는 둥근 테두리 박스 */
+.slider-row {
     display: flex;
     align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.4); /* 살짝 투명한 배경 */
+    border: 1px solid #ad99848f; /* 테두리선 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 15px 10px;
+    gap: 5px;
+}
+
+.template-track-wrapper {
+    width: 300px; /* 100px 카드 2개 + 간격 고려 */
+    overflow: hidden;
+}
+
+.template-track {
+    display: flex;
+    gap: 15px;
+    transition: transform 0.3s ease-out;
+}
+
+/* 개별 템플릿 카드 */
+.template-card {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 1px solid #e2d1c0;
+    border-radius: 12px; /* 카드의 둥근 모서리 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* 선택되었을 때 강조 효과 */
+.template-card.active {
+    position: relative;
+    border: 2px solid #976e6b;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.template-card.active::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(135, 111, 106, 0.55);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+}
+
+.template-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 화살표 버튼 스타일 */
+.arrow {
+    background: none;
+    border: none;
+    color: #918277;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.1s;
+}
+
+.arrow:active {
+    transform: scale(0.9);
+}
+
+/* ===== input row ===== */
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 날짜 선택 컨테이너 */
+.date-picker-container {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.input-row input {
+    width: 231px; /* 65px 카드 3개 + 간격 12px*2 = 195+24 = 219px, 여유분 포함 231px */
+    min-width: 0;
+}
+
+.input-desc {
+    font-size: 0.75rem;
+    color: #8a7d6b;
+    white-space: nowrap;
+}
+
+/* ===== BGM 탭 & 슬라이더 ===== */
+/* 기본 레이아웃 */
+/* 1. 전체 섹션 배경 제거 */
+.bgm-section {
+
+    padding: 15px 10px 20px 10px; /* 여백 추가 */
+    background-color: transparent; /* 배경 제거 */
+}
+
+.bgm-tabs {
+    display: flex;
+    gap: 2px;
+}
+
+.tab-btn {
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 6px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    background-color: #f0e6d9;
+    color: #3b110b;
+}
+
+.tab-btn.active {
+    background-color: #f0e6d9;
+    color: #fff;
+}
+
+.bgm-container {
+    background-color: #f0e6d9;
+    border-radius: 0 0px 15px 15px;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    gap: 8px;
+    gap: 13px;
+}
+
+
+.bgm-window {
+    width: 231px; /* 65px 카드 3개 + 간격 12px*2 = 195+24 = 219px, 여유분 포함 231px */
+    overflow: hidden;
+}
+
+.bgm-track {
+    display: flex;
     gap: 12px;
-    background: #f4ece1;
-    padding: 10px 15px;
+    transition: transform 0.3s ease-out;
+}
+
+.bgm-card {
+    width: 65px;
+    height: 65px;
+    background-color: #fff;
     border-radius: 12px;
-    border: 1px dashed #8e6546;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.bgm-card::after {
+    content: '♫';
+    font-size: 20px;
+    color: #3b110b;
+}
+
+.bgm-card.active {
+    background-color: #eddcc8;
+    border: 2px solid #fff;
+}
+
+.bgm-arrow {
+    background: none;
+    border: none;
+    color: #fff;
     cursor: pointer;
 }
 
-#scheduledWrapper {
-    font-size: 1.4rem;
-    background: none;
-    border: none;
+/* 2. 테마별 슬라이더 박스 색상만 변경 */
+/* Japanese Mood */
+.theme-japanese .bgm-container {
+    background-color: #baa890 !important;
 }
 
-/* 버튼 그룹 */
-.btn-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
+.theme-japanese .tab-btn.active {
+    background-color: #b9a78f !important;
+}
+
+/* Midnight Blue */
+.theme-midnight .bgm-container {
+    background-color: #98867c !important;
+}
+
+.theme-midnight .tab-btn.active {
+    background-color: #97857b !important;
+}
+
+/* Playful Day */
+.theme-playful .bgm-container {
+    background-color: #7d7064 !important;
+}
+
+.theme-playful .tab-btn.active {
+    background-color: #7e7165 !important;
+}
+
+/* Lofi Chill */
+.theme-lofi .bgm-container {
+    background-color: #634e2b !important;
+}
+
+.theme-lofi .tab-btn.active {
+    background-color: #6e5c43 !important;
+}
+
+/* Calm & Sad */
+.theme-calm .bgm-container {
+    background-color: #5a483d !important;
+}
+
+.theme-calm .tab-btn.active {
+    background-color: #59473d !important;
+}
+
+.player-wrapper {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#currentSongTitle {
+    font-size: 14px;
+    color: inherit;
     margin-top: 30px;
 }
 
-button, .link-btn {
-    flex: 1;
-    padding: 15px;
-    border: none;
-    border-radius: 15px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-    text-align: center;
-    text-decoration: none;
-}
-
-/* 수정 완료 버튼: 짙은 나무색 */
-button[type="submit"] {
-    background: #795548;
-    color: white;
-}
-
-button[type="submit"]:hover {
-    background: #5d4037;
-    transform: translateY(-3px);
-}
-
-/* 취소 버튼: 연한 나무색 */
-.link-btn {
-    background: #d7ccc8;
-    color: #5d4037 !important;
-}
-
-.link-btn:hover {
-    background: #bcaaa4;
-    transform: translateY(-3px);
-}
-
-/* 도토리 배경 패턴 */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
+audio {
     width: 100%;
-    height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png'); /* 은은한 나무결 */
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: -1;
+    height: 35px;
+}
+
+
+#currentSongTitle {
+    font-size: 15px;
+    color: #745b4c;
+    margin-top: 25px;
+}
+
+audio {
+    width: 100%;
+    height: 35px;
+}
+
+/* Flatpickr */
+.flatpickr-calendar {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+}
+/* Audio player controls - Webkit browsers */
+audio::-webkit-media-controls-panel {
+    background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
+    border-radius: 18px;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+    background-color: #f9f5f0;
+    border-radius: 50%;
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #f9f5f0;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+audio::-webkit-media-controls-timeline {
+    background-color: rgba(249, 245, 240, 0.3);
+    border-radius: 10px;
+    height: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-volume-slider {
+    background-color: rgba(249, 245, 240, 0.3);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-toggle-closed-captions-button {
+    background-color: #f9f5f0;
+    border-radius: 50%;
+    min-width: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Firefox audio styling */
+audio::-moz-media-controls-panel {
+    background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
+    border-radius: 18px;
+}
+
+/* Modern and clean audio player styling */
+audio {
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d5c1;
+}
+
+/* Webkit audio controls */
+audio::-webkit-media-controls-panel {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+    background-color: #f0e6d9;
+    border-radius: 4px;
+    min-width: 28px;
+    max-width: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    transition: all 0.2s ease;
+}
+
+audio::-webkit-media-controls-play-button:hover,
+audio::-webkit-media-controls-pause-button:hover {
+    background-color: #e0d5c1;
+    transform: scale(1.05);
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+    color: #3b110b;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+audio::-webkit-media-controls-timeline {
+    background-color: #f0e6d9;
+    border-radius: 3px;
+    height: 4px;
+    margin: 0 8px;
+}
+
+}
+
+audio::-webkit-media-controls-volume-slider {
+    background-color: #f0e6d9;
+    border-radius: 3px;
+    margin-left: 8px;
+}
+
+audio::-webkit-media-controls-mute-button,
+audio::-webkit-media-controls-toggle-closed-captions-button {
+    background-color: #f0e6d9;
+    border-radius: 4px;
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    transition: all 0.2s ease;
+}
+
+audio::-webkit-media-controls-mute-button:hover,
+audio::-webkit-media-controls-toggle-closed-captions-button:hover {
+    background-color: #e0d5c1;
+    transform: scale(1.05);
+}
+
+/* Fix speaker button vertical alignment */
+audio::-webkit-media-controls-mute-button {
+    vertical-align: middle;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+/* Adjust volume slider position */
+audio::-webkit-media-controls-volume-slider {
+    vertical-align: middle;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Remove timeline progress color */
+audio::-webkit-media-controls-timeline::-webkit-media-controls-time-fill {
+    background-color: transparent;
+}
+
+/* Remove dotted line from buttons */
+button[type="submit"], .link-btn {
+    margin-bottom: 0;
+}
+
+button[type="submit"]::after, .link-btn::after {
+    display: none !important;
+}
+
+/* Alternative: Remove form-row dotted line for buttons */
+form > button[type="submit"],
+form > .link-btn {
+    margin-bottom: 0;
+}
+
+form > button[type="submit"]::after,
+form > .link-btn::after {
+    display: none !important;
+}
+
+
+
+
+
+/* Textarea fixed height and scroll styling */
+textarea {
+    height: 120px;
+    resize: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c9b9a8 #f9f5f0;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #f9f5f0;
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #c9b9a8;
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #b39f7d;
 }
