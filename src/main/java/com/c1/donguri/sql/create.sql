@@ -34,7 +34,6 @@ CREATE TABLE template
 (
     template_id   RAW(16)     DEFAULT SYS_GUID() PRIMARY KEY,
     name          VARCHAR2(20 char) NOT NULL,
-    body_html     CLOB              NOT NULL,
     type          VARCHAR2(10)      NOT NULL,
     cover_img_url VARCHAR2(500)     NOT NULL,
     qr_url        VARCHAR2(500),

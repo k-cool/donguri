@@ -13,7 +13,9 @@ public class PostC extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("post", PostDAO.POST_DAO.getPost(request));
 
-        request.getRequestDispatcher("jsp/post/post.jsp").forward(request, response);
+        request.setAttribute("content", "jsp/post/post.jsp");
+
+        request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

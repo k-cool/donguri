@@ -11,8 +11,7 @@
         <h2 class="title">📬 예약 내용 확인 📬</h2>
 
         <div class="confirm-container">
-
-
+            
             <div class="post-container">
 
                 <svg class="top-cover"
