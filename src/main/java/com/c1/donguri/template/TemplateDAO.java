@@ -302,11 +302,12 @@ public class TemplateDAO {
         if (!dir.exists()) dir.mkdirs();
 
         // 큐알 생성
-        String prFileName = QRGenerator.QR_GENERATOR.generateQR(targetUrl, path);
+        String qrFileName = QRGenerator.QR_GENERATOR.generateQR(targetUrl, path);
+
 
         // 3. [QRC에서 가져온 로직] S3업로드
         S3Uploader s3Uploader = new S3Uploader();
-        s3Url = s3Uploader.uploadLocalFile(path, prFileName);
+        s3Url = s3Uploader.uploadLocalFile(path, qrFileName, "qr_img");
 
         Connection con = null;
         PreparedStatement pstmt = null;

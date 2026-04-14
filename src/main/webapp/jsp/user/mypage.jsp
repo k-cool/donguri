@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 <head>
     <title>마이페이지</title>
@@ -30,8 +31,9 @@
         <div class="nickname-box">
             <strong>닉네임:</strong>
             <input type="text" id="nicknameInput" value="${sessionScope.user.nickname}">
-            <button type="button" onclick="updateNickname()">수정(중복확인)</button>
+            <button type="button" id="nicknameBtn" onclick="handleNicknameProcess()">수정</button>
         </div>
+        <div id="nicknameMsg" style="font-size: 12px; margin-top: 5px; margin-left: 60px;"></div>
     </div>
 
     <div class="btn-group">
