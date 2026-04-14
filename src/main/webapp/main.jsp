@@ -41,14 +41,14 @@
 
         <div class="hd-logo-center">
             <a href="main">
-                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
+                <img src="image/logo.svg"
                      alt="donguri post" height="40">
             </a>
         </div>
 
         <div class="hd-header-right">
             <button id="hd-menuBtn" class="hd-menu-btn">
-                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/main/profile.svg"
+                <img src="image/profile.svg"
                      alt="menu" width="70" height="70">
             </button>
         </div>
@@ -82,7 +82,7 @@
                     <img src="${sessionScope.user.profileImgUrl}" alt="Profile" class="hd-profile-pic">
                 </c:when>
                 <c:otherwise>
-                    <img src="https://s3.amazonaws.com/donguri-dev/ui_asset/default_profile.png" alt="Profile"
+                    <img src="image/background.png" alt="Profile"
                          class="hd-profile-pic">
                 </c:otherwise>
             </c:choose>
