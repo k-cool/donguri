@@ -15,15 +15,15 @@
             <input type="hidden" name="action" value="list">
 
             <select name="status">
-                <option value="all" ${param.status == 'all' || empty param.status ? 'selected' : ''}>전체 상태</option>
-                <option value="완료" ${param.status == '완료' ? 'selected' : ''}>발송 완료</option>
-                <option value="대기" ${param.status == '대기' ? 'selected' : ''}>발송 대기</option>
+                <option value="all" ${param.status == 'all' || empty param.status ? 'selected' : ''}>${param.status == 'all' || empty param.status ? '✓ ' : ''}전체 상태</option>
+                <option value="완료" ${param.status == '완료' ? 'selected' : ''}>${param.status == '완료' ? '✓ ' : ''}발송 완료</option>
+                <option value="대기" ${param.status == '대기' ? 'selected' : ''}>${param.status == '대기' ? '✓ ' : ''}발송 대기</option>
             </select>
 
             <select name="searchType">
-                <option value="all" ${param.searchType == 'all' ? 'selected' : ''}>전체 항목</option>
-                <option value="recipientEmail" ${param.searchType == 'recipientEmail' ? 'selected' : ''}>이메일</option>
-                <option value="subject" ${param.searchType == 'subject' ? 'selected' : ''}>제목</option>
+                <option value="all" ${param.searchType == 'all' ? 'selected' : ''}>${param.searchType == 'all' ? '✓ ' : ''}전체 항목</option>
+                <option value="recipientEmail" ${param.searchType == 'recipientEmail' ? 'selected' : ''}>${param.searchType == 'recipientEmail' ? '✓ ' : ''}이메일</option>
+                <option value="subject" ${param.searchType == 'subject' ? 'selected' : ''}>${param.searchType == 'subject' ? '✓ ' : ''}제목</option>
             </select>
 
             <input type="text" name="keyword" placeholder="찾고싶은 도토리.." value="${param.keyword}">

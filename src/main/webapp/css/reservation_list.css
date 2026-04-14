@@ -78,6 +78,19 @@ select, input[type="text"] {
     font-size: 0.95rem;
     outline: none;
 }
+n/* 선택된 옵션 스타일 */
+select option[selected] {
+    background-color: #3b110b;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* 체크 표시 강조 */
+select option[selected]::before {
+    content: "✓ ";
+    color: #4CAF50;
+    font-weight: bold;
+}
 
 input[type="text"] {
     flex: 1;
