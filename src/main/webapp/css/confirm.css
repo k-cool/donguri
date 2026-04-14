@@ -241,12 +241,18 @@
     border: none;
     font-size: calc(var(--base) * 0.033); /* 14 */
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 수정 버튼 */
 .edit-btn {
     background: #c7a98b;
     color: white;
+    text-decoration: none;
+
 }
 
 /* 도토리 버튼 */

@@ -211,18 +211,24 @@
     </div>
 
     <!-- 모달 -->
-    <div id="modal" class="modal-overlay">
-        <div class="modal-box">
-            <p class="modal-text">
-                📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
-            </p>
 
-            <div class="modal-actions">
-                <button class="btn edit-btn">✏️ 수정하고 싶어요!</button>
-                <button class="btn plant-btn">🍀 도토리 심기</button>
+    <form action="reservation" method="post">
+        <input type="hidden" name="action" value="insert">
+        <div id="modal" class="modal-overlay">
+            <div class="modal-box">
+                <p class="modal-text">
+                    📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
+                </p>
+
+                <div class="modal-actions">
+                    <a class="btn edit-btn" href="reservation?action=write">
+                        <div>✏️ 수정하고 싶어요!</div>
+                    </a>
+                    <button class="btn plant-btn" type="submit">🍀 도토리 심기</button>
+                </div>
+
             </div>
-
         </div>
-    </div>
+    </form>
 
 </div>
