@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
         card.addEventListener("click", () => {
             // 기존 active 클래스 제거
             cards.forEach(c => c.classList.remove("active"));
-            
+
             // 클릭된 카드에 active 클래스 추가
             card.classList.add("active");
-            
+
             // 선택된 템플릿 ID를 hidden input에 설정
             const selectedTemplateInput = document.getElementById("selectedTemplate");
             if (selectedTemplateInput) {
@@ -45,5 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // DOMContentLoaded 이벤트 마지막 부분에 추가
+    if (cards.length > 0) {
+        cards[0].click(); // 첫 번째 카드를 강제로 클릭 시뮬레이션
+    }
 
 });

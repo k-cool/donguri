@@ -63,14 +63,12 @@
                 <div class="slider-row">
                     <button type="button" id="tempLeft" class="arrow">◀</button>
 
-                    <div class="template-track-wrapper">
-                        <div class="template-track" id="templateTrack">
-                            <div class="template-card" data-id="1"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card" data-id="2"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card" data-id="3"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card" data-id="4"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card" data-id="5"><img src="image/template_sakura_img.png"></div>
-                        </div>
+                    <div class="template-track" id="templateTrack">
+                        <c:forEach var="t" items="${templateList}">
+                            <div class="template-card" data-id="${t.templateId}">
+                                <img src="${t.coverImgUrl}">
+                            </div>
+                        </c:forEach>
                     </div>
 
                     <button type="button" id="tempRight" class="arrow">▶</button>
@@ -78,8 +76,6 @@
             </div>
 
             <input type="hidden" name="templateId" id="selectedTemplate">
-
-
 
 
             <%--            <div class="form-row">--%>
