@@ -182,6 +182,7 @@
                 </div>
 
                 <div class="post-square post-bottom">
+                    <div class="pattern"></div>
                     <div class="texture"></div>
 
                     <div class="row">
@@ -211,7 +212,6 @@
     </div>
 
     <!-- 모달 -->
-
     <form action="reservation" method="post">
         <input type="hidden" name="action" value="insert">
         <div id="modal" class="modal-overlay">
