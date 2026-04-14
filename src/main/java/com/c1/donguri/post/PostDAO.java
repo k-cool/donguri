@@ -24,7 +24,7 @@ public class PostDAO {
                 "       E.CONTENT,\n" +
                 "       E.BGM_URL,\n" +
                 "       E.COVER_IMG_URL AS COVER_IMG_URL_E,\n" +
-                "       T.BODY_HTML,\n" +
+                "       T.BG_COLOR,\n" +
                 "       T.COVER_IMG_URL\n" +
                 "FROM RESERVATION R,\n" +
                 "     EMAIL_CONTENT E,\n" +
@@ -52,8 +52,8 @@ public class PostDAO {
                         rs.getString("subject"),
                         rs.getString("content"),
                         rs.getString("bgm_url"),
-                        rs.getString("body_html"),
                         rs.getString("cover_img_url"),
+                        rs.getString("bg_color"),
                         null
                 );
 
@@ -61,14 +61,6 @@ public class PostDAO {
                     post.setCoverImgUrl(rs.getString("cover_img_url_e"));
                 }
             }
-
-            String renderedHtml = post.getBodyHtml()
-                    .replace("$COVER_IMG_URL$", post.getCoverImgUrl())
-                    .replace("$SUBJECT$", post.getSubject())
-                    .replace("$CONTENT$", post.getContent())
-                    .replace("$SCHEDULED_DATE$", post.getScheduledDate().toString());
-
-            post.setRenderedHtml(renderedHtml);
 
             return post;
 

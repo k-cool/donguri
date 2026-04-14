@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class TemplateDTO {
     private String templateId;
     private String name;
-    private String bodyHtml;
+    private String bgColor;
     private String type;
     private String coverImgUrl;
     private String qrUrl;

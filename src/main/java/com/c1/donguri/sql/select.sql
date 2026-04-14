@@ -28,7 +28,8 @@ FROM email_content e
          JOIN template t ON e.template_id = t.template_id
 WHERE u.email = 'user1@test.com';
 
-
+select *
+from TEMPLATE;
 -- 3. 발송 대기 중인 예약 목록 조회 (reservation + email_content JOIN)
 -- 아직 발송되지 않은('N') 예약 건을 발송 예정일 순으로 조회합니다.
 SELECT r.reservation_id,
@@ -124,7 +125,7 @@ SELECT R.RESERVATION_ID,
        E.CONTENT,
        E.BGM_URL,
        E.COVER_IMG_URL AS COVER_IMG_URL_E,
-       T.BODY_HTML,
+       T.BG_COLOR,
        T.COVER_IMG_URL
 FROM RESERVATION R,
      EMAIL_CONTENT E,

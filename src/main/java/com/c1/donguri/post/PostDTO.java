@@ -20,8 +20,8 @@ public class PostDTO {
     private String bgmUrl;
 
     // template
-    private String bodyHtml;
     private String coverImgUrl; // 유저가 선택한게 있으면 오버라이딩
+    private String bgColor;
 
     // 생성
     private String renderedHtml;
