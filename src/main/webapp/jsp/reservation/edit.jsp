@@ -99,7 +99,7 @@
 </div>
 
 <script src="js/reservation-flatpickr.js"></script>
-<script src="js/reservation_template.js"></script>
+<script src="js/reservation_write_template.js"></script>
 <script src="js/bgmplay.js"></script>
 <script src="js/reservation_editinit.js"></script>
 
