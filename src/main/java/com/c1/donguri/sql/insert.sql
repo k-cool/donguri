@@ -1,7 +1,7 @@
 /*
     테스트 데이터 생성
  */
- 
+
 
 INSERT INTO users (email, nickname, password, profile_img_url, roll)
 VALUES ('admin@test.com', '관리자', 'hash_123', 'https://picsum.photos/200', 'ADMIN');
@@ -27,26 +27,26 @@ INSERT INTO users (email, nickname, password, profile_img_url)
 VALUES ('user10@test.com', '픽펜', 'hash_123', 'https://picsum.photos/200');
 
 
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('생일 축하', '<html><body>Happy Birthday!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('감사 편지', '<html><body>Thank you so much!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('새해 인사', '<html><body>Happy New Year!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('크리스마스', '<html><body>Merry Christmas!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('커스텀 A', '<html><body>Custom Content A</body></html>', 'ADDED', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('커스텀 B', '<html><body>Custom Content B</body></html>', 'ADDED', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('졸업 축하', '<html><body>Congratulations!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('입사 축하', '<html><body>Welcome to Team!</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('안부 인사', '<html><body>How are you?</body></html>', 'BASE', 'https://picsum.photos/400/200');
-INSERT INTO template (name, body_html, type, cover_img_url)
-VALUES ('이벤트 공지', '<html><body>Special Event!</body></html>', 'ADDED', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('생일 축하', 'eeeeee', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('감사 편지', 'ffffff', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('새해 인사', 'aaaaaa', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('크리스마스', '111111', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('커스텀 A', '222222', 'ADDED', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('커스텀 B', '000000', 'ADDED', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('졸업 축하', 'ffffff', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('입사 축하', 'ffffff', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('안부 인사', 'ffffff', 'BASE', 'https://picsum.photos/400/200');
+INSERT INTO template (name, bg_color, type, cover_img_url)
+VALUES ('이벤트 공지', 'ffffff', 'ADDED', 'https://picsum.photos/400/200');
 
 
 

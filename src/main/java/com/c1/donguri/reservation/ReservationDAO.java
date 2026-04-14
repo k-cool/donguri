@@ -123,8 +123,8 @@ public class ReservationDAO {
                 "       e.subject,\n" +
                 "       e.content,\n" +
                 "       r.is_done,\n" +
-                "       t.BODY_HTML,\n" +
-                "       t.COVER_IMG_URL\n" +
+                "       t.bg_color,\n" +
+                "       t.cover_img_url\n" +
                 "FROM reservation r\n" +
                 "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
                 "         JOIN template t on e.TEMPLATE_ID = t.TEMPLATE_ID\n" +
@@ -147,7 +147,7 @@ public class ReservationDAO {
                         rs.getString("subject"),
                         rs.getString("content"),
                         rs.getString("is_done"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("cover_img_url")
                 );
             }
@@ -447,7 +447,7 @@ public class ReservationDAO {
 
         String addedSql = "SELECT t.TEMPLATE_ID,\n" +
                 "       t.NAME,\n" +
-                "       t.BODY_HTML,\n" +
+                "       t.BG_COLOR,\n" +
                 "       t.TYPE,\n" +
                 "       t.COVER_IMG_URL,\n" +
                 "       t.QR_URL,\n" +
@@ -470,7 +470,7 @@ public class ReservationDAO {
                 TemplateDTO template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),
@@ -489,7 +489,7 @@ public class ReservationDAO {
                 TemplateDTO template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),
@@ -557,7 +557,7 @@ public class ReservationDAO {
                 template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),

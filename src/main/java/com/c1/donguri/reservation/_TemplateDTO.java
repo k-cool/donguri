@@ -12,7 +12,7 @@ public class _TemplateDTO {
     //    private String name;
     private String templateName;
     private String type;
-    private String bodyHtml;
+    private String bgColor;
     private String coverImgUrl;
     private String savedAt;
 }
