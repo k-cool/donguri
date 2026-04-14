@@ -39,6 +39,8 @@
     position: relative;
     width: var(--base);
     margin: 0 auto;
+
+    perspective: 1000px; /* 👈 추가 */
 }
 
 /* 윗 뚜껑 */
@@ -47,8 +49,17 @@
     top: calc(var(--base) * -0.425); /* -119 / 420 */
     width: 100%;
     height: calc(var(--base) * 0.4275); /* 240 / 420 */
-    z-index: 1;
+    z-index: 30;
+
+    transform-origin: 50% 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
 }
+
+.top-cover.closed {
+    transform: rotateX(-180deg);
+}
+
 
 /* 좌측 날개 */
 .wing.left {
@@ -58,9 +69,16 @@
     transform: translateX(-99%);
     width: calc(var(--base) * 0.285);
     height: var(--base);
-    z-index: 2;
+    z-index: 20;
+
+    transform-origin: 100% 50%; /* 👈 오른쪽 중앙 */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
 }
 
+.wing.left.closed {
+    transform: translateX(-99%) rotateY(180deg);
+}
 
 /* 우측 날개 */
 .wing.right {
@@ -70,7 +88,15 @@
     transform: translateX(99%);
     width: calc(var(--base) * 0.285);
     height: var(--base);
-    z-index: 2;
+    z-index: 20;
+
+    transform-origin: 0% 50%; /* 👈 왼쪽 중앙 */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.wing.right.closed {
+    transform: translateX(99%) rotateY(-180deg);
 }
 
 .texture {
@@ -121,7 +147,11 @@
     left: calc(var(--base) * 0.12);
     rotate: 2deg;
 
-    box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);
+    /*box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);*/
+    transition: opacity 0.8s ease,
+    scale 0.8s ease;
+    opacity: 0;
+    scale: 0.8;
 }
 
 .img-wrapper img {
@@ -129,6 +159,7 @@
     height: calc(var(--base) * 0.76);
     object-fit: cover;
     border: calc(var(--base) * 0.038) solid white; /* 16 / 420 */
+
 }
 
 /* 우표 */
@@ -138,7 +169,13 @@
     left: calc(var(--base) * 0.012);
     width: calc(var(--base) * 0.19); /* 80 / 420 */
     rotate: 16deg;
-    transition: transform .3s ease-in-out;
+
+    transition: transform 0.3s ease,
+    opacity 0.8s ease,
+    scale 0.8s ease;
+    
+    opacity: 0;
+    scale: 0.8;
 }
 
 
@@ -146,14 +183,24 @@
     transform: scale(1.05);
 }
 
+.show {
+    opacity: 1;
+    scale: 1;
+    transition: transform 0.3s ease,
+    opacity 0.8s ease,
+    scale 0.8s ease;
+}
+
 /* ================= 하단 ================= */
 
 .post-bottom {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--base);
+    height: var(--base);
     top: var(--base);
-    width: 100%;
 
-    background: #f4cfd2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,6 +210,16 @@
 
     font-size: calc(var(--base) * 0.033); /* 14px */
     color: #5c3d3d;
+    z-index: 20;
+
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    transform-origin: 50% 0%;
+    backface-visibility: hidden;
+}
+
+.post-bottom.closed {
+    transform: rotateX(180deg) translateX(-50%);
 }
 
 /* 줄 */
@@ -271,4 +328,71 @@
 .plant-btn {
     background: #5a0b0b;
     color: white;
+}
+
+
+/*클릭 가이드*/
+.clickable {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--base);
+    height: var(--base);
+    z-index: 50;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.click-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.8s ease;
+}
+
+
+.click-guide.off {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 아이콘 애니메이션 */
+.click-guide .icon {
+    font-size: 28px;
+    animation: bounce 1.2s infinite;
+}
+
+/* 텍스트 애니메이션 */
+.click-guide .text {
+    font-size: 14px;
+    color: #555;
+    animation: fade 1.2s infinite;
+}
+
+/* 위아래 바운스 */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(8px) scale(1.1);
+    }
+}
+
+
+/* 깜빡임 */
+@keyframes fade {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
 }
