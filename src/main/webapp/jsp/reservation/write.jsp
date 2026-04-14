@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/reservation_write.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="js/reservation_write_templage.js"></script>
+    <script src="js/reservation_write_template.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -65,11 +65,11 @@
 
                     <div class="template-track-wrapper">
                         <div class="template-track" id="templateTrack">
-                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
-                            <div class="template-card"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card" data-id="1"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card" data-id="2"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card" data-id="3"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card" data-id="4"><img src="image/template_sakura_img.png"></div>
+                            <div class="template-card" data-id="5"><img src="image/template_sakura_img.png"></div>
                         </div>
                     </div>
 
@@ -80,7 +80,6 @@
             <input type="hidden" name="templateId" id="selectedTemplate">
 
 
-            <input type="hidden" name="templateId" id="selectedTemplate">
 
 
             <%--            <div class="form-row">--%>
@@ -125,7 +124,7 @@
 </div>
 </div>
 <script src="js/reservation-flatpickr.js"></script>
-<script src="js/reservation-template.js"></script>
+<script src="js/reservation_write_template.js"></script>
 <script src="js/bgmplay.js"></script>
 
 </body>

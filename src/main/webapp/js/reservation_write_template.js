@@ -39,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // 선택된 템플릿 ID를 hidden input에 설정
             const selectedTemplateInput = document.getElementById("selectedTemplate");
             if (selectedTemplateInput) {
-                selectedTemplateInput.value = index + 1; // 1부터 시작하는 ID
-                console.log("선택된 템플릿:", index + 1);
+                const templateId = card.getAttribute('data-id');
+                selectedTemplateInput.value = templateId;
+                console.log("selected template:", templateId);
             }
         });
     });
