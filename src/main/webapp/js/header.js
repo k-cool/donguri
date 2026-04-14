@@ -23,7 +23,12 @@ $(function () {
 $(document).ready(function () {
     var currentPath = window.location.pathname;
 
-    if (currentPath !== '/main' && currentPath !== '/') {
+    // 로그인 또는 회원가입 페이지일 때 헤더 하단과 우측 버튼 숨기기
+    if (currentPath.includes('login') || currentPath.includes('signup')) {
+        $('.hd-header-bottom').hide();
+        $('.hd-header-right').hide();
+        $('header').addClass('hd-sub-header');
+    } else if (currentPath !== '/main' && currentPath !== '/') {
         $('.hd-header-bottom').hide();
         $('header').addClass('hd-sub-header');
     }
