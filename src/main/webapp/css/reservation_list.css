@@ -236,28 +236,48 @@ input[type="text"] {
     z-index: 15;
 }
 
+/* masking_tape 배경 */
+.acorn-info::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-2deg);
+    width: 95%;
+    height: 80px;
+    background-image: url("../image/masking_tape.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.9;
+}
+
 /* 제목 및 날짜 스타일은 기존 유지 */
 .acorn-info .subject {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #ffffff;
+    color: #3b110b;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.8);
+    margin-bottom: 2px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    transform: translateY(-5px);
 }
 
 .acorn-info .date {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -40px;
+    bottom: -15px;
     width: 100%;
-    font-size: 1.1rem;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    font-size: 0.9rem;
+    color: #3b110b;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .acorn-card:hover {
