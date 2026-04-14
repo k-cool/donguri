@@ -78,7 +78,8 @@ select, input[type="text"] {
     font-size: 0.95rem;
     outline: none;
 }
-n/* 선택된 옵션 스타일 */
+
+n /* 선택된 옵션 스타일 */
 select option[selected] {
     background-color: #3b110b;
     color: #ffffff;
@@ -213,8 +214,8 @@ input[type="text"] {
     position: absolute;
 
     /* 카드 밖으로 확실히 밀어내기 */
-    top: -40px !important;
-    right: -40px !important;
+    top: -25px !important;
+    right: -23px !important;
 
     transform: rotate(15deg);
     z-index: 999 !important; /* 어떤 요소보다 위에 오도록 */
