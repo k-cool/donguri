@@ -32,14 +32,14 @@ END;
 
 CREATE TABLE template
 (
-    template_id   RAW(16) DEFAULT SYS_GUID() PRIMARY KEY,
+    template_id   RAW(16)     DEFAULT SYS_GUID() PRIMARY KEY,
     name          VARCHAR2(20 char) NOT NULL,
-    body_html     CLOB              NOT NULL,
     type          VARCHAR2(10)      NOT NULL,
     cover_img_url VARCHAR2(500)     NOT NULL,
     qr_url        VARCHAR2(500),
-    created_at    DATE    DEFAULT SYSDATE,
-    updated_at    DATE    DEFAULT SYSDATE,
+    bg_color      VARCHAR2(8) DEFAULT '5D4037',
+    created_at    DATE        DEFAULT SYSDATE,
+    updated_at    DATE        DEFAULT SYSDATE,
 
     CONSTRAINT chk_template_type
         CHECK (type IN ('BASE', 'ADDED'))
@@ -79,7 +79,11 @@ CREATE TABLE email_content
             REFERENCES users (user_id)
                 ON DELETE SET NULL
 );
+SELECT template_id
+FROM template;
 
+SELECT user_id
+FROM users;
 
 CREATE INDEX idx_email_template_id ON email_content (template_id);
 CREATE INDEX idx_email_sender_id ON email_content (sender_id);

@@ -123,8 +123,8 @@ public class ReservationDAO {
                 "       e.subject,\n" +
                 "       e.content,\n" +
                 "       r.is_done,\n" +
-                "       t.BODY_HTML,\n" +
-                "       t.COVER_IMG_URL\n" +
+                "       t.bg_color,\n" +
+                "       t.cover_img_url\n" +
                 "FROM reservation r\n" +
                 "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
                 "         JOIN template t on e.TEMPLATE_ID = t.TEMPLATE_ID\n" +
@@ -147,7 +147,7 @@ public class ReservationDAO {
                         rs.getString("subject"),
                         rs.getString("content"),
                         rs.getString("is_done"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("cover_img_url")
                 );
             }
@@ -162,54 +162,78 @@ public class ReservationDAO {
 
     }
 
-    public List<ReservationDTO> getAll(HttpServletRequest request) { //전체정보조회
-
+    public List<ReservationDTO> getAll(HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
+
+        String status = request.getParameter("status");
+        String searchType = request.getParameter("searchType");
+        String keyword = request.getParameter("keyword");
 
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         List<ReservationDTO> list = new ArrayList<>();
-        String sql = "SELECT R.RESERVATION_ID,\n" +
-                "       R.RECIPIENT_EMAIL,\n" +
-                "       R.SCHEDULED_DATE,\n" +
-                "       R.IS_DONE,\n" +
-                "       E.SUBJECT\n" +
-                "FROM RESERVATION R,\n" +
-                "     EMAIL_CONTENT E\n" +
-                "WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID\n" +
-                "AND R.IS_DONE = 'N'\n" +
-                "AND R.FROM_ID = ?\n" +
-                "ORDER BY R.SCHEDULED_DATE";
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT R.RESERVATION_ID, R.RECIPIENT_EMAIL, R.SCHEDULED_DATE, R.IS_DONE, E.SUBJECT ");
+        sql.append("FROM RESERVATION R, EMAIL_CONTENT E ");
+        sql.append("WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID ");
+        sql.append("AND R.FROM_ID = ? ");
+
+        if (status != null && !status.equals("all")) {
+            String statusVal = status.equals("완료") ? "Y" : "N";
+            sql.append("AND R.IS_DONE = '").append(statusVal).append("' ");
+        }
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            if ("recipientEmail".equals(searchType)) {
+                sql.append("AND R.RECIPIENT_EMAIL LIKE ? ");
+            } else if ("subject".equals(searchType)) {
+                sql.append("AND E.SUBJECT LIKE ? ");
+            } else {
+                sql.append("AND (R.RECIPIENT_EMAIL LIKE ? OR E.SUBJECT LIKE ?) ");
+            }
+        }
+
+        sql.append("ORDER BY R.SCHEDULED_DATE");
 
         try {
-
             con = DBManager.DB_MANAGER.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, user.getUserId());
+            ps = con.prepareStatement(sql.toString());
+
+            int paramIdx = 1;
+            ps.setString(paramIdx++, user.getUserId());
+
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                String searchKeyword = "%" + keyword + "%";
+                ps.setString(paramIdx++, searchKeyword);
+                if ("all".equals(searchType) || searchType == null) {
+                    ps.setString(paramIdx++, searchKeyword);
+                }
+            }
+
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 ReservationDTO r = new ReservationDTO();
-
                 r.setReservationId(rs.getString("reservation_id"));
                 r.setRecipientEmail(rs.getString("recipient_email"));
                 r.setSubject(rs.getString("subject"));
-                r.setIsDone(rs.getString("is_done"));
+
+                String isDoneRaw = rs.getString("is_done");
+                r.setIsDone(isDoneRaw.equals("Y") ? "완료" : "대기");
+
                 Timestamp ts = rs.getTimestamp("scheduled_date");
                 r.setScheduledDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(ts));
-
                 list.add(r);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.DB_MANAGER.close(con, ps, rs);
         }
-
         return list;
     }
 
@@ -423,7 +447,7 @@ public class ReservationDAO {
 
         String addedSql = "SELECT t.TEMPLATE_ID,\n" +
                 "       t.NAME,\n" +
-                "       t.BODY_HTML,\n" +
+                "       t.BG_COLOR,\n" +
                 "       t.TYPE,\n" +
                 "       t.COVER_IMG_URL,\n" +
                 "       t.QR_URL,\n" +
@@ -446,7 +470,7 @@ public class ReservationDAO {
                 TemplateDTO template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),
@@ -465,7 +489,7 @@ public class ReservationDAO {
                 TemplateDTO template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),
@@ -533,7 +557,7 @@ public class ReservationDAO {
                 template = new TemplateDTO(
                         rs.getString("template_id"),
                         rs.getString("name"),
-                        rs.getString("body_html"),
+                        rs.getString("bg_color"),
                         rs.getString("type"),
                         rs.getString("cover_img_url"),
                         rs.getString("qr_url"),

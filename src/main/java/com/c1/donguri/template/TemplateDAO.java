@@ -18,11 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -59,7 +57,7 @@ public class TemplateDAO {
 
                 templateDTO.setTemplateId(rs.getString("template_id"));
                 templateDTO.setName(rs.getString("name"));
-                templateDTO.setBodyHtml(rs.getString("body_html"));
+                templateDTO.setBgColor(rs.getString("bg_color"));
                 templateDTO.setType(rs.getString("type"));
                 templateDTO.setCoverImgUrl(rs.getString("cover_img_url"));
                 templateDTO.setQrUrl(rs.getString("qr_url"));
@@ -116,7 +114,7 @@ public class TemplateDAO {
 
                 templateDTO.setTemplateId(rs.getString("template_id"));
                 templateDTO.setName(rs.getString("name"));
-                templateDTO.setBodyHtml(rs.getString("body_html"));
+                templateDTO.setBgColor(rs.getString("bg_color"));
                 templateDTO.setType(rs.getString("type"));
                 templateDTO.setCoverImgUrl(rs.getString("cover_img_url"));
                 templateDTO.setQrUrl(rs.getString("qr_url"));
@@ -159,7 +157,7 @@ public class TemplateDAO {
                 templateDTO = new TemplateDTO();
                 templateDTO.setTemplateId(rs.getString("template_id"));
                 templateDTO.setName(rs.getString("name"));
-                templateDTO.setBodyHtml(rs.getString("body_html"));
+                templateDTO.setBgColor(rs.getString("bg_color"));
                 templateDTO.setType(rs.getString("type"));
                 templateDTO.setCoverImgUrl(rs.getString("cover_img_url"));
                 templateDTO.setQrUrl(rs.getString("qr_url"));
@@ -186,7 +184,7 @@ public class TemplateDAO {
         try {
             // 1. 파라미터 추출
             String name = request.getParameter("name");
-            String bodyHtml = request.getParameter("bodyHtml");
+            String bgColor = request.getParameter("bg_color");
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
 
             // 2. 고유 ID 생성 (QR 주소와 DB PK로 공통 사용)
@@ -206,7 +204,7 @@ public class TemplateDAO {
                 imgUrl = s3Uploader.upload(inputStream, fileName, contentType, fileSize);
             }
 
-            String sql = "INSERT INTO TEMPLATE (template_id, name, body_html, type, cover_img_url) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO TEMPLATE (template_id, name, bg_color, type, cover_img_url) VALUES (?,?,?,?,?)";
 
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
@@ -214,7 +212,7 @@ public class TemplateDAO {
             // 3. 데이터 세팅 (중요: mr.getParameter를 사용해야 함!)
             pstmt.setString(1, templateId);
             pstmt.setString(2, name);
-            pstmt.setString(3, bodyHtml);
+            pstmt.setString(3, bgColor);
             pstmt.setString(4, type);
             pstmt.setString(5, imgUrl);
 
@@ -314,7 +312,7 @@ public class TemplateDAO {
 
         try {
             String name = request.getParameter("name");
-            String bodyHtml = request.getParameter("bodyHtml");
+            String bgColor = request.getParameter("bgColor");
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
             Part filePart = request.getPart("coverImgUrl");
 
@@ -326,7 +324,7 @@ public class TemplateDAO {
             }
 
             // 4. SQL 실행 (qr_url 컬럼에 컨트롤러에서 보낸 s3Url을 바로 넣습니다)
-            String sql = "INSERT INTO TEMPLATE (template_id, name, body_html, type, cover_img_url, qr_url, created_at, updated_at) "
+            String sql = "INSERT INTO TEMPLATE (template_id, name, bg_color, type, cover_img_url, qr_url, created_at, updated_at) "
                     + "VALUES (?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE)";
 
             con = DBManager.DB_MANAGER.getConnection();
@@ -334,7 +332,7 @@ public class TemplateDAO {
 
             pstmt.setString(1, templateId);
             pstmt.setString(2, name);
-            pstmt.setString(3, bodyHtml);
+            pstmt.setString(3, bgColor);
             pstmt.setString(4, type);
             pstmt.setString(5, imgUrl);
             pstmt.setString(6, s3Url); // <--- 컨트롤러가 준 URL 사용
@@ -383,7 +381,7 @@ public class TemplateDAO {
         try {
             String templateId = request.getParameter("templateId");
             String name = request.getParameter("name");
-            String bodyHtml = request.getParameter("bodyHtml");
+            String bgColor = request.getParameter("bgColor");
 
             // 사진 수정 안 할 때를 대비한 기존 이미지 URL
             String existingImgUrl = request.getParameter("existingImgUrl");
@@ -398,14 +396,14 @@ public class TemplateDAO {
                 System.out.println(">>> [UPDATE] 새 이미지 업로드 완료: " + imgUrl);
             }
 
-            String sql = "UPDATE TEMPLATE SET name = ?, body_html = ?, cover_img_url = ?, " +
+            String sql = "UPDATE TEMPLATE SET name = ?, bg_color = ?, cover_img_url = ?, " +
                     "updated_at = SYSDATE WHERE template_id = ?";
 
             con = DBManager.DB_MANAGER.getConnection();
             pstmt = con.prepareStatement(sql);
 
             pstmt.setString(1, name);
-            pstmt.setString(2, bodyHtml);
+            pstmt.setString(2, bgColor);
             pstmt.setString(3, imgUrl);
             pstmt.setString(4, templateId);
 

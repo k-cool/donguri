@@ -25,7 +25,7 @@ public class ReservationDAO {
                 "       e.subject,\n" +
                 "       e.content,\n" +
                 "       r.is_done,\n" +
-                "       t.BODY_HTML,\n" +
+                "       t.bg_color,\n" +
                 "       t.COVER_IMG_URL\n" +
                 "FROM reservation r\n" +
                 "         JOIN email_content e ON r.email_content_id = e.email_content_id\n" +
@@ -51,7 +51,7 @@ public class ReservationDAO {
                                 rs.getString("subject"),
                                 rs.getString("CONTENT"),
                                 rs.getString("is_done"),
-                                rs.getString("body_html"),
+                                rs.getString("bg_color"),
                                 rs.getString("cover_img_url")
                         )
 

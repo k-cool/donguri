@@ -108,9 +108,11 @@
             <li><a href="login?type=logout">Logout</a></li>
         </ul>
     </div>
+
     <div class="content">
         <jsp:include page="${content}"/>
     </div>
+
 </div>
 </body>
 </html>
