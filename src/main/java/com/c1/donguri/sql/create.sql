@@ -79,7 +79,11 @@ CREATE TABLE email_content
             REFERENCES users (user_id)
                 ON DELETE SET NULL
 );
+SELECT template_id
+FROM template;
 
+SELECT user_id
+FROM users;
 
 CREATE INDEX idx_email_template_id ON email_content (template_id);
 CREATE INDEX idx_email_sender_id ON email_content (sender_id);
