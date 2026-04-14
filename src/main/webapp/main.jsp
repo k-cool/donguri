@@ -16,20 +16,6 @@
 
 </head>
 
-<%
-    System.out.println("main.jsp: " + request.getAttribute("cb"));
-%>
-
-<%--<c:if test="${cb != null}">--%>
-
-<%--    <div>${cb}</div>--%>
-
-<%--    <script>--%>
-<%--        location.href = "${cb}";--%>
-<%--    </script>--%>
-<%--    --%>
-<%--</c:if>--%>
-
 <body>
 
 <header>
@@ -101,5 +87,6 @@
     </div>
 
 </div>
+
 </body>
 </html>

@@ -57,7 +57,6 @@ public class ReservationC extends HttpServlet {
             request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
-            System.out.println("EEERERERERSkrjselkrj");
             String reservationId = request.getParameter("id");
             ReservationDAO.RESERVATION_DAO.delete(reservationId);
             response.sendRedirect("reservation?action=list");
@@ -84,7 +83,10 @@ public class ReservationC extends HttpServlet {
             TemplateDTO selectedTemplate = ReservationDAO.RESERVATION_DAO.getTemplate(request);
             ReservationDAO.RESERVATION_DAO.setReservationDTOToSession(request);
             request.setAttribute("selectedTemplate", selectedTemplate);
-            request.getRequestDispatcher("jsp/reservation/confirm.jsp").forward(request, response);
+
+            request.setAttribute("content", "jsp/reservation/confirm.jsp");
+
+            request.getRequestDispatcher("main.jsp").forward(request, response);
 
         } else if ("insert".equals(action)) {
             InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
