@@ -173,7 +173,7 @@
     transition: transform 0.3s ease,
     opacity 0.8s ease,
     scale 0.8s ease;
-    
+
     opacity: 0;
     scale: 0.8;
 }
@@ -258,79 +258,6 @@
     text-align: right;
 }
 
-/* 배경 오버레이 */
-.modal-overlay {
-    position: absolute;
-    top: calc(var(--base) * 0.22); /* 60 / 420 */
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    width: calc(var(--base) * 1.01); /* 424 / 420 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-/* 모달 박스 */
-.modal-box {
-    width: 90%;
-    max-width: var(--base);
-    padding: calc(var(--base) * 0.038) calc(var(--base) * 0.048); /* 16, 20 */
-
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: calc(var(--base) * 0.038); /* 16 */
-
-    position: relative;
-    text-align: center;
-
-    /* 점선 테두리 */
-    border: calc(var(--base) * 0.0048) dashed #7b4b3a; /* 2px */
-}
-
-/* 텍스트 */
-.modal-text {
-    font-size: calc(var(--base) * 0.033); /* 14 */
-    color: #5a3e36;
-    margin-bottom: calc(var(--base) * 0.057); /* 24 */
-}
-
-/* 버튼 영역 */
-.modal-actions {
-    display: flex;
-    gap: calc(var(--base) * 0.029); /* 12 */
-    justify-content: center;
-}
-
-/* 공통 버튼 */
-.btn {
-    flex: 1;
-    padding: calc(var(--base) * 0.024) calc(var(--base) * 0.029); /* 10, 12 */
-    border-radius: calc(var(--base) * 2.38); /* 999px → 충분히 크게 */
-    border: none;
-    font-size: calc(var(--base) * 0.033); /* 14 */
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 수정 버튼 */
-.edit-btn {
-    background: #c7a98b;
-    color: white;
-    text-decoration: none;
-
-}
-
-/* 도토리 버튼 */
-.plant-btn {
-    background: #5a0b0b;
-    color: white;
-}
-
-
 /*클릭 가이드*/
 .clickable {
     position: absolute;
@@ -395,4 +322,20 @@
     50% {
         opacity: 1;
     }
+}
+
+/*bgm*/
+.player {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.player.active {
+    opacity: 1;
+    pointer-events: auto;
 }

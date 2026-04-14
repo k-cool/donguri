@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link rel="stylesheet" href="css/post.css">
+    <script src="js/post.js" defer></script>
 </head>
 
 
@@ -179,6 +180,7 @@
                         <img src="image/template_post.svg" alt="stamp"/>
                     </div>
 
+
                 </div>
 
                 <div class="post-bottom openable closed" style="background-color: \#${post.bgColor}">
@@ -209,6 +211,14 @@
                         <div class="icon">♥️</div>
                         <div class="text">클릭해주세요!</div>
                     </div>
+
+
+                </div>
+
+                <div class="player">
+                    <audio id="bgmPlayer" src="${post.bgmUrl}"></audio>
+
+                    <button id="bgmToggle">🎵 BGM 켜기</button>
                 </div>
             </div>
         </div>
@@ -219,33 +229,3 @@
 </div>
 
 
-<script>
-
-    const clickable = document.querySelector(".clickable");
-    const clickGuide = document.querySelector(".click-guide");
-    const openables = document.querySelectorAll(".openable");
-    const stamp = document.querySelector(".stamp");
-    const imgWrapper = document.querySelector(".img-wrapper");
-
-
-    handleClickClickable = (e) => {
-        openables.forEach(clickable => {
-            const isClosed = clickable.classList.contains("closed");
-
-            if (isClosed) {
-                stamp.classList.add("show");
-                imgWrapper.classList.add("show");
-                clickGuide.classList.add("off");
-            } else {
-                stamp.classList.remove("show");
-                imgWrapper.classList.remove("show");
-                clickGuide.classList.remove("off");
-            }
-
-            clickable.classList.toggle("closed")
-        })
-    }
-
-    clickable.addEventListener("click", handleClickClickable);
-
-</script>
