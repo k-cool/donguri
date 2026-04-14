@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
 <link rel="stylesheet" href="css/confirm.css"/>
 
 <div class="confirm">
@@ -187,48 +190,71 @@
 
                     <div class="row">
                         <div class="label">받은 사람</div>
-                        <div class="data">user1@naver.com</div>
+                        <div class="data">${insertReservation.recipientEmail}</div>
                     </div>
 
                     <div class="row">
                         <div class="label">제&nbsp&nbsp&nbsp&nbsp&nbsp목</div>
-                        <div class="data">"둘레로 같이 벚꽃 볼래?"</div>
+                        <div class="data">${insertReservation.subject}</div>
                     </div>
 
                     <div class="content">
-                        <span>테스트 텍스트</span>
-                        <span>와우와우</span>
+                        <span>${insertReservation.content}</span>
                     </div>
 
                     <div class="row">
-                        <div class="date">2026.04.07</div>
+                        <div class="date">${insertReservation.scheduledDate}</div>
                     </div>
                 </div>
             </div>
 
-
+            </span>
         </div>
+
 
     </div>
 
-    <!-- 모달 -->
-    <form action="reservation" method="post">
-        <input type="hidden" name="action" value="insert">
-        <div id="modal" class="modal-overlay">
-            <div class="modal-box">
-                <p class="modal-text">
-                    📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
-                </p>
-
-                <div class="modal-actions">
-                    <a class="btn edit-btn" href="reservation?action=write">
-                        <div>✏️ 수정하고 싶어요!</div>
-                    </a>
-                    <button class="btn plant-btn" type="submit">🍀 도토리 심기</button>
-                </div>
-
-            </div>
-        </div>
-    </form>
-
 </div>
+
+<!-- 모달 -->
+<form action="reservation" method="post">
+    <input type="hidden" name="action" value="insert">
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+            <p class="modal-text">
+                📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
+            </p>
+
+            <div class="modal-actions">
+                <a class="btn edit-btn" href="reservation?action=write">
+                    <div>✏️ 수정하고 싶어요!</div>
+                </a>
+                <button class="btn plant-btn" type="submit">🍀 도토리 심기</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<%--TODO: 어떻게 표시할지 정하기--%>
+<%--<div class="confirm-row">--%>
+<%--    <label>BGM:</label>--%>
+<%--    <span>--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${empty insertReservation.bgmUrl or insertReservation.bgmUrl eq ''}">--%>
+<%--                    BGM--%>
+<%--                </c:when>--%>
+
+<%--                <c:otherwise>--%>
+<%--                    <c:set var="bgmFileName" value="${fn:substringAfter(insertReservation.bgmUrl, 'bgm/')}"/>--%>
+<%--                    <c:set var="bgmName"--%>
+<%--                           value="${fn:replace(fn:replace(bgmFileName, '.mp3', ''), '(chosic.com)', '')}"/>--%>
+<%--                    ${bgmName}--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
+<%--        </span>--%>
+<%--</div>--%>
+
+<%--<audio controls>--%>
+<%--    <source src="${param.bgmUrl}" type="audio/mpeg">--%>
+<%--</audio>--%>
