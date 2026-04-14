@@ -46,9 +46,10 @@
                 <c:when test="${not empty list}">
                     <c:forEach var="r" items="${list}">
                         <a href="reservation?action=detail&id=${r.reservationId}" class="acorn-card">
-                            <img src="${pageContext.request.contextPath}/image/${r.isDone == '완료' ? 'stamp_green.svg' : 'stamp_red.svg'}"
-                                 class="stamp-img">
-
+                            <c:if test="${r.isDone == '완료'}">
+                                <img src="${pageContext.request.contextPath}/image/stamp_red.svg"
+                                     class="stamp-img">
+                            </c:if>
                             <div class="acorn-info">
                                 <p class="subject">${r.subject}</p>
                                 <p class="date">
