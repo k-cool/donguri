@@ -139,19 +139,23 @@
 //
 // animate();
 
+// ------------------- 실제 동작하는 코드 -------------------
+
 // 요소 선택
 const acorn = document.getElementById("acorn");
 const bottomGroup = document.getElementById("bottomGroup");
 const scene = document.getElementById("scene");
 const textImage = document.getElementById("textImage");
 const cloudElements = document.querySelectorAll(".cloud");
+const postbox = document.getElementById("postbox");
 
-// 초기 물리 값 (home.js 오리지널 로직 반영)
+// 초기 물리 값
 let x = scene.clientWidth / 2 - 25;
 let y = 150;
 let velocityY = 0;
 let velocityX = 0;
-const gravity = 0.25;
+// 🎯 [수정] 떨어지는 속도(중력)를 0.25 -> 0.4로 올려서 더 시원하고 빠르게 떨어지게 함
+const gravity = 0.65;
 let angle = 0;
 let phase = "sky";
 const startTime = Date.now();
@@ -167,12 +171,10 @@ cloudElements.forEach((el) => {
     });
 });
 
-// 구름 투명도 조절
 function setCloudsOpacity(opacity) {
     cloudElements.forEach(el => el.style.opacity = opacity);
 }
 
-// 구름을 상단 하늘로 재배치
 function repositionCloudsToSky() {
     clouds.forEach(c => {
         c.x = Math.random() * scene.clientWidth;
@@ -194,18 +196,22 @@ function animate() {
         c.el.style.transform = `translate(${c.x}px, ${c.y}px)`;
     });
 
-    // 충돌 지점 계산
-    const mailboxTop = scene.clientHeight - 145;
-    const groundTop = scene.clientHeight - 100;
+    const postboxRect = postbox.getBoundingClientRect();
+    const sceneRect = scene.getBoundingClientRect();
+
+    const mailboxTop = (postboxRect.top - sceneRect.top) + 25;
+    const groundTop = (postboxRect.bottom - sceneRect.top) - 10;
 
     // 2. 단계별 물리 로직
     if (phase === "sky") {
         y = 150 + Math.sin(elapsed * 5) * 5;
         angle = Math.sin(elapsed * 10) * 20;
 
-        if (elapsed > 2) {
-            phase = "fall";
+        if (elapsed > 1.0 && !bottomGroup.classList.contains("show")) {
             bottomGroup.classList.add("show");
+        }
+        if (elapsed > 2.5) {
+            phase = "fall";
         }
     } else if (phase === "fall" || phase === "bounce") {
         velocityY += gravity;
@@ -213,38 +219,40 @@ function animate() {
         x += velocityX;
         angle += (phase === "fall") ? 0 : velocityX * 2;
 
-        // 벽 충돌 처리
         if (x < 0 || x > scene.clientWidth - 50) {
             velocityX *= -0.8;
             x = x < 0 ? 0 : scene.clientWidth - 50;
         }
 
-        // 지면 도착 전 구름 제거
-        if (phase === "fall" && y >= mailboxTop - 200) {
+        if (phase === "fall" && y >= Math.max(0, mailboxTop - 200)) {
             setCloudsOpacity("0");
         }
 
-        // 우체통 충돌 (투명벽 최소화)
-        if (phase === "fall" && y >= mailboxTop) {
-            y = mailboxTop;
-            velocityY = -8;
+        // 우체통 충돌
+        if (phase === "fall" && y + 45 >= mailboxTop) {
+            y = mailboxTop - 45;
+            // 🎯 [수정] 중력이 세졌으므로 튕겨 오르는 힘도 조금 더 높여줌 (-8 -> -10)
+            velocityY = -10;
             velocityX = 5;
             phase = "bounce";
         }
 
         // 바닥 충돌 및 정지
-        if (phase === "bounce" && y >= groundTop) {
-            y = groundTop;
-            velocityY *= -0.5;
-            velocityX *= 0.8;
+        if (phase === "bounce" && y + 45 >= groundTop) {
+            y = groundTop - 45;
+            // 🎯 [수정] 덜 튀어 오르게 (0.5 -> 0.4)
+            velocityY *= -0.4;
+            // 🎯 [수정 핵심] 마찰력 대폭 증가 (0.8 -> 0.4). 바닥에 닿자마자 미끄러지지 않고 턱! 하고 멈춤
+            velocityX *= 0.4;
 
-            if (Math.abs(velocityY) < 1) {
+            // 🎯 [수정] 속도가 어느 정도 줄어들면 곧바로 정지 판정
+            if (Math.abs(velocityY) < 1.5 && Math.abs(velocityX) < 1) {
                 phase = "stop";
                 repositionCloudsToSky();
                 setCloudsOpacity("0.8");
                 setTimeout(() => {
                     textImage.style.opacity = "1";
-                }, 800);
+                }, 600); // 멈춘 뒤 텍스트도 살짝 더 빨리 뜨게 조절
             }
         }
     }

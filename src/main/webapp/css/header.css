@@ -33,10 +33,9 @@ header {
     align-items: center;
     width: 100%;
     height: 110px;
-    background: url('../image/header.svg') center center no-repeat,
-    url('../image/background.png') center center no-repeat;
-    background-blend-mode: overlay;
-    background-size: cover;
+
+    /* 🚨 수정: background를 한 줄로 합치고 크기를 cover로 변경 */
+    background: url('../image/header.svg') center center / cover no-repeat;
 
     padding: 0 40px;
     box-sizing: border-box;
@@ -74,14 +73,13 @@ header {
     height: 48px;
 }
 
-/* 우측: KOR / JP */
 .hd-header-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     position: absolute;
     right: 40px;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
 }
 
@@ -91,13 +89,13 @@ header {
 .hd-header-bottom {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-end; /* 🚨 탭들이 바닥에 딱 붙게 정렬 */
     width: 100%;
     height: 45px;
     background-color: #6edfd3;
-    margin-top: -15px; /* 종이 뒤로 겹쳐 들어가게 끌어올림 */
+    margin-top: -15px;
     z-index: 1;
-    pointer-events: auto; /* 🚨 민트색 탭 영역 클릭 부활 */
+    pointer-events: auto;
 }
 
 .hd-nav-menu {
@@ -105,22 +103,29 @@ header {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 0;
+    gap: 10px; /* 탭 사이 간격을 살짝 주면 시안처럼 더 예쁩니다 */
+    height: 100%; /* 부모 높이를 100% 채움 */
+}
+
+.hd-nav-menu li {
+    display: flex;
+    align-items: flex-end; /* li 안에서도 a태그가 바닥에 붙게 설정 */
 }
 
 .hd-nav-menu a {
+    display: block; /* 🚨 핵심: 인라인 요소를 블록으로 바꿔서 형태를 꽉 채우게 만듦 */
     text-decoration: none;
     color: #004d40;
     font-weight: bold;
     font-size: 14px;
-    padding: 12px 35px;
+    padding: 12px 35px 10px; /* 위, 양옆, 아래 여백 (아래 여백을 살짝 줄여 바닥에 밀착) */
+    border-radius: 15px 15px 0 0; /* 🚨 모서리 둥글기를 평상시에도 미리 줘서 호버 시 안 끊기게 함 */
     transition: all 0.2s ease;
 }
 
 .hd-nav-menu a.hd-active, .hd-nav-menu a:hover {
-    background-color: #f7ead9;
-    color: #d35400;
-    border-radius: 10px 10px 0 0;
+    background-color: #f7ead9; /* 시안의 종이 배경과 비슷한 베이지색 */
+    color: #d35400; /* 포인트 주황색 */
 }
 
 /* -------------------------------------
@@ -218,22 +223,27 @@ header.hd-sub-header .hd-header-bottom {
 @media screen and (max-width: 768px) {
     .hd-header-top {
         height: 110px !important;
-        /* 🚨 모바일 화면 끝까지 찢어진 결이 닿게 하려면 350~400% 정도가 적당합니다 */
         background-size: 380% 100% !important;
-
         padding: 0 15px !important;
     }
 
     .hd-logo-center {
-        top: 48% !important; /* 종이 높이에 맞춰 로고 위치 미세 조정 */
+        top: 48% !important;
     }
 
     .hd-logo-center img {
-        height: 42px !important; /* 로고가 종이 세로폭을 넘지 않게 */
+        height: 42px !important;
     }
 
-    .hd-header-left, .hd-header-right {
-        transform: translateY(-8px) !important;
+    /* 🚨 이 부분을 아래 코드로 싹 바꿔주세요! */
+    .hd-header-left {
+        transform: translateY(-50%) !important;
+    }
+
+    .hd-header-right {
+        right: 15px !important; /* 모바일 좁은 화면에 맞게 우측 여백 줄임 */
+        top: 40% !important; /* 데스크탑처럼 살짝 위로 올림 */
+        transform: translateY(-50%) !important; /* 🚨 밑으로 쳐지는 현상 해결 (핵심) */
     }
 }
 

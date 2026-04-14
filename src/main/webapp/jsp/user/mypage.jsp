@@ -1,73 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<html>
-<head>
-    <title>마이페이지</title>
-    <link rel="stylesheet" href="css/mypage.css">
-    <link href="css/header.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="js/header.js"></script>
-</head>
-<body>
 
-<header>
-    <div class="hd-header-top">
-        <div class="hd-header-left">
-            <span style="font-weight: bold; color: #5d4037; font-family: 'Courier New', monospace;">KOR / JP</span>
-        </div>
-        <div class="hd-logo-center">
-            <a href="main">
-                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/logo.svg"
-                     alt="donguri post" height="40">
-            </a>
-        </div>
-        <div class="hd-header-right">
-            <button id="hd-menuBtn" class="hd-menu-btn">
-                <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/main/profile.svg"
-                     alt="menu" width="70" height="70">
-            </button>
-        </div>
-    </div>
+<%-- 마이페이지 전용 CSS --%>
+<link rel="stylesheet" href="css/mypage.css">
 
-    <div class="hd-header-bottom">
-        <nav class="hd-main-nav">
-            <ul class="hd-nav-menu">
-                <li><a href="omikuji">OMIKUJI</a></li>
-                <li><a href="sent-post">Sent Post</a></li>
-                <li><a href="#">Scheduled Post</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<div id="hd-slideMenu">
-    <div class="hd-user-info">
-        <c:choose>
-            <c:when test="${sessionScope.user.profileImgUrl != null}">
-                <img src="${sessionScope.user.profileImgUrl}" alt="Profile" class="hd-profile-pic">
-            </c:when>
-            <c:otherwise>
-                <img src="https://s3.amazonaws.com/donguri-dev/ui_asset/default_profile.png" alt="Profile"
-                     class="hd-profile-pic">
-            </c:otherwise>
-        </c:choose>
-
-        <p class="hd-user-email">이메일: ${sessionScope.user.email}</p>
-        <p class="hd-nickname">닉네임: ${sessionScope.user.nickname}</p>
-
-        <ul class="hd-sub-menu">
-            <li><a href="mypage">My page</a></li>
-            <li><a href="template-list">Template Storage</a></li>
-            <li><a href="#">Contacts</a></li>
-        </ul>
-    </div>
-    <ul class="hd-logout-menu">
-        <li><a href="login?type=logout">Logout</a></li>
-    </ul>
-</div>
 <div class="mypage-wrapper">
-    <h2>마이페이지</h2>
+    <h2>{ 마이페이지 }</h2>
 
     <div class="profile-section">
         <c:choose>
@@ -101,7 +39,5 @@
     </div>
 </div>
 
+<%-- 마이페이지 전용 JS --%>
 <script src="js/mypage.js"></script>
-
-</body>
-</html>

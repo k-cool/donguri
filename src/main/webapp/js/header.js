@@ -23,16 +23,20 @@ $(function () {
 $(document).ready(function () {
     var currentPath = window.location.pathname;
 
-    // 로그인 또는 회원가입 페이지일 때 헤더 하단과 우측 버튼 숨기기
+    // 🚨 1. 로그인 또는 회원가입 페이지: 2층 바 숨김 + 우측 햄버거/버튼 모두 숨김
     if (currentPath.includes('login') || currentPath.includes('signup')) {
         $('.hd-header-bottom').hide();
-        $('.hd-header-right').hide();
-        $('header').addClass('hd-sub-header');
-    } else if (currentPath !== '/main' && currentPath !== '/') {
-        $('.hd-header-bottom').hide();
+        $('.hd-header-right').hide(); // 우측 메뉴 숨김
         $('header').addClass('hd-sub-header');
     }
+    // 🚨 2. 메인 페이지('/main')가 아닌 다른 서비스 페이지: 2층 바만 숨김! (햄버거 메뉴는 살아있음)
+    else if (currentPath !== '/main' && currentPath !== '/') {
+        $('.hd-header-bottom').hide(); // 2층 민트색 바 숨김
+        $('header').addClass('hd-sub-header');
+        // 주의: 여기에 $('.hd-header-right').hide(); 를 넣지 않았으므로 햄버거 메뉴는 잘 보입니다.
+    }
 
+    // --- 탭 활성화 로직 ---
     $('.hd-nav-menu a').on('click', function () {
         $('.hd-nav-menu a').removeClass('hd-active');
         $(this).addClass('hd-active');

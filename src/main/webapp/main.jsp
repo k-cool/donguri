@@ -14,25 +14,12 @@
     <script src="js/main.js"></script>
     <script src="js/header.js"></script>
 
-    <%-- 로그인 페이지에서 헤더 버튼 숨기기 --%>
-    <c:if test="${not empty loginPage}">
-        <style>.hd-header-right {
-            display: none !important;
-        }</style>
-    </c:if>
+    <%-- 🚨 범인이었던 style 태그 삭제 완료! --%>
 </head>
 
 <%
     System.out.println("main.jsp: " + request.getAttribute("cb"));
 %>
-
-<%--<c:if test="${cb != null}">--%>
-<%--    <div>${cb}</div>--%>
-<%--    <script>--%>
-<%--        location.href = "${cb}";--%>
-<%--    </script>--%>
-<%--    --%>
-<%--</c:if>--%>
 
 <body>
 
@@ -40,8 +27,7 @@
     <div class="hd-header-top">
         <div class="hd-logo-center">
             <a href="main">
-                <img src="image/logo.svg"
-                     alt="donguri post" height="40">
+                <img src="image/logo.svg" alt="donguri post" height="40">
             </a>
         </div>
         <div class="hd-header-right">
@@ -57,22 +43,23 @@
             </c:if>
             <c:if test="${not empty sessionScope.user}">
                 <button id="hd-menuBtn" class="hd-menu-btn">
-                    <img src="image/profile.svg"
-                         alt="menu" width="70" height="70">
+                        <%-- 🚨 슬래시(/) 제거 완료! --%>
+                    <img src="image/profile.svg" alt="menu" width="80" height="70">
                 </button>
             </c:if>
         </div>
     </div>
+
     <c:if test="${not (request.requestURL.toString().contains('login') or request.requestURL.toString().contains('signup'))}">
-    <div class="hd-header-bottom">
-        <nav class="hd-main-nav">
-            <ul class="hd-nav-menu">
-                <li><a href="omikuji">동구리 뽑기</a></li>
-                <li><a href="sent-post">동구리 예약</a></li>
-                <li><a href="#">동구리 보관함</a></li>
-            </ul>
-        </nav>
-    </div>
+        <div class="hd-header-bottom">
+            <nav class="hd-main-nav">
+                <ul class="hd-nav-menu">
+                    <li><a href="omikuji">동구리 뽑기</a></li>
+                    <li><a href="reservation">동구리 예약</a></li>
+                    <li><a href="sent-post">동구리 보관함</a></li>
+                </ul>
+            </nav>
+        </div>
     </c:if>
 </header>
 
@@ -92,8 +79,7 @@
                     <img src="${sessionScope.user.profileImgUrl}" alt="Profile" class="hd-profile-pic">
                 </c:when>
                 <c:otherwise>
-                    <img src="image/background.png" alt="Profile"
-                         class="hd-profile-pic">
+                    <img src="image/background.png" alt="Profile" class="hd-profile-pic">
                 </c:otherwise>
             </c:choose>
             <p class="hd-user-email">이메일: ${sessionScope.user.email}</p>
