@@ -3,268 +3,125 @@
 <html>
 <head>
     <title>편지 예약 작성</title>
+    <link rel="stylesheet" href="css/reservation_write.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        /* 1. 배경: 깊은 숲속 원목 느낌 */
-        body {
-            background-color: #d7b899;
-            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-            color: #3e2723;
-            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-        }
+    <script src="js/reservation_write_template.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        /* 2. 메인 컨테이너: 나무 판자 위에 놓인 편지봉투 느낌 */
-        .form-container {
-            max-width: 550px;
-            width: 100%;
-            background: #fffef2; /* 편지지 색상 */
-            padding: 40px;
-            border-radius: 5px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
-            0 0 40px rgba(0, 0, 0, 0.1) inset,
-            15px 15px 0px rgba(0, 0, 0, 0.1); /* 바닥 그림자 */
-            border: 1px solid #e0d5c1;
-            position: relative;
-        }
-
-        /* 편지지 상단 장식 (도토리 아이콘) */
-        .form-container::before {
-            content: "🌰";
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3rem;
-            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            color: #5d4037;
-            border-bottom: 2px dashed #d7ccc8;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .form-row {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        /* 라벨: 연필로 꾹꾹 눌러쓴 느낌 */
-        .form-row label {
-            font-weight: bold;
-            color: #795548;
-            font-size: 1rem;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        /* 입력창: 테두리를 없애고 밑줄만 주어 편지지 느낌 강조 */
-        .form-row input,
-        .form-row textarea,
-        .form-row select {
-            padding: 12px 10px;
-            font-size: 1rem;
-            border: none;
-            border-bottom: 1px solid #d7ccc8;
-            background: transparent;
-            width: 100%;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .form-row input:focus,
-        .form-row textarea:focus {
-            border-bottom: 2px solid #8e6546;
-        }
-
-        /* 예약 날짜 선택 박스 */
-        .date-picker-container {
-            background: #fdf5f0;
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid #efebe9;
-            margin-top: 5px;
-        }
-
-        #scheduledWrapper {
-            font-size: 1.5rem;
-            margin-right: 10px;
-        }
-
-        /* 버튼 스타일: 묵직한 나무 버튼 */
-        button[type="submit"] {
-            width: 100%;
-            padding: 18px;
-            background: #5d4037;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #3e2723; /* 버튼 입체감 */
-            margin-top: 20px;
-            transition: all 0.1s;
-        }
-
-        button[type="submit"]:active {
-            box-shadow: 0 0px 0 #3e2723;
-            transform: translateY(4px);
-        }
-
-        /* 돌아가기 링크 버튼 */
-        .link-btn {
-            display: block;
-            margin-top: 25px;
-            color: #8d6e63;
-            text-decoration: none;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #8d6e63;
-            display: inline-block;
-        }
-
-        .link-btn:hover {
-            color: #5d4037;
-            border-color: #5d4037;
-        }
-
-        /* 템플릿 미리보기 이미지 */
-        #previewImg {
-            margin-top: 15px;
-            border: 5px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transform: rotate(-2deg); /* 사진이 툭 던져진 느낌 */
-        }
-
-        /* 예약 시간 컨테이너 전체에 클릭 스타일 적용 */
-        .date-picker-container {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
-            transition: all 0.2s ease; /* 부드러운 변화 효과 */
-            background-color: #fff;
-        }
-
-        /* 마우스를 올렸을 때 (Hover) */
-        .date-picker-container:hover {
-            background-color: #f0f0f0; /* 배경색을 살짝 어둡게 */
-            border-color: #999; /* 테두리 강조 */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 살짝 떠오르는 느낌 */
-        }
-
-        /* 클릭하는 순간 (Active) */
-        .date-picker-container:active {
-            background-color: #e5e5e5;
-            transform: scale(0.98); /* 살짝 눌리는 느낌 */
-        }
-
-        /* 달력 아이콘 스타일 */
-        #scheduledWrapper {
-            margin-right: 10px;
-            font-size: 1.2rem;
-            user-select: none; /* 아이콘 텍스트 선택 방지 */
-        }
-
-        /* 선택된 날짜 텍스트 */
-        #selectedDateDisplay {
-            flex-grow: 1;
-            color: #333;
-            font-weight: 500;
-        }
-    </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h2>너무나도 그리운 상대에게</h2>
+    <div>
 
-    <form action="reservation" method="post">
-        <input type="hidden" name="action" value="confirm">
+        <form action="reservation" method="post">
+            <h2>{ 너무나도 그리운 누군가에게 }</h2>
+            <input type="hidden" name="action" value="confirm">
 
 
-        <div class="form-row">
-            <label>받는 이메일</label>
-            <input name="recipientEmail" value="${sessionScope.insertReservation.recipientEmail}"
-                   placeholder="영어만 입력 가능" required
-                   oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g,'')">
-            <small style="color: gray; font-size: 0.8em;">
-                영어, 숫자, @ . _ - 만 입력 가능합니다.
-            </small>
-        </div>
+            <div class="form-row">
+                <label>받는 이메일</label>
 
-        <div class="form-row">
-            <label>제목</label>
-            <input name="subject" value="${sessionScope.insertReservation.subject}" placeholder="제목 입력" required>
-        </div>
+                <div class="input-row">
+                    <input name="recipientEmail"
+                           placeholder="영어, 숫자, @ . _ - 만 입력 가능합니다."
+                           required>
 
-        <div class="form-row">
-            <label>내용</label>
-            <textarea name="content" rows="6" placeholder="내용 입력"
-                      required>${sessionScope.insertReservation.content}</textarea>
-        </div>
 
-        <div class="form-row">
-            <label>예약 시간</label>
-            <div class="date-picker-container" id="datePickerBtn"
-                 style="cursor: pointer; display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
-                <div id="scheduledWrapper" style="margin-right: 10px;">📅</div>
-                <div id="selectedDateDisplay" class="selected-date" style="flex-grow: 1;">
-                    ${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}
                 </div>
-                <input type="text" id="scheduledDate" name="scheduledDate"
-                       value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
             </div>
-        </div>
 
-        <div class="form-row">
-            <label>템플릿</label>
-            <select name="templateId" id="templateSelect">
-                <option value="">-- 보관함 템플릿 선택 --</option>
-                <c:forEach items="${templateList}" var="t">
-                    <option value="${t.templateId}" data-url="${t.coverImgUrl}">
-                            ${t.name}
-                    </option>
-                </c:forEach>
-            </select>
-
-            <div id="templatePreview" style="margin-top: 15px; text-align: center;">
-                <img id="previewImg" src="" alt="템플릿 미리보기"
-                     style="display:none; max-width:100%; height:auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div class="form-row">
+                <label>제목</label>
+                <input name="subject" value="${sessionScope.insertReservation.subject}" placeholder="제목 입력" required>
             </div>
-        </div>
 
-        <div class="form-row">
-            <label>BGM</label>
-            <select name="bgmUrl">
-                <option value="https://www.chosic.com/wp-content/uploads/2021/02/PerituneMaterial_Sakuya2(chosic.com).mp3">
-                    없음
-                </option>
-                <option value="https://www.chosic.com/wp-content/uploads/2023/12/Konnichiwa-chosic.com_.mp3">피아노
-                </option>
-                <option value="https://www.chosic.com/wp-content/uploads/2024/08/Sunshine-Boulevard-chosic.com_.mp3">
-                    Lo-fi
-                </option>
-            </select>
-        </div>
+            <div class="form-row">
+                <label>내용</label>
+                <textarea name="content" placeholder="내용 입력"
+                          required
+                          style="height: 120px; resize: none; overflow-y: auto;">${sessionScope.insertReservation.content}</textarea>
+            </div>
 
-        <button type="submit">💌 예약하기</button>
+            <div class="form-row">
+                <label>예약 시간</label>
+                <div class="date-picker-container" id="datePickerBtn"
+                     style="cursor: pointer; display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                    <div id="scheduledWrapper" style="margin-right: 10px;">📅</div>
+                    <div id="selectedDateDisplay" class="selected-date" style="flex-grow: 1;">
+                        ${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}
+                    </div>
+                    <input type="text" id="scheduledDate" name="scheduledDate"
+                           value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
+                </div>
+            </div>
+
+            <div class="template-slider form-row">
+                <label>템플릿</label>
+
+                <div class="slider-row">
+                    <button type="button" id="tempLeft" class="arrow">◀</button>
+
+                    <div class="template-track" id="templateTrack">
+                        <c:forEach var="t" items="${templateList}">
+                            <div class="template-card" data-id="${t.templateId}">
+                                <img src="${t.coverImgUrl}">
+                            </div>
+                        </c:forEach>
+                    </div>
+
+                    <button type="button" id="tempRight" class="arrow">▶</button>
+                </div>
+            </div>
+
+            <input type="hidden" name="templateId" id="selectedTemplate">
+
+
+            <%--            <div class="form-row">--%>
+
+
+            <div class="bgm-section">
+                <label>B G M</label>
+
+                <div class="bgm-tabs">
+                    <button type="button" class="tab-btn active" data-genre="Japanese Mood">Japanese Mood</button>
+                    <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
+                    <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
+                    <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
+                    <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
+                </div>
+
+                <div class="bgm-container">
+                    <button type="button" class="bgm-arrow left">◀</button>
+
+                    <div class="bgm-window">
+                        <div class="bgm-track" id="bgmTrack">
+                        </div>
+                    </div>
+
+                    <button type="button" class="bgm-arrow right">▶</button>
+                </div>
+
+                <input type="hidden" name="bgmUrl" id="selectedBgm">
+                <div class="player-wrapper">
+                    <audio id="bgmPlayer" controls></audio>
+                    <p id="currentSongTitle"></p>
+                </div>
+            </div>
+    </div>
+
+
+    <button type="submit">예약하기</button>
+    <a href="reservation?action=list" class="link-btn">돌아가기</a>
     </form>
+    <%--    </div>--%>
 
-    <a href="reservation?action=list" class="link-btn">📬 도토리 예약 안 하고 그냥 돌아갈래!</a>
+</div>
 </div>
 <script src="js/reservation-flatpickr.js"></script>
-<script src="js/reservation-template.js"></script>
+<script src="js/reservation_write_template.js"></script>
+<script src="js/bgmplay.js"></script>
 
 </body>
 </html>

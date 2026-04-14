@@ -1,0 +1,296 @@
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+@font-face {
+    font-family: 'Galmuri11';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Galmuri11', sans-serif !important;
+    font-weight: 400;
+    color: #3b110b;
+}
+
+body {
+    background-image: url("../image/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #edeae2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-color: #d7c9b8;
+    z-index: -1;
+}
+
+.filter-basket {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px dashed #3b110ba6;
+    border-radius: 15px;
+    padding: 15px 10px;
+    margin-bottom: 25px;
+}
+
+.filter-basket form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+select, input[type="text"] {
+    border: 1px solid #c7bca1;
+    border-radius: 12px;
+    padding: 10px 15px;
+    background-color: #fffcf6;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+n /* 선택된 옵션 스타일 */
+select option[selected] {
+    background-color: #3b110b;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* 체크 표시 강조 */
+select option[selected]::before {
+    content: "✓ ";
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    flex: 1;
+    min-width: 140px;
+}
+
+.btn-search {
+    background-color: #3b110b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.btn-write {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3b110b;
+    color: #e0d5c1 !important;
+    padding: 0 40px;
+    height: 70px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin: 10px auto 35px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.acorn-box {
+    padding: 20px;
+}
+
+.acorn-box h3 {
+    font-size: 1.5rem;
+    display: inline-block;
+    position: relative;
+    padding: 0 4px;
+    margin-bottom: 30px;
+    z-index: 1;
+}
+
+.acorn-box h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-color: #b5a18a;
+    z-index: -1;
+}
+
+.acorn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.acorn-card {
+    background-color: #fff;
+    /* 배경 이미지 설정 */
+    background-image: url("../image/postcard.jpg");
+    background-size: cover; /* 영역을 빈틈없이 꽉 채움 */
+    background-position: center; /* 이미지의 중앙을 기준으로 */
+    background-repeat: no-repeat;
+
+    border: 3px dashed #8e765e;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+
+    /* [정사각형 강제 고정 방법] */
+    width: 100%;
+    height: 0;
+    padding-top: 100%; /* 너비와 동일한 높이를 강제로 생성 (1:1 비율) */
+
+    display: block; /* padding-top 방식에서는 block이 안전함 */
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* 1. 카드를 감싸는 그리드 설정 */
+.acorn-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 60px; /* 우표가 튀어나올 공간을 위해 간격을 넓힘 */
+    padding: 40px 20px; /* 상단과 좌우에 여백을 주어 우표가 잘리지 않게 함 */
+    overflow: visible !important; /* 부모에서도 잘림 방지 */
+}
+
+/* 2. 개별 카드 설정 */
+.acorn-card {
+    /* ... (배경 이미지 설정 등 기존 코드 유지) ... */
+
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+
+    /* [가장 중요] hidden을 visible로 강제 설정 */
+    overflow: visible !important;
+    border: 0px dashed #8e765e;
+    border-radius: 6px;
+    z-index: 1; /* 우표보다 낮게 설정 */
+    text-decoration: none;
+}
+
+/* 3. 우표 이미지 설정 */
+.acorn-card .stamp-img {
+    width: 150px; /* 크기 조절 */
+    height: auto;
+    position: absolute;
+
+    /* 카드 밖으로 확실히 밀어내기 */
+    top: -25px !important;
+    right: -23px !important;
+
+    transform: rotate(15deg);
+    z-index: 999 !important; /* 어떤 요소보다 위에 오도록 */
+    pointer-events: none; /* 클릭 방해 금지 */
+
+    /* 잘림 방지를 위해 clip 설정 해제 */
+    clip: auto;
+}
+
+/* 정보 영역 (정중앙 배치) */
+.acorn-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* masking_tape 배경 */
+.acorn-info::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-2deg);
+    width: 95%;
+    height: 80px;
+    background-image: url("../image/masking_tape.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.9;
+}
+
+/* 제목 및 날짜 스타일은 기존 유지 */
+.acorn-info .subject {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3b110b;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    transform: translateY(-5px);
+}
+
+.acorn-info .date {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -15px;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #3b110b;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.acorn-card:hover {
+    transform: scale(1.02);
+}
+
+/* 스크롤바 */
+.acorn-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.acorn-grid::-webkit-scrollbar-thumb {
+    background: #8d6e63;
+    border-radius: 4px;
+}

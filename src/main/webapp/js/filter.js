@@ -3,37 +3,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const keyword = params.get('keyword');
 
     if (keyword && keyword.trim() !== "") {
-        const rows = document.querySelectorAll("tbody tr");
+        const cards = document.querySelectorAll(".acorn-card");
 
-        rows.forEach(row => {
-            // 이메일(0번)과 제목(3번) 칸 확인
-            const targetCells = [row.cells[0], row.cells[3]];
-            let isFound = false;
+        cards.forEach(card => {
+            const subjectElement = card.querySelector(".subject");
+            if (!subjectElement) return;
 
-            targetCells.forEach(cell => {
-                if (!cell) return;
+            const text = subjectElement.textContent;
+            const regex = new RegExp(`(${keyword})`, 'gi');
 
-                const text = cell.textContent;
-                const regex = new RegExp(`(${keyword})`, 'gi');
-
-                if (text.match(regex)) {
-                    isFound = true; // 검색어 발견!
-
-                    // 단어 하이라이트 처리
-                    const newHTML = text.replace(regex, `<span class="text-highlight">$1</span>`);
-                    const strongTag = cell.querySelector('strong');
-                    if (strongTag) {
-                        strongTag.innerHTML = newHTML;
-                    } else {
-                        cell.innerHTML = newHTML;
-                    }
-                }
-            });
-
-            // 검색어가 발견된 행(tr) 전체에 강조 클래스 추가
-            if (isFound) {
-                row.classList.add('row-highlight');
+            if (text.match(regex)) {
+                const newHTML = text.replace(regex, `<span class="text-highlight">$1</span>`);
+                subjectElement.innerHTML = newHTML;
+                card.classList.add('row-highlight');
             }
         });
     }
+
+    const filterSelects = document.querySelectorAll(".filter-basket select");
+    filterSelects.forEach(select => {
+        select.addEventListener("change", function () {
+            this.form.submit();
+        });
+    });
 });

@@ -1,0 +1,254 @@
+#hd-slideMenu {
+    position: fixed;
+    right: -250px; /* 🚨 left에서 right로 변경 */
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6; /* 🚨 메뉴가 오른쪽에 있으므로 왼쪽 테두리로 변경 */
+    transition: all 0.3s ease-out;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.hd-user-info {
+    padding: 20px 0;
+    border-bottom: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.hd-profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.hd-nickname {
+    font-weight: bold;
+    margin: 5px 0;
+    color: #333;
+}
+
+.hd-notifications {
+    font-size: 12px;
+    color: #666;
+    margin: 5px 0;
+    padding: 5px 10px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+.hd-sub-menu {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+}
+
+.hd-sub-menu li {
+    margin: 5px 0;
+}
+
+.hd-sub-menu a {
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.hd-sub-menu a:hover {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.hd-logout-menu {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.hd-logout-menu li {
+    margin: 10px 0;
+}
+
+.hd-logout-menu a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.hd-logout-menu a:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+/* -------------------------------------
+   새롭게 바뀐 2층 구조 헤더 레이아웃
+-------------------------------------- */
+header {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* --- 1층 (상단) --- */
+.hd-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+/* 🚨 왼쪽(로그인)과 오른쪽(메뉴버튼) 영역 정렬 설정 */
+.hd-header-left, .hd-header-right {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    min-width: 60px; /* 중앙 로고 밸런스를 위해 양쪽 최소 너비 동일하게 유지 */
+}
+
+.hd-header-right {
+    justify-content: flex-end; /* 오른쪽 요소는 우측 끝으로 바짝 붙임 */
+}
+
+/* 15도씩 까딱까딱 기우는 애니메이션 정의 */
+@keyframes hd-acornTilt {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    75% {
+        transform: rotate(15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.hd-menu-btn {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* 마우스 커서가 올라갔을 때의 반응 */
+.hd-menu-btn:hover {
+    opacity: 0.8;
+    animation: hd-acornTilt 0.4s ease-in-out infinite;
+}
+
+/* 1층 정중앙 로고 고정 */
+.hd-logo-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hd-logo-center img {
+    height: 40px;
+}
+
+/* --- 2층 (하단 메뉴) --- */
+.hd-header-bottom {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.hd-main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hd-nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 70px;
+}
+
+.hd-nav-menu li {
+    margin: 0;
+}
+
+.hd-nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.hd-nav-menu a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+/* --- 모바일 화면 최적화 --- */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    .hd-header-bottom {
+        margin-top: 15px;
+    }
+
+    .hd-nav-menu {
+        gap: 20px;
+    }
+
+    .hd-logo-center img {
+        height: 35px;
+    }
+
+    .hd-nav-menu a {
+        font-size: 13px;
+        padding: 5px 8px;
+        white-space: nowrap;
+    }
+}
+
+/* 클릭된(활성화된) 메뉴 스타일 */
+.hd-nav-menu a.hd-active {
+    color: #007bff;
+    font-weight: 700;
+    border-bottom: 3px solid #007bff;
+    border-radius: 0;
+    padding-bottom: 6px;
+}
+
+/* 서브 페이지에서 2층이 숨겨졌을 때 헤더 높이 보정 */
+header.hd-sub-header {
+    min-height: 70px;
+    justify-content: center;
+}
