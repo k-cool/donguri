@@ -11,17 +11,27 @@
     <h2> {숲속 우체통: 추억 찾기}</h2>
 
     <div class="filter-basket">
-        <form action="reservation" method="get" style="display: flex; gap: 10px; margin: 0;">
+        <form action="reservation" method="get" style="display: flex; gap: 10px; margin: 0; align-items: center;">
             <input type="hidden" name="action" value="list">
+
+            <select name="status">
+                <option value="all" ${param.status == 'all' || empty param.status ? 'selected' : ''}>전체 상태</option>
+                <option value="완료" ${param.status == '완료' ? 'selected' : ''}>발송 완료</option>
+                <option value="대기" ${param.status == '대기' ? 'selected' : ''}>발송 대기</option>
+            </select>
+
             <select name="searchType">
-                <option value="all" ${param.searchType == 'all' ? 'selected' : ''}>전체</option>
+                <option value="all" ${param.searchType == 'all' ? 'selected' : ''}>전체 항목</option>
                 <option value="recipientEmail" ${param.searchType == 'recipientEmail' ? 'selected' : ''}>이메일</option>
                 <option value="subject" ${param.searchType == 'subject' ? 'selected' : ''}>제목</option>
             </select>
+
             <input type="text" name="keyword" placeholder="찾고싶은 도토리.." value="${param.keyword}">
             <button type="submit" class="btn-search">검색</button>
-            <c:if test="${not empty param.keyword}">
-                <a href="reservation?action=list" style="color: #8d6e63; font-size: 0.8rem; align-self: center;">초기화</a>
+
+            <c:if test="${not empty param.keyword or (not empty param.status and param.status != 'all')}">
+                <a href="reservation?action=list"
+                   style="color: #8d6e63; font-size: 0.8rem; align-self: center; text-decoration: none;">초기화</a>
             </c:if>
         </form>
     </div>
@@ -56,7 +66,7 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <p class="empty">검색 결과가 없습니다.</p>
+                    <p class="empty">찾으시는 도토리가 아직 숲에 없나봐요.</p>
                 </c:otherwise>
             </c:choose>
         </div>
