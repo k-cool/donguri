@@ -1,71 +1,76 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <div>
-    ${post.renderedHtml}
+    <div class="post-wrap">
 
-    <div class="wrapper">
-
-        <div class="envelope" id="envelope">
-
-            <div class="envelope-body">
-
-                <!-- 닫힌 상태에서 보이는 앞면 -->
-                <div class="cover">
-                    📩 편지를 열어보세요
-                </div>
-
-
-                <div class="wing left"></div>
-                <div class="wing right"></div>
-                <div class="top-flap"></div>
-
-                <div class="letter">
-                    <div class="stamp">どんぐり</div>
-
-                    <div class="image-area"></div>
-
-                    <div class="content">
-                        <div class="field">
-                            <label>받는 사람</label>
-                            <input type="text" value="user1@naver.com"/>
-                        </div>
-
-                        <div class="field">
-                            <label>제목</label>
-                            <input type="text" value="올해도 같이 벚꽃 볼래?"/>
-                        </div>
-
-                        <div class="message">
-                            <p>벌써 봄은 왔는데도 아직은 쌀쌀하더라.</p>
-                            <p>네 생각이 나서 그냥 편지를 끄적여봤어.</p>
-                            <p>꽃 보니까 같이 걷던 길도 생각나고, 그래서</p>
-                            <p>바쁘더라도 가끔은 봄도 좀 느끼고 살자.</p>
-                            <p>조만간 꼭 다 같이 모여 얼굴 한번 보자.</p>
-                        </div>
-
-                        <div class="date">2026.04.07</div>
-                    </div>
-                </div>
-
+        <div class="img-envelope" id="img-card">
+            <%-- img src 가데이터. 수정 필요 --%>
+            <%-- ${post.coverImgUrl} --%>
+            <div class="image-area">
+                <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlRqzE_9fEQS3P6LZf4rMGe2jIeHQ2ifbXdg&s"
+                        style="width: 100%;">
             </div>
-
         </div>
+
+        <div class="cover">
+            <div class="cover-front">편지를 열어보세요</div>
+            <div class="cover-back">
+                <p class="cover-subject">“ ${post.subject} ”</p>
+                <p class="cover-content">${post.content}</p>
+                <p class="cover-date">${post.scheduledDate}</p>
+            </div>
+        </div>
+
+        <div class="post-envelope" id="postcard">
+            <div class="top-flap"></div>
+
+            <svg class="part left-flap" viewBox="0 0 150 230" preserveAspectRatio="none">
+                <path d="
+                    M 140 20
+                    L 70 40
+                    L 26 56
+                    Q 20 60 20 68
+                    L 20 162
+                    Q 20 170 26 174
+                    L 70 190
+                    L 140 210
+                    L 140 20
+                    Z
+                "/>
+            </svg>
+
+            <svg class="part right-flap" viewBox="0 0 150 230" preserveAspectRatio="none">
+                <path d="
+                    M 10 20
+                    L 10 210
+                    L 80 190
+                    L 124 174
+                    Q 130 170 130 162
+                    L 130 68
+                    Q 130 60 124 56
+                    L 80 40
+                    L 10 20
+                    Z
+                "/>
+            </svg>
+        </div>
+
     </div>
-
-
-    <script>
-        const envelope = document.getElementById('envelope');
-
-        envelope.addEventListener('click', () => {
-            envelope.classList.toggle('open');
-        });
-    </script>
-
 </div>
+
+<script>
+    const postWrap = document.querySelector(".post-wrap");
+
+    postWrap.addEventListener("click", function () {
+        postWrap.classList.toggle("open");
+    });
+</script>
 </body>
 </html>

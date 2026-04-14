@@ -2,19 +2,48 @@ body {
     margin: 0;
     background: #e9e2d8;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 40px;
     height: 100vh;
+    padding: 50px 0;
     perspective: 1000px;
     font-family: sans-serif;
 }
 
-.envelope {
+.img-envelope {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+}
+
+.post-envelope {
     position: relative;
-    width: 300px;
-    height: 400px;
+    z-index: 2;
+
+}
+
+.img-envelope {
+    width: 250px;
     cursor: pointer;
     margin: 0;
+    z-index: 1;
+}
+
+
+.post-envelope {
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+    margin: 0;
+    z-index: 1;
+}
+
+.envelope {
+    position: relative;
+    perspective: 1200px; /* 이거 없으면 평면 회전됨 */
 }
 
 /* 닫힌 상태 덮개 */
@@ -23,64 +52,161 @@ body {
     width: 100%;
     height: 100%;
     background: #f5cdd1;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     z-index: 5;
-    border-radius: 10px;
+    border-radius: 5px;
     font-weight: bold;
-    transition: opacity 0.5s;
+
+    /* 핵심 */
+    transform-origin: bottom center;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
 }
 
-/* 봉투 */
-.envelope-body {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-/* 날개 */
-.wing {
+.cover-front,
+.cover-back {
     position: absolute;
-    top: 45px; /* 본체 최상단부터 시작해야 꼭짓점이 맞습니다 */
-    width: 150px;
-    height: 300px; /* 본체 높이에 맞춰 조절 */
+    inset: 0;
     background: #f5cdd1;
-    transition: transform 0.8s;
+    border-radius: 5px;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.cover.open {
+    transform: rotateX(180deg);
+}
+
+/* 앞면 */
+/*.cover::before,*/
+/*.cover::after {*/
+/*    position: absolute;*/
+/*    inset: 0;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    text-align: center;*/
+/*    padding: 20px;*/
+/*    box-sizing: border-box;*/
+/*    backface-visibility: hidden;*/
+/*    -webkit-backface-visibility: hidden;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+.cover-front {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* 닫힌 상태에서 보이는 글씨 */
+.cover::before {
+    content: attr(data-front);
+    background: #f5cdd1;
     z-index: 2;
 }
 
-.left {
-    left: -150px;
-    transform-origin: right;
-    transform: rotateY(-180deg);
-    /*clip-path: polygon(100% 0%, 100% 100%, 0% 80%, 0% 33.3%);*/
-    clip-path: polygon(100% 0%, 100% 100%, 0% 80%, 0% 15%);
+/* 열렸을 때 안쪽에서 보이는 면 */
+.cover-back {
+    transform: rotateX(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 28px 22px;
+    text-align: center;
+}
+
+/* 제목 */
+.cover-subject {
+    margin: 0 0 18px 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+    word-break: keep-all;
+}
+
+/* 본문 */
+.cover-content {
+    margin: 0 0 24px 0;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    word-break: keep-all;
+    white-space: pre-line;
+
+    text-align: left;
+    width: 100%;
+}
+
+/* 날짜 */
+.cover-date {
+    margin-top: auto;
+    font-size: 12px;
+    font-weight: 500;
+    align-self: flex-end;
+}
+
+/* 봉투 */
+.img-envelope-body {
+    position: relative;
+    width: 200px;
 }
 
 
-.right {
-    right: -150px;
-    transform-origin: left;
+/* ing .. */
+/* 오른쪽 날개 */
+
+.right-flap, .left-flap {
+    position: absolute;
+    width: 119px;
+    height: 300px;
+    top: -23px;
+    z-index: 4;
+    transition: transform 0.8s ease;
+    fill: #f5cdd1;
     transform: rotateY(180deg);
-    /*clip-path: polygon(0% 0%, 0% 100%, 100% 80%, 100% 33.3%);*/
-    clip-path: polygon(0% 0%, 0% 100%, 100% 80%, 100% 15%);
 }
+
+.right-flap {
+    right: -110px;
+    transform-origin: left center;
+}
+
+/* 왼쪽 날개 */
+.left-flap {
+    left: -110px;
+    transform-origin: right center;
+}
+
+.right-flap.open, .left-flap.open {
+    transform: rotateY(0deg);
+}
+
 
 /* 위 플랩 */
 .top-flap {
     position: absolute;
-    top: 45px;
-    left: 0;
-    width: 300px;
-    height: 100px; /* 삼각형 높이를 살짝 늘려 날개와 맞춤 */
+    top: 1px;
+    left: 0px;
+    width: 250px;
+    height: 135px;
     background: #f5cdd1;
     transform-origin: top;
     transition: transform 0.8s;
     z-index: 3;
-    /* 닫혔을 때 본체 뒤로 숨김 */
     transform: rotateX(0deg);
-    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, 85% 75%, 15% 75%);
 }
 
 /* 편지 */
@@ -96,34 +222,40 @@ body {
     transform: translateY(30px);
     transition: all 0.8s;
     z-index: 5;
+    box-sizing: border-box;
 }
 
 /* 열렸을 때 */
-.envelope.open .cover {
-    opacity: 0;
+.img-envelope.open .cover,
+.post-envelope.open .cover {
+    /*opacity: 0;*/
     pointer-events: none;
 }
 
-.envelope.open .top-flap {
+.img-envelope.open .top-flap,
+.post-envelope.open .top-flap {
     transform: rotateX(180deg);
 }
 
-.envelope.open .left {
+.img-envelope.open .left,
+.post-envelope.open .left {
+    transform: rotateY(180deg);
+}
+
+.post-envelope.open .right {
     transform: rotateY(0deg);
 }
 
-.envelope.open .right {
-    transform: rotateY(0deg);
-}
-
-.envelope.open .letter {
+.img-envelope.open .letter,
+.post-envelope.open .letter {
     opacity: 1;
     transform: translateY(0);
 }
 
 /* 내부 스타일 */
 .image-area {
-    height: 120px;
+    width: 100%;
+    height: 180px;
     background: white;
     margin-bottom: 10px;
 }
@@ -136,10 +268,37 @@ body {
 
 .message {
     font-size: 12px;
+    line-height: 1.6;
     margin-top: 10px;
 }
 
 .date {
     text-align: right;
     font-size: 11px;
+    margin-top: 20px;
+}
+
+.post-wrap {
+    position: relative;
+}
+
+.post-wrap.open .cover {
+    transform: rotateX(180deg);
+}
+
+.post-wrap.open .right-flap {
+    transform: rotateY(0deg);
+}
+
+.post-wrap.open .left-flap {
+    transform: rotateY(0deg);
+}
+
+.post-wrap.open .top-flap {
+    transform: rotateX(180deg);
+}
+
+.post-wrap.open .letter {
+    opacity: 1;
+    transform: translateY(0);
 }
