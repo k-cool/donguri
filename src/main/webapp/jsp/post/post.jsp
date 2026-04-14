@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link rel="stylesheet" href="css/post.css">
+    <script src="js/post.js" defer></script>
 </head>
 
 
@@ -15,7 +16,7 @@
 
             <div class="post-container">
 
-                <svg class="top-cover"
+                <svg class="top-cover openable closed"
                      xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 333.98 148"
                      preserveAspectRatio="none"
@@ -51,7 +52,7 @@
                              l333.86.19
                              v-.19
                              h0Z"
-                          fill="${post.bgColor}"
+                          fill="#${post.bgColor}"
                           clip-path="url(#clip-top)"
                     />
 
@@ -67,8 +68,7 @@
 
                 </svg>
 
-
-                <svg class="wing left"
+                <svg class="wing left openable closed"
                      viewBox="20 20 120 190"
                      preserveAspectRatio="none"
                      style="display: block;">
@@ -103,7 +103,7 @@
         L 140 20
         Z
     "
-                          fill="${post.bgColor}"
+                          fill="#${post.bgColor}"
                           clip-path="url(#clip-left)"
                     />
 
@@ -117,8 +117,7 @@
 
                 </svg>
 
-
-                <svg class="wing right"
+                <svg class="wing right openable closed"
                      viewBox="10 20 120 190"
                      preserveAspectRatio="none"
                      style="display: block;">
@@ -153,7 +152,7 @@
         L 10 20
         Z
     "
-                          fill="${post.bgColor}"
+                          fill="#${post.bgColor}"
                           clip-path="url(#clip-right)"
                     />
 
@@ -169,8 +168,7 @@
 
                 </svg>
 
-
-                <div class=" post-square post-top">
+                <div class="post-square post-top" style="background-color: \#${post.bgColor}">
                     <div class="texture"></div>
 
                     <div class="img-wrapper">
@@ -182,9 +180,10 @@
                         <img src="image/template_post.svg" alt="stamp"/>
                     </div>
 
+
                 </div>
 
-                <div class="post-square post-bottom">
+                <div class="post-bottom openable closed" style="background-color: \#${post.bgColor}">
                     <div class="pattern"></div>
                     <div class="texture"></div>
 
@@ -206,12 +205,27 @@
                         <div class="date">${post.scheduledDate}</div>
                     </div>
                 </div>
-            </div>
 
-            </span>
+                <div class="clickable">
+                    <div class="click-guide">
+                        <div class="icon">♥️</div>
+                        <div class="text">클릭해주세요!</div>
+                    </div>
+
+
+                </div>
+
+                <div class="player">
+                    <audio id="bgmPlayer" src="${post.bgmUrl}"></audio>
+
+                    <button id="bgmToggle">🎵 BGM 켜기</button>
+                </div>
+            </div>
         </div>
 
 
     </div>
 
 </div>
+
+

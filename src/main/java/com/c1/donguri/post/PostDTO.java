@@ -12,7 +12,8 @@ import java.util.Date;
 public class PostDTO {
     // reservation
     private String reservationId;
-    private Date ScheduledDate;
+    private Date scheduledDate;
+    private String recipientEmail;
 
     // email_content
     private String subject;

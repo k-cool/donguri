@@ -31,4 +31,4 @@ WHERE USER_ID = '4EB72BAF38F6D371E063835E000AADA2';
 */
 
 UPDATE EMAIL_CONTENT
-SET BGM_URL = 'https://www.chosic.com/wp-content/uploads/2021/02/PerituneMaterial_Sakuya2(chosic.com).mp3';
+SET BGM_URL = 'bgm/tokyo-music-walker-day-off-chosic.com_.mp3';

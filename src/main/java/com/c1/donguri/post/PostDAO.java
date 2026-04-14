@@ -20,6 +20,7 @@ public class PostDAO {
         ResultSet rs = null;
         String sql = "SELECT R.RESERVATION_ID,\n" +
                 "       R.SCHEDULED_DATE,\n" +
+                "       R.RECIPIENT_EMAIL,\n" +
                 "       E.SUBJECT,\n" +
                 "       E.CONTENT,\n" +
                 "       E.BGM_URL,\n" +
@@ -49,6 +50,7 @@ public class PostDAO {
                 post = new PostDTO(
                         rs.getString("reservation_id"),
                         rs.getDate("scheduled_date"),
+                        rs.getString("recipient_email"),
                         rs.getString("subject"),
                         rs.getString("content"),
                         rs.getString("bgm_url"),
@@ -61,6 +63,8 @@ public class PostDAO {
                     post.setCoverImgUrl(rs.getString("cover_img_url_e"));
                 }
             }
+
+            System.out.println(post.toString());
 
             return post;
 
