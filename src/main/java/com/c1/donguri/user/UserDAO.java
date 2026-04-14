@@ -128,6 +128,35 @@ public class UserDAO {
         }
     }
 
+    // 유저가 관리자(ADMIN)인지 확인하는 메서드
+    public boolean isAdmin(String email) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+
+        String sql = "SELECT roll FROM users WHERE email = ? AND is_deleted = 'N'";
+
+        try {
+            con = DBManager.DB_MANAGER.getConnection();
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String roll = rs.getString("roll");
+                if ("ADMIN".equals(roll)) {
+                    return true; // DB에 ADMIN으로 되어있으면 true 반환
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(con, pstmt, rs);
+        }
+        return false; // 아니면 false 반환
+    }
+
     /**
      * 로그인 처리 - 세션에 사용자 정보 저장
      *

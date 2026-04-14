@@ -1,7 +1,10 @@
 /*
     테스트 데이터 생성
  */
+ 
 
+INSERT INTO users (email, nickname, password, profile_img_url, roll)
+VALUES ('admin@test.com', '관리자', 'hash_123', 'https://picsum.photos/200', 'ADMIN');
 INSERT INTO users (email, nickname, password, profile_img_url)
 VALUES ('user1@test.com', '스누피', 'hash_123', 'https://picsum.photos/200');
 INSERT INTO users (email, nickname, password, profile_img_url)

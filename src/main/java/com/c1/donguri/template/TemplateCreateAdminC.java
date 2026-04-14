@@ -1,6 +1,7 @@
 package com.c1.donguri.template;
 
 import com.c1.donguri.user.UserDAO;
+import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.QRGenerator;
 import com.c1.donguri.util.S3Uploader;
 
@@ -23,6 +24,14 @@ public class TemplateCreateAdminC extends HttpServlet {
 
         if (!isLoggedIn) {
             response.sendRedirect("login");
+            return;
+        }
+        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+
+        boolean isAdmin = UserDAO.USER_DAO.isAdmin(user.getEmail());
+
+        if (!isAdmin) {
+            response.sendRedirect("main");
             return;
         }
 
