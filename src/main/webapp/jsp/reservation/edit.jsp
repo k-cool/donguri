@@ -50,6 +50,7 @@
                 <label>템플릿</label>
                 <div class="slider-row">
                     <button type="button" id="tempLeft" class="arrow">◀</button>
+
                     <div class="template-track-wrapper">
                         <div class="template-track" id="templateTrack">
                             <c:forEach items="${templateList}" var="t">
@@ -60,6 +61,7 @@
                             </c:forEach>
                         </div>
                     </div>
+
                     <button type="button" id="tempRight" class="arrow">▶</button>
                 </div>
             </div>

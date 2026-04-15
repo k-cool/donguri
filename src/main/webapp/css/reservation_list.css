@@ -68,8 +68,9 @@ h2::after {
     content: "";
     position: absolute;
     bottom: 0px;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
     height: 12px;
     background-color: #d7c9b8;
     z-index: -1;

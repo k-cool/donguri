@@ -7,8 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const visibleCount = 3;
 
     // 카드 + gap 정확히 계산 (자동 계산)
-    const cardWidth = cards[0].offsetWidth;
-    const gap = 12; // CSS gap
+    // const cardWidth = cards[0].offsetWidth;
+    const cardWidth = 100;
+    const gap = 15; // CSS gap
     const moveWidth = cardWidth + gap;
 
     /* ▶ 오른쪽 */
