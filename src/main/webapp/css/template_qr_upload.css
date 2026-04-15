@@ -102,3 +102,81 @@
     transform: translateY(-2px);
     background: #7d3939;
 }
+
+/* ===== 모바일 (768px 이하) ===== */
+@media (max-width: 768px) {
+
+    .qr-upload-container {
+        width: calc(100% - 44px);
+        max-width: 350px;
+        margin: 32px auto;
+        padding: 68px 18px 28px;
+        border-radius: 24px;
+    }
+
+    /* 라벨 */
+    .qr-upload-container::before {
+        font-size: 13px;
+        padding: 3px 12px;
+        top: 14px;
+    }
+
+    /* 라벨 아래 선 */
+    .qr-upload-container::after {
+        top: 52px;
+        left: 16px;
+        right: 16px;
+    }
+
+    /* 제목 */
+    .qr-upload-container h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    /* 설명 */
+    .qr-upload-container p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    /* 파일 버튼 */
+    .file-input-group input[type="file"] {
+        font-size: 12px;
+    }
+
+    .file-input-group input[type="file"]::file-selector-button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    /* 버튼 */
+    .btn-submit {
+        height: 48px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .qr-upload-container {
+        width: calc(100% - 40px);
+        max-width: 330px;
+        padding: 64px 14px 24px;
+        border-radius: 20px;
+    }
+
+    .qr-upload-container h2 {
+        font-size: 18px;
+    }
+
+    .qr-upload-container p {
+        font-size: 12px;
+    }
+
+    .btn-submit {
+        height: 44px;
+        font-size: 14px;
+    }
+}
