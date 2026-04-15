@@ -24,7 +24,7 @@
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="id" value="${r.reservationId}">
             <input type="hidden" name="templateId" id="selectedTemplate" value="${r.templateId}">
-            <input type="hidden" name="bgmUrl" id="selectedBgm" value="${r.bgm}">
+            <input type="hidden" name="bgmUrl" id="selectedBgm" value="${r.bgmUrl}">
 
             <h2>{ 도토리 예약 수정 }</h2>
 
@@ -78,6 +78,16 @@
                 </div>
             </div>
 
+            <%--            <div class="form-row">--%>
+            <%--                <label>커버 이미지(수정 불가)</label>--%>
+
+            <%--                <div>--%>
+            <%--                    <input name="fileUrl" type="text" value="" hidden>--%>
+            <%--                    <input id="fileInput" type="file" name="coverImgUrl" value="">--%>
+            <%--                </div>--%>
+
+            <%--            </div>--%>
+
             <div class="form-row">
                 <div class="bgm-section">
                     <label>B G M</label>
@@ -102,7 +112,7 @@
                     </div>
 
                     <div class="player-wrapper">
-                        <audio id="bgmPlayer" src="${r.bgm}" controls></audio>
+                        <audio id="bgmPlayer" src="${r.bgmUrl}" controls></audio>
                         <p id="currentSongTitle" style="color: #745b4c; font-size: 14px; margin-top: 10px;"></p>
                     </div>
                 </div>

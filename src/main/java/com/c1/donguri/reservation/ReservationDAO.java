@@ -55,7 +55,7 @@ public class ReservationDAO {
             ps.setString(3, user.getUserId());
             ps.setString(4, ir.getSubject());
             ps.setString(5, ir.getContent());
-            ps.setString(6, ir.getCoverImgUrl()); //TODO: 수정하기
+            ps.setString(6, ir.getCoverImgUrl());
             ps.setString(7, ir.getBgmUrl());
 
             int firstRow = ps.executeUpdate();

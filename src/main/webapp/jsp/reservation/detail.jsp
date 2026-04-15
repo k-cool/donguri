@@ -26,9 +26,10 @@
             🕰️ 이 추억은 <b>${r.scheduledDate}</b>에 배달될 예정이야.
         </p>
 
+        <%--        TODO: 삭제 작업--%>
         <div class="btn-group">
             <a href="reservation?action=edit&id=${r.reservationId}" class="btn btn-edit">수정하고싶어요!</a>
-            <a href="reservation?action=list" class="btn btn-list">도토리 심기</a>
+            <a href="reservation?action=list" class="btn btn-list">삭제하기</a>
         </div>
     </div>
 </div>
