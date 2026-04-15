@@ -48,10 +48,10 @@
     display: none;
 }
 
-/* 2. Firefox 및 전체 표준 */
+
 .container {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 h2 {
@@ -76,11 +76,18 @@ h2::after {
 }
 
 .filter-basket {
+    font-family: 'Galmuri11', sans-serif !important;
     background: rgba(255, 255, 255, 0.3);
     border: 2px dashed #3b110ba6;
     border-radius: 15px;
     padding: 15px 10px;
     margin-bottom: 25px;
+}
+
+.filter-basket select,
+.filter-basket input,
+.filter-basket button {
+    font-family: 'Galmuri11', sans-serif !important;
 }
 
 .filter-basket form {
