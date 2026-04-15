@@ -32,12 +32,26 @@
 .container {
     width: 100%;
     max-width: 400px;
-    margin: 0 auto; /* 위아래 0, 좌우 자동으로 설정하여 가운데 배치 */
-
-    /* 이하 기존 설정 */
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     text-align: center;
+
+
+    overflow-y: auto;
+
+
+    max-height: 100vh;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* 2. Firefox 및 전체 표준 */
+.container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 h2 {
@@ -125,7 +139,7 @@ input[type="text"] {
     border-radius: 40px;
     text-decoration: none;
     font-size: 1.1rem;
-    margin: 10px auto 35px auto;
+    margin: 30px auto 35px auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
