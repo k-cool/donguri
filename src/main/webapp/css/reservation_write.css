@@ -7,8 +7,16 @@
     font-display: swap;
 }
 
+* {
+    font-family: 'Galmuri11', sans-serif !important;
+}
 
-/* ===== 종이 ===== */
+
+input, textarea, select, button {
+    font-family: 'Galmuri11', sans-serif !important;
+}
+
+/*종이부분임*/
 .form-container {
     background-image: url(../image/posting_page.png);
     background-size: cover;
@@ -20,6 +28,7 @@
     max-width: 480px;
     height: 1400px;
     position: relative;
+    margin: 0 auto;
 }
 
 .form-container > div {
@@ -312,7 +321,7 @@ button[type="submit"] {
     align-items: center;
     padding: 15px 20px;
     gap: 13px;
-    width: 80%;
+    width: 89%;
 }
 
 
