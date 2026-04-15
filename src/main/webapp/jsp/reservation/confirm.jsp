@@ -4,9 +4,11 @@
 
 <link rel="stylesheet" href="css/confirm.css"/>
 <script src="js/reservation_indexedDB.js" defer></script>
+<script src="js/load_confirm.js" defer></script>
 
 
 <div class="confirm">
+
 
     <div class="confirm-wrapper">
         <h2 class="title">📬 예약 내용 확인 📬</h2>
@@ -219,7 +221,16 @@
 
 <!-- 모달 -->
 <form action="reservation" method="post">
-    <input type="hidden" name="action" value="insert">
+    <input type="text" hidden name="action" value="insert">
+    <input type="text" hidden name="bgmUrl">
+    <input type="text" hidden name="templateId">
+    <%--    <input type="file" hidden name="coverImgUrl">--%>
+    <input type="text" hidden name="recipientEmail">
+    <input type="text" hidden name="subject">
+    <input type="text" hidden name="content">
+    <input type="text" hidden name="coverImgUrl">
+    <input type="text" hidden name="scheduledDate">
+
     <div id="modal" class="modal-overlay">
         <div class="modal-box">
             <p class="modal-text">

@@ -14,6 +14,7 @@
 <script src="js/bgmplay.js" defer></script>
 <script src="js/reservation_indexedDB.js" defer></script>
 <script src="js/reservation_session_storage.js" defer></script>
+<script src="js/uplaod_img.js" defer></script>
 
 <div class="write">
 
@@ -25,7 +26,6 @@
 
 
             <h2>{ 너무나도 그리운 누군가에게 }</h2>
-            <input type="hidden" name="action" value="confirm">
 
 
             <div class="form-row">
@@ -88,6 +88,7 @@
                 <label>커버 이미지(선택)</label>
 
                 <div>
+                    <input name="fileUrl" type="text" value="" hidden>
                     <input id="fileInput" type="file" name="coverImgUrl" value="">
                 </div>
 

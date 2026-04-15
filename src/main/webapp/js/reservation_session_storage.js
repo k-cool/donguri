@@ -1,6 +1,8 @@
 console.log("reservation_session_storage.js");
 
-function saveReservation() {
+function saveReservation(e) {
+    // e.preventDefault();
+
     const mapObj = {};
 // 지금 화면의 모든 input을 선택
     const inputs = document.querySelectorAll('input');
@@ -17,6 +19,7 @@ function saveReservation() {
     // session storage에 저장
     sessionStorage.setItem('reservation', JSON.stringify(mapObj));
 
+    // e.submit();
 }
 
 function loadSavedReservation() {

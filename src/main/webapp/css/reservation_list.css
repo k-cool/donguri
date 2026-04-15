@@ -1,57 +1,13 @@
-@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
 
-@font-face {
-    font-family: 'Galmuri11';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}
-
-/** {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    box-sizing: border-box;*/
-/*    font-family: 'Galmuri11', sans-serif !important;*/
-/*    font-weight: 400;*/
-/*    color: #3b110b;*/
-/*}*/
-
-/*body {*/
-/*    background-image: url("../image/background.png");*/
-/*    background-size: cover;*/
-/*    background-repeat: no-repeat;*/
-/*    background-position: center center;*/
-/*    background-attachment: fixed;*/
-/*    background-color: #edeae2;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    padding: 20px 10px;*/
-/*}*/
-
-.container {
+.r-container {
     width: 100%;
-    max-width: 400px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 20px;
     text-align: center;
 
-
-    overflow-y: auto;
-
-
-    max-height: 100vh;
-}
-
-.container::-webkit-scrollbar {
-    display: none;
-}
-
-
-.container {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 
 h2 {
@@ -82,7 +38,7 @@ h2::after {
     border: 2px dashed #3b110ba6;
     border-radius: 15px;
     padding: 15px 10px;
-    margin-bottom: 25px;
+    max-width: 400px;
 }
 
 .filter-basket select,
@@ -142,18 +98,18 @@ input[type="text"] {
     align-items: center;
     background-color: #3b110b;
     color: #e0d5c1 !important;
-    padding: 20px 40px;
+    padding: 0 40px;
     height: 70px;
     border-radius: 40px;
     text-decoration: none;
     font-size: 1.1rem;
-    margin: 30px auto 35px auto;
+    margin: 20px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.acorn-box {
-    padding: 20px;
-}
+/*.acorn-box {*/
+/*    padding: 20px;*/
+/*}*/
 
 .acorn-box h3 {
     font-size: 1.5rem;
@@ -179,16 +135,21 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
-.acorn-card {
-    background-color: #fff;
+.cover-img {
+    max-width: 320px;
+    height: 320px;
     /* 배경 이미지 설정 */
     background-image: url("../image/postcard.jpg");
     background-size: cover; /* 영역을 빈틈없이 꽉 채움 */
     background-position: center; /* 이미지의 중앙을 기준으로 */
     background-repeat: no-repeat;
+}
+
+.acorn-card {
+    background-color: #fff;
 
     border: 3px dashed #8e765e;
     border-radius: 10px;
@@ -196,16 +157,15 @@ input[type="text"] {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 
     /* [정사각형 강제 고정 방법] */
-    width: 100%;
-    height: 0;
-    padding-top: 100%; /* 너비와 동일한 높이를 강제로 생성 (1:1 비율) */
+    max-width: 320px;
+    max-height: 320px;
 
     display: block; /* padding-top 방식에서는 block이 안전함 */
-    overflow: hidden;
     z-index: 1;
     transition: transform 0.2s ease;
     cursor: pointer;
     text-decoration: none;
+    object-fit: cover;
 }
 
 /* 1. 카드를 감싸는 그리드 설정 */
@@ -213,7 +173,7 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     gap: 60px; /* 우표가 튀어나올 공간을 위해 간격을 넓힘 */
-    padding: 40px 20px; /* 상단과 좌우에 여백을 주어 우표가 잘리지 않게 함 */
+    padding: 20px 0;
     overflow: visible !important; /* 부모에서도 잘림 방지 */
 }
 
@@ -226,7 +186,7 @@ input[type="text"] {
     width: 100%;
     height: 0;
     padding-top: 100%;
-
+    
     /* [가장 중요] hidden을 visible로 강제 설정 */
     overflow: visible !important;
     border: 0px dashed #8e765e;

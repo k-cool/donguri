@@ -7,7 +7,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<div class="container">
+
+<script>
+
+    function initDB(callback) {
+        const request = indexedDB.open("ImageStorageDB", 1);
+
+        request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+
+            if (!db.objectStoreNames.contains("tempImages")) {
+                db.createObjectStore("tempImages", {keyPath: "id"});
+            }
+        };
+
+        request.onsuccess = (e) => {
+            const db = e.target.result;
+            console.log("DB 준비 완료");
+            if (callback) callback(db);
+        };
+    }
+
+    function initEverything() {
+
+        const dbName = "ImageStorageDB";
+
+        const deleteRequest = indexedDB.deleteDatabase(dbName);
+
+        deleteRequest.onsuccess = () => {
+            console.log("DB 삭제 완료");
+
+            // ✅ 여기서 다시 초기화해야 안전
+            initDB();
+        };
+
+        sessionStorage.removeItem('reservation');
+
+    }
+
+    initEverything();
+</script>
+
+
+<div class="r-container">
     <h2> {숲속 우체통: 추억 찾기}</h2>
 
     <div class="filter-basket">
@@ -42,7 +84,9 @@
         </form>
     </div>
 
-    <a href="reservation?action=write" class="btn-write">도토리 심으러 가기</a>
+    <div>
+        <a href="reservation?action=write" class="btn-write">도토리 심으러 가기</a>
+    </div>
 
     <div class="acorn-box">
         <h3>{ 보낸 도토리 보관함 }</h3>
@@ -51,11 +95,13 @@
             <c:choose>
                 <c:when test="${not empty list}">
                     <c:forEach var="r" items="${list}">
-                        <a href="reservation?action=detail&id=${r.reservationId}" class="acorn-card">
-                            <c:if test="${r.isDone == '완료'}">
-                                <img src="${pageContext.request.contextPath}/image/stamp_red.svg"
-                                     class="stamp-img">
+                        <a class="acorn-card"
+                           style="background: url('${r.coverImgUrl}') center/cover no-repeat;"
+                           href="${r.isDone == 'Y' ? 'post?id=' : 'reservation?action=detail&id='}${r.reservationId}">
+                            <c:if test="${r.isDone == 'Y'}">
+                                <img class="stamp-img" src="${pageContext.request.contextPath}/image/stamp_red.svg">
                             </c:if>
+
                             <div class="acorn-info">
                                 <p class="subject">${r.subject}</p>
                                 <p class="date">
@@ -70,8 +116,10 @@
                                 </p>
                             </div>
                         </a>
+
                     </c:forEach>
                 </c:when>
+
                 <c:otherwise>
                     <p class="empty">찾으시는 도토리가 숲에 없어요..</p>
                 </c:otherwise>

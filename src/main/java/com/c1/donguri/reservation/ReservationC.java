@@ -2,15 +2,20 @@ package com.c1.donguri.reservation;
 
 import com.c1.donguri.template.TemplateDTO;
 import com.c1.donguri.user.UserDAO;
+import com.c1.donguri.util.S3Uploader;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @WebServlet("/reservation")
+@MultipartConfig()
 public class ReservationC extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -92,7 +97,15 @@ public class ReservationC extends HttpServlet {
         } else if ("insert".equals(action)) {
             InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
 
+            String coverImgUrl = request.getParameter("coverImgUrl");
+            System.out.println("여기여기!!" + coverImgUrl);
+
+            ir.setCoverImgUrl(coverImgUrl);
+
             String reservationId = null;
+
+
+            System.out.println(ir.toString());
 
             if (ir != null) {
                 reservationId = ReservationDAO.RESERVATION_DAO.insert(request);
@@ -119,5 +132,37 @@ public class ReservationC extends HttpServlet {
                 response.sendRedirect("reservation?action=list");
             }
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
+
+        if (!isLoggedIn) {
+            response.sendRedirect("login");
+            return;
+        }
+
+        // coverImg S3업로드
+        S3Uploader s3Uploader = new S3Uploader();
+
+        Part filePart = request.getPart("coverImgUrl");
+        String imgUrl = null;
+
+        System.out.println(filePart);
+
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = "cover_img/user/" + UUID.randomUUID().toString();
+            InputStream inputStream = filePart.getInputStream();
+            String contentType = filePart.getContentType();
+            long fileSize = filePart.getSize();
+
+            // S3에 바로 업로드 (서버 로컬에 저장되지 않음)
+            imgUrl = s3Uploader.upload(inputStream, fileName, contentType, fileSize);
+        }
+
+        response.getWriter().write(imgUrl);
+
     }
 }
