@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<div>
+<div class="omikuji-container">
     <div id="tree"><img src="../../image/tree.png"></div>
 
     <c:if test="${isOmikujiAvailable}">

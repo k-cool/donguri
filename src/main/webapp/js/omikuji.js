@@ -14,13 +14,10 @@ window.onload = function () {
 
             drawOmikuji();
 
-            // 현재 다람쥐의 절대 좌표 (시작점)
             const startX = squirrel.offsetLeft;
             const startY = squirrel.offsetTop;
 
-            // [반응형 핵심] 클릭 시점의 나무 위치를 실시간 파악
             const treeRect = tree.getBoundingClientRect();
-            // 나무 이미지 중앙보다 약간 왼쪽 아래(밑동)로 목표 설정
             const targetX = treeRect.left + (treeRect.width / 3.8);
             const targetY = treeRect.top + (treeRect.height / 2.8);
 

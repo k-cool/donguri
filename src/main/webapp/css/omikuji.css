@@ -1,7 +1,4 @@
-/* --- 전역 설정 --- */
-@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
-
-body {
+#omikuji-container {
     margin: 0;
     height: 100vh;
     overflow: hidden;
@@ -10,12 +7,9 @@ body {
     background-color: #fdfaf5;
 }
 
-/* --- 나무: 위치 고정 및 반응형 --- */
 #tree {
     position: absolute;
-    /* 기존 top 50px -> 약 5vh */
     top: 5vh;
-    /* 기존 right 200px -> 약 15vw */
     right: 15vw;
     z-index: -5;
     pointer-events: none;
@@ -25,19 +19,15 @@ body {
 }
 
 #tree img {
-    /* 나무 크기도 화면에 비례하게 조절 */
     width: 250px;
     max-width: 30vw;
     height: auto;
     display: block;
 }
 
-/* --- 다람쥐 레이아웃 --- */
 #squirrel {
     position: absolute;
-    /* 기존 left 300px -> 약 20vw */
     left: 20vw;
-    /* 기존 top 400px -> 약 45vh */
     top: 45vh;
     width: 150px;
     height: 150px;
@@ -53,7 +43,7 @@ body {
 
 #squirrel_come { display: none; opacity: 0; }
 
-/* --- 애니메이션 (원본 유지) --- */
+/* --- 애니메이션 --- */
 @keyframes shake-tree {
     0%, 100% { transform: rotate(0deg); }
     25% { transform: rotate(-6deg); }
@@ -67,7 +57,6 @@ body {
 }
 .hopping { animation: hop 0.5s infinite ease-in-out; }
 
-/* --- 메모지 설정 (원본 비율 유지) --- */
 #guide-text, #memo-modal {
     position: fixed;
     top: 50%;
