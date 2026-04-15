@@ -39,6 +39,8 @@
     position: relative;
     width: var(--base);
     margin: 0 auto;
+
+    perspective: 1000px; /* 👈 추가 */
 }
 
 /* 윗 뚜껑 */
@@ -47,8 +49,17 @@
     top: calc(var(--base) * -0.425); /* -119 / 420 */
     width: 100%;
     height: calc(var(--base) * 0.4275); /* 240 / 420 */
-    z-index: 1;
+    z-index: 30;
+
+    transform-origin: 50% 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
 }
+
+.top-cover.closed {
+    transform: rotateX(-180deg);
+}
+
 
 /* 좌측 날개 */
 .wing.left {
@@ -58,9 +69,16 @@
     transform: translateX(-99%);
     width: calc(var(--base) * 0.285);
     height: var(--base);
-    z-index: 2;
+    z-index: 20;
+
+    transform-origin: 100% 50%; /* 👈 오른쪽 중앙 */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
 }
 
+.wing.left.closed {
+    transform: translateX(-99%) rotateY(180deg);
+}
 
 /* 우측 날개 */
 .wing.right {
@@ -70,7 +88,15 @@
     transform: translateX(99%);
     width: calc(var(--base) * 0.285);
     height: var(--base);
-    z-index: 2;
+    z-index: 20;
+
+    transform-origin: 0% 50%; /* 👈 왼쪽 중앙 */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.wing.right.closed {
+    transform: translateX(99%) rotateY(-180deg);
 }
 
 .texture {
@@ -121,7 +147,11 @@
     left: calc(var(--base) * 0.12);
     rotate: 2deg;
 
-    box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);
+    /*box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);*/
+    transition: opacity 0.8s ease,
+    scale 0.8s ease;
+    opacity: 0;
+    scale: 0.8;
 }
 
 .img-wrapper img {
@@ -129,6 +159,7 @@
     height: calc(var(--base) * 0.76);
     object-fit: cover;
     border: calc(var(--base) * 0.038) solid white; /* 16 / 420 */
+
 }
 
 /* 우표 */
@@ -138,7 +169,13 @@
     left: calc(var(--base) * 0.012);
     width: calc(var(--base) * 0.19); /* 80 / 420 */
     rotate: 16deg;
-    transition: transform .3s ease-in-out;
+
+    transition: transform 0.3s ease,
+    opacity 0.8s ease,
+    scale 0.8s ease;
+
+    opacity: 0;
+    scale: 0.8;
 }
 
 
@@ -146,14 +183,24 @@
     transform: scale(1.05);
 }
 
+.show {
+    opacity: 1;
+    scale: 1;
+    transition: transform 0.3s ease,
+    opacity 0.8s ease,
+    scale 0.8s ease;
+}
+
 /* ================= 하단 ================= */
 
 .post-bottom {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--base);
+    height: var(--base);
     top: var(--base);
-    width: 100%;
 
-    background: #f4cfd2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,6 +210,16 @@
 
     font-size: calc(var(--base) * 0.033); /* 14px */
     color: #5c3d3d;
+    z-index: 20;
+
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    transform-origin: 50% 0%;
+    backface-visibility: hidden;
+}
+
+.post-bottom.closed {
+    transform: rotateX(180deg) translateX(-50%);
 }
 
 /* 줄 */
@@ -201,74 +258,84 @@
     text-align: right;
 }
 
-/* 배경 오버레이 */
-.modal-overlay {
+/*클릭 가이드*/
+.clickable {
     position: absolute;
-    top: calc(var(--base) * 0.22); /* 60 / 420 */
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    width: calc(var(--base) * 1.01); /* 424 / 420 */
+    top: 0;
+    right: 0;
+    width: var(--base);
+    height: var(--base);
+    z-index: 50;
+    background-color: transparent;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.click-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.8s ease;
+}
+
+
+.click-guide.off {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 아이콘 애니메이션 */
+.click-guide .icon {
+    font-size: 28px;
+    animation: bounce 1.2s infinite;
+}
+
+/* 텍스트 애니메이션 */
+.click-guide .text {
+    font-size: 14px;
+    color: #555;
+    animation: fade 1.2s infinite;
+}
+
+/* 위아래 바운스 */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(8px) scale(1.1);
+    }
+}
+
+
+/* 깜빡임 */
+@keyframes fade {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/*bgm*/
+.player {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
     z-index: 999;
 }
 
-/* 모달 박스 */
-.modal-box {
-    width: 90%;
-    max-width: var(--base);
-    padding: calc(var(--base) * 0.038) calc(var(--base) * 0.048); /* 16, 20 */
-
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: calc(var(--base) * 0.038); /* 16 */
-
-    position: relative;
-    text-align: center;
-
-    /* 점선 테두리 */
-    border: calc(var(--base) * 0.0048) dashed #7b4b3a; /* 2px */
-}
-
-/* 텍스트 */
-.modal-text {
-    font-size: calc(var(--base) * 0.033); /* 14 */
-    color: #5a3e36;
-    margin-bottom: calc(var(--base) * 0.057); /* 24 */
-}
-
-/* 버튼 영역 */
-.modal-actions {
-    display: flex;
-    gap: calc(var(--base) * 0.029); /* 12 */
-    justify-content: center;
-}
-
-/* 공통 버튼 */
-.btn {
-    flex: 1;
-    padding: calc(var(--base) * 0.024) calc(var(--base) * 0.029); /* 10, 12 */
-    border-radius: calc(var(--base) * 2.38); /* 999px → 충분히 크게 */
-    border: none;
-    font-size: calc(var(--base) * 0.033); /* 14 */
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 수정 버튼 */
-.edit-btn {
-    background: #c7a98b;
-    color: white;
-    text-decoration: none;
-
-}
-
-/* 도토리 버튼 */
-.plant-btn {
-    background: #5a0b0b;
-    color: white;
+.player.active {
+    opacity: 1;
+    pointer-events: auto;
 }
