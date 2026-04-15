@@ -5,12 +5,7 @@
            send_log, user_template, omikuji
     ==========================================================
 */
-select *
-from users;
 
-delete
-from USERS
-where NICKNAME = 'qweqwe';
 
 -- 1. 사용자 목록 조회 (users)
 -- 탈퇴하지 않은('N') 사용자들을 가입일 최신순으로 조회합니다.
