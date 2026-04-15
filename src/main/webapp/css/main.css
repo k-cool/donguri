@@ -21,8 +21,11 @@ html, body {
     overflow-x: hidden;
 }
 
+* {
+    font-family: 'Galmuri11', serif !important;
+}
+
 body {
-    font-family: 'Galmuri11', serif;
     background-image: url('/image/background.png'); /* 경로 맞게 수정 */
     background-size: cover; /* 화면 꽉 채움 */
     background-position: center; /* 가운데 정렬 */
