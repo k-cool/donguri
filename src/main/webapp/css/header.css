@@ -331,6 +331,98 @@ header.hd-sub-header .hd-header-bottom {
 /*        transform: translateY(-50%) !important;*/
 /*    }*/
 /*}*/
+@media screen and (max-width: 768px) {
+    header {
+        height: auto;
+    }
+
+    .hd-header-top {
+        height: 70px;
+    }
+
+    .hd-logo {
+        height: 35px;
+    }
+
+    .hd-menu-btn {
+        width: 60px;
+        height: 45px;
+    }
+
+    .hd-header-bottom {
+        height: 38px;
+    }
+
+    .hd-main-nav-btn {
+        padding: 0 15px;
+        font-size: 14px;
+        height: 30px;
+    }
+
+    .hd-nav-menu {
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #hd-slideMenu {
+        /* 1. 메뉴 너비 및 위치 조정 */
+        width: 80%; /* 고정 px 대신 화면 너비의 80%로 유연하게 설정 */
+        max-width: 300px; /* 너무 커지지 않게 최대치 제한 */
+        right: -320px; /* 닫혔을 때 완전히 숨겨지도록 (너비에 맞춰 조절 필요) */
+
+        /* 2. 헤더 높이에 맞춘 상단 여백 (모바일 헤더가 작아졌을 경우 대비) */
+        top: 110px; /* 기존 142px에서 모바일 헤더 높이에 맞춰 축소 */
+        height: calc(100vh - 110px);
+
+        padding: 30px 20px; /* 내부 여백 살짝 축소 */
+    }
+
+    /* 3. 프로필 이미지(우표 프레임) 크기 축소 */
+    .hd-profile-frame {
+        width: 110px; /* 140px -> 110px */
+        height: 110px;
+    }
+
+    .hd-default-pic {
+        width: 80px !important;
+        height: 80px !important;
+    }
+
+    /* 4. 사용자 닉네임 및 이메일 텍스트 조절 */
+    .hd-user-info-text {
+        text-align: center; /* 모바일에서는 중앙 정렬이 시각적으로 더 안정적입니다 */
+    }
+
+    .hd-nickname, .hd-user-email {
+        font-size: 13px; /* 폰트 크기 살짝 축소 */
+    }
+
+    /* 5. 마스킹 테이프 메뉴 버튼 크기 조절 */
+    .hd-sub-menu {
+        gap: 15px; /* 버튼 사이 간격 축소 */
+    }
+
+    .hd-sub-menu a {
+        width: 160px; /* 190px -> 160px */
+        padding: 12px 0; /* 상하 여백 축소 */
+        font-size: 14px;
+        background-size: 100% 100%; /* 테이프 이미지가 버튼 크기에 딱 맞게 */
+    }
+
+    /* 6. 로그아웃 버튼 (도장 느낌) */
+    .hd-logout-menu {
+        width: 100%;
+        justify-content: center; /* 모바일은 터치 영역을 고려해 중앙 배치 추천 */
+        margin-top: 15px;
+    }
+
+    .hd-logout-menu a {
+        width: 100px; /* 120px -> 100px */
+        height: 28px; /* 높이 축소 */
+        font-size: 15px;
+    }
+}
 
 /* -------------------------------------
    6. 로그인 / 회원가입 버튼 (비로그인 상태)
