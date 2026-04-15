@@ -1,117 +1,157 @@
-body {
+#omikuji-container {
     margin: 0;
     height: 100vh;
-    background-color: #f0f4c3;
     overflow: hidden;
     position: relative;
-    font-family: 'Malgun Gothic', sans-serif;
+    font-family: 'Galmuri11', sans-serif;
+    background-color: #fdfaf5;
 }
 
 #tree {
     position: absolute;
-    top: 30px;
-    right: 30px;
-    font-size: 150px;
-    z-index: 1;
+    top: 5vh;
+    right: 15vw;
+    z-index: -5;
+    pointer-events: none;
+    transform-origin: bottom center;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-#acorn {
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    font-size: 40px;
-    opacity: 0;
-    z-index: 15;
-    transition: transform 0.5s ease-in-out; /* 커지는 효과를 위한 transition */
-}
-
-/* 도토리가 도착했을 때 커지는 효과 */
-#acorn.active {
-    transform: scale(2);
+#tree img {
+    width: 250px;
+    max-width: 30vw;
+    height: auto;
+    display: block;
 }
 
 #squirrel {
     position: absolute;
+    left: 20vw;
+    top: 45vh;
+    width: 150px;
+    height: 150px;
+    z-index: 999;
+    cursor: pointer;
+}
+
+#squirrel img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#squirrel_come { display: none; opacity: 0; }
+
+/* --- 애니메이션 --- */
+@keyframes shake-tree {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-6deg); }
+    75% { transform: rotate(6deg); }
+}
+.shake { animation: shake-tree 0.5s ease-in-out; }
+
+@keyframes hop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-40px); }
+}
+.hopping { animation: hop 0.5s infinite ease-in-out; }
+
+#guide-text, #memo-modal {
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 60px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 10;
+    /* 화면이 작아지면 너비의 90%까지 채우되, 최대 500px 유지 */
+    width: min(90vw, 500px);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important;
 }
 
-@keyframes hop {
-    0%, 100% {
-        transform: translate(-50%, -50%) translateY(0);
-    }
-    50% {
-        transform: translate(-50%, -50%) translateY(-60px);
-    }
+.memo-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    object-fit: contain;
 }
 
-.hopping {
-    animation: hop 0.5s infinite ease-in-out;
-}
-
-/* --- 모달 스타일 추가 --- */
 #modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 2000;
 }
 
-#memo-modal {
-    background-color: #fff9c4; /* 메모지 색상 */
+.memo-content, #guide-text h2 {
+    width: 80%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    width: 300px;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    border-left: 10px solid #fbc02d;
-    transform: translateY(20px);
-    transition: transform 0.3s;
-}
-
-#memo-modal h2 {
-    margin-top: 0;
-    font-size: 1.2rem;
-    color: #5d4037;
-}
-
-#memo-modal p {
-    line-height: 1.6;
-    color: #333;
-}
-
-#guide-text {
-    position: fixed;
-    bottom: 30%;
-    left: 0;
-    width: 100%;
     text-align: center;
-    font-size: 1.2rem;
+    color: #5d4037 !important;
+    padding: 10px 30px;
+    box-sizing: border-box;
 }
 
-.close-btn {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 5px 10px;
-    background: #5d4037;
-    color: white;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 0.9rem;
+#luck { font-size: 1.2rem;
+        font-weight: bold;
+        margin: 10px 0; }
+
+#message { line-height: 1.4;
+            font-size: 1rem;
+            word-break: keep-all;
+}
+
+.close-btn { margin-top: 20px;
+            padding: 12px 40px;
+            background: #5d4037;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem; }
+
+#guide-text h2 {
+    line-height: 1.5;
+}
+
+@media screen and (max-width: 600px) {
+    #tree {
+        right: 10vw;
+        top: 10vh;
+    }
+
+    #squirrel {
+        left: 15vw;
+        top: 60vh;
+    }
+
+    #luck { font-size: 0.8rem;
+            line-height: 1rem;
+    }
+
+    .memo-content {
+        line-height: 0.6 !important;
+        padding: 70px 20px !important;
+    }
+
+    #message { font-size: 0.6rem;
+        line-height: 1.5 !important;
+    }
+
+    #guide-text h2 {
+        line-height: 1.5 !important;
+        font-size: 0.8rem;
+        padding-top: 10px;
+    }
 }

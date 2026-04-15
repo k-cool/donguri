@@ -515,6 +515,8 @@ audio::-webkit-media-controls-timeline {
     margin: 0 8px;
 }
 
+}
+
 audio::-webkit-media-controls-volume-slider {
     background-color: #f0e6d9;
     border-radius: 3px;

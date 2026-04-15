@@ -1,137 +1,86 @@
-const squirrel = document.getElementById('squirrel');
-const acorn = document.getElementById('acorn');
-const overlay = document.getElementById('modal-overlay');
-
+let isMoving = false;
 
 window.onload = function () {
-    console.log("omikuji.js loaded");
+    const squirrel = document.getElementById('squirrel');
+    const goImg = document.getElementById('squirrel_go');
+    const comeImg = document.getElementById('squirrel_come');
+    const tree = document.getElementById('tree');
+    const overlay = document.getElementById('modal-overlay');
 
-    let isMoving = false;
+    if (squirrel && tree) {
+        squirrel.addEventListener('click', function () {
+            if (isMoving) return;
+            isMoving = true;
 
-    squirrel?.addEventListener('click', function () {
-        if (isMoving) return;
-        isMoving = true;
+            drawOmikuji();
 
-        drawOmikuji()
+            const startX = squirrel.offsetLeft;
+            const startY = squirrel.offsetTop;
 
-        const rect = squirrel.getBoundingClientRect();
-        const startPos = {
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2
-        };
+            const treeRect = tree.getBoundingClientRect();
+            const targetX = treeRect.left + (treeRect.width / 3.8);
+            const targetY = treeRect.top + (treeRect.height / 2.8);
 
-        const treePos = {
-            x: window.innerWidth - 180,
-            y: 180
-        };
+            // 1. 나무로 이동
+            moveTo(squirrel, startX, startY, targetX, targetY, 1500, function () {
+                goImg.style.opacity = '0';
+                setTimeout(() => {
+                    goImg.style.display = 'none';
+                    tree.classList.add('shake');
 
-        // 1. 나무로 가기
-        moveTo(startPos, treePos, 1500, function () {
-            acorn.style.opacity = '1';
-            acorn.classList.remove('active'); // 초기화
+                    setTimeout(() => {
+                        tree.classList.remove('shake');
+                        comeImg.style.display = 'block';
+                        setTimeout(() => { comeImg.style.opacity = '1'; }, 50);
 
-            setTimeout(function () {
-                // 2. 돌아오기
-                const currentRect = squirrel.getBoundingClientRect();
-                const currentPos = {
-                    x: currentRect.left + currentRect.width / 2,
-                    y: currentRect.top + currentRect.height / 2
-                };
-
-                moveTo(currentPos, startPos, 1500, function () {
-                    isMoving = false;
-                    // 수정: 도토리를 사라지게 하지 않고 효과 부여
-                    acorn.classList.add('active');
-
-                    // 약간의 딜레이 후 모달창 띄우기
-                    setTimeout(showModal, 500);
-                });
-            }, 800);
+                        // 2. 다시 원래 자리(startX, startY)로 복귀
+                        setTimeout(() => {
+                            moveTo(squirrel, targetX, targetY, startX, startY, 1500, function () {
+                                isMoving = false;
+                                if (overlay) overlay.style.display = 'flex';
+                            });
+                        }, 500);
+                    }, 600);
+                }, 500);
+            });
         });
-    });
+    }
 
-    function moveTo(start, target, duration, callback) {
+    function moveTo(element, startX, startY, endX, endY, duration, callback) {
         const startTime = Date.now();
-        squirrel.classList.add('hopping');
+        element.classList.add('hopping');
 
         function update() {
             const now = Date.now();
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            const currentX = start.x + (target.x - start.x) * progress;
-            const currentY = start.y + (target.y - start.y) * progress;
+            element.style.left = (startX + (endX - startX) * progress) + "px";
+            element.style.top = (startY + (endY - startY) * progress) + "px";
 
-            squirrel.style.left = currentX + "px";
-            squirrel.style.top = currentY + "px";
-
-            if (acorn.style.opacity === "1") {
-                const computedStyle = window.getComputedStyle(squirrel);
-                const matrix = computedStyle.transform;
-                let translateY = 0;
-                if (matrix && matrix !== 'none') {
-                    const values = matrix.split('(')[1].split(')')[0].split(',');
-                    translateY = parseFloat(values[5]);
-                }
-                acorn.style.left = (currentX - 20) + "px";
-                acorn.style.top = (currentY - 20 + translateY) + "px";
-            }
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            } else {
-                squirrel.classList.remove('hopping');
+            if (progress < 1) requestAnimationFrame(update);
+            else {
+                element.classList.remove('hopping');
                 if (callback) callback();
             }
         }
-
         requestAnimationFrame(update);
-    }
-
-    function showModal() {
-        overlay.style.display = 'flex';
     }
 };
 
-
 function drawOmikuji() {
-    console.log("draw-btn");
-
-    const $luck = $("#luck")
-    const $message = $("#message")
-    $message.empty();
-
     $.ajax({
         url: "omikuji",
         type: "POST",
-        data: {},
         success: (resData) => {
-            console.log(resData);
-
-            const omikuji = resData.omikuji;
-
-            $luck.append(`${omikuji.luck}`);
-            $message.append(`${omikuji.message}`);
-
-        },
-        error: (error) => {
-            console.log(
-                error.status
-            );
-
-            if (error.status === 409) {
-                $message.append("오늘은 이미 뽑았어요 내일 다시 시도해주세요!");
-
+            if (resData.omikuji) {
+                $("#luck").text(resData.omikuji.luck);
+                $("#message").text(resData.omikuji.message);
             }
         }
-    })
+    });
 }
 
 function closeModal() {
-    squirrel.style.display = 'none';
-    acorn.style.opacity = '0';
-    acorn.classList.remove('active');
-    overlay.style.display = 'none';
-
-    location.href = "omikuji";
+    location.reload();
 }

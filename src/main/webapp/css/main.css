@@ -35,8 +35,9 @@ body {
 
 /* 화면 전체를 감싸는 뼈대 설정 */
 .container {
-    /* height: 100vh; 🚨 삭제: 무조건 화면 100%를 차지해서 밑으로 밀리게 만든 주범! */
-    flex: 1; /* 🚨 추가: 헤더가 차지하고 남은 아래쪽 빈 공간만 똑똑하게 100% 채움 */
+
+    flex: 1;
+    margin-top: 142px;
 
     display: flex;
     flex-direction: column;

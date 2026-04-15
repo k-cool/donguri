@@ -1,9 +1,69 @@
-body {
-    margin: 0;
-    overflow: hidden;
-}
+/*body {*/
+/*    margin: 0;*/
+/*    background: #4facfe;*/
+/*    overflow: hidden;*/
+/*}*/
 
-.scene {
+/*.scene {*/
+/*    position: relative;*/
+/*    width: 100vw;*/
+/*    height: 100%;*/
+/*    !*margin-top: 70px;*!*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.cloud {*/
+/*    position: absolute;*/
+/*    font-size: 60px;*/
+/*    opacity: 0.5;*/
+/*    will-change: transform;*/
+/*    !* 구름이 사라질 때 0.5초 동안 부드럽게 투명해짐 *!*/
+/*    transition: opacity 0.5s ease;*/
+/*}*/
+
+/*.acorn {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    font-size: 50px;*/
+/*    z-index: 10;*/
+/*    will-change: transform;*/
+/*}*/
+
+/*.bottom-group {*/
+/*    position: absolute;*/
+/*    bottom: -300px;*/
+/*    width: 100%;*/
+/*    transition: bottom 1.2s cubic-bezier(0.39, 0.575, 0.565, 1);*/
+/*    z-index: 5;*/
+/*}*/
+
+/*.mailbox {*/
+/*    position: absolute;*/
+/*    bottom: 100px;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    font-size: 70px;*/
+/*}*/
+
+/*.ground {*/
+/*    width: 100%;*/
+/*    height: 100px;*/
+/*    background: #654321;*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    z-index: 1;*/
+/*}*/
+
+/*.show {*/
+/*    bottom: 0px;*/
+/*}*/
+
+.donguri-ani {
+    height: 100vh;
+    /*background: url('../image/background.png') no-repeat center center; !* 경로 주의 *!*/
+    background-size: cover;
     position: relative;
     width: 100vw;
     height: 100%;
@@ -11,16 +71,8 @@ body {
     overflow: hidden;
 }
 
-.cloud {
-    position: absolute;
-    font-size: 60px;
-    opacity: 0.5;
-    will-change: transform;
-    /* 구름이 사라질 때 0.5초 동안 부드럽게 투명해짐 */
-    transition: opacity 0.5s ease;
-}
-
-.acorn {
+.dong {
+    width: 50px;
     position: absolute;
     top: 0;
     left: 0;
@@ -33,28 +85,88 @@ body {
     position: absolute;
     bottom: -300px;
     width: 100%;
-    transition: bottom 1.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    height: 100%;
+    bottom: -100%;
+    left: 0;
+    transition: bottom 2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
     z-index: 5;
 }
 
-.mailbox {
+.bottom-group.show {
+    bottom: 0;
+}
+
+.postbox {
+    width: 120px;
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 70px;
 }
 
-.ground {
-    width: 100%;
-    height: 100px;
-    background: #654321;
+.falling-item {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
+    bottom: 40px;
+    pointer-events: none;
 }
 
-.show {
-    bottom: 0px;
+/* 솔방울 개별 위치 */
+.cone-1 {
+    width: 40px;
+    left: 15%;
+}
+
+.cone-2 {
+    width: 35px;
+    left: 25%;
+    bottom: 30px;
+}
+
+.cone-3 {
+    width: 45px;
+    left: 75%;
+}
+
+.cone-4 {
+    width: 38px;
+    left: 85%;
+    bottom: 35px;
+}
+
+.cone-5 {
+    width: 42px;
+    left: 65%;
+}
+
+.cloud {
+    position: absolute;
+    width: 100px;
+    opacity: 0.8;
+    transition: opacity 1.5s ease;
+    pointer-events: none;
+    z-index: 3;
+}
+
+#textImage {
+    position: absolute;
+    top: 28%; /* 시안처럼 화면 중앙보다 살짝 위쪽에 오도록 위치 조정 (기존 25% -> 35%) */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 15;
+    pointer-events: none;
+
+    /* 🚨 수정 포인트: 데스크탑에서 너무 커지지 않도록 절대 크기 제한 */
+    width: 80%; /* 모바일에서는 화면의 80% 차지 */
+    max-width: 450px; /* 아무리 화면이 커져도 450px 이상 커지지 않음 */
+    height: auto;
+}
+
+.test-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: transparent;
+    z-index: 9999;
 }
