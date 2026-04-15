@@ -12,12 +12,14 @@
 <script src="js/reservation-flatpickr.js" defer></script>
 <script src="js/reservation_write_template.js" defer></script>
 <script src="js/bgmplay.js" defer></script>
+<script src="js/reservation_indexedDB.js" defer></script>
 
 
 <div class="write">
 
     <div class="form-container">
         <form action="reservation" method="post">
+            <input type="hidden" name="action" value="confirm">
             <input type="hidden" name="templateId" id="selectedTemplate">
             <input type="hidden" name="bgmUrl" id="selectedBgm">
 
@@ -39,7 +41,7 @@
             <div class="form-row">
                 <label>제목</label>
 
-                <input name="subject" value="${sessionScope.insertReservation.subject}" placeholder="제목 입력" required>
+                <input name="subject" value="" placeholder="제목 입력" required>
             </div>
 
             <div class="form-row">
@@ -47,7 +49,7 @@
 
                 <textarea name="content" placeholder="내용 입력"
                           required
-                          style="height: 120px; resize: none; overflow-y: auto;">${sessionScope.insertReservation.content}</textarea>
+                          style="height: 120px; resize: none; overflow-y: auto;"></textarea>
             </div>
 
             <div class="form-row">
@@ -56,11 +58,9 @@
                 <div class="date-picker-container" id="datePickerBtn"
                      style="cursor: pointer; display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
                     <div id="scheduledWrapper" style="margin-right: 10px;">📅</div>
-                    <div id="selectedDateDisplay" class="selected-date" style="flex-grow: 1;">
-                        ${sessionScope.insertReservation.scheduledDate != null ? sessionScope.insertReservation.scheduledDate : '선택된 시간 없음'}
-                    </div>
+                    <div id="selectedDateDisplay" class="selected-date" style="flex-grow: 1;">선택된 시간 없음</div>
                     <input type="text" id="scheduledDate" name="scheduledDate"
-                           value="${sessionScope.insertReservation.scheduledDate}" style="display:none;" required>
+                           value="" style="display:none;" required>
                 </div>
             </div>
 
@@ -84,6 +84,14 @@
                 </div>
             </div>
 
+            <div class="form-row">
+                <label>커버 이미지(선택)</label>
+
+                <div>
+                    <input id="fileInput" type="file" name="coverImgUrl" value="">
+                </div>
+
+            </div>
 
             <div class="form-row">
 
@@ -120,7 +128,7 @@
                 </div>
 
             </div>
-        
+
             <div class="btn-wrapper">
                 <button type="submit" class="reservation-btn">예약하기</button>
                 <a href="reservation?action=list" class="link-btn">돌아가기</a>

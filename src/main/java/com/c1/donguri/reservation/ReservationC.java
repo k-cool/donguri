@@ -39,7 +39,6 @@ public class ReservationC extends HttpServlet {
             request.setAttribute("templateList", templateList);
             request.setAttribute("content", "jsp/reservation/write.jsp");
             request.getRequestDispatcher("main.jsp").forward(request, response);
-
         } else if ("detail".equals(action)) {
             ReservationDTO r = ReservationDAO.RESERVATION_DAO.getOne(request);
             request.setAttribute("r", r);
@@ -81,7 +80,9 @@ public class ReservationC extends HttpServlet {
 
         if ("confirm".equals(action)) {
             TemplateDTO selectedTemplate = ReservationDAO.RESERVATION_DAO.getTemplate(request);
+
             ReservationDAO.RESERVATION_DAO.setReservationDTOToSession(request);
+
             request.setAttribute("selectedTemplate", selectedTemplate);
 
             request.setAttribute("content", "jsp/reservation/confirm.jsp");

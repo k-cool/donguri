@@ -1,4 +1,4 @@
-.write{
+.write {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -21,10 +21,9 @@
     padding: 260px 45px 40px 45px;
 
 
-
 }
 
-form{
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -188,7 +187,6 @@ label::after {
 }
 
 
-
 /* 입력창 */
 input, textarea {
     width: 100%;
@@ -198,13 +196,6 @@ input, textarea {
     box-shadow: none;
     font-size: 0.95rem;
 }
-
-
-/*button[type="submit"]:not(.form-row), .link-btn:not(.form-row) {*/
-/*    display: inline-block;*/
-/*    vertical-align: top;*/
-/*    margin: 30px 10px 0 0;*/
-/*}*/
 
 /* 버튼 */
 .reservation-btn {
@@ -266,11 +257,11 @@ input, textarea {
     width: 100%;
 }
 
-.tab-btn:first-child{
+.tab-btn:first-child {
     width: 110px;
 }
 
-.tab-btn:last-child{
+.tab-btn:last-child {
     width: 81px;
 }
 
@@ -421,6 +412,7 @@ audio {
     transform: translate(-50%, -50%) !important;
     z-index: 9999 !important;
 }
+
 /* Audio player controls - Webkit browsers */
 audio::-webkit-media-controls-panel {
     background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
@@ -523,8 +515,6 @@ audio::-webkit-media-controls-timeline {
     margin: 0 8px;
 }
 
-}
-
 audio::-webkit-media-controls-volume-slider {
     background-color: #f0e6d9;
     border-radius: 3px;
@@ -589,9 +579,6 @@ form > .link-btn::after {
 }
 
 
-
-
-
 /* Textarea fixed height and scroll styling */
 textarea {
     height: 120px;
@@ -620,7 +607,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 
-.btn-wrapper{
+.btn-wrapper {
     display: flex;
     align-items: center;
     gap: 20px;

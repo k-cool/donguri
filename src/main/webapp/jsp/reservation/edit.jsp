@@ -81,20 +81,24 @@
             <div class="form-row">
                 <div class="bgm-section">
                     <label>B G M</label>
-                    <div class="bgm-tabs">
-                        <button type="button" class="tab-btn active" data-genre="Japanese Mood">Japanese Mood</button>
-                        <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
-                        <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
-                        <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
-                        <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
-                    </div>
-
-                    <div class="bgm-container">
-                        <button type="button" class="bgm-arrow left">◀</button>
-                        <div class="bgm-window">
-                            <div class="bgm-track" id="bgmTrack"></div>
+                    <div>
+                        <div class="bgm-tabs">
+                            <button type="button" class="tab-btn active" data-genre="Japanese Mood">Japanese Mood
+                            </button>
+                            <button type="button" class="tab-btn" data-genre="Midnight Blue">Midnight Blue</button>
+                            <button type="button" class="tab-btn" data-genre="Playful Day">Playful Day</button>
+                            <button type="button" class="tab-btn" data-genre="Lofi Chill">Lofi Chill</button>
+                            <button type="button" class="tab-btn" data-genre="Calm & Sad">Calm</button>
                         </div>
-                        <button type="button" class="bgm-arrow right">▶</button>
+
+
+                        <div class="bgm-container">
+                            <button type="button" class="bgm-arrow left">◀</button>
+                            <div class="bgm-window">
+                                <div class="bgm-track" id="bgmTrack"></div>
+                            </div>
+                            <button type="button" class="bgm-arrow right">▶</button>
+                        </div>
                     </div>
 
                     <div class="player-wrapper">

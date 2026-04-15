@@ -518,7 +518,7 @@ public class ReservationDAO {
 
 
         InsertReservationDTO ir = new InsertReservationDTO(
-                request.getParameter("id"),
+                null,
                 user.getUserId(),
                 null,
                 request.getParameter("recipientEmail"),

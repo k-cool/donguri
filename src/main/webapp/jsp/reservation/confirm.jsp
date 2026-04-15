@@ -4,6 +4,8 @@
 
 
 <link rel="stylesheet" href="css/confirm.css"/>
+<script src="js/reservation_indexedDB.js" defer></script>
+
 
 <div class="confirm">
 
@@ -11,7 +13,7 @@
         <h2 class="title">📬 예약 내용 확인 📬</h2>
 
         <div class="confirm-container">
-            
+
             <div class="post-container">
 
                 <svg class="top-cover"
@@ -50,7 +52,7 @@
                              l333.86.19
                              v-.19
                              h0Z"
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-top)"
                     />
 
@@ -102,7 +104,7 @@
         L 140 20
         Z
     "
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-left)"
                     />
 
@@ -152,7 +154,7 @@
         L 10 20
         Z
     "
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-right)"
                     />
 
@@ -169,12 +171,14 @@
                 </svg>
 
 
-                <div class=" post-square post-top">
+                <div class="post-square post-top" style="background-color: \#${selectedTemplate.bgColor}">
                     <div class="texture"></div>
 
                     <div class="img-wrapper">
-                        <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/template/template_sakura_img.png"
-                             alt="cover-img"/>
+                        <img
+                                id="cover-img"
+                                src="${selectedTemplate.coverImgUrl}"
+                                alt="cover-img"/>
                     </div>
 
                     <div class="stamp">
@@ -183,7 +187,7 @@
 
                 </div>
 
-                <div class="post-square post-bottom">
+                <div class="post-square post-bottom" style="background-color: \#${selectedTemplate.bgColor}">
                     <div class="pattern"></div>
                     <div class="texture"></div>
 
@@ -207,7 +211,6 @@
                 </div>
             </div>
 
-            </span>
         </div>
 
 
@@ -221,7 +224,7 @@
     <div id="modal" class="modal-overlay">
         <div class="modal-box">
             <p class="modal-text">
-                📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
+                📬 이 추억은 <strong>${insertReservation.scheduledDate}</strong>에 배달될 예정이야.
             </p>
 
             <div class="modal-actions">
