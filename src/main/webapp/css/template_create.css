@@ -1,0 +1,148 @@
+.reg-container * {
+    box-sizing: border-box;
+
+    /* 혹시라도 CSS 깨지면 얘네 지워주세욘 */
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    color: #6d2e2e;
+}
+
+/* 전체 박스 */
+.reg-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 80px 26px 36px;
+    border: 1.5px dashed #8f4f4f;
+    border-radius: 30px;
+    background: rgba(255, 250, 247, 0.7);
+    text-align: center;
+    position: relative;
+}
+
+/* 상단 라벨 */
+.reg-container::before {
+    content: "{ 새 템플릿 등록 }";
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 14px;
+    background: #e5cfb2;
+    color: #6e3030;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* 라벨 아래 선 */
+.reg-container::after {
+    content: "";
+    position: absolute;
+    top: 58px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: rgba(110, 48, 48, 0.7);
+}
+
+/* 제목 */
+.reg-container h2 {
+    margin: 0 0 24px;
+    font-size: 22px;
+    font-weight: 500;
+    color: #6c2d2d;
+}
+
+/* 한 줄 */
+.row {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* 라벨 */
+.row label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #7a3b3b;
+}
+
+/* 입력창 */
+.row input[type="text"],
+.row input[type="file"],
+.row select {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-bottom: 1.5px solid rgba(109, 46, 46, 0.5);
+    background: transparent;
+    font-size: 14px;
+    color: #5c2d2d;
+    outline: none;
+}
+
+/* placeholder */
+.row input::placeholder {
+    color: rgba(92, 45, 45, 0.5);
+}
+
+/* select 화살표 느낌 줄이기 */
+.row select {
+    appearance: none;
+    background: transparent;
+}
+
+/* 파일 input 조금 정리 */
+.row input[type="file"] {
+    border: none;
+    padding: 6px 0;
+}
+
+/* 버튼 */
+button[type="submit"] {
+    margin-top: 26px;
+    width: 100%;
+    height: 54px;
+    border-radius: 999px;
+    border: none;
+    background: #6f3030;
+    color: #fff7f4;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(111, 48, 48, 0.22);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px);
+    background: #7d3939;
+}
+
+.row input:focus,
+.row select:focus {
+    border-bottom: 1.5px solid #6f3030;
+}
+
+.row input,
+.row select {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-bottom: 1.5px solid rgba(109, 46, 46, 0.4);
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
+    color: #5c2d2d;
+}
+
+.row input[type="file"]::file-selector-button {
+    border: none;
+    padding: 6px 10px;
+    background: #e5cfb2;
+    color: #6e3030;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+}

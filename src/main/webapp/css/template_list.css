@@ -1,0 +1,258 @@
+@charset "UTF-8";
+
+.container * {
+    box-sizing: border-box;
+
+    /* 혹시라도 CSS 깨지면 얘네 지워주세욘 */
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    text-align: center;
+}
+
+.container h2 {
+    display: inline-block;
+    position: relative;
+    margin: 0 0 52px;
+    padding: 0 10px;
+    background: transparent;
+    color: #6e3030;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    z-index: 1;
+}
+
+.container h2::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 302px;
+    height: 28px;
+    background: #e5cfb2;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 카드 배치 */
+.template-grid {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px 24px;
+    margin: 0 auto;
+}
+
+/* 카드 1개 */
+.template-card {
+    width: 300px;
+    min-height: 420px;
+    padding: 36px 18px 28px;
+    border: 1.5px dashed #8f4f4f;
+    border-radius: 26px;
+    background: rgba(255, 250, 247, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 250, 247, 0.72);
+}
+
+/* 링크 전체 클릭 */
+.template-card a {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 이미지 */
+.img-wrapper {
+    width: 170px;
+    margin: 0 auto 18px;
+    flex-shrink: 0;
+}
+
+.img-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* 정보 영역 */
+.info-box {
+    width: 100%;
+    text-align: center;
+}
+
+.type-tag {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 3px 12px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6e3030;
+    background: rgba(229, 207, 178, 0.9);
+}
+
+.info-box h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #6c2d2d;
+    line-height: 1.4;
+    word-break: keep-all;
+}
+
+.info-box h3 strong {
+    font-weight: 500;
+}
+
+.date {
+    font-size: 13px;
+    color: #7a5252;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* 빈 상태 */
+.empty-msg {
+    width: 300px;
+    min-height: 220px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    border: 1.5px dashed #8f4f4f;
+    border-radius: 26px;
+    background: rgba(255, 250, 247, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-msg p {
+    margin: 0;
+    font-size: 15px;
+    color: #7a5c5c;
+    line-height: 1.7;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    .container {
+        padding: 0 18px;
+    }
+
+    .template-card {
+        width: 270px;
+        min-height: 390px;
+    }
+
+    .img-wrapper {
+        width: 145px;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 70px 14px 70px;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .container h2 {
+        font-size: 20px;
+        margin-bottom: 24px;
+    }
+
+    .container:has(a[href^="template-detail?"]) > h2 {
+        font-size: 13px;
+        margin-bottom: 28px;
+        padding: 4px 10px;
+    }
+
+    .template-grid {
+        gap: 18px;
+    }
+
+    .template-card,
+    .empty-msg {
+        width: min(100%, 290px);
+    }
+
+    .template-card {
+        min-height: 370px;
+        padding: 26px 14px 22px;
+    }
+
+    .img-wrapper {
+        width: 135px;
+        margin-bottom: 14px;
+    }
+
+    .info-box h3 {
+        font-size: 15px;
+    }
+
+    .date {
+        font-size: 12px;
+    }
+}
+
+html,
+body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+body {
+    min-height: 100vh !important;
+    position: static !important;
+}
+
+.container {
+    position: relative !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.template-grid {
+    position: static !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    align-content: flex-start !important;
+}
+
+.template-card {
+    position: relative !important;
+}

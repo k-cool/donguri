@@ -463,12 +463,15 @@ audio {
     transform: translate(-50%, -50%) !important;
     z-index: 9999 !important;
 }
+
 /* Audio player controls - Webkit browsers */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-panel {
     background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
     border-radius: 18px;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-pause-button {
     background-color: #f9f5f0;
@@ -480,6 +483,7 @@ audio::-webkit-media-controls-pause-button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display {
     color: #f9f5f0;
@@ -487,6 +491,7 @@ audio::-webkit-media-controls-time-remaining-display {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-timeline {
     background-color: rgba(249, 245, 240, 0.3);
     border-radius: 10px;
@@ -494,12 +499,14 @@ audio::-webkit-media-controls-timeline {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-volume-slider {
     background-color: rgba(249, 245, 240, 0.3);
     border-radius: 10px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-mute-button,
 audio::-webkit-media-controls-toggle-closed-captions-button {
     background-color: #f9f5f0;
@@ -512,6 +519,7 @@ audio::-webkit-media-controls-toggle-closed-captions-button {
 }
 
 /* Firefox audio styling */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-moz-media-controls-panel {
     background: linear-gradient(135deg, #8b7355 0%, #6b5637 100%);
     border-radius: 18px;
@@ -528,12 +536,14 @@ audio {
 }
 
 /* Webkit audio controls */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-panel {
     background: #ffffff;
     border-radius: 6px;
     padding: 4px;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-pause-button {
     background-color: #f0e6d9;
@@ -545,12 +555,14 @@ audio::-webkit-media-controls-pause-button {
     transition: all 0.2s ease;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-play-button:hover,
 audio::-webkit-media-controls-pause-button:hover {
     background-color: #e0d5c1;
     transform: scale(1.05);
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display {
     color: #3b110b;
@@ -558,6 +570,7 @@ audio::-webkit-media-controls-time-remaining-display {
     font-weight: 500;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-timeline {
     background-color: #f0e6d9;
     border-radius: 3px;
@@ -565,14 +578,14 @@ audio::-webkit-media-controls-timeline {
     margin: 0 8px;
 }
 
-}
-
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-volume-slider {
     background-color: #f0e6d9;
     border-radius: 3px;
     margin-left: 8px;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-mute-button,
 audio::-webkit-media-controls-toggle-closed-captions-button {
     background-color: #f0e6d9;
@@ -584,6 +597,7 @@ audio::-webkit-media-controls-toggle-closed-captions-button {
     transition: all 0.2s ease;
 }
 
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-mute-button:hover,
 audio::-webkit-media-controls-toggle-closed-captions-button:hover {
     background-color: #e0d5c1;
@@ -591,6 +605,7 @@ audio::-webkit-media-controls-toggle-closed-captions-button:hover {
 }
 
 /* Fix speaker button vertical alignment */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-mute-button {
     vertical-align: middle;
     margin-top: 0;
@@ -599,6 +614,7 @@ audio::-webkit-media-controls-mute-button {
 }
 
 /* Adjust volume slider position */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-volume-slider {
     vertical-align: middle;
     margin-top: 0;
@@ -606,6 +622,7 @@ audio::-webkit-media-controls-volume-slider {
 }
 
 /* Remove timeline progress color */
+/*noinspection CssInvalidPseudoSelector*/
 audio::-webkit-media-controls-timeline::-webkit-media-controls-time-fill {
     background-color: transparent;
 }
@@ -629,9 +646,6 @@ form > button[type="submit"]::after,
 form > .link-btn::after {
     display: none !important;
 }
-
-
-
 
 
 /* Textarea fixed height and scroll styling */
