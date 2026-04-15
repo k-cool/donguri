@@ -12,52 +12,39 @@ header {
     top: 0;
     left: 0;
     width: 100vw;
-    z-index: 1100;
+    height: 142px;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    border: none;
     box-sizing: border-box;
-    /* 🚨 핵심 1: 헤더의 빈 공간이 화면 뒤쪽 버튼 클릭을 방해하지 않게 유령 취급 */
-    pointer-events: none;
+    z-index: 1100;
 }
 
 /* -------------------------------------
    2. 1층 상단 (찢어진 종이 테마)
 -------------------------------------- */
 .hd-header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 135px;
-
-    /* 🚨 수정: background를 한 줄로 합치고 크기를 cover로 변경 */
-    background: url('../image/header.svg') center center / cover no-repeat;
-
-    padding: 0 40px;
-    box-sizing: border-box;
     position: relative;
-    z-index: 2;
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid #e0e8f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 🚨 진짜로 클릭해야 하는 로고, KOR/JP, 도토리 버튼만 클릭 기능 부활 */
-.hd-header-left, .hd-logo-center, .hd-header-right {
-    pointer-events: auto;
-}
+/*.hd-header-left, .hd-logo-center, .hd-header-right {*/
+/*    pointer-events: auto;*/
+/*}*/
 
 
 .hd-menu-btn {
-    width: 60px;
+    width: 80px;
     height: 60px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0;
-
-    /* 🚨 추가: 애니메이션이 부드럽게 이어지도록 설정 */
     transition: transform 0.2s ease-in-out;
 }
 
@@ -66,75 +53,105 @@ header {
     transform: scale(1.1) rotate(-5deg); /* 도장 애니메이션처럼 살짝 삐딱하게 */
 }
 
-/* 정중앙: 동구리 우편 로고 */
-.hd-logo-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hd-logo-center img {
+.hd-logo {
     height: 48px;
 }
 
 .hd-header-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     position: absolute;
-    right: 40px;
-    top: 40%;
+    right: 20px;
+    top: 50%;
     transform: translateY(-50%);
+}
+
+.hd-header-bottom {
+    /*position: relative;*/
+    width: 100%;
+    height: 42px;
+    background-color: rgba(110, 223, 211, 0.64);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.hd-main-nav {
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: 50%;*/
+    /*transform: translateX(-50%);*/
+    display: flex;
+}
+
+.hd-nav-menu {
+    display: flex;
+    gap: 20px;
+}
+
+.hd-nav-menu a {
+    text-decoration: none;
+
+}
+
+.hd-main-nav-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    height: 36px;
+    color: #004d40;
+    /*font-weight: ;*/
+    font-size: 18px;
+
+}
+
+.hd-main-nav-btn.active {
+    background: url("/image/menu_texture.png") no-repeat center center transparent;
 }
 
 /* -------------------------------------
    3. 2층 하단 (민트색 바 & 탭)
 -------------------------------------- */
-.hd-header-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* 🚨 탭들이 바닥에 딱 붙게 정렬 */
-    width: 100%;
-    height: 45px;
-    background-color: #6edfd3;
-    margin-top: -15px;
-    z-index: 1;
-    pointer-events: auto;
-}
+/*.hd-header-bottom {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: flex-end; !* 🚨 탭들이 바닥에 딱 붙게 정렬 *!*/
+/*    width: 100%;*/
+/*    height: 45px;*/
+/*    background-color: #6edfd3;*/
+/*    margin-top: -15px;*/
+/*    z-index: 1;*/
+/*    pointer-events: auto;*/
+/*}*/
 
-.hd-nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 10px; /* 탭 사이 간격을 살짝 주면 시안처럼 더 예쁩니다 */
-    height: 100%; /* 부모 높이를 100% 채움 */
-}
+/*.hd-nav-menu {*/
+/*    display: flex;*/
+/*    list-style: none;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    gap: 10px; !* 탭 사이 간격을 살짝 주면 시안처럼 더 예쁩니다 *!*/
+/*    height: 100%; !* 부모 높이를 100% 채움 *!*/
+/*}*/
 
-.hd-nav-menu li {
-    display: flex;
-    align-items: flex-end; /* li 안에서도 a태그가 바닥에 붙게 설정 */
-}
+/*.hd-nav-menu li {*/
+/*    display: flex;*/
+/*    align-items: flex-end; !* li 안에서도 a태그가 바닥에 붙게 설정 *!*/
+/*}*/
 
-.hd-nav-menu a {
-    display: block; /* 🚨 핵심: 인라인 요소를 블록으로 바꿔서 형태를 꽉 채우게 만듦 */
-    text-decoration: none;
-    color: #004d40;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 12px 35px 10px; /* 위, 양옆, 아래 여백 (아래 여백을 살짝 줄여 바닥에 밀착) */
-    border-radius: 15px 15px 0 0; /* 🚨 모서리 둥글기를 평상시에도 미리 줘서 호버 시 안 끊기게 함 */
-    transition: all 0.2s ease;
-}
+/*.hd-nav-menu a {*/
+/*    display: block; !* 🚨 핵심: 인라인 요소를 블록으로 바꿔서 형태를 꽉 채우게 만듦 *!*/
+/*    text-decoration: none;*/
+/*    color: #004d40;*/
+/*    font-weight: bold;*/
+/*    font-size: 14px;*/
+/*    padding: 12px 35px 10px; !* 위, 양옆, 아래 여백 (아래 여백을 살짝 줄여 바닥에 밀착) *!*/
+/*    border-radius: 15px 15px 0 0; !* 🚨 모서리 둥글기를 평상시에도 미리 줘서 호버 시 안 끊기게 함 *!*/
+/*    transition: all 0.2s ease;*/
+/*}*/
 
-.hd-nav-menu a.hd-active, .hd-nav-menu a:hover {
-    background-color: #f7ead9; /* 시안의 종이 배경과 비슷한 베이지색 */
-    color: #d35400; /* 포인트 주황색 */
-}
+/*.hd-nav-menu a.hd-active, .hd-nav-menu a:hover {*/
+/*    background-color: #f7ead9; !* 시안의 종이 배경과 비슷한 베이지색 *!*/
+/*    color: #d35400; !* 포인트 주황색 *!*/
+/*}*/
 
 /* -------------------------------------
    4. 햄버거 슬라이드 메뉴 (모눈종이 & 우표)
@@ -143,9 +160,9 @@ header {
     position: fixed;
     /* 🚨 JS에서 닫을 때 -350px로 닫혀야 화면 밖으로 완벽히 숨습니다 */
     right: -350px;
-    top: 120px;
+    top: 142px;
     width: 320px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 142px);
     background-color: #fdfdfd;
     background-image: linear-gradient(#e0e8f0 1px, transparent 1px),
     linear-gradient(90deg, #e0e8f0 1px, transparent 1px);
@@ -161,45 +178,29 @@ header {
 
 /* 우표 형태 프로필 사진 영역 */
 .hd-user-info {
-    text-align: left;
-    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 /* 기본 프로필 이미지만 위한 스타일 */
 .hd-default-pic {
-    max-width: 100px !important;
-    max-height: 130px !important;
+    width: 100px !important;
+    height: 100px !important;
 }
 
-.hd-profile-pic {
-    max-width: 140px;
-    max-height: 180px;
-    margin: 0 auto 20px auto;
-    display: block;
-    object-fit: contain;
-    overflow: hidden;
+.hd-profile-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 140px;
+    background: url('/image/frame.png') center center / cover no-repeat;
+}
 
-    /* frame.png를 엽서 테두리로 사용 */
-    border: none;
-    padding: 39px;
-    background: url('../image/frame.png') center center / contain no-repeat;
-
-    /* 2. 🚨 수정된 마스크: 가운데 사진 보호 + 테두리 펀칭 */
-    -webkit-mask-image: linear-gradient(#000, #000), /* 첫 번째 층: 가운데를 가려주는 방패 */ radial-gradient(circle at 6px 6px, transparent 6px, #000 6.5px); /* 두 번째 층: 우표 톱니바퀴 */
-    -webkit-mask-position: center,
-    -6px -6px;
-    -webkit-mask-size: calc(100% - 12px) calc(100% - 12px), /* 방패 크기를 줄여서 가장자리 6px만 노출 */ 16px 16px; /* 톱니바퀴 반복 사이즈 */
-    -webkit-mask-repeat: no-repeat,
-    repeat;
-
-    mask-image: linear-gradient(#000, #000),
-    radial-gradient(circle at 6px 6px, transparent 6px, #000 6.5px);
-    mask-position: center,
-    -6px -6px;
-    mask-size: calc(100% - 12px) calc(100% - 12px),
-    16px 16px;
-    mask-repeat: no-repeat,
-    repeat;
+.hd-user-info-text {
+    text-align: left;
 }
 
 .hd-nickname, .hd-user-email {
@@ -212,21 +213,21 @@ header {
 
 /* 테이프 모양의 버튼 메뉴 */
 .hd-sub-menu {
-    list-style: none;
-    padding: 0;
-    margin: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .hd-sub-menu a {
     display: block;
     background: url('../image/masking_tape.png') center center / cover no-repeat;
+    width: 190px;
     color: #5d4037;
-    margin-bottom: 20px;
-    padding: 15px;
+    padding: 15px 0;
     text-decoration: none;
-    font-weight: bold;
     text-align: center;
-        transition: transform 0.2s;
+    transition: transform 0.2s;
 }
 
 .hd-sub-menu a:hover {
@@ -235,21 +236,27 @@ header {
 }
 
 .hd-logout-menu {
+    margin-top: 20px;
+    width: 190px;
     list-style: none;
     padding: 0;
-    margin-top: 50px;
     display: flex;
     justify-content: flex-end; /* 오른쪽 정렬 */
 }
 
 .hd-logout-menu a {
-    display: inline-block;
+    width: 120px;
+    height: 32px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     color: #7b1e1a; /* 시그니처 짙은 붉은색 */
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
     font-family: 'Courier New', 'Malgun Gothic', sans-serif; /* 타자기 느낌 폰트 */
     text-decoration: none;
-    padding: 6px 14px;
+    /*padding: 6px 14px;*/
 
     /* 스탬프 테두리 느낌 */
     border: 2px dashed #7b1e1a;
@@ -275,59 +282,55 @@ header.hd-sub-header .hd-header-bottom {
 /* -------------------------------------
    5. 모바일 전용 스타일 (화면 너비 768px 이하)
 -------------------------------------- */
-@media screen and (max-width: 768px) {
-    .hd-header-top {
-        height: 120px !important;
-        padding: 0 15px !important;
-        position: relative;
-        overflow: hidden;
-        background: none !important;
-    }
+/*@media screen and (max-width: 768px) {*/
+/*    .hd-header-top {*/
+/*        height: 120px !important;*/
+/*        padding: 0 15px !important;*/
+/*        position: relative;*/
+/*        overflow: hidden;*/
+/*        background: none !important;*/
+/*    }*/
 
-    .hd-header-top::after {
-        content: "";
-        position: absolute;
-        /* 🚨 핵심: 이미지를 위로 살짝(-20px) 들어 올려서,
-           숨어있던 바닥의 찢어진 자국이 헤더 안으로 들어오게 합니다. */
-        bottom: -20px;
-        left: 50%;
-        transform: translateX(-50%);
+/*.hd-header-top::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    !* 🚨 핵심: 이미지를 위로 살짝(-20px) 들어 올려서,*/
+/*       숨어있던 바닥의 찢어진 자국이 헤더 안으로 들어오게 합니다. *!*/
+/*    bottom: -20px;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    !* 옆쪽 크기 조절: 180% 유지 *!*/
+/*    width: 180%;*/
+/*    !* 🚨 높이를 130% 정도로 넉넉히 줘야 위로 올렸을 때 정수리가 안 비어 보입니다. *!*/
+/*    height: 130%;*/
+/*    background: url('../image/header.svg') no-repeat center bottom;*/
+/*    background-size: cover !important;*/
+/*    z-index: -1;*/
+/*    pointer-events: none;*/
+/*}*/
+/* 로고와 버튼 위치는 배경과 상관없이 정중앙 유지 */
+/*    .hd-header-left {*/
+/*        transform: none !important;*/
+/*        display: flex;*/
+/*        align-items: center;*/
+/*        height: 100%;*/
+/*    }*/
 
-        /* 옆쪽 크기 조절: 180% 유지 */
-        width: 180%;
-        /* 🚨 높이를 130% 정도로 넉넉히 줘야 위로 올렸을 때 정수리가 안 비어 보입니다. */
-        height: 130%;
+/*    .hd-logo-center {*/
+/*        top: 50% !important;*/
+/*        transform: translate(-50%, -50%) !important;*/
+/*    }*/
 
-        background: url('../image/header.svg') no-repeat center bottom;
-        background-size: cover !important;
+/*    .hd-logo-center img {*/
+/*        height: 42px !important;*/
+/*    }*/
 
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    /* 로고와 버튼 위치는 배경과 상관없이 정중앙 유지 */
-    .hd-header-left {
-        transform: none !important;
-        display: flex;
-        align-items: center;
-        height: 100%;
-    }
-
-    .hd-logo-center {
-        top: 50% !important;
-        transform: translate(-50%, -50%) !important;
-    }
-
-    .hd-logo-center img {
-        height: 42px !important;
-    }
-
-    .hd-header-right {
-        right: 15px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-    }
-}
+/*    .hd-header-right {*/
+/*        right: 15px !important;*/
+/*        top: 50% !important;*/
+/*        transform: translateY(-50%) !important;*/
+/*    }*/
+/*}*/
 
 /* -------------------------------------
    6. 로그인 / 회원가입 버튼 (비로그인 상태)

@@ -1,3 +1,17 @@
+/*
+ * 메뉴 클릭시 active 클래스 토글 이벤트
+ */
+const menuList = document.querySelectorAll("hd-main-nav-btn");
+
+menuList.forEach(menu => {
+
+    menu.addEventListener("click", () => {
+        menuList.forEach(m => m.classList.remove("active"));
+        menu.classList.add("active");
+    });
+
+});
+
 $(function () {
     let menuVisible = false;
 
