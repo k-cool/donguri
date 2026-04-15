@@ -1,15 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<html>
-<head>
-    <title>마이페이지</title>
-    <link rel="stylesheet" href="css/mypage.css">
-</head>
-<body>
+
+<%-- 마이페이지 전용 CSS --%>
+<link rel="stylesheet" href="css/mypage.css">
 
 <div class="mypage-wrapper">
-    <h2>마이페이지</h2>
+    <h2> 마이페이지 </h2>
 
     <div class="profile-section">
         <c:choose>
@@ -43,7 +39,5 @@
     </div>
 </div>
 
+<%-- 마이페이지 전용 JS --%>
 <script src="js/mypage.js"></script>
-
-</body>
-</html>

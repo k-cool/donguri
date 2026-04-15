@@ -1,54 +1,127 @@
-/* 성공 메시지 컨테이너 */
+/* 기본 배경 설정 (이전 페이지들과 완벽히 통일) */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea;
+    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+    /* 혹시 모를 밀림 방지 */
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 회원가입 완료 안내 박스 */
 .success-container {
-    max-width: 500px;
-    margin: 80px auto;
-    padding: 50px 30px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    text-align: center; /* 모든 요소 중앙 정렬 */
-    border: 1px solid #f1f3f5;
+    /* 치우침 방지를 위한 절대 중앙 정렬 */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    width: 400px;
+    padding: 50px 40px; /* 상하 여백을 넉넉히 주어 여유롭게 */
+    background-color: rgba(255, 255, 255, 0.85); /* 텍스트가 잘 보이도록 약간 불투명하게 */
+    border: 2px dashed #8b5a42;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
 }
 
-/* 제목 스타일 (축하 문구) */
+/* 축하 문구 제목 ( { } 기호 추가로 디자인 통일 ) */
 .success-container h2 {
-    font-size: 28px;
-    color: #333;
+    color: #5d3a2a;
+    font-size: 1.6rem;
+    margin-top: 0;
     margin-bottom: 20px;
-    font-weight: 700;
 }
 
-/* 안내 문구 */
+.success-container h2::before {
+    content: "{ ";
+}
+
+.success-container h2::after {
+    content: " }";
+}
+
+/* 본문 텍스트 */
 .success-container p {
-    font-size: 16px;
-    color: #666;
-    line-height: 1.6;
+    color: #5d3a2a;
+    font-size: 1rem;
     margin-bottom: 40px;
+    line-height: 1.5;
+    word-break: keep-all; /* 단어 단위로 줄바꿈되어 깔끔하게 */
 }
 
-/* 버튼 영역 */
-.success-container .button-group {
-    display: flex;
-    justify-content: center;
+/* 버튼 그룹 및 로그인 버튼 */
+.button-group {
+    width: 100%;
 }
 
-/* 로그인 이동 버튼 */
-.success-container button {
-    width: 200px;
-    height: 55px;
-    background-color: #ff6b6b; /* 회원가입 버튼과 동일한 포인트 컬러 */
-    color: #fff;
+.button-group button {
+    width: 100%;
+    padding: 14px;
+    background-color: #5d0000; /* 로그인 페이지와 동일한 와인색 */
+    color: white;
     border: none;
-    border-radius: 30px; /* 둥근 버튼 스타일 */
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    transition: background 0.3s ease;
 }
 
-.success-container button:hover {
-    background-color: #ee5253;
-    transform: translateY(-2px); /* 살짝 떠오르는 효과 */
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+.button-group button:hover {
+    background-color: #3e0000;
+}
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 1. 배경 설정 (스크롤 허용 및 고정 헤더 겹침 방지) */
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+        padding-top: 130px; /* 🚨 헤더 높이만큼 안전 거리 확보 */
+    }
+
+    /* 2. 회원가입 완료 박스 크기 및 유연한 위치 조정 */
+    .success-container {
+        width: 85%; /* 화면 너비의 85% 사용 */
+        padding: 40px 20px; /* 상하좌우 여백 모바일에 맞게 축소 */
+        border-radius: 20px;
+
+        /* 강제 중앙 고정(absolute) 해제하고 자연스럽게 흐르도록 변경 */
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0 auto 40px auto; /* 가로 중앙 정렬 및 하단 여유 공간 */
+    }
+
+    /* 3. 제목 및 안내 메시지 글씨 크기 다이어트 */
+    .success-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .success-container p {
+        font-size: 0.95rem;
+        margin-bottom: 30px; /* 버튼과의 간격 살짝 축소 */
+    }
+
+    /* 4. 로그인 버튼 크기 조절 */
+    .button-group button {
+        padding: 12px;
+        font-size: 1rem;
+    }
 }
