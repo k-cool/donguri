@@ -149,11 +149,11 @@
 
 #textImage {
     position: absolute;
-    top: 15%; /* 시안처럼 화면 중앙보다 살짝 위쪽에 오도록 위치 조정 (기존 25% -> 35%) */
+    top: 28%; /* 시안처럼 화면 중앙보다 살짝 위쪽에 오도록 위치 조정 (기존 25% -> 35%) */
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 1s ease-in-out;
     z-index: 15;
     pointer-events: none;
 
