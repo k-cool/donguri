@@ -79,7 +79,7 @@
                     <img src="${sessionScope.user.profileImgUrl}" alt="Profile" class="hd-profile-pic">
                 </c:when>
                 <c:otherwise>
-                    <img src="image/background.png" alt="Profile" class="hd-profile-pic">
+                    <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/profile/squirrel_img.png" alt="Profile" class="hd-profile-pic hd-default-pic">
                 </c:otherwise>
             </c:choose>
             <p class="hd-user-email">이메일: ${sessionScope.user.email}</p>
@@ -87,7 +87,7 @@
             <ul class="hd-sub-menu">
                 <li><a href="mypage">My page</a></li>
                 <li><a href="template-list">Template Storage</a></li>
-                <li><a href="#">Contacts</a></li>
+                <li><a href="inquiry">Contacts</a></li>
             </ul>
         </div>
         <ul class="hd-logout-menu">

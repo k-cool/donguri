@@ -84,3 +84,47 @@ body {
 .btn-home:hover {
     background-color: #3e0000;
 }
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 1. 배경 설정 (스크롤 허용 및 고정 헤더 피하기) */
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+        padding-top: 130px; /* 🚨 1층 헤더 높이만큼 띄워주기 */
+    }
+
+    /* 2. 안내 박스 크기 및 위치 조정 */
+    .delete-success-wrapper {
+        width: 85%; /* 화면의 85%만 차지 */
+        padding: 40px 20px; /* 상하좌우 여백 축소 */
+        border-radius: 20px;
+
+        /* 화면 중앙 강제 고정을 풀고 위에서부터 자연스럽게 배치 */
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0 auto 40px auto; /* 가로 가운데 정렬 및 하단 여백 */
+    }
+
+    /* 3. 제목 및 안내 메시지 폰트 다이어트 */
+    .delete-success-wrapper h2 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .success-message p {
+        font-size: 0.95rem;
+        margin: 6px 0;
+    }
+
+    /* 4. 홈으로 버튼 크기 조절 */
+    .btn-home {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

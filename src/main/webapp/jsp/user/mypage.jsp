@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="css/mypage.css">
 
 <div class="mypage-wrapper">
-    <h2>{ 마이페이지 }</h2>
+    <h2> 마이페이지 </h2>
 
     <div class="profile-section">
         <c:choose>

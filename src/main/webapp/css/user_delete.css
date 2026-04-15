@@ -154,3 +154,58 @@ input[type="password"]:focus {
 .btn-delete:hover {
     background-color: #3e0000;
 }
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 1. 배경 설정 (스크롤 허용 및 고정 헤더 밑으로 숨는 현상 방지) */
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+        align-items: flex-start; /* 화면 위쪽부터 차곡차곡 쌓기 */
+        padding-top: 130px; /* 🚨 1층 헤더 높이만큼 위쪽 여유 공간 확보 */
+    }
+
+    /* 2. 탈퇴 폼 컨테이너 크기 조절 */
+    .user-delete-wrapper {
+        width: 85%; /* 화면 너비의 85% 차지 */
+        padding: 30px 20px; /* 상하좌우 여백 다이어트 */
+        border-radius: 20px;
+
+        /* 강제 정중앙 고정(absolute)을 풀고 자연스럽게 배치 */
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0 auto 40px auto; /* 가로 중앙 정렬 및 하단 여백 추가 */
+    }
+
+    /* 3. 텍스트 및 경고문 크기 조절 */
+    .user-delete-wrapper h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .warning-text {
+        font-size: 0.9rem; /* 글씨 크기 축소 */
+        padding: 12px; /* 안쪽 여백 축소 */
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    input[type="password"] {
+        font-size: 0.95rem;
+        padding: 10px 12px; /* 입력창 높이 살짝 축소 */
+    }
+
+    /* 4. 나란히 있는 두 버튼의 크기 다이어트 */
+    .btn-cancel, .btn-delete {
+        padding: 12px;
+        font-size: 0.95rem; /* 화면이 좁아도 두 버튼이 예쁘게 들어가도록 폰트 축소 */
+    }
+}

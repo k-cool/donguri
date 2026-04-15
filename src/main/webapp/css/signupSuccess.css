@@ -81,3 +81,47 @@ body {
 .button-group button:hover {
     background-color: #3e0000;
 }
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 1. 배경 설정 (스크롤 허용 및 고정 헤더 겹침 방지) */
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+        padding-top: 130px; /* 🚨 헤더 높이만큼 안전 거리 확보 */
+    }
+
+    /* 2. 회원가입 완료 박스 크기 및 유연한 위치 조정 */
+    .success-container {
+        width: 85%; /* 화면 너비의 85% 사용 */
+        padding: 40px 20px; /* 상하좌우 여백 모바일에 맞게 축소 */
+        border-radius: 20px;
+
+        /* 강제 중앙 고정(absolute) 해제하고 자연스럽게 흐르도록 변경 */
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0 auto 40px auto; /* 가로 중앙 정렬 및 하단 여유 공간 */
+    }
+
+    /* 3. 제목 및 안내 메시지 글씨 크기 다이어트 */
+    .success-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .success-container p {
+        font-size: 0.95rem;
+        margin-bottom: 30px; /* 버튼과의 간격 살짝 축소 */
+    }
+
+    /* 4. 로그인 버튼 크기 조절 */
+    .button-group button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

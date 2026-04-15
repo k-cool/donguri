@@ -140,3 +140,56 @@ input[type="file"] {
     margin-top: 4px;
     margin-left: 5px;
 }
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 🚨 추가된 부분: 세로 중앙 정렬을 풀고, 헤더 높이만큼 띄워줍니다 */
+    body {
+        align-items: flex-start; /* 화면 위쪽에서부터 차곡차곡 쌓이도록 변경 */
+        padding-top: 130px; /* 고정 헤더(110px)보다 조금 더 넉넉하게 위쪽 공간 확보 */
+    }
+
+    .join-container {
+        width: 85%;
+        padding: 30px 20px;
+        border-radius: 20px;
+
+        position: relative;
+        top: auto; /* top: 0 대신 auto로 변경 */
+        left: auto; /* left: 0 대신 auto로 변경 */
+        transform: none;
+
+        /* padding-top을 주었으니 위쪽 마진은 0으로, 좌우는 중앙 정렬(auto), 아래는 40px 여유 */
+        margin: 0 auto 40px auto;
+    }
+
+    /* (아래쪽은 아까 추가했던 코드 그대로 유지) */
+    .join-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="password"] {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    .input-flex {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btn-secondary {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .btn-signup {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

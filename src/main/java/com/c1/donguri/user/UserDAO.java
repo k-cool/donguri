@@ -21,7 +21,7 @@ public class UserDAO {
     public static final UserDAO USER_DAO = new UserDAO();
 
     // 기본 프로필 이미지 URL
-    private static final String DEFAULT_PROFILE_IMAGE = "https://donguri-dev.s3.ap-northeast-2.amazonaws.com/profile_img/donguriSample.png";
+    private static final String DEFAULT_PROFILE_IMAGE = "https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/profile/squirrel_img.png";
 
     private UserDAO() {
     }

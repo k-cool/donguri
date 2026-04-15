@@ -123,3 +123,32 @@ input::placeholder {
     top: 50px;
     font-size: 2rem;
 }
+
+/* -------------------------------------
+   모바일 전용 스타일 (화면 너비 768px 이하)
+-------------------------------------- */
+@media screen and (max-width: 768px) {
+    .login-container {
+        /* 고정된 400px 대신 화면 너비의 85%만 차지하도록 유연하게 변경 */
+        width: 85%;
+
+        /* 좁은 화면에 맞춰 안쪽 여백(padding)도 위아래 30px, 좌우 20px로 살짝 줄임 */
+        padding: 30px 20px;
+
+        /* 모서리 둥글기도 모바일 비율에 맞게 살짝 다듬기 */
+        border-radius: 20px;
+    }
+
+    .login-container h2 {
+        /* 제목 글씨 크기도 모바일에 맞게 살짝 축소 */
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        /* 모바일에서 터치하기 편하도록 입력창 크기 유지 및 폰트 사이즈 조정 */
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+}
