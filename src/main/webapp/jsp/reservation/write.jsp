@@ -13,7 +13,7 @@
 <script src="js/reservation_write_template.js" defer></script>
 <script src="js/bgmplay.js" defer></script>
 <script src="js/reservation_indexedDB.js" defer></script>
-
+<script src="js/reservation_session_storage.js" defer></script>
 
 <div class="write">
 
@@ -130,7 +130,7 @@
             </div>
 
             <div class="btn-wrapper">
-                <button type="submit" class="reservation-btn">예약하기</button>
+                <button type="submit" class="reservation-btn" onclick="saveReservation()">예약하기</button>
                 <a href="reservation?action=list" class="link-btn">돌아가기</a>
             </div>
         </form>

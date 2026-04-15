@@ -34,9 +34,13 @@ function saveImageToDB(file) {
 }
 
 // HTML input 이벤트 연결
-document.getElementById('fileInput').addEventListener('change', (e) => {
+document.getElementById('fileInput')?.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (file) saveImageToDB(file);
+    if (file) {
+        saveImageToDB(file);
+        const fileName = file.name;
+        document.getElementById('fileName').value = fileName;
+    }
 });
 
 
@@ -65,6 +69,8 @@ function loadImageFromDB() {
                 const coverImg = document.getElementById('cover-img');
                 coverImg.src = imgUrl;
 
+                console.log(imgUrl);
+
                 // 전송을 위해 전역 변수나 클로저에 보관
                 // window.selectedFile = file;
             }
@@ -72,8 +78,10 @@ function loadImageFromDB() {
     };
 }
 
-window.onload = loadImageFromDB;
-
+(() => {
+    loadImageFromDB();
+    console.log("loadImageFromDB called")
+})();
 
 // 2. 서버로 멀티파트 업로드 (자바 서블릿 전송)
 // async function uploadToServer() {
