@@ -1,29 +1,9 @@
-@charset "UTF-8";
-
-@font-face {
-    font-family: 'Galmuri11';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-display: swap;
-}
-
-* {
+.detail-container * {
     box-sizing: border-box;
-}
 
-html,
-body {
+    /* 혹시라도 CSS 깨지면 얘네 지워주세욘 */
     margin: 0;
-    padding: 0;
     min-height: 100%;
-    color: #6d2e2e;
-}
-
-body {
-    background: url("../image/background.png") no-repeat center center fixed;
-    background-size: cover;
-    padding: 70px 20px 100px;
-    font-family: "Galmuri11", "Malgun Gothic", sans-serif;
 }
 
 /* 전체 상세 카드 */
