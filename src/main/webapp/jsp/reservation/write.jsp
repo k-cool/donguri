@@ -120,7 +120,7 @@
                 </div>
 
             </div>
-
+        
             <div class="btn-wrapper">
                 <button type="submit" class="reservation-btn">예약하기</button>
                 <a href="reservation?action=list" class="link-btn">돌아가기</a>
