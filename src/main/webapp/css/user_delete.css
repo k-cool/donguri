@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
 /* 기본 배경 설정 (전체 페이지 통일) */
 body {
     margin: 0;
@@ -8,7 +9,6 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
     width: 100%;
     height: 100vh;
@@ -41,13 +41,6 @@ body {
     margin-bottom: 20px;
 }
 
-.user-delete-wrapper h2::before {
-    content: "{ ";
-}
-
-.user-delete-wrapper h2::after {
-    content: " }";
-}
 
 /* 탈퇴 경고 텍스트 */
 .warning-text {

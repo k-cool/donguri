@@ -1,8 +1,8 @@
 /* 🚨 여백 발생의 주범인 body 기본 마진 강제 삭제 */
-body {
-    margin: 0 !important;
-    padding: 0 !important;
-}
+/*body {*/
+/*    margin: 0 !important;*/
+/*    padding: 0 !important;*/
+/*}*/
 
 /* -------------------------------------
    1. 전체 헤더 뼈대
@@ -204,7 +204,6 @@ header {
 }
 
 .hd-nickname, .hd-user-email {
-    font-family: 'Courier New', monospace;
     color: #4e342e;
     font-size: 14px;
     margin: 5px 0;
@@ -254,7 +253,6 @@ header {
     color: #7b1e1a; /* 시그니처 짙은 붉은색 */
     font-size: 18px;
     font-weight: bold;
-    font-family: 'Courier New', 'Malgun Gothic', sans-serif; /* 타자기 느낌 폰트 */
     text-decoration: none;
     /*padding: 6px 14px;*/
 
@@ -429,19 +427,22 @@ header.hd-sub-header .hd-header-bottom {
 -------------------------------------- */
 .nav-menu {
     display: flex;
-    gap: 10px;
-    pointer-events: auto; /* 버튼 클릭 활성화 */
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end; /* 버튼들을 오른쪽으로 밀착 */
+    /*gap: 10px;*/
+    /*width: auto; !* 부모 너비가 너무 넓게 잡히지 않도록 확인 *!*/
 }
 
 .nav-menu button {
     cursor: pointer;
-    font-family: 'Courier New', 'Malgun Gothic', sans-serif;
     font-weight: bold;
     font-size: 14px;
     padding: 8px 16px;
     border-radius: 20px; /* 둥근 버튼 형태 */
     transition: all 0.2s ease;
     border: 2px solid transparent; /* 호버 시 테두리 변화를 위한 기본 투명 테두리 */
+    white-space: nowrap;
 }
 
 /* 회원가입 버튼: 배경 없이 테두리만 있는 스타일 */
