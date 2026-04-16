@@ -27,6 +27,13 @@ h2 {
     margin-bottom: 30px;
     letter-spacing: -1px;
     text-align: center;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* 투명색이 40%에서 끝나고, 형광펜 색이 '바로 그 지점(40%)'에서 시작하게 설정 */
+    background: linear-gradient(to top, rgba(193, 167, 137, 0.43) 60%, transparent 60%);
 }
 
 /* 정보 영역 (받는 사람, 제목 등) */
@@ -85,12 +92,11 @@ hr {
     padding: 12px 25px;
     border-radius: 12px;
     text-decoration: none;
-    font-weight: bold;
     transition: all 0.3s ease;
 }
 
 .btn-edit {
-    background-color: #795548;
+    background-color: #593e34;
     color: white;
 }
 

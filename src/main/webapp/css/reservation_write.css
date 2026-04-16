@@ -232,6 +232,21 @@ input, textarea {
 
 }
 
+@keyframes soft-shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
+}
+
+
+.reservation-btn:hover,
+.link-btn:hover {
+    animation: soft-shake 1.5s ease-in-out infinite;
+    transition: transform 0.3s;
+}
+
 /*.input-row input {*/
 /*    !*width: 231px; !* 65px 카드 3개 + 간격 12px*2 = 195+24 = 219px, 여유분 포함 231px *!*!*/
 /*    !*min-width: 0;*!*/
@@ -404,6 +419,21 @@ audio {
 audio {
     width: 100%;
     height: 35px;
+}
+
+/* 탭 버튼 클릭 시 상하로 살짝 눌리는 느낌 */
+.tab-btn:active {
+    transform: translateY(2px); /* 클릭하는 순간 아래로 2px 내려감 */
+    filter: brightness(0.9);    /* 살짝 어두워지며 눌린 느낌 강조 */
+    transition: 0.1s;
+}
+
+/* 활성화된 탭에 상단 보더 라인 추가 (선택사항) */
+.tab-btn.active {
+    background-color: #f0e6d9;
+    color: #fff;
+    border-top: 3px solid #fff; /* 상단에 흰색 선이 생기며 강조됨 */
+
 }
 
 /* Flatpickr 달력 위치 캘린더 */
