@@ -94,6 +94,18 @@
         <ul class="hd-logout-menu">
             <li><a href="login?type=logout">Logout</a></li>
         </ul>
+
+
+        <c:if test="${'관리자' == sessionScope.user.nickname}">
+            <div class="hd-admin-menu-wrapper">
+                <div class="hd-admin-menu-title">ADMIN MENU</div>
+                <ul class="hd-admin-menu">
+                    <li><a href="template-list-admin">Template Management</a></li>
+                    <li><a href="template-create-admin">New Template</a></li>
+                    <li><a href="inquiry-admin">Inquiry Management</a></li>
+                </ul>
+            </div>
+        </c:if>
     </div>
 </div>
 

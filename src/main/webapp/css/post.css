@@ -181,7 +181,7 @@
 
 
 .stamp:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .show {
@@ -336,6 +336,7 @@
     cursor: pointer;
 }
 
+
 .player.active {
     opacity: 1;
 }
@@ -344,6 +345,11 @@
     border: none;
     background-color: transparent;
     rotate: 10deg;
+    transition: all 0.5s ease;
+}
+
+#bgmToggle:hover {
+    scale: 1.1;
 }
 
 .bgmToggleImg {

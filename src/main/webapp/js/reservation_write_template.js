@@ -47,9 +47,55 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+
+    function initTemplate(cardLength, moveWidth) {
+        let hasTemplateId = false;
+
+
+        // 현재 URL의 query string 가져오기
+        const params = new URLSearchParams(window.location.search);
+
+// templateId 값 추출
+        const templateId = params.get('templateId');
+
+        console.log(templateId);
+
+        const input = document.getElementById('selectedTemplate');
+        const cards = document.querySelectorAll(".template-card");
+        const track = document.getElementById("templateTrack");
+
+        if (templateId && input && cards.length > 0) {
+            input.value = templateId;
+
+            cards.forEach((c, i) => {
+
+                c.classList.remove("active");
+                const templateIdData = c.getAttribute('data-id');
+
+                if (templateId === templateIdData) {
+                    c.classList.add("active");
+
+                    currentIndex = i;
+
+                    track.style.transform = `translateX(-${currentIndex * moveWidth}px)`;
+
+                    hasTemplateId = true;
+                }
+            });
+        }
+
+
+        return hasTemplateId;
+    }
+
+
+    const hasTemplateId = initTemplate(cards.length, moveWidth);
+
+
     // DOMContentLoaded 이벤트 마지막 부분에 추가
-    if (cards.length > 0) {
+    if (!hasTemplateId && cards.length > 0) {
         cards[0].click(); // 첫 번째 카드를 강제로 클릭 시뮬레이션
     }
 
 });
+
