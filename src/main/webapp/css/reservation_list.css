@@ -97,15 +97,40 @@ input[type="text"] {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: #3b110b;
+    /* 1. 초기 상태: 그라데이션 없는 깔끔한 단색 */
+    background: #3b110b;
     color: #e0d5c1 !important;
-    padding: 0 40px;
+    padding: 0 45px;
     height: 70px;
-    border-radius: 40px;
+    border-radius: 50px; /* 좀 더 둥글게 깎아 세련미 추가 */
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: -0.02em; /* 자간을 좁혀 고급스러운 인상 */
     margin: 20px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    /* 2. 부드러운 전환 속도 (0.5초로 더 여유 있게) */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.btn-write:hover {
+    animation: slow-sway 1.2s ease-in-out infinite;
+}
+
+/* 세련된 저속 흔들림 애니메이션 */
+@keyframes slow-sway {
+    0%, 100% {
+        transform: translateY(-5px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(-1.5deg) translateX(-2px);
+    }
+    75% {
+        transform: translateY(-5px) rotate(1.5deg) translateX(2px);
+    }
 }
 
 /*.acorn-box {*/
