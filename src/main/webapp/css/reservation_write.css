@@ -33,7 +33,7 @@ form {
 /* ===== 제목 ===== */
 h2 {
     position: relative;
-    font-size: 24px;
+    font-size: 28px;
     text-align: center;
     z-index: 1;
     margin-bottom: 20px;
@@ -45,7 +45,7 @@ h2::before {
     bottom: 0px;
     left: 0;
     width: 100%;
-    height: 15px;
+    height: 18px;
     background-color: #c7b8a6;
     z-index: -1;
 }
@@ -199,27 +199,28 @@ input, textarea {
 
 /* 버튼 */
 .reservation-btn {
-    background-color: #614d34;
-    color: #e0d5c1;
+    background-color: #786d65;
+    color: #ece1d2;
     border: none;
     padding: 16px;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     cursor: pointer;
     line-height: 1.1rem;
     width: 180px;
     height: 52px;
     box-sizing: border-box;
+    margin-top: 40px;
 }
 
 /* 리스트로 돌아가기 버튼 */
 .link-btn {
-    background-color: #50402b;
-    color: #e0d5c1;
+    background-color: #b9a78f;
+    color: #685142;
     border: none;
     padding: 16px;
     border-radius: 50px;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
@@ -227,7 +228,23 @@ input, textarea {
     width: 180px;
     height: 52px;
     box-sizing: border-box;
+    margin-top: 40px;
 
+}
+
+@keyframes soft-shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
+}
+
+
+.reservation-btn:hover,
+.link-btn:hover {
+    animation: soft-shake 1.5s ease-in-out infinite;
+    transition: transform 0.3s;
 }
 
 /*.input-row input {*/
@@ -402,6 +419,21 @@ audio {
 audio {
     width: 100%;
     height: 35px;
+}
+
+/* 탭 버튼 클릭 시 상하로 살짝 눌리는 느낌 */
+.tab-btn:active {
+    transform: translateY(2px); /* 클릭하는 순간 아래로 2px 내려감 */
+    filter: brightness(0.9);    /* 살짝 어두워지며 눌린 느낌 강조 */
+    transition: 0.1s;
+}
+
+/* 활성화된 탭에 상단 보더 라인 추가 (선택사항) */
+.tab-btn.active {
+    background-color: #f0e6d9;
+    color: #fff;
+    border-top: 3px solid #fff; /* 상단에 흰색 선이 생기며 강조됨 */
+
 }
 
 /* Flatpickr 달력 위치 캘린더 */
