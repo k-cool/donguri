@@ -1,3 +1,7 @@
+button, input, select, textarea {
+    font-family: inherit !important;
+}
+
 .reg-container * {
     box-sizing: border-box;
 }
@@ -79,7 +83,6 @@ button[type="submit"] {
     background: #6f3030;
     color: #fff7f4;
     font-size: 16px;
-    font-weight: 700;
     cursor: pointer;
     box-shadow: 0 8px 18px rgba(111, 48, 48, 0.22);
     transition: transform 0.2s ease, background-color 0.2s ease;
