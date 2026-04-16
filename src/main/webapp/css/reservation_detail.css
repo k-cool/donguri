@@ -26,6 +26,7 @@ h2 {
     font-size: 1.8rem;
     margin-bottom: 30px;
     letter-spacing: -1px;
+    text-align: center;
 }
 
 /* 정보 영역 (받는 사람, 제목 등) */
@@ -46,7 +47,7 @@ h2 {
 .content-area {
     min-height: 200px;
     padding: 20px 0;
-    text-align: left;
+    text-align: center;
     white-space: pre-line;
     font-size: 1.1rem;
     color: #3e2723;
