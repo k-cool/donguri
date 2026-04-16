@@ -1,24 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
-/* 기본 배경 설정 (전체 페이지 통일) */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f1ea;
-    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
+.de-join {
     width: 100%;
-    height: 100vh;
-    overflow: hidden; /* 스크롤 및 화면 밀림 방지 */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
 }
 
 /* 회원 탈퇴 컨테이너 */
 .user-delete-wrapper {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
@@ -152,38 +143,34 @@ input[type="password"]:focus {
    모바일 전용 스타일 (화면 너비 768px 이하)
 -------------------------------------- */
 @media screen and (max-width: 768px) {
-    /* 1. 배경 설정 (스크롤 허용 및 고정 헤더 밑으로 숨는 현상 방지) */
-    body {
-        height: auto;
+    .de-join {
+        padding: 40px 0;
         min-height: 100vh;
-        overflow: auto;
-        align-items: flex-start; /* 화면 위쪽부터 차곡차곡 쌓기 */
-        padding-top: 130px; /* 🚨 1층 헤더 높이만큼 위쪽 여유 공간 확보 */
+        align-items: center; /* 세로 중앙 정렬 */
     }
 
-    /* 2. 탈퇴 폼 컨테이너 크기 조절 */
     .user-delete-wrapper {
-        width: 85%; /* 화면 너비의 85% 차지 */
-        padding: 30px 20px; /* 상하좌우 여백 다이어트 */
-        border-radius: 20px;
-
-        /* 강제 정중앙 고정(absolute)을 풀고 자연스럽게 배치 */
-        position: relative;
-        top: auto;
-        left: auto;
+        /* 위치 방식 유연하게 변경 */
+        top: 50px;
+        left: 20px;
         transform: none;
-        margin: 0 auto 40px auto; /* 가로 중앙 정렬 및 하단 여백 추가 */
+        margin: 0 auto;
+
+        width: 90%; /* 화면 너비의 90% 사용 */
+        max-width: 400px;
+        padding: 30px 20px; /* 내부 여백 축소 */
+        border-radius: 20px;
     }
 
-    /* 3. 텍스트 및 경고문 크기 조절 */
     .user-delete-wrapper h2 {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
     }
 
+    /* 경고 텍스트 영역 */
     .warning-text {
-        font-size: 0.9rem; /* 글씨 크기 축소 */
-        padding: 12px; /* 안쪽 여백 축소 */
+        font-size: 0.85rem; /* 모바일 가독성을 위해 살짝 축소 */
+        padding: 12px 10px;
         margin-bottom: 20px;
     }
 
@@ -192,13 +179,18 @@ input[type="password"]:focus {
     }
 
     input[type="password"] {
-        font-size: 0.95rem;
-        padding: 10px 12px; /* 입력창 높이 살짝 축소 */
+        padding: 10px 12px;
+        font-size: 1rem; /* iOS 자동 줌 방지용 16px 유지 */
     }
 
-    /* 4. 나란히 있는 두 버튼의 크기 다이어트 */
+    /* 버튼 그룹 */
+    .btn-group {
+        margin-top: 20px;
+        gap: 8px;
+    }
+
     .btn-cancel, .btn-delete {
-        padding: 12px;
-        font-size: 0.95rem; /* 화면이 좁아도 두 버튼이 예쁘게 들어가도록 폰트 축소 */
+        padding: 12px 5px; /* 패딩 축소 */
+        font-size: 0.95rem; /* 버튼 내부 글자 크기 축소 */
     }
 }

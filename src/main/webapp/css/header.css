@@ -446,7 +446,7 @@ header.hd-sub-header .hd-header-bottom {
 }
 
 /* 회원가입 버튼: 배경 없이 테두리만 있는 스타일 */
-.btn-signup {
+.hd-btn-signup {
     background-color: transparent;
     color: #4e342e; /* 짙은 갈색 텍스트 */
     border-color: #4e342e; /* 짙은 갈색 테두리 */

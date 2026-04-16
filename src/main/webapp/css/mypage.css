@@ -1,18 +1,8 @@
-/* 기본 배경 설정 (이전 페이지들과 완벽히 통일) */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f1ea;
-    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    
-
+.mypage-join {
     width: 100%;
-    height: 100vh;
-    overflow: hidden; /* 화면 밀림 및 불필요한 스크롤 방지 */
+    display: flex;
+    justify-content: center;
+    padding: 30px;
 }
 
 /* 마이페이지 컨테이너 */
@@ -41,13 +31,6 @@ body {
     margin-bottom: 25px;
 }
 
-.mypage-wrapper h2::before {
-    content: "{ ";
-}
-
-.mypage-wrapper h2::after {
-    content: " }";
-}
 
 /* 프로필 사진 영역 */
 .profile-section {
@@ -87,7 +70,7 @@ body {
 .nickname-box {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     margin-left: 5px;
 }
 
@@ -108,7 +91,7 @@ body {
     background-color: #fcfaf5;
     border: 1px solid #8b5a42;
     color: #5d3a2a;
-    padding: 10px 15px;
+    padding: 10px 3px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.85rem;
@@ -168,7 +151,6 @@ body {
 .btn-group button:nth-child(3) {
     background: none;
     color: #8b5a42;
-    text-decoration: underline;
     font-size: 0.9rem;
     font-weight: normal;
     padding: 5px; /* 공간 차지를 줄임 */
@@ -178,62 +160,60 @@ body {
    모바일 전용 스타일 (화면 너비 768px 이하)
 -------------------------------------- */
 @media screen and (max-width: 768px) {
-    /* 1. 배경 설정 (스크롤 방지 해제) */
-    body {
-        height: auto; /* 고정된 높이를 풀고 */
-        min-height: 100vh; /* 화면을 꽉 채우되 길어지면 늘어나게 변경 */
-        overflow: auto; /* 잘리는 부분이 있으면 스크롤이 생기도록 허용 */
-        align-items: flex-start; /* 헤더 잘림 방지를 위해 위쪽부터 쌓기 */
-        padding-top: 130px; /* 고정된 헤더 밑으로 폼이 숨지 않게 여백 추가 */
+    .mypage-join {
+        padding: 20px 10px;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
     }
 
-    /* 2. 마이페이지 폼 크기 조절 */
     .mypage-wrapper {
-        width: 85%; /* 화면 너비의 85%만 차지 */
-        padding: 30px 20px; /* 안쪽 여백 축소 */
-        border-radius: 20px; /* 모서리 둥글기 모바일에 맞게 축소 */
-
-        /* 세로 중앙 정렬(absolute)을 풀고 일반적인 배치로 변경 */
-        position: relative;
-        top: auto;
-        left: auto;
+        top: 0;
+        left: 16px;
         transform: none;
-        margin: 0 auto 40px auto; /* 중앙 정렬 유지 & 하단 여유 공간 확보 */
+        margin: 0 auto;
+
+        width: 92%;
+        max-width: 400px;
+        padding: 30px 20px;
+        border-radius: 20px;
     }
 
-    /* 3. 내부 요소들 크기 미세 조정 */
     .mypage-wrapper h2 {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         margin-bottom: 20px;
     }
 
+
     .profile-img {
-        width: 100px; /* 프로필 사진 크기 살짝 축소 */
+        width: 100px;
         height: 100px;
     }
 
-    .user-info p,
-    .nickname-box strong {
-        font-size: 0.95rem; /* 글자 크기 축소 */
-    }
-
+    /* 닉네임 수정 영역 */
     .nickname-box {
-        margin-left: 0; /* 불필요한 왼쪽 여백을 없애서 버튼 들어갈 공간 확보 */
-        width: 100%; /* 부모 상자 너비를 넘지 않게 꽉 채움 */
+        gap: 2px;
+        margin-left: 0;
     }
 
     #nicknameInput {
-        flex: 1; /* 남는 공간을 다 차지하되 */
-        min-width: 0; /* 🚨 핵심: input의 똥고집(최소 너비)을 0으로 만들어 유연하게 줄어들게 허락함 */
         padding: 8px 10px;
+        font-size: 0.9rem;
     }
 
     #nicknameBtn {
-        padding: 8px 10px; /* 버튼 크기도 비율에 맞게 조절 */
+        padding: 8px 1px;
+        font-size: 0.8rem;
+    }
+
+
+    .btn-group {
+        gap: 10px;
     }
 
     .btn-group button {
-        padding: 12px; /* 하단 버튼들의 높이도 조절 */
+        padding: 12px;
         font-size: 1rem;
     }
 }

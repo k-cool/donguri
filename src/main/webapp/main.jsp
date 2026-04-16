@@ -27,7 +27,7 @@
         <div class="hd-header-right">
             <c:if test="${empty sessionScope.user and not (request.requestURL.toString().contains('login') or request.requestURL.toString().contains('signup'))}">
                 <div class="nav-menu">
-                    <button type="button" class="btn-signup" onclick="location.href='signup-do'">
+                    <button type="button" class="hd-btn-signup" onclick="location.href='signup-do'">
                         회원가입
                     </button>
                     <button type="button" class="btn-login" onclick="location.href='login'">
