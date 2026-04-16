@@ -49,8 +49,8 @@
             </div>
 
             <div class="button-group">
-                <button type="submit" class="btn-signup">가입하기</button>
-                <button type="button" class="btn-cancel" onclick="history.back()">취소</button>
+                <button type="submit" class="sg-btn-signup">가입하기</button>
+                <button type="button" class="sg-btn-cancel" onclick="history.back()">취소</button>
             </div>
         </form>
     </div>

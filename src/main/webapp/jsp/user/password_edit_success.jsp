@@ -8,12 +8,12 @@
 <div class="pas-join">
 
     <div class="success-wrapper">
-        <h2>✅ 비밀번호 변경 완료</h2>
+        <h2> 비밀번호 변경 완료</h2>
         <p>비밀번호가 성공적으로 변경되었습니다.</p>
 
         <div class="btn-group">
-            <button onclick="location.href='../main'">🏠 홈으로</button>
-            <button onclick="location.href='mypage'">👤 마이페이지</button>
+            <button onclick="location.href='../main'"> 홈으로</button>
+            <button onclick="location.href='mypage'"> 마이페이지</button>
         </div>
     </div>
 

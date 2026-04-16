@@ -30,7 +30,7 @@
                     <button type="button" class="hd-btn-signup" onclick="location.href='signup-do'">
                         회원가입
                     </button>
-                    <button type="button" class="btn-login" onclick="location.href='login'">
+                    <button type="button" class="hd-btn-login" onclick="location.href='login'">
                         로그인
                     </button>
                 </div>

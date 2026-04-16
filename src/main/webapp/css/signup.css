@@ -26,13 +26,6 @@
     margin-bottom: 30px;
 }
 
-.join-container h2::before {
-    content: "{ ";
-}
-
-.join-container h2::after {
-    content: " }";
-}
 
 /* 폼 그룹 */
 .form-group {
@@ -91,6 +84,7 @@ input[type="password"] {
 input[type="file"] {
     font-size: 0.85rem;
     color: #5d3a2a;
+
 }
 
 /* 하단 버튼 그룹 */
@@ -99,7 +93,7 @@ input[type="file"] {
 }
 
 /* 가입하기 버튼 (메인) */
-.btn-signup {
+.sg-btn-signup {
     width: 100%;
     padding: 14px;
     background: #7b1e1a;
@@ -112,12 +106,16 @@ input[type="file"] {
 }
 
 /* 취소 버튼 */
-.btn-cancel {
-    background: none;
-    border: none;
+.sg-btn-cancel {
+    width: 100%;
+    padding: 14px;
+    background: #fcfaf5;
+    border: 1px solid;
+    border-radius: 25px;
     color: #8b5a42;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    margin-top: 12px;
 }
 
 /* 메시지 텍스트 (이메일 중복 시 등) */

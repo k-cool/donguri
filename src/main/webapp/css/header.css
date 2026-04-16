@@ -447,7 +447,7 @@ header.hd-sub-header .hd-header-bottom {
 
 /* 회원가입 버튼: 배경 없이 테두리만 있는 스타일 */
 .hd-btn-signup {
-    background-color: transparent;
+    background-color: #e8dcc6;
     color: #4e342e; /* 짙은 갈색 텍스트 */
     border-color: #4e342e; /* 짙은 갈색 테두리 */
 }
@@ -457,13 +457,13 @@ header.hd-sub-header .hd-header-bottom {
 }
 
 /* 로그인 버튼: 테마 컬러(짙은 레드/브라운) 배경 스타일 */
-.btn-login {
+.hd-btn-login {
     background-color: #7b1e1a; /* 짙은 레드/브라운 (우체통 색상 계열) */
     color: #ffffff;
     border-color: #7b1e1a;
 }
 
-.btn-login:hover {
+.hd-btn-login:hover {
     background-color: #5a1512; /* 호버 시 조금 더 어두운 색상 */
     border-color: #5a1512;
 }
