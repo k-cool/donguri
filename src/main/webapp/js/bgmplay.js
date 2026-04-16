@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const titleDisplay = document.getElementById('currentSongTitle');
     const selectedInput = document.getElementById('selectedBgm');
     const bgmSection = document.querySelector('.bgm-section');
+    const playerWrapper = document.querySelector('.player-wrapper');
 
     // 테마 변경 함수 (CSS 이름과 맞춰줌)
     function updateTheme(genre) {
@@ -75,14 +76,28 @@ document.addEventListener("DOMContentLoaded", function () {
         bgmData[genre].forEach(song => {
             const card = document.createElement('div');
             card.className = 'bgm-card';
+
+            // 곡 클릭시
             card.onclick = () => {
                 document.querySelectorAll('.bgm-card').forEach(c => c.classList.remove('active'));
                 card.classList.add('active');
                 player.src = song.url;
                 player.play();
-                titleDisplay.innerText = "♪ " + song.title + " ♪";
                 selectedInput.value = song.url;
+
+
+                let currentSongTitle = document.getElementById('currentSongTitle');
+
+                currentSongTitle && playerWrapper.removeChild(currentSongTitle);
+
+                currentSongTitle = document.createElement('div');
+
+                currentSongTitle.id = 'currentSongTitle';
+                currentSongTitle.innerText = "♪ " + song.title + " ♪";
+
+                playerWrapper.appendChild(currentSongTitle);
             };
+
             track.appendChild(card);
         });
     }

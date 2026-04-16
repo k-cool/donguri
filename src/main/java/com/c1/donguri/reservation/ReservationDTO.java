@@ -20,8 +20,10 @@ public class ReservationDTO {
     private String content;
 
     private String templateId;
-    private String bgm;
+    private String bgmUrl;
 
     private String scheduledDate;
     private String isDone;
+
+    private String coverImgUrl;
 }
