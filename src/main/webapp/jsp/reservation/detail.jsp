@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="detail-card">
-    <div align="center">
+    <div>
         <h2>📬 도토리 상세보기</h2>
 
         <div class="info-section">

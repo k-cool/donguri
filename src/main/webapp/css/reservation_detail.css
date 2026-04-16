@@ -43,15 +43,20 @@ h2 {
     color: #a1887f;
 }
 
-/* 본문 영역 */
 .content-area {
     min-height: 200px;
     padding: 20px 0;
     text-align: left;
-    white-space: pre-wrap; /* 줄바꿈 유지 */
+    white-space: pre-line;
     font-size: 1.1rem;
     color: #3e2723;
 }
+
+.content-area * {
+    text-align: left !important;
+    white-space: pre-line;
+}
+
 
 /* 구분선 스타일 */
 hr {
