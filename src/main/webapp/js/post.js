@@ -15,14 +15,12 @@ handleClickClickable = (e) => {
             clickGuide.classList.add("off");
             player.classList.add("active");
             audio.play();
-            btn.textContent = "🎵 재생중";
         } else {
             stamp.classList.remove("show");
             imgWrapper.classList.remove("show");
             clickGuide.classList.remove("off");
             player.classList.remove("active");
             audio.pause();
-            btn.textContent = "🔇 정지됨";
         }
 
         clickable.classList.toggle("closed")
@@ -34,13 +32,22 @@ clickable.addEventListener("click", handleClickClickable);
 // bgm
 const audio = document.getElementById("bgmPlayer");
 const btn = document.getElementById("bgmToggle");
+const playImg = document.getElementById("bgmTogglePlay");
+const stopImg = document.getElementById("bgmToggleStop");
 
-btn.addEventListener("click", () => {
+
+const toggleBgmPlayer = () => {
     if (audio.paused) {
+        playImg.style.display = "none";
+        stopImg.style.display = "block";
+        console.log("play!")
         audio.play();
-        btn.textContent = "🎵 재생중";
     } else {
+        playImg.style.display = "block";
+        stopImg.style.display = "none";
+        console.log("pause!")
         audio.pause();
-        btn.textContent = "🔇 정지됨";
     }
-});
+};
+
+btn.addEventListener("click", toggleBgmPlayer);

@@ -176,10 +176,6 @@
                              alt="cover-img"/>
                     </div>
 
-                    <div class="stamp">
-                        <img src="image/template_post.svg" alt="stamp"/>
-                    </div>
-
 
                 </div>
 
@@ -215,10 +211,17 @@
 
                 </div>
 
+                <div class="stamp">
+                    <img src="image/template_post.svg" alt="stamp"/>
+                </div>
+
                 <div class="player">
                     <audio id="bgmPlayer" src="${post.bgmUrl}"></audio>
 
-                    <button id="bgmToggle">🎵 BGM 켜기</button>
+                    <button id="bgmToggle">
+                        <img id="bgmTogglePlay" class="bgmToggleImg" src="/image/music_play_button.png" alt="bgmBtn"/>
+                        <img id="bgmToggleStop" class="bgmToggleImg" src="/image/music_stop_button.png" alt="bgmBtn"/>
+                    </button>
                 </div>
             </div>
         </div>
