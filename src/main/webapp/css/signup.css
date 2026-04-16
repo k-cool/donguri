@@ -1,25 +1,13 @@
-/* 기본 배경 설정 (로그인과 통일) */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f1ea;
-    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png'); /* 종이 질감 이미지가 있다면 추가 */
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+
+.join {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* 가입폼이 길므로 min-height 사용 */
-    padding: 50px 0; /* 상하 여백 */
+    padding: 50px 0;
 }
 
 /* 회원가입 컨테이너 */
 .join-container {
-    /* 절대 위치 정렬 */
-    position: fixed; /* 혹은 absolute */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000; /* 배경 이미지보다 무조건 위로 */
 
     width: 450px;
     padding: 40px;
@@ -38,13 +26,6 @@ body {
     margin-bottom: 30px;
 }
 
-.join-container h2::before {
-    content: "{ ";
-}
-
-.join-container h2::after {
-    content: " }";
-}
 
 /* 폼 그룹 */
 .form-group {
@@ -103,6 +84,7 @@ input[type="password"] {
 input[type="file"] {
     font-size: 0.85rem;
     color: #5d3a2a;
+
 }
 
 /* 하단 버튼 그룹 */
@@ -111,27 +93,29 @@ input[type="file"] {
 }
 
 /* 가입하기 버튼 (메인) */
-.btn-signup {
+.sg-btn-signup {
     width: 100%;
     padding: 14px;
-    background-color: #5d0000; /* 이미지의 진한 빨간색 */
+    background: #7b1e1a;
     color: white;
     border: none;
     border-radius: 25px;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    margin-bottom: 10px;
 }
 
 /* 취소 버튼 */
-.btn-cancel {
-    background: none;
-    border: none;
+.sg-btn-cancel {
+    width: 100%;
+    padding: 14px;
+    background: #fcfaf5;
+    border: 1px solid;
+    border-radius: 25px;
     color: #8b5a42;
-    text-decoration: underline;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    margin-top: 12px;
 }
 
 /* 메시지 텍스트 (이메일 중복 시 등) */
@@ -145,47 +129,38 @@ input[type="file"] {
    모바일 전용 스타일 (화면 너비 768px 이하)
 -------------------------------------- */
 @media screen and (max-width: 768px) {
-    /* 🚨 추가된 부분: 세로 중앙 정렬을 풀고, 헤더 높이만큼 띄워줍니다 */
-    body {
-        align-items: flex-start; /* 화면 위쪽에서부터 차곡차곡 쌓이도록 변경 */
-        padding-top: 130px; /* 고정 헤더(110px)보다 조금 더 넉넉하게 위쪽 공간 확보 */
+    .join {
+        padding: 20px 0; /* 상하 여백 축소 */
     }
 
     .join-container {
-        width: 85%;
-        padding: 30px 20px;
-        border-radius: 20px;
-
-        position: relative;
-        top: auto; /* top: 0 대신 auto로 변경 */
-        left: auto; /* left: 0 대신 auto로 변경 */
-        transform: none;
-
-        /* padding-top을 주었으니 위쪽 마진은 0으로, 좌우는 중앙 정렬(auto), 아래는 40px 여유 */
-        margin: 0 auto 40px auto;
+        width: 92%; /* 고정 450px 제거, 화면의 92% 차지 */
+        max-width: 400px; /* 너무 커지지 않게 제한 */
+        padding: 25px 20px; /* 내부 패딩 축소 (이게 핵심) */
+        border-radius: 20px; /* 둥근 모서리 살짝 완만하게 */
     }
 
-    /* (아래쪽은 아까 추가했던 코드 그대로 유지) */
     .join-container h2 {
-        font-size: 1.3rem;
+        font-size: 1.4rem; /* 제목 크기 축소 */
         margin-bottom: 20px;
+    }
+
+    /* 입력창과 버튼 레이아웃 */
+    .input-flex {
+        gap: 5px; /* 간격 축소 */
+    }
+
+    /* 중복확인 버튼 */
+    .btn-secondary {
+        padding: 0 10px; /* 버튼 내부 좌우 여백 축소 */
+        font-size: 0.8rem; /* 글자 크기 축소 */
     }
 
     input[type="email"],
     input[type="text"],
     input[type="password"] {
-        font-size: 0.95rem;
-        padding: 10px 12px;
-    }
-
-    .input-flex {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .btn-secondary {
-        width: 100%;
-        padding: 10px;
+        padding: 8px 12px; /* 입력창 높이 살짝 축소 */
+        font-size: 0.9rem;
     }
 
     .btn-signup {
