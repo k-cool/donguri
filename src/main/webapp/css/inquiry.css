@@ -1,84 +1,110 @@
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #2c2f4a, #5a5f82);
-    color: white;
+
+.inquiry-wrapper {
+    margin-top: 100px;
 }
 
-.hero {
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.wrapper {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+input, textarea {
+    width: 780px !important;
+    margin-top: 10px !important;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.wrapper div {
     text-align: center;
 }
 
-.hero h1 {
+.wrapper h1 {
     font-size: 40px;
     margin-bottom: 10px;
 }
 
-.hero p {
+.wrapper p {
     font-size: 18px;
     opacity: 0.8;
 }
 
 
 .container {
-    background: #f4f4f4;
-    color: #333;
-    padding: 40px;
-    border-radius: 20px;
-    width: 70%;
-    margin: -100px auto 50px auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+
 }
-
-
-.flex {
-    display: flex;
-    gap: 50px;
-}
-
 
 .left {
     flex: 1;
+    text-align: left;
+    color: #5a2d0c;
 }
 
 .left h3 {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
-
 .right {
-    flex: 1;
+    flex: 1.5;
 }
+
+@media (max-width: 480px) {
+
+    .container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left, .right {
+        width: 100%;
+        text-align: left;
+    }
+
+    input, textarea {
+        width: 100%;
+    }
+}
+
 
 input, textarea {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #aaa;
-    padding: 10px;
-    margin-bottom: 20px;
-    background: transparent;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #caa;
+    border-radius: 10px;
+    font-size: 15px;
 }
 
-textarea {
-    resize: none;
-    height: 80px;
+input:focus, textarea:focus {
+    outline: none;
+    border: 1px solid #7a1c1c;
 }
 
 
 button {
-    background: #5a5f82;
+    display: block;
+    margin: 0 auto;
+
+    background: #7a1c1c;
     color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+
+    padding: 12px 30px;
+    border-radius: 25px;
 }
 
 button:hover {
-    background: #2c2f4a;
+    background: #8b4a1f;
 }
