@@ -199,8 +199,8 @@ input, textarea {
 
 /* 버튼 */
 .reservation-btn {
-    background-color: #614d34;
-    color: #e0d5c1;
+    background-color: #786d65;
+    color: #ece1d2;
     border: none;
     padding: 16px;
     border-radius: 50px;
@@ -210,12 +210,13 @@ input, textarea {
     width: 180px;
     height: 52px;
     box-sizing: border-box;
+    margin-top: 40px;
 }
 
 /* 리스트로 돌아가기 버튼 */
 .link-btn {
-    background-color: #50402b;
-    color: #e0d5c1;
+    background-color: #c6b394;
+    color: #322c25;
     border: none;
     padding: 16px;
     border-radius: 50px;
@@ -227,6 +228,7 @@ input, textarea {
     width: 180px;
     height: 52px;
     box-sizing: border-box;
+    margin-top: 40px;
 
 }
 
