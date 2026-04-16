@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-button, input, select, textarea {
-    font-family: inherit !important;
-}
-
 .detail-container * {
     box-sizing: border-box;
     margin: 0;
