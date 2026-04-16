@@ -127,7 +127,7 @@ public class ReservationC extends HttpServlet {
             int result = ReservationDAO.RESERVATION_DAO.update(request);
 
             if (result > 0) {
-                response.sendRedirect("reservation?action=detail&id=" + reservationId);
+                response.sendRedirect("reservation?action=list");
             } else {
                 response.sendRedirect("reservation?action=list");
             }
