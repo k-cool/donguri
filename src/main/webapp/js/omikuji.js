@@ -31,7 +31,9 @@ window.onload = function () {
                     setTimeout(() => {
                         tree.classList.remove('shake');
                         comeImg.style.display = 'block';
-                        setTimeout(() => { comeImg.style.opacity = '1'; }, 50);
+                        setTimeout(() => {
+                            comeImg.style.opacity = '1';
+                        }, 50);
 
                         // 2. 다시 원래 자리(startX, startY)로 복귀
                         setTimeout(() => {
@@ -64,8 +66,18 @@ window.onload = function () {
                 if (callback) callback();
             }
         }
+
         requestAnimationFrame(update);
     }
+};
+
+
+const TEXT_MAP = {
+    BIG_GOOD: "대길",
+    MIDDLE_GOOD: "중길",
+    SMALL_GOOD: "소길",
+    SMALL_BAD: "소흉",
+    BAD: "흉",
 };
 
 function drawOmikuji() {
@@ -74,7 +86,7 @@ function drawOmikuji() {
         type: "POST",
         success: (resData) => {
             if (resData.omikuji) {
-                $("#luck").text(resData.omikuji.luck);
+                $("#luck").text(TEXT_MAP[resData.omikuji.luck]);
                 $("#message").text(resData.omikuji.message);
             }
         }
@@ -84,3 +96,4 @@ function drawOmikuji() {
 function closeModal() {
     location.reload();
 }
+

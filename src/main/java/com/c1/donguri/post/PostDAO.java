@@ -52,7 +52,7 @@ public class PostDAO {
                         rs.getDate("scheduled_date"),
                         rs.getString("recipient_email"),
                         rs.getString("subject"),
-                        rs.getString("content"),
+                        rs.getString("content").replace("\n", "<br>"),
                         rs.getString("bgm_url"),
                         rs.getString("cover_img_url"),
                         rs.getString("bg_color"),

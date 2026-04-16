@@ -176,11 +176,12 @@
 
     opacity: 0;
     scale: 0.8;
+    z-index: 100;
 }
 
 
 .stamp:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .show {
@@ -327,15 +328,36 @@
 /*bgm*/
 .player {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 8px;
+    top: 320px;
     opacity: 0;
     transition: opacity 0.8s ease;
-    pointer-events: none;
     z-index: 999;
+    cursor: pointer;
 }
+
 
 .player.active {
     opacity: 1;
-    pointer-events: auto;
+}
+
+#bgmToggle {
+    border: none;
+    background-color: transparent;
+    rotate: 10deg;
+    transition: all 0.5s ease;
+}
+
+#bgmToggle:hover {
+    scale: 1.1;
+}
+
+.bgmToggleImg {
+    width: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#bgmTogglePlay {
+    display: none;
 }
