@@ -8,11 +8,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class InquiryDAO {
-    public static void selectAllinquiry(HttpServletRequest req, HttpServletResponse resp) {
+    public static ArrayList<InquiryDTO> selectAllinquiry(HttpServletRequest req, HttpServletResponse resp) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         String sql = "select * from inquiry";
+        ArrayList<InquiryDTO> inquiry = new ArrayList();
 
 
         try {
@@ -21,7 +22,6 @@ public class InquiryDAO {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             InquiryDTO dto = null;
-            ArrayList<InquiryDTO> inquiry = new ArrayList();
 
 
             while (rs.next()) {
@@ -47,6 +47,7 @@ public class InquiryDAO {
         }
 
 
+        return inquiry;
     }
 
 
@@ -73,6 +74,27 @@ public class InquiryDAO {
             if (result == 1) {
                 System.out.println("DB 입력 성공");
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.DB_MANAGER.close(conn, pstmt, null);
+        }
+    }
+
+
+    public void delete(String no) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        String sql = "DELETE FROM inquiry WHERE inquiry_id = ?";
+
+        try {
+            conn = DBManager.DB_MANAGER.getConnection();
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, no);
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();

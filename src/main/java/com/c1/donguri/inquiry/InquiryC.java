@@ -36,7 +36,9 @@ public class InquiryC extends HttpServlet {
 
         request.setAttribute("msg", "정상 접수되었습니다.");
 
-        request.getRequestDispatcher("jsp/inquiry/inquiry.jsp").forward(request, response);
+        request.setAttribute("content", "jsp/inquiry/inquiry.jsp");
+        request.getRequestDispatcher("main.jsp").forward(request, response);
+//        request.getRequestDispatcher("jsp/inquiry/inquiry.jsp").forward(request, response);
 
     }
 
