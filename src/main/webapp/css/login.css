@@ -93,14 +93,16 @@ input::placeholder {
 }
 
 .btn-signup-link {
+    padding: 12px;
     background: none;
+    background-color: #e8dcc6;
+    border-radius: 25px;
     border: none;
     color: #5d3a2a;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
-/* 이미지의 솔방울/도토리 효과를 위한 가상 요소 (선택 사항) */
 /* 실제 이미지가 있다면 아래처럼 배치할 수 있습니다 */
 .login-container::after {
     position: absolute;
