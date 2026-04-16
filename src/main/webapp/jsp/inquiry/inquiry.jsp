@@ -5,9 +5,22 @@
     <link type="text/css" rel="stylesheet" href="css/inquiry.css"/>
 </head>
 
-<body>
+<script>
+    function checkDomain(select) {
+        const direct = document.getElementById("directDomain");
 
-<%
+        if (select.value === "direct") {
+            direct.style.display = "inline";
+            direct.name = "emailDomain";
+        } else {
+            direct.style.display = "none";
+            direct.name = "";
+        }
+    }
+</script>
+
+
+    <%
     String msg = (String) request.getAttribute("msg");
     if (msg != null) {
 %>
@@ -16,44 +29,49 @@
     alert("<%= msg %>");
     window.location.href = "<%= request.getContextPath() %>/inquiry";
 </script>
-
-<%
+    <%
     }
 %>
-<div class="hero">
-    <div>
-        <h1>Get in touch</h1>
-        <p>Let's work together on your next project.</p>
-    </div>
-</div>
 
-<div class="container">
-    <div class="flex">
 
-        <div class="left">
-            <h3>Contact</h3>
-            <p>For commissions and inquiries, please email.</p>
-            <p><b>leesepatrick@gmail.com</b></p>
+<div class="inquiry-wrapper">
+
+
+    <div class="wrapper">
+        <div>
+            <h1>Get in touch</h1>
+            <p>Let's work together on your next project.</p>
         </div>
-
-        <div class="right">
-
-
-            <form action="inquiry" method="post">
-                이름 <input type="text" name="name"><br><br>
-                연락처 <input type="text" name="phone"><br><br>
-                이메일 <input type="email" name="email"><br><br>
-                문의내용 <textarea name="message"></textarea><br><br>
-                <br>
-
-
-                <button type="submit">전송</button>
-            </form>
-        </div>
-
     </div>
+
+    <div class="container">
+        <div class="flex">
+
+            <div class="left">
+                <h3>Contact</h3>
+                <p>For commissions and inquiries, please email.</p>
+                <p><b>leesepatrick@gmail.com</b></p>
+                <p><b> Business hour from 9:00 to 18:00(Mon-fri)</b></p>
+            </div>
+
+            <div class="right">
+
+
+                <form action="inquiry" method="post">
+                    Name <input type="text" name="name"><br><br>
+                    Contact number <input type="text" name="phone"><br><br>
+                    E-mail <input type="email" name="email"><br><br>
+
+                    Inquiries <textarea name="message"></textarea><br><br>
+                    <br>
+
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
 </div>
-
-
-</body>
-</html>

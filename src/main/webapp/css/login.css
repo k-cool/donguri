@@ -1,14 +1,8 @@
-/* 기본 배경 및 폰트 설정 */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f1ea; /* 전체적인 미색 배경 */
-    background-image: url('https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/%EC%A0%84%EC%86%A1%EC%84%9C%EB%B9%84%EC%8A%A4/background.png'); /* 종이 질감 이미지가 있다면 추가 */
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+.log-join {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 30px 0;
 }
 
 /* 로그인 박스 컨테이너 */
@@ -36,13 +30,6 @@ body {
     margin-bottom: 30px;
 }
 
-.login-container h2::before {
-    content: "{ ";
-}
-
-.login-container h2::after {
-    content: " }";
-}
 
 /* 폼 그룹 레이아웃 */
 .form-group {
@@ -90,7 +77,6 @@ input::placeholder {
 }
 
 .btn-login {
-    width: 100%;
     padding: 12px;
     background-color: #5d0000; /* 이미지의 짙은 갈색/와인색 버튼 */
     color: white;
@@ -99,7 +85,7 @@ input::placeholder {
     font-size: 1.1rem;
     cursor: pointer;
     transition: background 0.3s;
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
 }
 
 .btn-login:hover {
@@ -107,15 +93,16 @@ input::placeholder {
 }
 
 .btn-signup-link {
+    padding: 12px;
     background: none;
+    background-color: #e8dcc6;
+    border-radius: 25px;
     border: none;
     color: #5d3a2a;
-    text-decoration: underline;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
-/* 이미지의 솔방울/도토리 효과를 위한 가상 요소 (선택 사항) */
 /* 실제 이미지가 있다면 아래처럼 배치할 수 있습니다 */
 .login-container::after {
     position: absolute;

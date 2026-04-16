@@ -636,10 +636,10 @@ body::after {
     }
 
     .detail-label {
-        flex: 0 0 82px;
+        flex: 0 0 81px;
         font-size: 14px !important;
-        padding: 0 8px 2px !important;
-        background-size: calc(100% + 10px) 85% !important;
+        padding: 0 8px 6px !important;
+        background-size: calc(100% + 10px) 75% !important;
     }
 
     .detail-value {

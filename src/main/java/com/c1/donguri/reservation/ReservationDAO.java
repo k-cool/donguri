@@ -5,9 +5,12 @@ import com.c1.donguri.scheduler.EmailScheduler;
 import com.c1.donguri.template.TemplateDTO;
 import com.c1.donguri.user.UserDTO;
 import com.c1.donguri.util.DBManager;
+import com.c1.donguri.util.S3Uploader;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.InputStream;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -38,7 +41,9 @@ public class ReservationDAO {
         String reservationId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
         String emailContentId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
+
         try {
+
             con = DBManager.DB_MANAGER.getConnection();
 
             con.setAutoCommit(false);
@@ -177,10 +182,11 @@ public class ReservationDAO {
         List<ReservationDTO> list = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT R.RESERVATION_ID, R.RECIPIENT_EMAIL, R.SCHEDULED_DATE, R.IS_DONE, E.SUBJECT ");
-        sql.append("FROM RESERVATION R, EMAIL_CONTENT E ");
-        sql.append("WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID ");
-        sql.append("AND R.FROM_ID = ? ");
+        sql.append("SELECT R.RESERVATION_ID, R.RECIPIENT_EMAIL, R.SCHEDULED_DATE, R.IS_DONE, E.SUBJECT, T.COVER_IMG_URL, E.COVER_IMG_URL AS E_COVER_IMG_URL\n");
+        sql.append("FROM RESERVATION R, EMAIL_CONTENT E, TEMPLATE T\n");
+        sql.append("WHERE R.EMAIL_CONTENT_ID = E.EMAIL_CONTENT_ID\n");
+        sql.append("AND E.TEMPLATE_ID = T.TEMPLATE_ID\n");
+        sql.append("AND R.FROM_ID = ?\n");
 
         if (status != null && !status.equals("all")) {
             String statusVal = status.equals("완료") ? "Y" : "N";
@@ -218,99 +224,87 @@ public class ReservationDAO {
 
             while (rs.next()) {
                 ReservationDTO r = new ReservationDTO();
+
                 r.setReservationId(rs.getString("reservation_id"));
                 r.setRecipientEmail(rs.getString("recipient_email"));
                 r.setSubject(rs.getString("subject"));
-
-                String isDoneRaw = rs.getString("is_done");
-                r.setIsDone(isDoneRaw.equals("Y") ? "완료" : "대기");
-
+                r.setIsDone(rs.getString("is_done"));
                 Timestamp ts = rs.getTimestamp("scheduled_date");
                 r.setScheduledDate(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(ts));
+
+                String coverImgUrl = rs.getString("cover_img_url");
+
+                if (rs.getString("e_cover_img_url") != null) {
+                    coverImgUrl = rs.getString("e_cover_img_url");
+                }
+
+                r.setCoverImgUrl(coverImgUrl);
+
                 list.add(r);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.DB_MANAGER.close(con, ps, rs);
         }
+
         return list;
     }
 
-
     public void delete(String reservationId) {
-
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         String emailContentId = null;
 
-        String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
-        String deleteReservationSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID=?";
-        String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID=?";
+        String selectEmailIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID = ?";
+        String deleteLogSql = "DELETE FROM SEND_LOG WHERE RESERVATION_ID = ?";
+        String deleteResSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID = ?";
+        String deleteEmailSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID = ?";
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
-
             con.setAutoCommit(false);
 
-            // getEmailContentIdSql
-            pstmt = con.prepareStatement(getEmailContentIdSql);
+            pstmt = con.prepareStatement(selectEmailIdSql);
             pstmt.setString(1, reservationId);
-
             rs = pstmt.executeQuery();
-
             if (rs.next()) {
                 emailContentId = rs.getString("EMAIL_CONTENT_ID");
             }
+            pstmt.close();
 
-            // deleteReservationSql
-            if (emailContentId == null) {
-                throw new Exception();
+            if (emailContentId != null) {
+                pstmt = con.prepareStatement(deleteLogSql);
+                pstmt.setString(1, reservationId);
+                pstmt.executeUpdate();
+                pstmt.close();
+
+                pstmt = con.prepareStatement(deleteResSql);
+                pstmt.setString(1, reservationId);
+                pstmt.executeUpdate();
+                pstmt.close();
+
+                pstmt = con.prepareStatement(deleteEmailSql);
+                pstmt.setString(1, emailContentId);
+                pstmt.executeUpdate();
+
+                con.commit();
             }
-
-            pstmt = con.prepareStatement(deleteReservationSql);
-            pstmt.setString(1, reservationId);
-
-            int rRow = pstmt.executeUpdate();
-
-            if (rRow > 0) {
-                System.out.println("RESERVATION DELETE SUCCESS");
-            }
-
-            pstmt = con.prepareStatement(deleteEmailContentSql);
-            pstmt.setString(1, emailContentId);
-            int eRow = pstmt.executeUpdate();
-
-            if (eRow > 0) {
-                System.out.println("EMAIL_CONTENT DELETE SUCCESS");
-            }
-
-            con.commit();
 
         } catch (Exception e) {
             if (con != null) {
                 try {
                     con.rollback();
-                    System.err.println("에러 발생! 데이터가 롤백되었습니다.");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }
-
             e.printStackTrace();
         } finally {
-            if (con != null) {
-                try {
-                    con.setAutoCommit(true);
-                } catch (Exception e) {
-                }
-            }
-
             DBManager.DB_MANAGER.close(con, pstmt, rs);
-
         }
-
     }
 
     public ReservationDTO getOne(HttpServletRequest request) {
@@ -342,7 +336,7 @@ public class ReservationDAO {
                 r.setSubject(rs.getString("subject"));
                 r.setContent(rs.getString("content"));
                 r.setTemplateId(rs.getString("template_id"));
-                r.setBgm(rs.getString("bgm_url"));
+                r.setBgmUrl(rs.getString("bgm_url"));
                 r.setScheduledDate(rs.getString("scheduled_date"));
                 return r;
             }
@@ -518,7 +512,7 @@ public class ReservationDAO {
 
 
         InsertReservationDTO ir = new InsertReservationDTO(
-                request.getParameter("id"),
+                null,
                 user.getUserId(),
                 null,
                 request.getParameter("recipientEmail"),

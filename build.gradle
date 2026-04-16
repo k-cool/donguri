@@ -67,6 +67,10 @@ dependencies {
     // QR 코드 생성
     implementation 'com.google.zxing:core:3.5.3'
     implementation 'com.google.zxing:javase:3.5.3'
+
+    // inquiry 관련
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation 'javax.activation:activation:1.1.1'
 }
 
 test {

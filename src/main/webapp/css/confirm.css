@@ -108,7 +108,6 @@
 }
 
 .post-top {
-    background: #f4cfd2;
     border-radius: calc(var(--base) * 0.005); /* 2px */
     box-shadow: rgba(0, 0, 0, 0.1) 0 calc(var(--base) * 0.01) calc(var(--base) * 0.02);
     z-index: 2;
@@ -153,7 +152,6 @@
     top: var(--base);
     width: 100%;
 
-    background: #f4cfd2;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 4. 폼 제출 유효성 검사
     const form = document.querySelector("form");
+
     if (form) {
         form.addEventListener("submit", function (e) {
             const scheduledDate = dateInput.value;

@@ -1,9 +1,10 @@
-button, input, select, textarea {
-    font-family: inherit !important;
-}
-
 .reg-container * {
     box-sizing: border-box;
+
+    /* 혹시라도 CSS 깨지면 얘네 지워주세욘 */
+    margin: 0;
+    padding: 0;
+    color: #6d2e2e;
 }
 
 .reg-container {

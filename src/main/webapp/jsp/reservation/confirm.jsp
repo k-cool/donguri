@@ -2,16 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
 <link rel="stylesheet" href="css/confirm.css"/>
+<script src="js/reservation_indexedDB.js" defer></script>
+<script src="js/load_confirm.js" defer></script>
+
 
 <div class="confirm">
+
 
     <div class="confirm-wrapper">
         <h2 class="title">📬 예약 내용 확인 📬</h2>
 
         <div class="confirm-container">
-            
+
             <div class="post-container">
 
                 <svg class="top-cover"
@@ -50,7 +53,7 @@
                              l333.86.19
                              v-.19
                              h0Z"
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-top)"
                     />
 
@@ -102,7 +105,7 @@
         L 140 20
         Z
     "
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-left)"
                     />
 
@@ -152,7 +155,7 @@
         L 10 20
         Z
     "
-                          fill="#f4cfd2"
+                          fill="#${selectedTemplate.bgColor}"
                           clip-path="url(#clip-right)"
                     />
 
@@ -169,12 +172,14 @@
                 </svg>
 
 
-                <div class=" post-square post-top">
+                <div class="post-square post-top" style="background-color: \#${selectedTemplate.bgColor}">
                     <div class="texture"></div>
 
                     <div class="img-wrapper">
-                        <img src="https://donguri-dev.s3.ap-northeast-2.amazonaws.com/ui_asset/template/template_sakura_img.png"
-                             alt="cover-img"/>
+                        <img
+                                id="cover-img"
+                                src="${selectedTemplate.coverImgUrl}"
+                                alt="cover-img"/>
                     </div>
 
                     <div class="stamp">
@@ -183,7 +188,7 @@
 
                 </div>
 
-                <div class="post-square post-bottom">
+                <div class="post-square post-bottom" style="background-color: \#${selectedTemplate.bgColor}">
                     <div class="pattern"></div>
                     <div class="texture"></div>
 
@@ -207,7 +212,6 @@
                 </div>
             </div>
 
-            </span>
         </div>
 
 
@@ -217,11 +221,20 @@
 
 <!-- 모달 -->
 <form action="reservation" method="post">
-    <input type="hidden" name="action" value="insert">
+    <input type="text" hidden name="action" value="insert">
+    <input type="text" hidden name="bgmUrl">
+    <input type="text" hidden name="templateId">
+    <%--    <input type="file" hidden name="coverImgUrl">--%>
+    <input type="text" hidden name="recipientEmail">
+    <input type="text" hidden name="subject">
+    <input type="text" hidden name="content">
+    <input type="text" hidden name="coverImgUrl">
+    <input type="text" hidden name="scheduledDate">
+
     <div id="modal" class="modal-overlay">
         <div class="modal-box">
             <p class="modal-text">
-                📬 이 추억은 <strong>2026-04-09 12:00:00</strong>에 배달될 예정이야.
+                📬 이 추억은 <strong>${insertReservation.scheduledDate}</strong>에 배달될 예정이야.
             </p>
 
             <div class="modal-actions">

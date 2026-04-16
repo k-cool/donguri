@@ -34,10 +34,10 @@
         <div class="hd-header-right">
             <c:if test="${empty sessionScope.user and not (request.requestURL.toString().contains('login') or request.requestURL.toString().contains('signup'))}">
                 <div class="nav-menu">
-                    <button type="button" class="btn-signup" onclick="location.href='signup-do'">
+                    <button type="button" class="hd-btn-signup" onclick="location.href='signup-do'">
                         회원가입
                     </button>
-                    <button type="button" class="btn-login" onclick="location.href='login'">
+                    <button type="button" class="hd-btn-login" onclick="location.href='login'">
                         로그인
                     </button>
                 </div>
@@ -94,6 +94,18 @@
         <ul class="hd-logout-menu">
             <li><a href="login?type=logout">Logout</a></li>
         </ul>
+
+
+        <c:if test="${'관리자' == sessionScope.user.nickname}">
+            <div class="hd-admin-menu-wrapper">
+                <div class="hd-admin-menu-title">ADMIN MENU</div>
+                <ul class="hd-admin-menu">
+                    <li><a href="template-list-admin">Template Management</a></li>
+                    <li><a href="template-create-admin">New Template</a></li>
+                    <li><a href="inquiry-admin">Inquiry Management</a></li>
+                </ul>
+            </div>
+        </c:if>
     </div>
 </div>
 
