@@ -119,7 +119,7 @@
             </div>
 
             <div class="btn-wrapper" style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
-                <button type="submit" class="reservation-btn">수정하기</button>
+                <button type="submit" class="reservation-btn">완료</button>
                 <a href="reservation?action=detail&id=${r.reservationId}" class="link-btn"
                    style="background-color: #50402b;">취소</a>
             </div>

@@ -252,80 +252,59 @@ public class ReservationDAO {
         return list;
     }
 
-
     public void delete(String reservationId) {
-
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         String emailContentId = null;
 
-        String getEmailContentIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID=?";
-        String deleteReservationSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID=?";
-        String deleteEmailContentSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID=?";
+        String selectEmailIdSql = "SELECT EMAIL_CONTENT_ID FROM RESERVATION WHERE RESERVATION_ID = ?";
+        String deleteLogSql = "DELETE FROM SEND_LOG WHERE RESERVATION_ID = ?";
+        String deleteResSql = "DELETE FROM RESERVATION WHERE RESERVATION_ID = ?";
+        String deleteEmailSql = "DELETE FROM EMAIL_CONTENT WHERE EMAIL_CONTENT_ID = ?";
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
-
             con.setAutoCommit(false);
 
-            // getEmailContentIdSql
-            pstmt = con.prepareStatement(getEmailContentIdSql);
+            pstmt = con.prepareStatement(selectEmailIdSql);
             pstmt.setString(1, reservationId);
-
             rs = pstmt.executeQuery();
-
             if (rs.next()) {
                 emailContentId = rs.getString("EMAIL_CONTENT_ID");
             }
+            pstmt.close();
 
-            // deleteReservationSql
-            if (emailContentId == null) {
-                throw new Exception();
+            if (emailContentId != null) {
+                pstmt = con.prepareStatement(deleteLogSql);
+                pstmt.setString(1, reservationId);
+                pstmt.executeUpdate();
+                pstmt.close();
+
+                pstmt = con.prepareStatement(deleteResSql);
+                pstmt.setString(1, reservationId);
+                pstmt.executeUpdate();
+                pstmt.close();
+
+                pstmt = con.prepareStatement(deleteEmailSql);
+                pstmt.setString(1, emailContentId);
+                pstmt.executeUpdate();
+
+                con.commit();
             }
-
-            pstmt = con.prepareStatement(deleteReservationSql);
-            pstmt.setString(1, reservationId);
-
-            int rRow = pstmt.executeUpdate();
-
-            if (rRow > 0) {
-                System.out.println("RESERVATION DELETE SUCCESS");
-            }
-
-            pstmt = con.prepareStatement(deleteEmailContentSql);
-            pstmt.setString(1, emailContentId);
-            int eRow = pstmt.executeUpdate();
-
-            if (eRow > 0) {
-                System.out.println("EMAIL_CONTENT DELETE SUCCESS");
-            }
-
-            con.commit();
 
         } catch (Exception e) {
             if (con != null) {
                 try {
                     con.rollback();
-                    System.err.println("에러 발생! 데이터가 롤백되었습니다.");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }
-
             e.printStackTrace();
         } finally {
-            if (con != null) {
-                try {
-                    con.setAutoCommit(true);
-                } catch (Exception e) {
-                }
-            }
-
             DBManager.DB_MANAGER.close(con, pstmt, rs);
-
         }
-
     }
 
     public ReservationDTO getOne(HttpServletRequest request) {
