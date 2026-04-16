@@ -90,6 +90,16 @@
     padding: 0 10px;
 }
 
+.meta-info {
+    margin-top: 25px; /* 버튼과의 간격 확보 */
+    font-size: 12px;
+    color: #9a7272;
+    line-height: 1.5;
+    word-break: break-all; /* ID가 길어질 경우 대비 */
+    border-top: 1px solid rgba(143, 79, 79, 0.1); /* 살짝 구분선 */
+    padding-top: 15px;
+}
+
 .btn-action {
     display: inline-flex;
     align-items: center;

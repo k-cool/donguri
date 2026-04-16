@@ -7,12 +7,11 @@
     color: #6d2e2e;
 }
 
-/* 전체 박스 */
 .reg-container {
     width: 100%;
     max-width: 420px;
-    margin: 0 auto;
-    padding: 80px 26px 36px;
+    margin: 80px auto;
+    padding: 60px 26px 36px;
     border: 1.5px dashed #8f4f4f;
     border-radius: 30px;
     background: rgba(255, 250, 247, 0.7);
@@ -20,54 +19,33 @@
     position: relative;
 }
 
-/* 상단 라벨 */
-.reg-container::before {
-    content: "{ 새 템플릿 등록 }";
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 4px 14px;
-    background: #e5cfb2;
-    color: #6e3030;
-    font-size: 14px;
-    white-space: nowrap;
-}
-
-/* 라벨 아래 선 */
-.reg-container::after {
-    content: "";
-    position: absolute;
-    top: 58px;
-    left: 20px;
-    right: 20px;
-    height: 1px;
-    background: rgba(110, 48, 48, 0.7);
-}
-
-/* 제목 */
 .reg-container h2 {
-    margin: 0 0 24px;
+    display: inline-block;
+    margin: 0 0 40px;
     font-size: 22px;
     font-weight: 500;
     color: #6c2d2d;
+    position: relative;
+    z-index: 1;
 }
 
-/* 한 줄 */
+.reg-container h2::before {
+    content: "";
+    position: absolute;
+    left: -5%;
+    bottom: -2px;
+    width: 110%;
+    height: 15px;
+    background: #e5cfb2;
+    z-index: -1;
+    opacity: 0.8;
+}
+
 .row {
     margin-bottom: 20px;
     text-align: left;
 }
 
-/* 라벨 */
-.row label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 14px;
-    color: #7a3b3b;
-}
-
-/* 입력창 */
 .row input[type="text"],
 .row input[type="file"],
 .row select {
@@ -86,13 +64,11 @@
     color: rgba(92, 45, 45, 0.5);
 }
 
-/* select 화살표 느낌 줄이기 */
 .row select {
     appearance: none;
     background: transparent;
 }
 
-/* 파일 input 조금 정리 */
 .row input[type="file"] {
     border: none;
     padding: 6px 0;
@@ -108,7 +84,6 @@ button[type="submit"] {
     background: #6f3030;
     color: #fff7f4;
     font-size: 16px;
-    font-weight: 700;
     cursor: pointer;
     box-shadow: 0 8px 18px rgba(111, 48, 48, 0.22);
     transition: transform 0.2s ease, background-color 0.2s ease;
