@@ -3,41 +3,42 @@
 
 <%-- 마이페이지 전용 CSS --%>
 <link rel="stylesheet" href="css/mypage.css">
+<div class="mypage-join">
+    <div class="mypage-wrapper">
+        <h2> 마이페이지 </h2>
 
-<div class="mypage-wrapper">
-    <h2> 마이페이지 </h2>
-
-    <div class="profile-section">
-        <c:choose>
-            <c:when test="${not empty sessionScope.user.profileImgUrl}">
-                <img src="${sessionScope.user.profileImgUrl}" alt="프로필 이미지" class="profile-img" id="profilePreview"
-                     onclick="document.getElementById('profileUpload').click();" title="클릭해서 사진 변경">
-            </c:when>
-            <c:otherwise>
-                <img src="images/default_profile.png" alt="기본 이미지" class="profile-img" id="profilePreview"
-                     onclick="document.getElementById('profileUpload').click();" title="클릭해서 사진 변경">
-            </c:otherwise>
-        </c:choose>
-        <input type="file" id="profileUpload" accept="image/*" style="display: none;" onchange="uploadProfileImage()">
-    </div>
-
-    <div class="user-info">
-        <p><strong>이메일:</strong> ${sessionScope.user.email}</p>
-
-        <div class="nickname-box">
-            <strong>닉네임:</strong>
-            <input type="text" id="nicknameInput" value="${sessionScope.user.nickname}">
-            <button type="button" id="nicknameBtn" onclick="handleNicknameProcess()">수정</button>
+        <div class="profile-section">
+            <c:choose>
+                <c:when test="${not empty sessionScope.user.profileImgUrl}">
+                    <img src="${sessionScope.user.profileImgUrl}" alt="프로필 이미지" class="profile-img" id="profilePreview"
+                         onclick="document.getElementById('profileUpload').click();" title="클릭해서 사진 변경">
+                </c:when>
+                <c:otherwise>
+                    <img src="images/default_profile.png" alt="기본 이미지" class="profile-img" id="profilePreview"
+                         onclick="document.getElementById('profileUpload').click();" title="클릭해서 사진 변경">
+                </c:otherwise>
+            </c:choose>
+            <input type="file" id="profileUpload" accept="image/*" style="display: none;"
+                   onchange="uploadProfileImage()">
         </div>
-        <div id="nicknameMsg" style="font-size: 12px; margin-top: 5px; margin-left: 60px;"></div>
-    </div>
 
-    <div class="btn-group">
-        <button type="button" onclick="location.href='../main'">홈으로</button>
-        <button type="button" onclick="location.href='password-edit'">비밀번호 재설정</button>
-        <button type="button" onclick="location.href='user-delete'">회원 탈퇴</button>
+        <div class="user-info">
+            <p><strong>이메일:</strong> ${sessionScope.user.email}</p>
+
+            <div class="nickname-box">
+                <strong>닉네임:</strong>
+                <input type="text" id="nicknameInput" value="${sessionScope.user.nickname}">
+                <button type="button" id="nicknameBtn" onclick="handleNicknameProcess()">수정</button>
+            </div>
+            <div id="nicknameMsg" style="font-size: 12px; margin-top: 5px; margin-left: 60px;"></div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" onclick="location.href='../main'">홈으로</button>
+            <button type="button" onclick="location.href='password-edit'">비밀번호 재설정</button>
+            <button type="button" onclick="location.href='user-delete'">회원 탈퇴</button>
+        </div>
     </div>
 </div>
-
 <%-- 마이페이지 전용 JS --%>
 <script src="js/mypage.js"></script>
