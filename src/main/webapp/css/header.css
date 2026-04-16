@@ -49,7 +49,8 @@ header {
 }
 
 /* 🚨 추가: 마우스를 올렸을 때 살짝 커지면서 까딱! 하는 효과 */
-.hd-menu-btn:hover {
+.hd-menu-btn:hover,
+#hd-qr-upload:hover {
     transform: scale(1.1) rotate(-5deg); /* 도장 애니메이션처럼 살짝 삐딱하게 */
 }
 
@@ -62,6 +63,28 @@ header {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.hd-header-left {
+    position: absolute;
+    left: 20px;
+    width: 95px;
+}
+
+.hd-header-left img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#hd-qr-upload {
+    display: block;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transform: scale(1) rotate(0deg);
+    transition: transform 0.2s ease-in-out;
 }
 
 .hd-header-bottom {
@@ -477,5 +500,10 @@ header.hd-sub-header .hd-header-bottom {
     .nav-menu button {
         font-size: 12px; /* 글씨 크기 축소 */
         padding: 6px 10px; /* 여백 축소 */
+    }
+
+    .hd-header-left {
+        width: 65px;
+        left: 20px;
     }
 }

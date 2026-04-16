@@ -9,6 +9,7 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
+    <link rel="icon" href="${pageContext.request.contextPath}/image/logo.svg" type="image/png">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="js/main.js" defer></script>
@@ -23,6 +24,12 @@
         <a href="main">
             <img class="hd-logo" src="image/logo.svg" alt="donguri post" height="40">
         </a>
+
+        <div class="hd-header-left">
+            <button id="hd-qr-upload" onclick="location.href='qr-decode'">
+                <img src="image/qr_uploader.png" alt="menu">
+            </button>
+        </div>
 
         <div class="hd-header-right">
             <c:if test="${empty sessionScope.user and not (request.requestURL.toString().contains('login') or request.requestURL.toString().contains('signup'))}">

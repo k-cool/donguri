@@ -89,12 +89,12 @@ public class TemplateDAO {
 
 
         // 추가된 엽서는 내림차순(최신순)으로 정렬
-        String sql = "SELECT T.* " + // 끝에 공백
-                "FROM USERS U, TEMPLATE T, USER_TEMPLATE UT " + // 끝에 공백
-                "WHERE U.USER_ID = UT.USER_ID " + // 끝에 공백
-                "  AND T.TEMPLATE_ID = UT.TEMPLATE_ID " + // 끝에 공백
-                "  AND U.USER_ID = ? " + // 끝에 공백
-                "ORDER BY UT.CREATED_AT DESC";
+        String sql = "SELECT * FROM TEMPLATE WHERE TYPE = 'BASE' " +
+                "UNION " +
+                "SELECT T.* FROM TEMPLATE T " +
+                "JOIN USER_TEMPLATE UT ON T.TEMPLATE_ID = UT.TEMPLATE_ID " +
+                "WHERE UT.USER_ID = ? " +
+                "ORDER BY 7 DESC";
 
         try {
 
@@ -119,7 +119,7 @@ public class TemplateDAO {
                 templateDTO.setCoverImgUrl(rs.getString("cover_img_url"));
                 templateDTO.setQrUrl(rs.getString("qr_url"));
                 templateDTO.setCreatedAt(rs.getString("created_at"));
-                templateDTO.setCreatedAt(rs.getString("updated_at"));
+                templateDTO.setUpdatedAt(rs.getString("updated_at"));
 
                 templateListUser.add(templateDTO);
 
