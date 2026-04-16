@@ -9,6 +9,7 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
+    <link rel="icon" href="${pageContext.request.contextPath}/image/logo.svg" type="image/png">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="js/main.js" defer></script>
