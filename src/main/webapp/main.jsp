@@ -24,6 +24,12 @@
             <img class="hd-logo" src="image/logo.svg" alt="donguri post" height="40">
         </a>
 
+        <div class="hd-header-left">
+            <button id="hd-qr-upload" onclick="location.href='qr-decode'">
+                <img src="image/qr_uploader.png" alt="menu">
+            </button>
+        </div>
+
         <div class="hd-header-right">
             <c:if test="${empty sessionScope.user and not (request.requestURL.toString().contains('login') or request.requestURL.toString().contains('signup'))}">
                 <div class="nav-menu">
