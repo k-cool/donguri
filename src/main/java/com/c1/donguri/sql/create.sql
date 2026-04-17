@@ -222,6 +222,8 @@ BEGIN
 END;
 /
 
+DELETE USERS
+WHERE email = 'ksw3721@gmail.com';
 
 CREATE TABLE inquiry
 (

@@ -84,7 +84,7 @@ public class EmailSend {
                 "    <title>동구리 우편</title>" +
                 "</head>" +
                 "<body style='font-family: Arial, sans-serif; background-color:#f9f9f9; padding:20px;'>" +
-                "    <div style='max-width:600px; margin:0 auto; background:#ffffff; padding:30px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);'>" +
+                "    <div style='display:flex; flex-direction: column; align-items: center; max-width:600px;margin:0 auto;background:#ffffff;padding:30px;border-radius:12px'>" +
                 "        <header style='text-align:center; margin-bottom:20px;'>" +
                 "            <h1 style='color:#6b4f3b;'>동구리</h1>" +
                 "        </header>" +
@@ -109,17 +109,17 @@ public class EmailSend {
         try {
             String title = "[동구리] 이메일 인증 코드";
 //            String content = "안녕하세요.\n\n" +
-//                    "도토리 서비스 이메일 인증 코드입니다.\n\n" +
+//                    "동구리 서비스 이메일 인증 코드입니다.\n\n" +
 //                    "인증 코드: " + verificationCode + "\n\n" +
 //                    "해당 코드를 입력하여 이메일 인증을 완료해주세요.\n\n" +
 //                    "감사합니다.\n" +
-//                    "도토리 팀 드림";
+//                    "동구리 팀 드림";
 //
             String content = "<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
                     "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>도토리 이메일 인증</title>\n" +
+                    "    <title>동구리 이메일 인증</title>\n" +
                     "</head>\n" +
                     "<body style=\"margin: 0; padding: 0; background-color: #fdfaf7; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;\">\n" +
                     "    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"background-color: #fdfaf7; padding: 40px 20px;\">\n" +
@@ -129,14 +129,14 @@ public class EmailSend {
                     "                    <tr>\n" +
                     "                        <td style=\"padding: 40px 30px;\">\n" +
                     "                            <h1 style=\"margin: 0; color: #7b3f00; font-size: 24px; font-weight: bold; text-align: center;\">\n" +
-                    "                                \uD83C\uDF30 도토리\n" +
+                    "                                \uD83C\uDF30 동구리\n" +
                     "                            </h1>\n" +
                     "                            \n" +
                     "                            <div style=\"margin-top: 30px; height: 1px; background-color: #eee;\"></div>\n" +
                     "                            \n" +
                     "                            <p style=\"margin-top: 30px; font-size: 16px; color: #4a4238; line-height: 1.6;\">\n" +
                     "                                안녕하세요.<br>\n" +
-                    "                                도토리 서비스 이메일 인증 코드입니다.\n" +
+                    "                                동구리 서비스 이메일 인증 코드입니다.\n" +
                     "                            </p>\n" +
                     "                            <p style=\"font-size: 15px; color: #7d6e5e; margin-bottom: 30px;\">\n" +
                     "                                아래의 인증 코드를 입력하여 이메일 인증을 완료해주세요.\n" +
@@ -149,7 +149,7 @@ public class EmailSend {
                     "                            \n" +
                     "                            <p style=\"font-size: 14px; color: #8d8379; line-height: 1.6; margin-top: 40px;\">\n" +
                     "                                감사합니다.<br>\n" +
-                    "                                <strong>도토리 팀 드림</strong>\n" +
+                    "                                <strong>동구리 팀 드림</strong>\n" +
                     "                            </p>\n" +
                     "                        </td>\n" +
                     "                    </tr>\n" +

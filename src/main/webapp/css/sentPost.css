@@ -276,10 +276,6 @@ body::after {
     font-size: 15px;
 }
 
-.empty-message::after {
-    content: " 🐿";
-}
-
 /* =========================
    sentMailDetail.jsp
    ========================= */

@@ -74,7 +74,7 @@
                 <option value="subject" ${param.searchType == 'subject' ? 'selected' : ''}>${param.searchType == 'subject' ? '✓ ' : ''}제목</option>
             </select>
 
-            <input type="text" name="keyword" placeholder="찾고싶은 도토리.." value="${param.keyword}">
+            <input type="text" name="keyword" placeholder="찾고싶은 동구리.." value="${param.keyword}">
             <button type="submit" class="btn-search">검색</button>
 
             <c:if test="${not empty param.keyword or (not empty param.status and param.status != 'all')}">
@@ -85,11 +85,11 @@
     </div>
 
     <div>
-        <a href="reservation?action=write" class="btn-write">도토리 심으러 가기</a>
+        <a href="reservation?action=write" class="btn-write">동구리 심으러 가기</a>
     </div>
 
     <div class="acorn-box">
-        <h3>{ 보낸 도토리 보관함 }</h3>
+        <h3>{ 보낸 동구리 보관함 }</h3>
 
         <div class="acorn-grid">
             <c:choose>
@@ -121,7 +121,7 @@
                 </c:when>
 
                 <c:otherwise>
-                    <p class="empty">찾으시는 도토리가 숲에 없어요..</p>
+                    <p class="empty">찾으시는 동구리가 숲에 없어요..</p>
                 </c:otherwise>
             </c:choose>
         </div>

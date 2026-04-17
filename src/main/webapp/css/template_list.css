@@ -4,9 +4,11 @@
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
+    padding-top: 60px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
+
 .template-list-content::-webkit-scrollbar {
     display: none;
 }

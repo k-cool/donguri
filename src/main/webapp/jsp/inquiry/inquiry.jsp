@@ -61,12 +61,11 @@
                     Name <input type="text" name="name"><br><br>
                     Contact number <input type="text" name="phone"><br><br>
                     E-mail <input type="email" name="email"><br><br>
-
-                    Inquiries <textarea name="message"></textarea><br><br>
+                    Message <textarea name="message"></textarea><br><br>
                     <br>
 
 
-                    <button type="submit">Submit</button>
+                    <button id="submit-btn" type="submit">Send a message</button>
                 </form>
             </div>
 

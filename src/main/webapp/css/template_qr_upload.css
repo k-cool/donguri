@@ -6,7 +6,7 @@ button, input, select, textarea {
     width: 100%;
     max-width: 420px;
     margin: 40px auto;
-    padding: 80px 26px 36px;
+    padding: 40px 26px 36px;
     border: 1.5px dashed #8f4f4f;
     border-radius: 30px;
     background: rgba(255, 250, 247, 0.7);
@@ -19,7 +19,10 @@ button, input, select, textarea {
     font-size: 14px;
     color: #7a3b3b;
     line-height: 1.6;
-    padding-bottom: 20px; /
+    margin: 20px;
+    word-break: keep-all;
+    /*padding-bottom: 20px;*/
+/
 }
 
 /* 제목 */
@@ -109,7 +112,7 @@ button, input, select, textarea {
         width: calc(100% - 44px);
         max-width: 350px;
         margin: 32px auto;
-        padding: 68px 18px 28px;
+        padding: 40px 18px 28px;
         border-radius: 24px;
     }
 
@@ -137,7 +140,8 @@ button, input, select, textarea {
     .qr-upload-container p {
         font-size: 13px;
         line-height: 1.5;
-        margin-bottom: 20px;
+        margin: 10px 0;
+        /*margin-bottom: 20px;*/
     }
 
     /* 파일 버튼 */

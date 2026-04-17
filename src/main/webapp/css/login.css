@@ -77,7 +77,7 @@ input::placeholder {
 }
 
 .btn-login {
-    padding: 12px;
+    padding: 12px 24px;
     background-color: #5d0000; /* 이미지의 짙은 갈색/와인색 버튼 */
     color: white;
     border: none;
@@ -93,7 +93,7 @@ input::placeholder {
 }
 
 .btn-signup-link {
-    padding: 12px;
+    padding: 12px 24px;
     background: none;
     background-color: #e8dcc6;
     border-radius: 25px;
