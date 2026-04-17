@@ -283,6 +283,7 @@ public class UserDAO {
         ResultSet rs = null;
 
         String sql = "SELECT COUNT(*) FROM users WHERE nickname = ? AND is_deleted = 'N'";
+        int count = 0;
 
         try {
             con = DBManager.DB_MANAGER.getConnection();
@@ -290,17 +291,20 @@ public class UserDAO {
             pstmt.setString(1, newNickname);
             rs = pstmt.executeQuery();
 
+
             if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0; // 중복이면 true, 아니면 false
+                count = rs.getInt(1);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.DB_MANAGER.close(con, pstmt, rs);
         }
 
-        return false; // 에러 발생 시 false 반환
+
+        return count > 0; // 중복이면 true, 아니면 false
+
     }
 
     public boolean updateNickname(String email, String newNickname) {
@@ -499,12 +503,13 @@ public class UserDAO {
                 currentSession.setAttribute("verificationTime", new java.util.Date());
                 currentSession.setMaxInactiveInterval(60); // 1분 유효
 
-                // 기존 코드로 이메일 재발송
-                String existingCode = (String) currentSession.getAttribute("verificationCode");
-                boolean success = EmailSend.EMAIL_SEND.sendVerificationEmail(email, existingCode);
+                // 재발송 시에도 새로운 인증 코드 생성
+                String newVerificationCode = generateVerificationCode();
+                currentSession.setAttribute("verificationCode", newVerificationCode);
+                boolean success = EmailSend.EMAIL_SEND.sendVerificationEmail(email, newVerificationCode);
 
                 if (success) {
-                    System.out.println("인증 코드 재발송 성공: " + email + " (기존 코드: " + existingCode + ")");
+                    System.out.println("인증 코드 재발송 성공: " + email + " (새로운 코드: " + newVerificationCode + ")");
                     return true;
                 }
             } else {

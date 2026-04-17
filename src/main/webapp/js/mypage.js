@@ -17,6 +17,10 @@ function uploadProfileImage() {
             if (data.success) {
                 alert("프로필 이미지가 변경되었습니다.");
                 document.getElementById('profilePreview').src = data.newImageUrl;
+                const sidebarProfile = document.querySelector('.hd-profile-pic');
+                if (sidebarProfile) {
+                    sidebarProfile.src = data.newImageUrl;
+                }
             } else {
                 alert("이미지 업로드 실패: " + data.message);
             }

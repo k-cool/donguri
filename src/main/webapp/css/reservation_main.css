@@ -1,36 +1,37 @@
-@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+/*@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');*/
 
-@font-face {
-    font-family: 'Galmuri11';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}
+/*@font-face {*/
+/*    font-family: 'Galmuri11';*/
+/*    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11.woff2') format('woff2');*/
+/*    font-weight: 400;*/
+/*    font-display: swap;*/
+/*}*/
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Galmuri11', sans-serif;
-    font-weight: 400;
-    color: #3b110b;
-}
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*    font-family: 'Galmuri11', sans-serif;*/
+/*    font-weight: 400;*/
+/*    color: #3b110b;*/
+/*}*/
 
-body {
-    background-image: url("../image/background.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-color: #edeae2;
-}
+/*body {*/
+/*    background-image: url("../image/background.png");*/
+/*    background-size: cover;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center center;*/
+/*    background-attachment: fixed;*/
+/*    background-color: #edeae2;*/
+/*}*/
 
-.container {
+.r-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 80px 0;
+    /*padding: 20px;*/
 }
 
 .paper-box {

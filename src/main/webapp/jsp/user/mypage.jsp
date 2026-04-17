@@ -3,6 +3,7 @@
 
 <%-- 마이페이지 전용 CSS --%>
 <link rel="stylesheet" href="css/mypage.css">
+
 <div class="mypage-join">
     <div class="mypage-wrapper">
         <h2> 마이페이지 </h2>

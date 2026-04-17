@@ -18,9 +18,16 @@ function checkEmailDuplicate() {
     if (!email) {
         messageDiv.textContent = "이메일을 입력해주세요.";
         messageDiv.style.color = "red";
+        isEmailDuplicateChecked = false;
         return;
     }
-
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        messageDiv.textContent = "올바른 이메일 형식이 아닙니다.";
+        messageDiv.style.color = "red";
+        isEmailDuplicateChecked = false;
+        return;
+    }
     // AJAX로 이메일 중복 확인
     fetch("email-check", {
         method: "POST",
@@ -177,7 +184,7 @@ function checkNickname() {
     fetch("nickname-check", {
         method: "POST",
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         },
         body: "nickname=" + encodeURIComponent(nickname)
     })
@@ -441,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (password !== passwordConfirm) {
             const passwordConfirmInput = document.getElementById("passwordConfirm");
             const messageDiv = document.getElementById("passwordConfirmMessage");
-            
+
             // 메시지 div가 없으면 생성
             if (!messageDiv) {
                 const passwordConfirmGroup = passwordConfirmInput.closest(".form-group");
@@ -450,7 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 newDiv.className = "message";
                 passwordConfirmGroup.appendChild(newDiv);
             }
-            
+
             const msgDiv = document.getElementById("passwordConfirmMessage");
             passwordConfirmInput.focus();
             msgDiv.textContent = "비밀번호가 일치하지 않습니다.";

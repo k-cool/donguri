@@ -1,17 +1,29 @@
 /*
  * 메뉴 클릭시 active 클래스 토글 이벤트
  */
-const menuList = document.querySelectorAll("hd-main-nav-btn");
+// const menuList = document.querySelectorAll(".hd-main-nav-btn");
+//
+// menuList.forEach(menu => {
+//
+//     menu.addEventListener("click", () => {
+//         menuList.forEach(m => m.classList.remove("active"));
+//         menu.classList.add("active");
+//     });
+//
+// });
 
-menuList.forEach(menu => {
+window.addEventListener("DOMContentLoaded", () => {
+    const menuList = document.querySelectorAll(".hd-main-nav-btn");
+    const currentPath = window.location.pathname;
 
-    menu.addEventListener("click", () => {
-        menuList.forEach(m => m.classList.remove("active"));
-        menu.classList.add("active");
+    menuList.forEach(menu => {
+        const menuLink = menu.getAttribute("href");
+
+        if (currentPath.includes(menuLink)) {
+            menu.classList.add("active");
+        }
     });
-
 });
-
 $(function () {
     let menuVisible = false;
 

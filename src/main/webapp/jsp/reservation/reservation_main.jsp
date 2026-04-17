@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="r-container">
 
     <div class="paper-box">
         <h2 class="title">동구리 메일 서비스</h2>
