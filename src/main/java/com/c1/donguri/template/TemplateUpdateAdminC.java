@@ -22,7 +22,7 @@ public class TemplateUpdateAdminC extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-       
+
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
 
         boolean isAdmin = UserDAO.USER_DAO.isAdmin(user.getEmail());
@@ -34,6 +34,7 @@ public class TemplateUpdateAdminC extends HttpServlet {
 
         TemplateDTO template = TemplateDAO.TEMPLATE_DAO.getTemplateDetail(request);
 
+        System.out.println(template.toString());
         request.setAttribute("t", template);
 
         request.setAttribute("content", "jsp/template/template_update_admin.jsp");

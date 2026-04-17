@@ -120,6 +120,7 @@ public class AppStartupListener implements ServletContextListener {
 
             // 사용되고있는 드라이버 종료
             Enumeration<Driver> drivers = DriverManager.getDrivers();
+
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
                 DriverManager.deregisterDriver(driver);

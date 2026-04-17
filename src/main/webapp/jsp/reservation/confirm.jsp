@@ -241,7 +241,7 @@
                 <a class="btn edit-btn" href="reservation?action=write">
                     <div>✏️ 수정하고 싶어요!</div>
                 </a>
-                <button class="btn plant-btn" type="submit">🍀 도토리 심기</button>
+                <button class="btn plant-btn" type="submit">🍀 동구리 심기</button>
             </div>
 
         </div>

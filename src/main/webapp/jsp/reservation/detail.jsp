@@ -9,7 +9,7 @@
 <body>
 <div class="detail-card">
     <div>
-        <h2>📬 도토리 상세보기</h2>
+        <h2>📬 동구리 상세보기</h2>
 
         <div class="info-section">
             <p><span class="info-label">받는 사람</span> ${r.recipientEmail}</p>

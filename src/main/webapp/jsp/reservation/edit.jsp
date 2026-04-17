@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>도토리 예약 수정</title>
+    <title>동구리 예약 수정</title>
     <link rel="stylesheet" href="css/reservation_edit.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
             <input type="hidden" name="templateId" id="selectedTemplate" value="${r.templateId}">
             <input type="hidden" name="bgmUrl" id="selectedBgm" value="${r.bgmUrl}">
 
-            <h2>{ 도토리 예약 수정 }</h2>
+            <h2>{ 동구리 예약 수정 }</h2>
 
             <div class="form-row">
                 <label>받는 이메일</label>

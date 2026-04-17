@@ -184,7 +184,7 @@ public class TemplateDAO {
         try {
             // 1. 파라미터 추출
             String name = request.getParameter("name");
-            String bgColor = request.getParameter("bg_color");
+            String bgColor = request.getParameter("bgColor");
             String type = request.getParameter("type"); // BASE 또는 ADDED(QR ver.)
 
             // 2. 고유 ID 생성 (QR 주소와 DB PK로 공통 사용)

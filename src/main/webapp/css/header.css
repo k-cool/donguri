@@ -363,11 +363,11 @@ header.hd-sub-header .hd-header-bottom {
     }
 
     .hd-header-top {
-        height: 70px;
+        /*height: 70px;*/
     }
 
     .hd-logo {
-        height: 35px;
+        /*height: 35px;*/
     }
 
     .hd-menu-btn {
@@ -512,7 +512,7 @@ header.hd-sub-header .hd-header-bottom {
     }
 
     .hd-main-nav-btn {
-        padding: 0;
+        padding: 0 10px;
 
     }
 

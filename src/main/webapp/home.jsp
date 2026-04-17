@@ -9,18 +9,18 @@
 </head>
 <body>
 
-<div class="test-btn">
-    <h1>여기 이동 버튼 모아서 사용해주세요!</h1>
+<%--<div class="test-btn">--%>
+<%--    <h1>여기 이동 버튼 모아서 사용해주세요!</h1>--%>
 
-    <button onclick="location.href='omikuji'">omikuji</button>
-    <button type="button" onclick="location.href='template-list-admin'">template list admin</button>
-    <button type="button" onclick="location.href='template-create-admin'">template create admin</button>
-    <button type="button" onclick="location.href='template-list'">template list</button>
-    <button type="button" onclick="location.href='qr-decode'">PC QR Upload!</button>
-    <button onclick="location.href='sent-post'">sent-post</button>
-    <button onclick="location.href='reservation'">전송서비스</button>
-    <button onclick="location.href='inquiry'">inquiry</button>
-</div>
+<%--    <button onclick="location.href='omikuji'">omikuji</button>--%>
+<%--    <button type="button" onclick="location.href='template-list-admin'">template list admin</button>--%>
+<%--    <button type="button" onclick="location.href='template-create-admin'">template create admin</button>--%>
+<%--    <button type="button" onclick="location.href='template-list'">template list</button>--%>
+<%--    <button type="button" onclick="location.href='qr-decode'">PC QR Upload!</button>--%>
+<%--    <button onclick="location.href='sent-post'">sent-post</button>--%>
+<%--    <button onclick="location.href='reservation'">전송서비스</button>--%>
+<%--    <button onclick="location.href='inquiry'">inquiry</button>--%>
+<%--</div>--%>
 
 <div class="donguri-ani" id="scene">
     <img id="acorn" class="dong" src="image/acon.png" alt="main donguri"/>

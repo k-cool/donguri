@@ -10,44 +10,47 @@
 <div class="r-container">
 
     <div class="paper-box">
-        <h2 class="title">동구리 메일 서비스</h2>
+
+        <h2 class="title">🍂 동구리 메일 서비스 🍂</h2>
 
         <p class="desc">
-            일본의 연하장 문화를 참고하여<br>
-            온라인으로 원하는 시점에<br>
-            원하는 대상에게 마음을 전할 수 있는<br>
-            서비스를 만들고자 하였습니다.
+            가장 좋은 때에 닿기를 바라는 마음,<br>
+            <strong>동구리 메일</strong><br><br>
+
+            일본의 연하장 문화처럼,<br>
+            당신의 진심을 소중히 보관했다가<br>
+            약속한 그 순간 가장 따뜻한 모습으로 배달합니다.<br>
+            서두르지 않아 더 깊은, 우리만의 마음 전달 서비스를 만나보세요.<br>
         </p>
 
         <hr class="separator">
 
         <div class="section">
-            <h3>서비스 목적</h3>
+            <h3>🌰 서비스 목적 🌰</h3>
             <ul>
-                <li>예약된 시간에 이메일을 전송하는 서버 스케줄링 기능</li>
-                <li> 이메일 전송 기능 구현</li>
-                <li>QR코드 및 모바일 웹 대응</li>
-                <li>일본 사용자도 쉽게 사용할 수 있는 글로벌 서비스 구현</li>
+                <li>기다림의 미학 → 메시지의 가치 상승</li>
+                <li>정서적 교감 → 감성 전달 극대화</li>
+                <li>기억 보관 → 시간이 지나도 꺼내볼 수 있는 편지</li>
             </ul>
         </div>
 
         <hr class="separator">
 
         <div class="section">
-            <h3>주요 기능</h3>
+            <h3>📮 주요 기능 📮</h3>
             <ul>
-                <li>회원 관리</li>
-                <li>포스트 예약</li>
-                <li>이메일 자동 발송</li>
-                <li>엽서 보관함</li>
-
+                <li>👤 회원 관리 (User)</li>
+                <li>⏳ 예약 발송 (Reservation)</li>
+                <li>📧 자동 메일 전송 (Scheduler)</li>
+                <li>🎨 템플릿 & QR 경험</li>
             </ul>
         </div>
 
         <a href="${isLoggedIn ? "reservation?action=list" : "login"}"
            class="btn">
-            도토리 보내기
+            💌 동구리 보내기
         </a>
+
     </div>
 
 </div>
