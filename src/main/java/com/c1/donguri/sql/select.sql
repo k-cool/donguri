@@ -5,14 +5,21 @@
            send_log, user_template, omikuji
     ==========================================================
 */
-SELECT * FROM RESERVATION;
-SELECT * FROM TEMPLATE;
+SELECT *
+FROM RESERVATION;
+SELECT *
+FROM TEMPLATE;
 -- 1. 사용자 목록 조회 (users)
 -- 탈퇴하지 않은('N') 사용자들을 가입일 최신순으로 조회합니다.
 SELECT user_id, email, nickname, created_at
 FROM users
 WHERE is_deleted = 'N'
 ORDER BY created_at DESC;
+
+SELECT COUNT(*)
+FROM users
+WHERE nickname = '관리자'
+  AND is_deleted = 'N';
 
 SELECT *
 FROM USERS;

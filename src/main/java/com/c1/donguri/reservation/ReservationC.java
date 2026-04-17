@@ -24,7 +24,8 @@ public class ReservationC extends HttpServlet {
         boolean isLoggedIn = UserDAO.USER_DAO.loginCheck(request);
 
         if (!isLoggedIn) {
-            request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/reservation_main.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
             return;
         }
 
@@ -32,7 +33,8 @@ public class ReservationC extends HttpServlet {
 
         if (action == null) {
             request.setAttribute("isLoggedIn", isLoggedIn);
-            request.getRequestDispatcher("jsp/reservation/reservation_main.jsp").forward(request, response);
+            request.setAttribute("content", "jsp/reservation/reservation_main.jsp");
+            request.getRequestDispatcher("main.jsp").forward(request, response);
         } else if (action.equals("list")) {
             List<ReservationDTO> list = ReservationDAO.RESERVATION_DAO.getAll(request);
             request.setAttribute("list", list);

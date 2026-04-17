@@ -127,6 +127,11 @@ header {
 
 }
 
+.hd-main-nav-btn li {
+    word-break: keep-all;
+    white-space: nowrap;
+}
+
 .hd-main-nav-btn.active {
     background: url("/image/menu_texture.png") no-repeat center center transparent;
 }
@@ -450,10 +455,10 @@ header.hd-sub-header .hd-header-bottom {
 -------------------------------------- */
 .nav-menu {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: flex-end; /* 버튼들을 오른쪽으로 밀착 */
-    /*gap: 10px;*/
+    gap: 6px;
+    /*justify-content: flex-end; !* 버튼들을 오른쪽으로 밀착 *!*/
+    /*width: auto; !* 부모 너비가 너무 넓게 잡히지 않도록 확인 *!*/
     /*width: auto; !* 부모 너비가 너무 넓게 잡히지 않도록 확인 *!*/
 }
 
@@ -492,7 +497,7 @@ header.hd-sub-header .hd-header-bottom {
 }
 
 /* --- 모바일 버튼 대응 (768px 이하) --- */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 420px) {
     .nav-menu {
         gap: 5px; /* 버튼 사이 간격 축소 */
     }
@@ -500,6 +505,15 @@ header.hd-sub-header .hd-header-bottom {
     .nav-menu button {
         font-size: 12px; /* 글씨 크기 축소 */
         padding: 6px 10px; /* 여백 축소 */
+    }
+
+    .hd-nav-menu {
+        gap: 8px;
+    }
+
+    .hd-main-nav-btn {
+        padding: 0;
+
     }
 
     .hd-header-left {

@@ -85,6 +85,7 @@
     border-radius: 10px;
     font-size: 0.95rem;
     box-sizing: border-box;
+    max-width: 190px !important;
 }
 
 #nicknameBtn {
@@ -98,6 +99,7 @@
     font-weight: bold;
     white-space: nowrap;
     transition: 0.2s;
+    width: 70px;
 }
 
 #nicknameBtn:hover {
@@ -169,9 +171,9 @@
     }
 
     .mypage-wrapper {
-        top: 0;
-        left: 16px;
-        transform: none;
+        /*top: 0;*/
+        /*left: 16px;*/
+        /*transform: none;*/
         margin: 0 auto;
 
         width: 92%;
@@ -185,6 +187,9 @@
         margin-bottom: 20px;
     }
 
+    .user-info p {
+        text-align: center;
+    }
 
     .profile-img {
         width: 100px;
@@ -193,13 +198,18 @@
 
     /* 닉네임 수정 영역 */
     .nickname-box {
-        gap: 2px;
+        gap: 10px;
         margin-left: 0;
+        flex-direction: column;
+        align-items: center;
+
+        /*flex-wrap: wrap;*/
     }
 
     #nicknameInput {
         padding: 8px 10px;
         font-size: 0.9rem;
+        max-width: 190px;
     }
 
     #nicknameBtn {
