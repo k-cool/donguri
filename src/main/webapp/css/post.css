@@ -253,6 +253,13 @@
     padding: calc(var(--base) * 0.048) 0;
 }
 
+.content-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
 /* 날짜 */
 .date {
     width: 100%;
@@ -361,3 +368,4 @@
 #bgmTogglePlay {
     display: none;
 }
+

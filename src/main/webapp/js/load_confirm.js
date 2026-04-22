@@ -11,11 +11,12 @@ function loadConfirm() {
 
     // 선택된 요소를 순회하면서 같은 name을 가진 input에 mapObj의 value를 저장
     inputs.forEach(input => {
-        if (input.name === "action") return;
-        console.log("123")
-        if (input.name === "coverImgUrl") {
+        if (!input.name || input.name === "action") return;
 
-            console.log(mapObj["fileUrl"]);
+        console.log(input.name);
+
+
+        if (input.name === "coverImgUrl") {
             input.value = mapObj["fileUrl"];
             return;
         }
@@ -23,11 +24,33 @@ function loadConfirm() {
         input.value = mapObj[input.name];
     });
 
-    // textarea 별도 처리
-    const textarea = document.querySelector('textarea');
-    textarea.value = mapObj[textarea.name];
+    // // textarea 별도 처리
+    // const textarea = document.querySelector('textarea');
+    // console.log(textarea);
 
-    sessionStorage.removeItem('reservation');
+
+    // textarea.value = mapObj[textarea.name];
+
+
+    // sessionStorage.removeItem('reservation');
+
+    // content 줄맞춤
+    const contentText = document.querySelector(".content-text");
+
+    console.log("??", contentText)
+    if (contentText && contentText.innerText) {
+        const temp = contentText.innerText;
+        contentText.innerText = "";
+        console.log("??", temp.split("<br>"))
+
+        temp.split("\n").forEach(text => {
+            const line = document.createElement("div");
+            line.innerText = text;
+            contentText.appendChild(line);
+
+            console.log("??")
+        })
+    }
 }
 
 (() => {

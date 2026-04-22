@@ -51,3 +51,18 @@ const toggleBgmPlayer = () => {
 };
 
 btn.addEventListener("click", toggleBgmPlayer);
+
+// 가운데정렬
+const contentText = document.querySelector(".content-text");
+
+if (contentText && contentText.innerText) {
+    const temp = contentText.innerText;
+    contentText.innerText = "";
+
+    temp.split("\n").forEach(text => {
+        const line = document.createElement("div");
+        line.innerText = text;
+        contentText.appendChild(line);
+
+    })
+}

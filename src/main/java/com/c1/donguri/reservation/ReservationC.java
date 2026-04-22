@@ -90,6 +90,15 @@ public class ReservationC extends HttpServlet {
 
             ReservationDAO.RESERVATION_DAO.setReservationDTOToSession(request);
 
+
+            InsertReservationDTO ir = (InsertReservationDTO) session.getAttribute("insertReservation");
+
+            System.out.println(ir.toString());
+
+            ir.setContent(ir.getContent().replaceAll("\n", "<br>"));
+
+            session.setAttribute("insertReservation", ir);
+
             request.setAttribute("selectedTemplate", selectedTemplate);
 
             request.setAttribute("content", "jsp/reservation/confirm.jsp");
