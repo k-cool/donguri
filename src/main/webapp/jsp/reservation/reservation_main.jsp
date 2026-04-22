@@ -11,7 +11,7 @@
 
     <div class="paper-box">
 
-        <h2 class="title">🍂 동구리 메일 서비스 🍂</h2>
+        <h2 class="title">동구리 메일 서비스</h2>
 
         <p class="desc">
             가장 좋은 때에 닿기를 바라는 마음,<br>
@@ -26,7 +26,7 @@
         <hr class="separator">
 
         <div class="section">
-            <h3>🌰 서비스 목적 🌰</h3>
+            <h3>서비스 목적</h3>
             <ul>
                 <li>기다림의 미학 → 메시지의 가치 상승</li>
                 <li>정서적 교감 → 감성 전달 극대화</li>
@@ -37,18 +37,18 @@
         <hr class="separator">
 
         <div class="section">
-            <h3>📮 주요 기능 📮</h3>
+            <h3>주요 기능</h3>
             <ul>
-                <li>👤 회원 관리 (User)</li>
-                <li>⏳ 예약 발송 (Reservation)</li>
-                <li>📧 자동 메일 전송 (Scheduler)</li>
-                <li>🎨 템플릿 & QR 경험</li>
+                <li>회원 관리 (User)</li>
+                <li>예약 발송 (Reservation)</li>
+                <li>자동 메일 전송 (Scheduler)</li>
+                <li>템플릿 & QR 경험</li>
             </ul>
         </div>
 
         <a href="${isLoggedIn ? "reservation?action=list" : "login"}"
            class="btn">
-            💌 동구리 보내기
+            동구리 보내기
         </a>
 
     </div>

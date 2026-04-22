@@ -16,6 +16,8 @@ function saveReservation(e) {
     const textarea = document.querySelector('textarea');
     mapObj[textarea.name] = textarea.value;
 
+    console.log(mapObj);
+
     // session storage에 저장
     sessionStorage.setItem('reservation', JSON.stringify(mapObj));
 

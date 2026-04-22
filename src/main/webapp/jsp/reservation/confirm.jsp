@@ -203,7 +203,7 @@
                     </div>
 
                     <div class="content">
-                        <span>${insertReservation.content}</span>
+                        <div class="content-text">${insertReservation.content}</div>
                     </div>
 
                     <div class="row">
@@ -238,7 +238,7 @@
             </p>
 
             <div class="modal-actions">
-                <a class="btn edit-btn" href="reservation?action=write">
+                <a class="btn edit-btn" href="reservation?action=write&templateId=${insertReservation.templateId}">
                     <div>✏️ 수정하고 싶어요!</div>
                 </a>
                 <button class="btn plant-btn" type="submit">🍀 동구리 심기</button>

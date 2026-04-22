@@ -203,7 +203,7 @@ public class ReservationDAO {
             }
         }
 
-        sql.append("ORDER BY R.SCHEDULED_DATE");
+        sql.append("ORDER BY R.SCHEDULED_DATE DESC");
 
         try {
             con = DBManager.DB_MANAGER.getConnection();

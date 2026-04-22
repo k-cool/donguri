@@ -194,7 +194,9 @@
                     </div>
 
                     <div class="content">
-                        <span>${post.content}</span>
+                        <div class="content-text">${post.content}</div>
+
+                        <%--                        <span>${post.content}</span>--%>
                     </div>
 
                     <div class="row">

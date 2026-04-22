@@ -270,3 +270,11 @@
     background: #5a0b0b;
     color: white;
 }
+
+
+.content-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
